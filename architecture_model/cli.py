@@ -31,7 +31,9 @@ def run(arguments: list[str]) -> dict:
     read = actions.add_parser("read")
     read.add_argument("--component", default="")
     read.add_argument("--scenario", default="")
-    maintenance = actions.add_parser("maintenance")
+    maintenance = actions.add_parser(
+        "maintenance", help="Show current interpretation coverage and historical observations"
+    )
     for name in ("binding", "component", "scenario"):
         maintenance.add_argument(f"--{name}", default="")
     for name in ("maintenance-preview", "maintenance-refresh"):

@@ -120,6 +120,16 @@ For an external business Agent, the normal loop is:
    using confirmed or a revised explanation patch and a concrete reason.
 7. Read again in another process. Older unresolved versions remain visible.
 
+Review coverage also follows model edits. Shared new scenarios and changed related
+definitions create a new context without extending any old confirmation. Query
+`current_pending_ids` for current definitions and `pending_ids` for all unresolved
+history. A revised review can create new contexts for other source targets; the
+replay re-queries pending work after each explicit outcome and processes these
+separately. With the P2 coverage rule its final revision is **24** (the earlier
+revision-21 record remains historical). Pre-fix M2 confirmations retain their IDs,
+authors, reasons and declared object sets, with unknown content coverage until a
+new context is explicitly reviewed.
+
 The [protocol](../../docs/architecture-model.md#m2-source-maintenance) documents
 commands, strict review JSON, M1 compatibility and failure semantics. Extend the
 M1 test command above to include all M2 regressions in the same directory.

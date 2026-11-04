@@ -5,6 +5,7 @@ from typing import Literal
 from pydantic import Field
 
 from architecture_model.errors import ModelError
+from architecture_model.maintenance_coverage import capture_coverage, comparison_key, maintained_observations
 from architecture_model.schema import (
     Binding,
     Facts,
@@ -16,7 +17,14 @@ from architecture_model.schema import (
     Strict,
     Text,
 )
-from architecture_model.store import ModelStore, candidate, model_diff, revision_candidate
+from architecture_model.store import (
+    BINDING_EVIDENCE_FIELDS,
+    ModelStore,
+    candidate,
+    model_diff,
+    patched_model,
+    revision_candidate,
+)
 from architecture_model.validation import digest, parse, validate_facts, validate_model
 
 
@@ -41,7 +49,8 @@ def preview(model: Model, target: Facts) -> dict:
     validate_facts(target)
     if target.project_id != model.project.id:
         raise ModelError("FACTS_MISMATCH", "/project", "Comparison project differs from model")
-    saved = {item.id: item for item in model.maintenance}
+    maintained = maintained_observations(model, model_diff)
+    saved = {item.id: item for item in maintained}
     observations = []
     for binding in model.bindings:
         observation = _compare(model, binding, target)
@@ -56,7 +65,7 @@ def preview(model: Model, target: Facts) -> dict:
         "granularity": "Exact containing-file bytes and incident static call endpoints; no function-body hash",
         "pending_ids": [
             item.id
-            for item in {entry.id: entry for entry in [*model.maintenance, *observations]}.values()
+            for item in {entry.id: entry for entry in [*maintained, *observations]}.values()
             if item.disposition != "unchanged" and item.resolution is None
         ],
         "observations": [item.model_dump() for item in observations],
@@ -92,7 +101,13 @@ def rebind(store: ModelStore, item_id: str, key: str, expected_revision: int, au
         if binding is None:
             raise ModelError("NOT_FOUND", "/bindings", item.binding_id)
         history = [entry.model_dump() for entry in binding.history]
-        if (binding.snapshot_id, binding.location) != (item.target_snapshot_id, choice.location):
+        target_evidence = {
+            "snapshot_id": item.target_snapshot_id,
+            "source_version": item.target_source_version,
+            "location": choice.location.model_dump(),
+        }
+        previous = binding.model_dump()
+        if any(previous[field] != target_evidence[field] for field in BINDING_EVIDENCE_FIELDS):
             history.append(
                 parse(
                     HistoricalLocation,
@@ -144,19 +159,17 @@ def resolve(store: ModelStore, item_id: str, review_value: object, expected_revi
             for operation in review.operations
         ):
             raise ModelError("REVIEW_INVALID", "/operations", "Review operations must revise interpretations")
-        maintenance = [entry.model_copy(deep=True) for entry in current.maintenance]
-        updated = next(entry for entry in maintenance if entry.id == item_id)
+        maintenance = [entry.model_copy(deep=True) for entry in maintained_observations(current, model_diff)]
         object_ids = sorted(set(item.component_ids + item.relation_ids + item.scenario_ids + item.step_ids))
-        updated.resolution = MaintenanceResolution(
-            outcome=review.outcome,
-            author=review.author,
-            reason=review.reason,
-            source_version=review.source_version,
-            timestamp=datetime.now(timezone.utc).isoformat(),
-            object_ids=object_ids,
-        )
         if review.operations:
-            proposed, difference = candidate(
+            if (
+                item.binding_id not in {binding.id for binding in current.bindings}
+                or item.id != capture_coverage(current, item, model_diff).id
+            ):
+                raise ModelError(
+                    "REVIEW_INVALID", "/operations", "Interpretation edits require current review coverage"
+                )
+            proposed, _ = patched_model(
                 current,
                 {"author": review.author, "summary": review.reason, "operations": review.operations},
                 maintenance,
@@ -164,7 +177,7 @@ def resolve(store: ModelStore, item_id: str, review_value: object, expected_revi
         else:
             proposed = current.model_copy(deep=True)
             proposed.maintenance = maintenance
-            proposed, difference = revision_candidate(current, proposed, review.author, review.reason)
+        difference = model_diff(current, proposed)
         changed = {
             identity
             for collection in ("components", "relations", "scenarios")
@@ -172,7 +185,25 @@ def resolve(store: ModelStore, item_id: str, review_value: object, expected_revi
         }
         if review.outcome == "revised" and not changed.intersection(object_ids):
             raise ModelError("REVIEW_INVALID", "/operations", "Revised requires a change to an affected interpretation")
-        return proposed, difference
+        proposed.maintenance = maintained_observations(proposed, model_diff)
+        reviewed_ids = {item.id}
+        if review.operations:
+            reviewed_ids.add(capture_coverage(proposed, item, model_diff).id)
+        timestamp = datetime.now(timezone.utc).isoformat()
+        for updated in proposed.maintenance:
+            if updated.id in reviewed_ids and updated.resolution is None:
+                updated.resolution = MaintenanceResolution(
+                    outcome=review.outcome,
+                    author=review.author,
+                    reason=review.reason,
+                    source_version=review.source_version,
+                    timestamp=timestamp,
+                    object_ids=sorted(
+                        set(updated.component_ids + updated.relation_ids + updated.scenario_ids + updated.step_ids)
+                    ),
+                    object_versions=dict(updated.object_versions),
+                )
+        return revision_candidate(current, proposed, review.author, review.reason)
 
     return store.commit(expected_revision, build)
 
@@ -187,22 +218,33 @@ def query(model: Model, binding_id: str = "", component_id: str = "", scenario_i
             raise ModelError("NOT_FOUND", "/scope", identity)
     items = [
         item
-        for item in model.maintenance
+        for item in maintained_observations(model, model_diff)
         if (not binding_id or item.binding_id == binding_id)
         and (not component_id or component_id in item.component_ids)
         and (not scenario_id or scenario_id in item.scenario_ids)
     ]
+    bindings = {binding.id for binding in model.bindings}
+    comparisons = {comparison_key(item): item for item in items if item.binding_id in bindings}
+    current_ids = {capture_coverage(model, item, model_diff).id for item in comparisons.values()} & {
+        item.id for item in items
+    }
     return {
         "model_id": model.id,
         "revision": model.revision,
         "pending_ids": [item.id for item in items if item.disposition != "unchanged" and item.resolution is None],
+        "current_coverage_ids": sorted(current_ids),
+        "current_pending_ids": [
+            item.id
+            for item in items
+            if item.id in current_ids and item.disposition != "unchanged" and item.resolution is None
+        ],
         "latest_target_snapshot_id": model.maintenance_target_snapshot_id,
         "observations": [item.model_dump() for item in items],
     }
 
 
 def _item(model: Model, identity: str) -> Maintenance:
-    item = next((entry for entry in model.maintenance if entry.id == identity), None)
+    item = next((entry for entry in maintained_observations(model, model_diff) if entry.id == identity), None)
     if item is None:
         raise ModelError("NOT_FOUND", "/maintenance", identity)
     return item
@@ -278,20 +320,8 @@ def _compare(model: Model, binding: Binding, target: Facts) -> Maintenance:
         reasons.append(
             "Original location absent from complete export under matching extraction rules; no plausible candidate"
         )
-    # Reuse the same impact computation as ordinary model operations.
-    marked = model.model_copy(deep=True)
-    selected = next(entry for entry in marked.bindings if entry.id == binding.id)
-    selected.reason += " [maintenance impact]"
-    impact = model_diff(model, marked)
-    step_ids = [
-        step.id
-        for scenario in model.scenarios
-        for step in scenario.steps
-        if binding.id in step.binding_ids + step.claim.binding_ids
-        or set(step.component_ids).intersection(impact["component_ids"])
-    ]
     identity = digest({"binding": binding.id, "basis": basis.model_dump(), "target": target.id})
-    return Maintenance(
+    observation = Maintenance(
         id=f"maintenance-{identity}",
         binding_id=binding.id,
         basis=basis,
@@ -301,12 +331,13 @@ def _compare(model: Model, binding: Binding, target: Facts) -> Maintenance:
         disposition=disposition,
         reasons=reasons,
         candidates=choices,
-        component_ids=impact["component_ids"],
-        relation_ids=impact["relation_ids"],
-        scenario_ids=impact["scenario_ids"],
-        step_ids=step_ids,
+        component_ids=[],
+        relation_ids=[],
+        scenario_ids=[],
+        step_ids=[],
         call_changes={"before": old_calls, "after": new_calls},
     )
+    return capture_coverage(model, observation, model_diff)
 
 
 def _candidates(binding: Binding, target: Facts) -> list[MaintenanceCandidate]:

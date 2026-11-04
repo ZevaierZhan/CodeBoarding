@@ -22,7 +22,7 @@ Global source digest differences alone do not imply business changes.
 New facts retain the M1 facts schema and carry a canonical extraction descriptor
 in tools metadata: discovery implementation hashes, effective ignore patterns,
 engine configuration/tool hashes and completeness declaration. The descriptor is
-checked before and after extraction. Old snapshots remain byte/摘要 compatible;
+checked before and after extraction. Old snapshots remain content/digest compatible;
 absent or different descriptors yield indeterminate, never deleted. Export errors
 publish nothing. An independent strict inventory rejects traversal/stat/read errors
 and native discovery disagreement. A complete comparable export can establish
@@ -48,6 +48,29 @@ records confirmed/revised, author, rationale, exact target version and affected
 objects; optional ordinary interpretation operations commit in the same revision.
 Revised requires an actual interpretation change. No general patch can edit or
 erase maintenance records. Read/query supports binding/component/scenario scope.
+
+## P2: model evolution and review coverage
+
+The source comparison key is independent of review coverage. `objects-v1` adds an
+ID-indexed map of SHA-256 hashes of the complete affected component, relation,
+scenario and step definitions. Observation identity includes the map. The review
+unit is conservatively the whole affected set: new shared B or a changed related
+definition creates another context, while unrelated edits and model revision alone
+do not. Exact unchanged/reverted contexts reuse their existing state.
+
+All candidate writes derive the current context for every known historical source
+comparison, atomically with ordinary explanation edits. Read/preview/query use the
+same helper. Historical observations and resolutions retain their original object
+sets and content hashes. Current coverage IDs and current pending IDs are exposed
+separately from all pending history. Confirming old coverage never closes new
+coverage. Resolve patches require current context and record the resulting state
+as reviewed in the same transaction; historical confirmations are not overwritten.
+
+Legacy M2 observations lack hashes. Preserve them unchanged as coverage-unknown;
+derive a new current context, persisting it on the next successful write. Do not
+invent historical content coverage or rewrite any fact catalog. Rebinding uses the
+same snapshot/version/location triple as M1 history protection, including recovery
+when only a non-current binding's declared source version differs.
 
 All writes use ModelStore candidate validation and its same read/check/build/
 validate/replace critical section. Stale previews conflict before any write.

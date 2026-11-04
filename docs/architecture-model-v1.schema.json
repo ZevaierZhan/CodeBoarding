@@ -482,6 +482,26 @@
             }
           ],
           "default": null
+        },
+        "coverage_version": {
+          "default": "",
+          "enum": [
+            "",
+            "objects-v1"
+          ],
+          "title": "Coverage Version",
+          "type": "string"
+        },
+        "object_versions": {
+          "additionalProperties": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          },
+          "propertyNames": {
+            "minLength": 1
+          },
+          "title": "Object Versions",
+          "type": "object"
         }
       },
       "required": [
@@ -569,6 +589,17 @@
           },
           "title": "Object Ids",
           "type": "array"
+        },
+        "object_versions": {
+          "additionalProperties": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          },
+          "propertyNames": {
+            "minLength": 1
+          },
+          "title": "Object Versions",
+          "type": "object"
         }
       },
       "required": [

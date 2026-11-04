@@ -164,7 +164,9 @@ def run(output: Path, node: Path, pyright: Path, tokei: Path) -> dict:
     assert same_file["disposition"] == "changed"
     assert same_file["basis"]["location"]["start"] == same_file["candidates"][0]["location"]["start"]
     pending = cli(*prefix, "maintenance", "--binding", "bind-total")
-    for index, item in enumerate(entry for entry in pending["observations"] if entry["id"] in pending["pending_ids"]):
+    index = 0
+    while pending["pending_ids"]:
+        item = next(entry for entry in pending["observations"] if entry["id"] in pending["pending_ids"])
         review = {
             "author": "business-agent",
             "reason": "Inspected this target: A/B still share quantity pricing; rate is twelve",
@@ -191,6 +193,8 @@ def run(output: Path, node: Path, pyright: Path, tokei: Path) -> dict:
             "--expected-revision",
             str(read()["revision"]),
         )
+        index += 1
+        pending = cli(*prefix, "maintenance", "--binding", "bind-total")
     assert not cli(*prefix, "maintenance", "--binding", "bind-total")["pending_ids"]
     refresh("resolved target repeat", s3_path)
     assert not cli(*prefix, "maintenance", "--binding", "bind-total")["pending_ids"]

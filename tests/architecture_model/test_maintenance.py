@@ -433,3 +433,504 @@ def test_revert_retains_pending_and_repeat_preserves_resolution(maintained: Mode
     repeated = preview(store.read(), target)
     assert repeated["observations"][0]["resolution"]["outcome"] == "confirmed"
     assert item["id"] not in repeated["pending_ids"]
+
+
+@pytest.mark.parametrize("confirmed", [False, True])
+def test_shared_scenario_gets_current_review_scope(maintained: ModelStore, confirmed: bool) -> None:
+    store = maintained
+    target = changed(store.read().facts[-1])
+    original = record(store, target)["observations"][0]
+    if confirmed:
+        resolve(store, original["id"], _review(target), store.read().revision)
+    historical = store.read().maintenance[0].model_dump()
+    _add_business_b(store)
+    scoped = query(store.read(), scenario_id="business-B")
+    assert scoped["pending_ids"], "New shared scenario must have review coverage before refresh"
+    assert set(scoped["current_pending_ids"]).issubset({item.id for item in store.read().maintenance})
+    report = preview(store.read(), target)
+    current = report["observations"][0]
+    assert current["scenario_ids"] == ["business-B", "scenario"]
+    assert current["resolution"] is None and current["id"] != original["id"]
+    refresh(store, target, report["revision"], report["token"], "agent")
+    assert next(item for item in store.read().maintenance if item.id == original["id"]).model_dump() == historical
+    assert current["id"] in query(ModelStore(store.path).read(), scenario_id="business-B")["pending_ids"]
+
+
+@pytest.mark.parametrize(
+    "collection,identity,value",
+    [
+        ("components", "component", {"responsibility": "Changed interpretation with stable identity"}),
+        (
+            "scenarios",
+            "scenario",
+            {
+                "claim": {
+                    "kind": "code_fact",
+                    "explanation": "Changed business interpretation",
+                    "binding_ids": ["binding"],
+                }
+            },
+        ),
+    ],
+)
+def test_edited_explanation_does_not_inherit_confirmation(
+    maintained: ModelStore, collection: str, identity: str, value: dict
+) -> None:
+    store = maintained
+    target = changed(store.read().facts[-1])
+    original = record(store, target)["observations"][0]
+    resolve(store, original["id"], _review(target), store.read().revision)
+    historical = store.read().maintenance[0].model_dump()
+    store.apply(
+        store.read().revision,
+        {
+            "author": "agent",
+            "summary": "Edit continuing interpretation",
+            "operations": [
+                {"action": "update", "collection": collection, "id": identity, "value": value},
+            ],
+        },
+    )
+    assert query(store.read(), scenario_id="scenario")["pending_ids"]
+    current = record(store, target)["observations"][0]
+    assert current["id"] != original["id"] and current["resolution"] is None
+    assert store.read().maintenance[0].model_dump() == historical
+    assert store.read().components[0].id == "component" and store.read().scenarios[0].steps[0].id == "step"
+
+
+def test_unrelated_object_and_noop_keep_review_closed(maintained: ModelStore) -> None:
+    store = maintained
+    target = changed(store.read().facts[-1])
+    original = record(store, target)["observations"][0]
+    resolve(store, original["id"], _review(target), store.read().revision)
+    initial = store.read()
+    other_binding = initial.bindings[0].model_dump() | {
+        "id": "other-binding",
+        "snapshot_id": target.id,
+        "source_version": target.source.digest,
+        "location": target.symbols["app.py|app.run"].model_dump(),
+        "history": [],
+    }
+    other = initial.components[0].model_dump() | {
+        "id": "other",
+        "binding_ids": ["other-binding"],
+        "claim": initial.components[0].claim.model_dump() | {"binding_ids": ["other-binding"]},
+    }
+    store.apply(
+        initial.revision,
+        {
+            "author": "agent",
+            "summary": "Independent interpretation",
+            "operations": [
+                {"action": "create", "collection": "bindings", "id": "other-binding", "value": other_binding},
+                {"action": "create", "collection": "components", "id": "other", "value": other},
+            ],
+        },
+    )
+    before = store.read().maintenance[0].model_dump()
+    for _ in range(2):
+        record(store, target)
+    assert not query(store.read(), component_id="component")["pending_ids"]
+    assert store.read().maintenance[0].model_dump() == before
+    assert len([item for item in store.read().maintenance if item.binding_id == "binding"]) == 1
+
+
+def test_rebind_recovers_version_only_m1_state(maintained: ModelStore) -> None:
+    store = maintained
+    original = store.read().bindings[0]
+    target = store.read().facts[-1]
+    historical = {
+        "snapshot_id": original.snapshot_id,
+        "source_version": original.source_version,
+        "location": original.location.model_dump(),
+        "reason": "Record previous valid evidence",
+    }
+    store.apply(
+        store.read().revision,
+        {
+            "author": "agent",
+            "summary": "Declare changed source version",
+            "operations": [
+                {
+                    "action": "update",
+                    "collection": "bindings",
+                    "id": original.id,
+                    "value": {
+                        "status": "changed",
+                        "source_version": "b" * 64,
+                        "reason": "Agent observed a new version",
+                        "history": [*[item.model_dump() for item in original.history], historical],
+                    },
+                },
+            ],
+        },
+    )
+    before = store.read().bindings[0]
+    item = record(store, target)["observations"][0]
+    assert item["disposition"] == "indeterminate"
+    intact = store.path.read_bytes()
+    with pytest.raises(ModelError):
+        rebind(store, item["id"], "absent", store.read().revision, "agent", "Invalid selection")
+    assert store.path.read_bytes() == intact
+    with patch("architecture_model.store.os.replace", side_effect=OSError("Injected recovery save failure")):
+        with pytest.raises(ModelError) as failure:
+            rebind(store, item["id"], "app.py|app.run", store.read().revision, "agent", "Discard failed recovery")
+    assert failure.value.code == "SAVE_FAILED" and store.path.read_bytes() == intact
+    rebind(store, item["id"], "app.py|app.run", store.read().revision, "agent", "Restore declared target version")
+    restored = ModelStore(store.path).read().bindings[0]
+    assert restored.id == original.id and restored.status == "current" and restored.snapshot_id == target.id
+    assert restored.source_version == target.source.digest and restored.location == target.symbols["app.py|app.run"]
+    assert restored.history[:-1] == before.history
+    assert restored.history[-1].source_version == "b" * 64
+    assert restored.history[-1].snapshot_id == before.snapshot_id and restored.history[-1].location == before.location
+    assert restored.history[-1].reason == "Restore declared target version"
+    assert item["id"] in query(store.read())["pending_ids"]
+    rebind(store, item["id"], "app.py|app.run", store.read().revision, "agent", "Same target evidence")
+    assert store.read().bindings[0].history == restored.history
+
+
+@pytest.mark.parametrize("confirmed", [False, True])
+def test_cli_new_scenario_review_survives_process_boundaries(
+    maintained: ModelStore, tmp_path: Path, confirmed: bool
+) -> None:
+    store = maintained
+    target = changed(store.read().facts[-1])
+    original = record(store, target)["observations"][0]
+    if confirmed:
+        resolve(store, original["id"], _review(target), store.read().revision)
+    prefix = ("model", "--file", str(store.path))
+    b = _business_b(store)
+    patch_path = write(
+        tmp_path / "new-business.json",
+        {
+            "author": "agent",
+            "summary": "Share existing component",
+            "operations": [
+                {"action": "create", "collection": "scenarios", "id": b["id"], "value": b},
+            ],
+        },
+    )
+    cli(*prefix, "apply", "--patch", str(patch_path), "--expected-revision", str(store.read().revision))
+    assert cli(*prefix, "maintenance", "--scenario", "business-B")["pending_ids"]
+    target_path = write(tmp_path / "target-current.json", target.model_dump())
+    report = cli(*prefix, "maintenance-preview", "--facts", str(target_path))
+    cli(
+        *prefix,
+        "maintenance-refresh",
+        "--facts",
+        str(target_path),
+        "--token",
+        report["token"],
+        "--expected-revision",
+        str(report["revision"]),
+        "--author",
+        "agent",
+    )
+    latest = report["observations"][0]
+    review_path = write(tmp_path / "current-review.json", _review(target))
+    cli(
+        *prefix,
+        "maintenance-resolve",
+        "--item",
+        latest["id"],
+        "--review",
+        str(review_path),
+        "--expected-revision",
+        str(store.read().revision),
+    )
+    persisted = cli(*prefix, "maintenance", "--scenario", "business-B")
+    assert latest["id"] not in persisted["pending_ids"]
+    resolved = next(item for item in persisted["observations"] if item["id"] == latest["id"])
+    assert "business-B" in resolved["resolution"]["object_ids"]
+    if confirmed:
+        old = next(item for item in store.read().maintenance if item.id == original["id"])
+        assert old.resolution is not None and "business-B" not in old.resolution.object_ids
+
+
+def test_historical_confirmation_does_not_close_new_context(maintained: ModelStore) -> None:
+    store = maintained
+    target = changed(store.read().facts[-1])
+    original = record(store, target)["observations"][0]
+    _add_business_b(store)
+    current_id = query(store.read(), scenario_id="business-B")["current_pending_ids"][0]
+    before = store.path.read_bytes()
+    stale_edit = _review(target) | {
+        "outcome": "revised",
+        "operations": [
+            {
+                "action": "update",
+                "collection": "components",
+                "id": "component",
+                "value": {"responsibility": "Patch prepared against an obsolete interpretation scope"},
+            }
+        ],
+    }
+    with pytest.raises(ModelError) as error:
+        resolve(store, original["id"], stale_edit, store.read().revision)
+    assert error.value.code == "REVIEW_INVALID" and store.path.read_bytes() == before
+    resolve(store, original["id"], _review(target), store.read().revision)
+    old = next(item for item in store.read().maintenance if item.id == original["id"])
+    assert old.resolution is not None
+    assert old.resolution.object_versions == original["object_versions"]
+    assert "business-B" not in old.resolution.object_ids
+    assert current_id in query(store.read(), scenario_id="business-B")["current_pending_ids"]
+    resolve(store, current_id, _review(target), store.read().revision)
+    current = next(item for item in store.read().maintenance if item.id == current_id)
+    assert current.resolution is not None and "business-B" in current.resolution.object_versions
+    assert current.object_versions != old.object_versions
+    assert not query(store.read())["pending_ids"]
+
+
+def test_revised_review_covers_result_without_overwriting_earlier_confirmation(maintained: ModelStore) -> None:
+    store = maintained
+    target = changed(store.read().facts[-1])
+    initial = record(store, target)["observations"][0]
+    resolve(store, initial["id"], _review(target), store.read().revision)
+    historical = store.read().maintenance[0].model_dump()
+    original_responsibility = store.read().components[0].responsibility
+    store.apply(
+        store.read().revision,
+        {
+            "author": "agent",
+            "summary": "Change responsibility",
+            "operations": [
+                {
+                    "action": "update",
+                    "collection": "components",
+                    "id": "component",
+                    "value": {"responsibility": "New explanation"},
+                }
+            ],
+        },
+    )
+    current_id = query(store.read())["current_pending_ids"][0]
+    resolve(
+        store,
+        current_id,
+        _review(target)
+        | {
+            "author": "second-agent",
+            "outcome": "revised",
+            "reason": "Restore the previously reviewed responsibility",
+            "operations": [
+                {
+                    "action": "update",
+                    "collection": "components",
+                    "id": "component",
+                    "value": {"responsibility": original_responsibility},
+                }
+            ],
+        },
+        store.read().revision,
+    )
+    assert store.read().maintenance[0].model_dump() == historical
+    assert not query(store.read())["current_pending_ids"]
+    assert not query(store.read())["pending_ids"]
+    revised = next(item for item in store.read().maintenance if item.id == current_id)
+    assert revised.resolution is not None and revised.resolution.author == "second-agent"
+
+
+def test_coverage_preview_conflicts_after_model_evolution(maintained: ModelStore) -> None:
+    store = maintained
+    target = changed(store.read().facts[-1])
+    record(store, target)
+    old = preview(store.read(), target)
+    _add_business_b(store)
+    before = store.path.read_bytes()
+    for revision, code in ((old["revision"], "REVISION_CONFLICT"), (store.read().revision, "PREVIEW_CONFLICT")):
+        with pytest.raises(ModelError) as error:
+            refresh(store, target, revision, old["token"], "agent")
+        assert error.value.code == code and store.path.read_bytes() == before
+
+
+def test_legacy_m2_resolution_is_preserved_without_invented_coverage(maintained: ModelStore) -> None:
+    store = maintained
+    target = changed(store.read().facts[-1])
+    original = record(store, target)["observations"][0]
+    resolve(store, original["id"], _review(target), store.read().revision)
+    legacy = store.read().model_dump()
+    old = legacy["maintenance"][0]
+    old["id"] = "maintenance-" + digest(
+        {"binding": old["binding_id"], "basis": old["basis"], "target": old["target_snapshot_id"]}
+    )
+    old.pop("coverage_version")
+    old.pop("object_versions")
+    old["resolution"].pop("object_versions")
+    store.path.write_text(json.dumps(legacy))
+    before = store.path.read_bytes()
+    view = query(store.read())
+    assert view["current_pending_ids"] and store.path.read_bytes() == before
+    old_id = old["id"]
+    current_id = view["current_pending_ids"][0]
+    record(store, target)
+    historical = next(item for item in store.read().maintenance if item.id == old_id)
+    assert historical.coverage_version == "" and historical.object_versions == {}
+    assert historical.resolution is not None and historical.resolution.author == "business-agent"
+    assert (
+        historical.resolution.object_versions == {}
+        and historical.resolution.object_ids == old["resolution"]["object_ids"]
+    )
+    assert store.read().facts == validate_model(legacy).facts
+    resolve(store, current_id, _review(target), store.read().revision)
+    assert not query(store.read())["current_pending_ids"]
+    assert next(item for item in store.read().maintenance if item.id == old_id) == historical
+
+
+def test_cli_version_only_recovery_is_atomic_and_keeps_review_open(maintained: ModelStore, tmp_path: Path) -> None:
+    store = maintained
+    initial = store.read()
+    binding = initial.bindings[0]
+    history = [item.model_dump() for item in binding.history] + [
+        {
+            "snapshot_id": binding.snapshot_id,
+            "source_version": binding.source_version,
+            "location": binding.location.model_dump(),
+            "reason": "Previous saved evidence",
+        }
+    ]
+    prefix = ("model", "--file", str(store.path))
+    patch_path = write(
+        tmp_path / "version-only.json",
+        {
+            "author": "agent",
+            "summary": "Declare changed version",
+            "operations": [
+                {
+                    "action": "update",
+                    "collection": "bindings",
+                    "id": binding.id,
+                    "value": {
+                        "status": "changed",
+                        "source_version": "c" * 64,
+                        "reason": "Unmatched source version",
+                        "history": history,
+                    },
+                }
+            ],
+        },
+    )
+    cli(*prefix, "apply", "--patch", str(patch_path), "--expected-revision", str(initial.revision))
+    facts_path = write(tmp_path / "known-facts.json", initial.facts[-1].model_dump())
+    report = cli(*prefix, "maintenance-preview", "--facts", str(facts_path))
+    cli(
+        *prefix,
+        "maintenance-refresh",
+        "--facts",
+        str(facts_path),
+        "--token",
+        report["token"],
+        "--expected-revision",
+        str(report["revision"]),
+        "--author",
+        "agent",
+    )
+    item = report["observations"][0]
+    before = store.path.read_bytes()
+    invalid = cli(
+        *prefix,
+        "maintenance-rebind",
+        "--item",
+        item["id"],
+        "--candidate",
+        "not-a-candidate",
+        "--expected-revision",
+        str(store.read().revision),
+        "--author",
+        "agent",
+        "--reason",
+        "Reject invalid location",
+        success=False,
+    )
+    assert invalid["code"] == "CANDIDATE_INVALID" and store.path.read_bytes() == before
+    cli(
+        *prefix,
+        "maintenance-rebind",
+        "--item",
+        item["id"],
+        "--candidate",
+        "app.py|app.run",
+        "--expected-revision",
+        str(store.read().revision),
+        "--author",
+        "agent",
+        "--reason",
+        "Restore known evidence",
+    )
+    cli(*prefix, "validate")
+    restored = cli(*prefix, "read")["model"]["bindings"][0]
+    assert restored["id"] == binding.id and restored["status"] == "current"
+    assert restored["history"][:-1] == history and restored["history"][-1]["source_version"] == "c" * 64
+    assert restored["history"][-1]["reason"] == "Restore known evidence"
+    assert item["id"] in cli(*prefix, "maintenance", "--binding", binding.id)["pending_ids"]
+
+
+def test_deleted_binding_keeps_historical_review_readable(maintained: ModelStore) -> None:
+    store = maintained
+    target = changed(store.read().facts[-1])
+    item = record(store, target)["observations"][0]
+    store.apply(
+        store.read().revision,
+        {
+            "author": "agent",
+            "summary": "Explicitly remove continuing interpretation",
+            "operations": [
+                {"action": "delete", "collection": "scenarios", "id": "scenario"},
+                {"action": "delete", "collection": "components", "id": "component"},
+                {"action": "delete", "collection": "bindings", "id": "binding"},
+            ],
+        },
+    )
+    assert item["id"] in query(store.read())["pending_ids"]
+    assert query(store.read())["current_coverage_ids"] == []
+    before = store.path.read_bytes()
+    with pytest.raises(ModelError) as error:
+        resolve(
+            store,
+            item["id"],
+            _review(target)
+            | {
+                "operations": [
+                    {
+                        "action": "update",
+                        "collection": "components",
+                        "id": "component",
+                        "value": {"name": "Deleted"},
+                    }
+                ]
+            },
+            store.read().revision,
+        )
+    assert error.value.code == "REVIEW_INVALID" and store.path.read_bytes() == before
+    resolve(store, item["id"], _review(target), store.read().revision)
+    historical = store.read().maintenance[0]
+    assert historical.resolution is not None and historical.resolution.object_versions == item["object_versions"]
+
+
+def _review(target: Facts) -> dict:
+    return {
+        "author": "business-agent",
+        "reason": "Inspected target and the listed interpretation state",
+        "outcome": "confirmed",
+        "source_version": target.source.digest,
+    }
+
+
+def _business_b(store: ModelStore) -> dict:
+    value = store.read().scenarios[0].model_dump()
+    value.update(id="business-B", name="New shared business", entry_step_id="step-B", order=["step-B"])
+    value["steps"][0]["id"] = "step-B"
+    return value
+
+
+def _add_business_b(store: ModelStore) -> None:
+    value = _business_b(store)
+    store.apply(
+        store.read().revision,
+        {
+            "author": "agent",
+            "summary": "Add shared scenario B",
+            "operations": [
+                {"action": "create", "collection": "scenarios", "id": value["id"], "value": value},
+            ],
+        },
+    )

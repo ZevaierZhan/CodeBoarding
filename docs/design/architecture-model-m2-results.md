@@ -1,5 +1,8 @@
 # M2 source maintenance validation — 2026-11-04 (Asia/Shanghai)
 
+Historical initial M2 evidence. The current P2 fixes, coverage rules and final
+validation are recorded in [M2 P2 results](architecture-model-m2-p2-results.md).
+
 Draft PR [#3](https://github.com/ZevaierZhan/CodeBoarding/pull/3) targets fork
 `main` from `m2/source-maintenance`. PR #2 was already merged at
 `d265acc51968cfcdbfc827a394dba522e6c56512`, including reviewed M1

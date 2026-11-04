@@ -207,6 +207,7 @@ class MaintenanceResolution(Strict):
     source_version: Digest
     timestamp: Text
     object_ids: list[Text]
+    object_versions: dict[Text, Digest] = Field(default_factory=dict)
 
 
 class Maintenance(Strict):
@@ -225,6 +226,8 @@ class Maintenance(Strict):
     step_ids: list[Text]
     call_changes: dict[Literal["before", "after"], list[Call]]
     resolution: MaintenanceResolution | None = None
+    coverage_version: Literal["", "objects-v1"] = ""
+    object_versions: dict[Text, Digest] = Field(default_factory=dict)
 
 
 class Model(Strict):

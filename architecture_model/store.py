@@ -9,8 +9,11 @@ from collections.abc import Callable
 from filelock import FileLock, Timeout
 
 from architecture_model.errors import ModelError
+from architecture_model.maintenance_coverage import maintained_observations
 from architecture_model.schema import Maintenance, Model, Patch, Project, Revision
 from architecture_model.validation import COLLECTIONS, parse, validate_model
+
+BINDING_EVIDENCE_FIELDS = ("snapshot_id", "source_version", "location")
 
 
 def load_json(path: Path) -> object:
@@ -109,6 +112,13 @@ def model_diff(before: Model, after: Model) -> dict:
 
 
 def candidate(current: Model, patch_value: object, maintenance: list[Maintenance] | None = None) -> tuple[Model, dict]:
+    proposed, patch = patched_model(current, patch_value, maintenance)
+    return revision_candidate(current, proposed, patch.author, patch.summary)
+
+
+def patched_model(
+    current: Model, patch_value: object, maintenance: list[Maintenance] | None = None
+) -> tuple[Model, Patch]:
     patch = parse(Patch, patch_value)
     value = current.model_dump()
     if maintenance is not None:
@@ -138,10 +148,11 @@ def candidate(current: Model, patch_value: object, maintenance: list[Maintenance
                 if operation.value:
                     raise ModelError("SCHEMA_INVALID", location, "Delete value must be empty")
                 items.remove(existing)
-    return revision_candidate(current, validate_model(value), patch.author, patch.summary)
+    return validate_model(value), patch
 
 
 def revision_candidate(current: Model, proposed: Model, author: str, summary: str) -> tuple[Model, dict]:
+    proposed.maintenance = maintained_observations(proposed, model_diff)
     previous_bindings = {binding.id: binding.model_dump() for binding in current.bindings}
     for binding in proposed.bindings:
         if binding.id in previous_bindings:
@@ -221,6 +232,7 @@ class ModelStore:
 
     def read_scope(self, component_id: str = "", scenario_id: str = "") -> dict:
         model = self.read()
+        model.maintenance = maintained_observations(model, model_diff)
         value = model.model_dump()
         scope = {"component_id": component_id, "scenario_id": scenario_id}
         if not (component_id or scenario_id):
@@ -253,8 +265,8 @@ def _unique_keys(pairs: list[tuple[str, object]]) -> dict:
 def _preserve_binding_history(old: dict, update: dict, location: str) -> None:
     if update.get("history", old["history"])[: len(old["history"])] != old["history"]:
         raise ModelError("HISTORY_REQUIRED", location, "Binding history is append-only")
-    if any(key in update and update[key] != old[key] for key in ("snapshot_id", "source_version", "location")):
+    if any(key in update and update[key] != old[key] for key in BINDING_EVIDENCE_FIELDS):
         history = update.get("history", [])
-        previous = {key: old[key] for key in ("snapshot_id", "source_version", "location")}
+        previous = {key: old[key] for key in BINDING_EVIDENCE_FIELDS}
         if not any(all(entry.get(key) == item for key, item in previous.items()) for entry in history):
             raise ModelError("HISTORY_REQUIRED", location, "Rebinding requires the previous version and location")

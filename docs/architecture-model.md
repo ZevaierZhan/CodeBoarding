@@ -327,6 +327,10 @@ uv run codeboarding-model model --file model.json maintenance-rebind \
 
 This chooses exactly a candidate saved in the observation, imports no new facts,
 preserves binding ID and appends its previous location/version/reason to M1 history.
+The append decision and history validator use the same snapshot ID, source version
+and location fields. A non-current M1 binding with only a different source version
+can therefore recover to a valid saved candidate; its unmatched version is retained
+in history. Repeating an exactly equal evidence triple adds no history entry.
 It does **not** close review or rewrite explanations. Selection from an older
 observation explicitly selects that historical target; the engine does not replace
 it with the latest target. A same-evidence selection is a no-op with one revision.
@@ -362,10 +366,65 @@ Only the named observation closes. Other target-version reviews remain pending.
 S0→S1→S2 therefore retains unresolved S1 changes even if S2 changes only an
 unrelated file or reverts the source. Bindings still citing an older baseline may
 have another observation for S2; Agent review is deliberately version-specific.
-Repeating an identical binding-basis/target pair reuses the saved observation,
-including a completed resolution. It never resets it or duplicates facts. Every
+Repeating an identical binding-basis/target and interpretation-coverage state reuses
+the saved observation, including a completed resolution. It never resets it or duplicates facts. Every
 successful refresh, including a no-op, consumes exactly one revision like M1 apply.
 General patches cannot edit/delete maintenance observations.
+
+### Interpretation coverage after model edits
+
+Source comparison and interpretation review have different identities. The source
+comparison key remains binding ID, original snapshot/version/location and target
+snapshot. Its disposition, reasons, candidates and static call evidence can be
+reused because the fact catalogs are immutable. They do not freeze model impact.
+
+Each observation now captures `coverage_version: "objects-v1"` and
+`object_versions`, a map from affected component/relation/scenario/step IDs to
+SHA-256 of their complete serialized definitions. Observation identity also
+includes that map. This is a conservative **whole affected set** rule: adding B
+to a shared binding/component, or changing related explanation text, boundaries,
+membership, steps or transitions, creates a new review context for the affected
+set. It does not transfer A's previous confirmation to B. Unchanged A may appear
+again in the new A/B context; this is deliberate conservative review scope, not
+a claim that A's earlier review never happened. Unrelated definitions, opinions,
+verification records and global model revision are excluded from the fingerprint.
+
+Ordinary `model apply`, `validate --patch` and `diff` derive the same new contexts
+through the shared candidate builder. Apply persists them in the same revision
+and transaction as the explanation change, with no source export or provider
+call. Read-only previews/queries derive the current view too. A related edit is
+visible immediately, before another refresh. A no-op, unrelated edit or repeated
+refresh does not reopen an identical already reviewed context. Reverting to an
+exact previously reviewed context may reuse its existing confirmation, preserving
+its original author and reason.
+
+Old observations and their resolutions remain intact. `maintenance` returns:
+
+- `observations`: matching historical and current contexts.
+- `current_coverage_ids`: contexts matching the current definitions for each
+  known source comparison, restricted to this query's scope. This does not mean
+  their source target is the latest exported version.
+- `current_pending_ids`: unresolved changed/ambiguous/missing/indeterminate
+  contexts within `current_coverage_ids`.
+- `pending_ids`: **all** unresolved contexts, including historical interpretation
+  states and older source targets. A newer context never erases these.
+
+Resolutions save their exact `object_ids` and `object_versions`, author, reason,
+timestamp and target source version. Confirming a historical observation closes
+only that saved scope; it cannot confirm current B or changed definitions. Patches
+within resolve require the selected context to match current definitions, or
+return `REVIEW_INVALID` without writing. A valid revised patch records handling
+of the selected old state and review of its resulting state in separate contexts
+within one transaction. It never overwrites an earlier confirmation of a reused
+resulting state. Other source-version/context reviews remain explicit.
+
+Pre-fix M2 files lack coverage fingerprints. They read with `coverage_version: ""`
+and empty `object_versions`; the old covered IDs, author, reason and target remain
+historical, but the reader cannot infer which explanation contents were reviewed.
+Current views therefore derive one unreviewed `objects-v1` context. The next
+successful write persists it. Historical fields are never backfilled to pretend
+they covered current definitions; identical subsequent reads/refreshes reuse the
+new context. Fact catalogs and their IDs are untouched.
 
 ### M1 compatibility and errors
 

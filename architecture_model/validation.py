@@ -133,6 +133,18 @@ def validate_model(value: object) -> Model:
             item.resolution.source_version != item.target_source_version or item.disposition == "unchanged"
         ):
             raise ModelError("MAINTENANCE_INVALID", location, "Resolution must address a changed target version")
+        if item.coverage_version:
+            covered = set(item.component_ids + item.relation_ids + item.scenario_ids + item.step_ids)
+            if set(item.object_versions) != covered:
+                raise ModelError(
+                    "MAINTENANCE_INVALID", location, "Coverage must fingerprint every affected interpretation"
+                )
+            if item.resolution and (
+                set(item.resolution.object_ids) != covered or item.resolution.object_versions != item.object_versions
+            ):
+                raise ModelError(
+                    "MAINTENANCE_INVALID", location, "Resolution must retain the reviewed interpretation state"
+                )
     if [revision.revision for revision in model.revisions] != list(range(model.revision + 1)):
         raise ModelError("REVISION_INVALID", "/revisions", "Revision history must run from zero to current revision")
     return model
