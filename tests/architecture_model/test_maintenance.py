@@ -24,6 +24,58 @@ SCOPE = json.dumps(
 )
 
 
+@pytest.mark.parametrize("surface", ["read", "maintenance"])
+def test_legacy_derived_id_can_be_referenced_by_ordinary_patch(store: ModelStore, surface: str) -> None:
+    record(store, changed(store.read().facts[0]))
+    legacy = store.read().model_dump()
+    for item in legacy["maintenance"]:
+        item["id"] = "maintenance-" + digest(
+            {"binding": item["binding_id"], "basis": item["basis"], "target": item["target_snapshot_id"]}
+        )
+        item.pop("coverage_version")
+        item.pop("object_versions")
+    store.path.write_text(json.dumps(legacy), encoding="utf-8")
+    before = store.path.read_bytes()
+    prefix = ("model", "--file", str(store.path))
+    response = cli(*prefix, surface)
+    observations = response["model"]["maintenance"] if surface == "read" else response["observations"]
+    identity = next(item["id"] for item in observations if item["coverage_version"] == "objects-v1")
+    assert store.path.read_bytes() == before
+    revision = legacy["revision"]
+    patch = {
+        "author": "agent",
+        "summary": "Comment on visible review",
+        "operations": [
+            {
+                "action": "create",
+                "collection": "opinions",
+                "id": "feedback",
+                "value": {"author": "user", "text": "Please inspect", "stance": "question", "object_ids": [identity]},
+            }
+        ],
+    }
+    patch_path = write(store.path.parent / "opinion.json", patch)
+    assert (
+        cli(*prefix, "apply", "--patch", str(patch_path), "--expected-revision", str(revision - 1), success=False)[
+            "code"
+        ]
+        == "REVISION_CONFLICT"
+    )
+    assert store.path.read_bytes() == before
+    invalid = deepcopy(patch)
+    invalid["operations"][0]["value"]["object_ids"].append("absent")
+    with pytest.raises(ModelError) as failure:
+        store.apply(revision, invalid)
+    assert failure.value.code == "DANGLING_REFERENCE"
+    assert store.path.read_bytes() == before
+    cli(*prefix, "apply", "--patch", str(patch_path), "--expected-revision", str(revision))
+    saved = cli(*prefix, "read")["model"]
+    assert saved["revision"] == revision + 1
+    assert saved["opinions"][0]["object_ids"] == [identity]
+    assert saved["maintenance"][: len(legacy["maintenance"])] == validate_model(legacy).model_dump()["maintenance"]
+    assert saved["facts"] == legacy["facts"]
+
+
 def snapshot(value: dict) -> Facts:
     value = deepcopy(value)
     value["source"]["digest"] = digest(value["source"]["files"])
