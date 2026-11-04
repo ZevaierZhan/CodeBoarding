@@ -49,7 +49,7 @@
 | 路径/变化 | 代码证实的行为 | 实验范围与应对 |
 |---|---|---|
 | full | run_full/generate_analysis 重建全树、重新 draft TreeSpec、语义回填并保存，旧未知字段不被保留 | 不执行内部 LLM full；根据源码结论，不能拿 full 作为解释维护机制 |
-| incremental | static warm start + persisted TreeSpec 重放 + 受影响 scope 语义更新；未变组继承既有字段，重建 file_methods/关系；引擎版本冲突 CLI 可按约定恢复 full | 实验只调用静态 warm start 与聚类/成员重放，完整语义增量未执行；新增解释文件不得由此覆盖 |
+| incremental | static warm start + TreeSpec 重放（生产路径读取持久化 spec；P0 实验仅复用内存 service.spec） + 受影响 scope 语义更新；未变组继承既有字段，重建 file_methods/关系；引擎版本冲突 CLI 可按约定恢复 full | 实验只调用静态 warm start 与聚类/成员重放，完整语义增量未执行；新增解释文件不得由此覆盖 |
 | partial | 针对 component_id 展开 subtree，保存既有其余 subtree，准备受限结构/语义 | 完整语义 partial 未执行；不是结构编辑接口，也不是扫描全仓更新 |
 | 函数体修改 | method key 为 `<file_path>|<qualified_name>`；content_hash 变化可判别，分组重放可保留 ID | P0 实测体编辑；描述保留不证明仍正确；实验保留了“乘十”的旧描述，正好说明必须标记复核 |
 | 行增减 | key 不含行，位置与 hash 可更新；原生 source reference 修复需重新 resolver | 本轮未跑行移动实验；不可称持久化行号稳定 |
@@ -79,8 +79,7 @@ Invoke-WebRequest 'https://github.com/CodeBoarding/tools/releases/download/tools
 # 7db547cb6bfa1722e89ca52a43426fb212aa53603a60256af25fb6e59ca12099
 Get-FileHash temp/p0-tools/tokei.exe -Algorithm SHA256
 $env:PATH = (Resolve-Path temp/p0-tools).Path + ';' + $env:PATH
-$env:CODEBOARDING_TELEMETRY = 'false'
-$env:DO_NOT_TRACK = '1'
+# experiment.py 在导入原生模块前自行关闭遥测；无需从父进程继承这两个变量。
 uv run python docs/design/external-agent-p0/experiment.py --output temp/p0-results --pyright-js temp/p0-tools/node_modules/pyright/langserver.index.js
 uv run codeboarding-render temp/p0-results/native/analysis.json --format html --output-dir temp/p0-results/html
 ```
@@ -89,6 +88,39 @@ Linux/macOS 使用同 release 的 `tokei-linux`/`tokei-macos`，校验 registry.
 
 预期检查：fixture 三条调用及位置；ScopeAnalysisResult 与 UnifiedAnalysisJson schema；save/reload 成员和 ID；resolved key_entities；内部调用 guard 零次；成员移动可保存但被 native replay 恢复；体编辑改变 content_hash。结果文件和 HTML 需要分别检查，不能只看 schema。
 
-LLM 排除证据：脚本不读 user provider 配置或进入 bootstrap；profile 在主线程及新 Python 线程对配置/校验/初始化、ScopeAnalysisAgent.analyze 和 LangChain 调用入口抛错；socket.connect 也抛错，telemetry 关闭。LSP 是 stdio 子进程；该 guard 不能证明任意第三方子进程绝不访问网络，声明范围限于本脚本路径和固定 Pyright。外部语义是实施 Agent 根据八个源码文件编写的固定样例，验证写入链路，不证明业务分析自动化。
+LLM 排除证据：脚本不读 user provider 配置或进入 bootstrap；profile 在主线程及新 Python 线程对配置/校验/初始化、ScopeAnalysisAgent.analyze 和 LangChain 调用入口抛错；不可卸载的 Python audit hook 拦截 socket.connect/getaddrinfo/sendto，覆盖主线程、新线程和退出回调；telemetry 在原生导入前关闭并断言 client 为空。LSP 是 stdio 子进程；该 guard 不能证明任意第三方子进程绝不访问网络，声明范围限于本脚本路径和固定 Pyright。外部语义是实施 Agent 根据八个源码文件编写的固定样例，验证写入链路，不证明业务分析自动化。
 
-实验 A/B 与检查的实际运行结果将在同目录 `results.md` 中记录，机器摘要见 `results.json`。完整增量 LLM 流程、真实业务执行、官网/VS Code 运行操作、文件移动/重命名/删除/完整重建尚未验证。
+实验 A/B 与检查的实际运行结果在同目录 `results.md` 中记录，机器摘要见 `results.json`。完整增量 LLM 流程、真实业务执行、官网/VS Code 运行操作、文件移动/重命名/删除/完整重建尚未验证。
+
+
+## P2 审阅整改复现（2026-11-04，17:08 起）
+
+本轮机器产物、快照和截图已替换为本轮真实输出；上一轮调查与工程检查在 results.md 的历史章节保留。执行前 `.env` 不存在，未建立 provider 配置。生产源码、锁文件、fixture 保持不变，没有新增依赖。
+
+在上述已准备好的环境中，从仓库根运行（每轮使用新的输出目录）：
+
+```powershell
+$env:PATH = (Resolve-Path temp/p0-tools).Path + ';' + $env:PATH
+Remove-Item Env:CODEBOARDING_TELEMETRY -ErrorAction SilentlyContinue
+Remove-Item Env:DO_NOT_TRACK -ErrorAction SilentlyContinue
+uv run python docs/design/external-agent-p0/experiment.py --output temp/p2-final --pyright-js temp/p0-tools/node_modules/pyright/langserver.index.js
+# 期望 0；results.json: status PASS, telemetry_client_absent true, guard_attempts []
+uv run python docs/design/external-agent-p0/check-guard-negatives.py temp/p2-final temp/p0-tools/node_modules/pyright/langserver.index.js
+# 期望 0：旧实验完整链路中注入并吞掉一次连接异常仍退出 0；新版 caught/thread/exit 探针均退出 1。
+$env:P0_PLAYWRIGHT_MODULE = 'C:\Users\BW011222\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\node_modules\playwright'
+$env:P0_BROWSER_CHANNEL = 'msedge'
+node docs/design/external-agent-p0/check-render-negatives.cjs temp/p2-final
+# 期望 0：两类故障页面旧检查器退出 0、新检查器退出 1；最后正常页面退出 0。
+node docs/design/external-agent-p0/check-render.cjs temp/p2-final
+# 单独检查正常页面，期望 0。
+```
+
+Playwright 路径是本次复用的桌面运行时；其他机器可按前文安装 Playwright 1.62.1 后将变量设为对应模块绝对路径。两个负例程序从本地 Git 中读取固定审阅基线，不需要在线访问 GitHub。原始日志和临时浏览器 HTML 均在 ignored temp。
+
+`p0_guard.py` 在标准库导入后、jsonschema/CodeBoarding 导入前设置原生 service.py 真正识别的两个开关，并安装保护；分析前断言原生 singleton 的 `_client is None`，没有可发送/flush 的客户端。不会通过 flush 发送积压事件。原生 StaticAnalyzer context manager 先关闭固定 Pyright stdio 服务器，再退出实验临时目录；main 的 finally 对新增 Python 线程进行最多十秒的合并，未结束则失败。进程退出时最后运行的实验 atexit 回调再次检查线程与累计 attempts，才写最终状态并打印 PASS/FAIL；失败使用非零退出，防止 atexit 异常不影响退出码。保护从不解除。RUNNING 会先覆盖旧结果，未完成核心断言只能得到 FAIL。
+
+profile 覆盖主线程及新建 Python 线程的指定 LLM 配置/调用入口；audit hook 覆盖整个解释器中使用 CPython socket API 的连接、域名解析和 sendto，包括线程和退出回调。它不是 OS 防火墙，也不证明原生扩展直接系统调用或任意第三方子进程无法联网。实际外部工具边界仍限于 pinned Tokei 14.0.0、Node 24.20.0 和 Pyright 1.1.400 stdio 路径。故障注入地址为保留文档地址，调用在 OS connect 之前被截获；没有访问 PostHog 或 provider。
+
+浏览器在导航前监听 pageerror、console error 和脚本加载失败，等待真实 Cytoscape core ready。只读探针读取原生库在 `#cy._cyreg.cy` 注册的实例，核对非 headless、有效可见绘制表面、每个节点/边的可见性与渲染边界、四个节点和 1→2、2→3、2→4 三条关系。该内部注册点属于固定 Cytoscape 3.23.0 的验证适配；库升级需要复核。canvas 仅用于确认有实际绘制表面，不以数量验收。检查一直覆盖到截图及隔离 context 关闭，随后统一判定页面异常。没有修改 renderer 或构造替代图。
+
+实验 B 的重放参数仍是同进程内 `service.spec`，不能称已从磁盘重新加载 TreeSpec 后跨进程恢复；该验收留给 M1。保存/重读 analysis.json 已验证，与跨进程 spec 恢复是不同证据。

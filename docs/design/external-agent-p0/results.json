@@ -119,6 +119,7 @@
     }
   },
   "guard_attempts": [],
+  "telemetry_client_absent": true,
   "environment": {
     "codeboarding": "0.15.3",
     "pydantic": "2.12.5",
@@ -128,5 +129,14 @@
     "networkx": "3.4.2"
   },
   "python": "3.12.13",
-  "fixture_hash": "f89db7e0ca7ffbf7268fcbde329b353011204c976cc1e28ef0d3aa1091bc45d0"
+  "fixture_hash": "f89db7e0ca7ffbf7268fcbde329b353011204c976cc1e28ef0d3aa1091bc45d0",
+  "started_at": "2026-11-04T09:13:26.671629+00:00",
+  "platform": "win32",
+  "probe_source_sha256": {
+    "experiment.py": "cfe0c527c7589427ce5f0b6cea061b9fd3298a705aa6e187e22b9a082345a527",
+    "p0_guard.py": "856dc6377b48df04584c3a3224363a626fa3e88fed8a751af69bfa4eac9298a1",
+    "check-render.cjs": "80770293661738a85d863d626d8843b97e5b64b1ee1d3f0cd8bd83f39ca8a4a6"
+  },
+  "status": "PASS",
+  "unfinished_threads": []
 }

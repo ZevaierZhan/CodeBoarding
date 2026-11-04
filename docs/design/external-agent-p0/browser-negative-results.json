@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "name": "missing_library",
+      "test_status": "PASS",
+      "old_checker_exit": 0,
+      "checker_exit": 1,
+      "report": {
+        "status": "FAIL",
+        "page_errors": [],
+        "console_errors": [
+          "Cytoscape is not loaded"
+        ],
+        "failed_dependencies": [],
+        "component_details": 4,
+        "source_reference_texts": 8,
+        "clickable_source_links": 0,
+        "error": "TimeoutError: page.waitForFunction: Timeout 15000ms exceeded."
+      }
+    },
+    {
+      "name": "initialization_exception",
+      "test_status": "PASS",
+      "old_checker_exit": 0,
+      "checker_exit": 1,
+      "report": {
+        "status": "FAIL",
+        "page_errors": [],
+        "console_errors": [
+          "Error initializing Cytoscape: Error: P0 injected initialization failure\n    at HTMLDocument.<anonymous> (file:///F:/CodeBoarding/temp/p2-render-negatives-tq596V/initialization_exception/html/overview.html:249:23)"
+        ],
+        "failed_dependencies": [],
+        "component_details": 4,
+        "source_reference_texts": 8,
+        "clickable_source_links": 0,
+        "error": "TimeoutError: page.waitForFunction: Timeout 15000ms exceeded."
+      }
+    }
+  ],
+  "normal_checker_exit": 0
+}

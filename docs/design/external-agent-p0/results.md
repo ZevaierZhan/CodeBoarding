@@ -1,4 +1,45 @@
-# P0 实验记录：2026-11-04
+# P2 整改实测：2026-11-04（Asia/Shanghai）
+
+两项整改均已完成并重跑真实链路。下列为本轮证据；后面的“历史 P0”章节保留首次交付的调查与运行记录，其工程检查数值不代表本轮。当前 results.json、facts、semantics、snapshots、browser-results.json 和 renderer.png 均来自 `temp/p2-final-verified` 新执行，未沿用历史成功产物。
+
+执行起点为 `a57e2e773a7e79971e202ca2fafe903e5347c399`，工作区初始干净；本轮执行时包含未提交的 P2 脚本改动。results.json 记录 UTC 启动时间 `2026-11-04T09:13:26.671629+00:00`（本地 17:13:26）及三个执行脚本的实际字节 SHA-256。最终提交在 PR head 中；不以执行起点 SHA 冒充已提交的新代码版本。Git fetch 连接重置，通过 GitHub PR API 和 gh ref 读取确认远端仍为该基线。
+
+环境：Windows 11 Pro x64 10.0.26100；Python 3.12.13；Node 24.20.0；Pyright 1.1.400；Tokei 14.0.0（既有 tools-2026.04.05 二进制）；Playwright 1.62.1；Edge 156.0.4314.58。PostHog SDK 7.18.0；其他关键 Python 依赖见 results.json.environment。固定浏览器图依赖仍为 dagre 0.8.5、Cytoscape 3.23.0、cytoscape-dagre 2.4.0。未安装或升级依赖。
+
+| 本轮验证 | 实际退出码与结果 |
+|---|---|
+| 未继承遥测关闭变量，直接执行 experiment.py | 0；PASS，telemetry_client_absent=true，guard_attempts=[]，unfinished_threads=[] |
+| 真实引擎、语义、持久化与 renderer | 0；8 callable、3 调用边、4 组件、有限语义保存/重读；原子替换失败保持原文件 |
+| 原生刷新结论 | 原始内容 hash 与体编辑后的 hash 不同；成员从 4 移到 1 可保存，内存 service.spec 重放后恢复至 4；ID 和旧描述保留，独立 scenarios/rationale 仍丢失 |
+| guard 对照程序 check-guard-negatives.py | 0（测试通过）；完整旧实验注入并吞掉一次 socket.connect 异常，旧退出码 0、A/B PASS、日志仍称 passed；记录含该调用。新版 caught/thread/exit 三个受控探针均退出 1，结果 FAIL、各有一次 socket.connect、无成功日志 |
+| 图形库缺失对照 | 测试通过；原生 HTML 临时副本移除 Cytoscape script，4 详情和 8 位置仍在；旧检查器 0，新检查器 1，报告 FAIL |
+| 初始化异常对照 | 测试通过；原生初始化位置抛错（原生 catch 记录 console.error）；旧检查器 0，新检查器 1，报告 FAIL |
+| 最后正常页面检查 | 0；真实可见四节点、三条预期边；4 详情/8 源码位置/0 源码链接；page_errors、console_errors、failed_dependencies 均为空；截图已实际查看 |
+
+负例驱动程序成功与被测检查器失败分别记录在 [guard-negative-results.json](guard-negative-results.json)、[browser-negative-results.json](browser-negative-results.json)。实际命令见 [README 整改复现](README.md#p2-审阅整改复现2026-11-041708-起)。测试中的 telemetry_client_absent=false 表示 standalone guard 探针根本没有导入原生 telemetry；真实正例字段为 true。没有真实外发，故障在 socket 调用进入 OS 前终止。
+
+根因 A：原生 telemetry singleton 在 import 时初始化，run 内关闭太晚；吞掉 guard 异常后，原脚本没有最终累计失败判定。修复为原生导入前 opt-out + client 空值断言 + 进程生命周期保护和最终统一判定。具体覆盖与线程/退出收尾边界见 README。根因 B：旧检查只以静态详情为通过条件。修复为观察真实原生图实例和渲染边界，并拒绝脚本错误、缺失依赖及图初始化失败。
+
+本轮未实现跨进程 TreeSpec 恢复、解释正确性自动复核、业务执行验证或 M1 产品功能。源码跳转仍为 0 个链接，CDN 依赖仍需联网加载。Python guard 的结果不扩称为任意第三方子进程的网络隔离证明。
+
+## 本轮工程门禁
+
+命令及机器摘要见 [engineering-results.json](engineering-results.json)，完整原始日志保留在 ignored temp。
+
+| 本轮命令 | 实际结果 |
+|---|---|
+| `uv run black . --check` | 0，通过 |
+| `uv run mypy .` | 1；检查 332 源文件，仅 `static_analyzer/workspace_dependencies.py:78` 的 Windows signal.SIGKILL attr-defined 错误 |
+| README 中四个聚焦测试文件的 pytest 命令 | 1；63 passed、2 failed，4.97s；两个 ScopeAssembler 相对路径断言失败 |
+| 固定生产基线重新执行 ScopeAssembler 测试 | 1；20 passed、相同 2 failed，3.55s；从 temp/p0-baseline 根目录、激活同一 venv 后执行 `python -m pytest tests/diagram_analysis/test_scope_assembly.py -q` |
+| 固定生产基线重新执行 `python -m mypy .` | 1；329 源文件，同一 SIGKILL 错误；相关两个生产文件与当前树逐文件 diff 相同 |
+| `uv run pytest --cov=. --cov-report=term --cov-fail-under=80` | 实际退出 -1（主动终止测试进程）；collected 2699，在 test_edge_builder.py 附近约 67% 连续超过五分钟无进展后停止；已出现多处失败，没有最终覆盖率报告，80% 门槛未确认 |
+
+只有两个聚焦失败与类型错误完成了本轮基线归因；全仓其他失败尚未逐项归因。private CodeBoarding-tests 集成套件未执行。提交时运行原有 pre-commit Black hook，不降低任何工程门禁。
+
+---
+
+# 历史 P0 实验记录：2026-11-04，首次交付
 
 输入：核心 `156806c0eedcfded65eb8d02c39b3cf618a8254b`，仓库 uv.lock；本目录八文件 fixture。规范化源码 hash `f89db7e0ca7ffbf7268fcbde329b353011204c976cc1e28ef0d3aa1091bc45d0`（使用原生 compute_source_tree_hash）。Python 3.12.13、Node 24.20.0、Pyright 1.1.400、Tokei tools-2026.04.05，Windows 11 x64。关键 Python 依赖见 [results.json](results.json)。执行命令见 [README](README.md#复现)。
 
