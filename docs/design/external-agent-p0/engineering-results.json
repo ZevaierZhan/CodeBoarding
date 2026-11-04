@@ -39,7 +39,7 @@
     "command": "uv run pytest --cov=. --cov-report=term --cov-fail-under=80",
     "exit_code": -1,
     "collected": 2699,
-    "result": "Stopped after >5 minutes without progress near test_edge_builder.py at about 67%; failures observed; no final coverage report",
+    "result": "Stopped after about 4 minutes 40 seconds without new output near test_edge_builder.py at about 67%; failures observed; no final coverage report",
     "coverage_threshold_confirmed": false,
     "other_failures": "Not individually attributed"
   },

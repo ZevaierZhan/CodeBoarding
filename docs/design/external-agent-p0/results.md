@@ -33,7 +33,7 @@
 | README 中四个聚焦测试文件的 pytest 命令 | 1；63 passed、2 failed，4.97s；两个 ScopeAssembler 相对路径断言失败 |
 | 固定生产基线重新执行 ScopeAssembler 测试 | 1；20 passed、相同 2 failed，3.55s；从 temp/p0-baseline 根目录、激活同一 venv 后执行 `python -m pytest tests/diagram_analysis/test_scope_assembly.py -q` |
 | 固定生产基线重新执行 `python -m mypy .` | 1；329 源文件，同一 SIGKILL 错误；相关两个生产文件与当前树逐文件 diff 相同 |
-| `uv run pytest --cov=. --cov-report=term --cov-fail-under=80` | 实际退出 -1（主动终止测试进程）；collected 2699，在 test_edge_builder.py 附近约 67% 连续超过五分钟无进展后停止；已出现多处失败，没有最终覆盖率报告，80% 门槛未确认 |
+| `uv run pytest --cov=. --cov-report=term --cov-fail-under=80` | 实际退出 -1（主动终止测试进程）；collected 2699，在 test_edge_builder.py 附近约 67% 连续约四分四十秒无新输出后停止；已出现多处失败，没有最终覆盖率报告，80% 门槛未确认 |
 
 只有两个聚焦失败与类型错误完成了本轮基线归因；全仓其他失败尚未逐项归因。private CodeBoarding-tests 集成套件未执行。提交时运行原有 pre-commit Black hook，不降低任何工程门禁。
 
