@@ -1,0 +1,105 @@
+{
+  "description": "Static explanation of the order fixture. This is not an execution trace.",
+  "components": [
+    {
+      "group_id": "1",
+      "name": "Order responsibility 1",
+      "description": "Validate positive quantity and enter the order flow. Present an accepted identifier; not called by submit_order. P0 grouping rationale: responsibilities are inferred from the inspected fixture, not author intent.",
+      "key_entities": [
+        {
+          "qualified_name": "delivery.request.submit_order",
+          "reference_file": "delivery/request.py"
+        },
+        {
+          "qualified_name": "delivery.status.present_status",
+          "reference_file": "delivery/status.py"
+        }
+      ],
+      "rationale": "P0_INDEPENDENT_RATIONALE",
+      "members": [
+        "policies/pricing.py"
+      ],
+      "parent_id": "external-parent"
+    },
+    {
+      "group_id": "2",
+      "name": "Order responsibility 2",
+      "description": "Format cancellation; not part of the submit flow. Compute a total, then ask the store to return an order identifier. P0 grouping rationale: responsibilities are inferred from the inspected fixture, not author intent.",
+      "key_entities": [
+        {
+          "qualified_name": "orchestration.cancel.cancel_order",
+          "reference_file": "orchestration/cancel.py"
+        },
+        {
+          "qualified_name": "orchestration.order.place_order",
+          "reference_file": "orchestration/order.py"
+        }
+      ],
+      "rationale": "P0_INDEPENDENT_RATIONALE",
+      "members": [
+        "policies/pricing.py"
+      ],
+      "parent_id": "external-parent"
+    },
+    {
+      "group_id": "3",
+      "name": "Order responsibility 3",
+      "description": "Format a receipt; no storage side effect. Format an order identifier; this fixture does not persist to a database. P0 grouping rationale: responsibilities are inferred from the inspected fixture, not author intent.",
+      "key_entities": [
+        {
+          "qualified_name": "persistence.receipt.format_receipt",
+          "reference_file": "persistence/receipt.py"
+        },
+        {
+          "qualified_name": "persistence.store.save_order",
+          "reference_file": "persistence/store.py"
+        }
+      ],
+      "rationale": "P0_INDEPENDENT_RATIONALE",
+      "members": [
+        "policies/pricing.py"
+      ],
+      "parent_id": "external-parent"
+    },
+    {
+      "group_id": "4",
+      "name": "Order responsibility 4",
+      "description": "Subtract one with a zero floor; not called by place_order. Multiply quantity by ten; no external pricing service is called. P0 grouping rationale: responsibilities are inferred from the inspected fixture, not author intent.",
+      "key_entities": [
+        {
+          "qualified_name": "policies.discount.apply_discount",
+          "reference_file": "policies/discount.py"
+        },
+        {
+          "qualified_name": "policies.pricing.calculate_total",
+          "reference_file": "policies/pricing.py"
+        }
+      ],
+      "rationale": "P0_INDEPENDENT_RATIONALE",
+      "members": [
+        "policies/pricing.py"
+      ],
+      "parent_id": "external-parent"
+    }
+  ],
+  "relations": [
+    {
+      "source_group_id": "1",
+      "target_group_id": "2",
+      "relation": "passes order data",
+      "evidence": "Inspected static fixture call; not a runtime observation."
+    },
+    {
+      "source_group_id": "2",
+      "target_group_id": "3",
+      "relation": "passes order data",
+      "evidence": "Inspected static fixture call; not a runtime observation."
+    },
+    {
+      "source_group_id": "2",
+      "target_group_id": "4",
+      "relation": "passes order data",
+      "evidence": "Inspected static fixture call; not a runtime observation."
+    }
+  ]
+}

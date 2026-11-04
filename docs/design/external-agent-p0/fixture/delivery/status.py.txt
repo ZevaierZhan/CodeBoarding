@@ -1,0 +1,2 @@
+def present_status(order_id: str) -> str:
+    return f"accepted:{order_id}"

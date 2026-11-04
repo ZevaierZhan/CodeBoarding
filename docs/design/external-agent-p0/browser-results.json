@@ -1,0 +1,9 @@
+{
+  "component_details": 4,
+  "source_reference_texts": 8,
+  "clickable_source_links": 0,
+  "graph_canvases": 3,
+  "page_errors": [],
+  "playwright": "1.62.1",
+  "chromium": "156.0.4314.58"
+}

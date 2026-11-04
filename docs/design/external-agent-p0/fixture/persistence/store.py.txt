@@ -1,0 +1,2 @@
+def save_order(total: int) -> str:
+    return f"order:{total}"

@@ -1,0 +1,2 @@
+def cancel_order(order_id: str) -> str:
+    return f"cancelled:{order_id}"

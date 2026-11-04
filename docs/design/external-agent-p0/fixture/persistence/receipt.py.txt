@@ -1,0 +1,2 @@
+def format_receipt(total: int) -> str:
+    return f"receipt:{total}"
