@@ -1,0 +1,57 @@
+{
+  "execution_base": "a57e2e773a7e79971e202ca2fafe903e5347c399",
+  "execution_worktree": "Initially clean; P2 validation ran with uncommitted experiment/checker changes; script byte hashes are in results.json.",
+  "format": {
+    "command": "uv run black . --check",
+    "exit_code": 0
+  },
+  "types": {
+    "command": "uv run mypy .",
+    "exit_code": 1,
+    "result": "1 pre-existing Windows signal.SIGKILL attr-defined error; 332 source files checked"
+  },
+  "focused": {
+    "command": "uv run pytest tests/diagram_analysis/test_scope_assembly.py tests/output_generators/test_rendering.py tests/static_analyzer/test_warmstart_changed_files.py tests/diagram_analysis/test_scope_plan.py -q",
+    "exit_code": 1,
+    "passed": 63,
+    "failed": 2,
+    "duration_seconds": 4.97
+  },
+  "baseline_reproduction": {
+    "production_base": "156806c0eedcfded65eb8d02c39b3cf618a8254b",
+    "workdir": "temp/p0-baseline",
+    "environment": "Activated F:/CodeBoarding/.venv; Python 3.12.13; telemetry disabled",
+    "tests": {
+      "command": "python -m pytest tests/diagram_analysis/test_scope_assembly.py -q",
+      "exit_code": 1,
+      "passed": 20,
+      "failed": 2,
+      "duration_seconds": 3.55
+    },
+    "types": {
+      "command": "python -m mypy .",
+      "exit_code": 1,
+      "result": "Same signal.SIGKILL error; 329 source files checked"
+    },
+    "source_comparison": "git diff --no-index for scope_assembly.py and workspace_dependencies.py: identical (exit 0)"
+  },
+  "full": {
+    "command": "uv run pytest --cov=. --cov-report=term --cov-fail-under=80",
+    "exit_code": -1,
+    "collected": 2699,
+    "result": "Stopped after about 4 minutes 40 seconds without new output near test_edge_builder.py at about 67%; failures observed; no final coverage report",
+    "coverage_threshold_confirmed": false,
+    "other_failures": "Not individually attributed"
+  },
+  "private_integration": "Not run; private CodeBoarding-tests repository unavailable",
+  "versions": {
+    "os": "Windows 11 Pro x64 10.0.26100",
+    "python": "3.12.13",
+    "node": "24.20.0",
+    "pyright": "1.1.400",
+    "tokei": "14.0.0",
+    "playwright": "1.62.1",
+    "edge": "156.0.4314.58",
+    "posthog": "7.18.0"
+  }
+}

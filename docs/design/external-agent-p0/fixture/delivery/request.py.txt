@@ -1,0 +1,7 @@
+from orchestration.order import place_order
+
+
+def submit_order(quantity: int) -> str:
+    if quantity <= 0:
+        raise ValueError("quantity must be positive")
+    return place_order(quantity)

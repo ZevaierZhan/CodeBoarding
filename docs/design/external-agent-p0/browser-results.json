@@ -1,0 +1,108 @@
+{
+  "status": "PASS",
+  "page_errors": [],
+  "console_errors": [],
+  "failed_dependencies": [],
+  "component_details": 4,
+  "source_reference_texts": 8,
+  "clickable_source_links": 0,
+  "graph": {
+    "width": 1402,
+    "height": 602,
+    "headless": false,
+    "nodes": [
+      {
+        "id": "Order_responsibility_1",
+        "visible": true,
+        "box": {
+          "x1": 29.999999999999982,
+          "x2": 291.234221598878,
+          "y1": 256.7741935483871,
+          "y2": 343.2258064516129,
+          "w": 261.234221598878,
+          "h": 86.45161290322585
+        }
+      },
+      {
+        "id": "Order_responsibility_2",
+        "visible": true,
+        "box": {
+          "x1": 569.382889200561,
+          "x2": 830.617110799439,
+          "y1": 256.7741935483871,
+          "y2": 343.2258064516129,
+          "w": 261.2342215988781,
+          "h": 86.45161290322585
+        }
+      },
+      {
+        "id": "Order_responsibility_3",
+        "visible": true,
+        "box": {
+          "x1": 1108.7657784011221,
+          "x2": 1370,
+          "y1": 140.2524544179523,
+          "y2": 226.70406732117812,
+          "w": 261.23422159887787,
+          "h": 86.45161290322582
+        }
+      },
+      {
+        "id": "Order_responsibility_4",
+        "visible": true,
+        "box": {
+          "x1": 1108.7657784011221,
+          "x2": 1370,
+          "y1": 373.2959326788219,
+          "y2": 459.7475455820477,
+          "w": 261.23422159887787,
+          "h": 86.4516129032258
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "Order_responsibility_1",
+        "target": "Order_responsibility_2",
+        "visible": true,
+        "box": {
+          "x1": 285.5960729312763,
+          "x2": 583.1963534361852,
+          "y1": 262.41234221598876,
+          "y2": 311.93408134642357,
+          "w": 297.6002805049089,
+          "h": 49.52173913043481
+        }
+      },
+      {
+        "source": "Order_responsibility_2",
+        "target": "Order_responsibility_3",
+        "visible": true,
+        "box": {
+          "x1": 824.9055729996609,
+          "x2": 1122.6526317689227,
+          "y1": 187.2701123626531,
+          "y2": 275.9636821399348,
+          "w": 297.7470587692618,
+          "h": 88.69356977728171
+        }
+      },
+      {
+        "source": "Order_responsibility_2",
+        "target": "Order_responsibility_4",
+        "visible": true,
+        "box": {
+          "x1": 824.9055729996609,
+          "x2": 1122.6526317689227,
+          "y1": 302.99816210292227,
+          "y2": 400.660736838392,
+          "w": 297.7470587692618,
+          "h": 97.66257473546972
+        }
+      }
+    ],
+    "painted_surface": true
+  },
+  "playwright": "1.62.1",
+  "chromium": "156.0.4314.58"
+}

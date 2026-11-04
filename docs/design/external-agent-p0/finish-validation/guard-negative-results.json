@@ -1,0 +1,200 @@
+{
+  "status": "PASS",
+  "baseline_exit": 0,
+  "baseline_report": {
+    "A": {
+      "static_edges": "PASS",
+      "semantics_schema": "PASS",
+      "unified_schema": "PASS",
+      "save_reload": "PASS",
+      "renderer": "PASS: real CLI main, HTML content checked; browser QA recorded separately",
+      "failed_save_keeps_previous": "PASS"
+    },
+    "B": {
+      "semantic_membership_request": "LIMIT: ignored",
+      "manual_member_move_save_reload": "PASS (internal API only)",
+      "warm_static_refresh": "PASS",
+      "native_incremental_replay": "LIMIT: restores TreeSpec membership",
+      "ids_and_descriptions": "PASS for body edit",
+      "source_content_hash_changed": "PASS"
+    },
+    "unknown_fields": "LIMIT: independent rationale and scenarios dropped by native roundtrip",
+    "before_member_edit": {
+      "1": {
+        "name": "Delivery",
+        "description": "Owns 2 symbols across 2 files: delivery/request.py, delivery/status.py.",
+        "members": [
+          "delivery/request.py|delivery.request.submit_order",
+          "delivery/status.py|delivery.status.present_status"
+        ]
+      },
+      "2": {
+        "name": "Orchestration",
+        "description": "Owns 2 symbols across 2 files: orchestration/cancel.py, orchestration/order.py.",
+        "members": [
+          "orchestration/cancel.py|orchestration.cancel.cancel_order",
+          "orchestration/order.py|orchestration.order.place_order"
+        ]
+      },
+      "3": {
+        "name": "Persistence",
+        "description": "Owns 2 symbols across 2 files: persistence/receipt.py, persistence/store.py.",
+        "members": [
+          "persistence/receipt.py|persistence.receipt.format_receipt",
+          "persistence/store.py|persistence.store.save_order"
+        ]
+      },
+      "4": {
+        "name": "Policies",
+        "description": "Owns 2 symbols across 2 files: policies/discount.py, policies/pricing.py.",
+        "members": [
+          "policies/discount.py|policies.discount.apply_discount",
+          "policies/pricing.py|policies.pricing.calculate_total"
+        ]
+      }
+    },
+    "edited": {
+      "1": {
+        "name": "Order responsibility 1",
+        "description": "Validate positive quantity and enter the order flow. Present an accepted identifier; not called by submit_order. P0 grouping rationale: responsibilities are inferred from the inspected fixture, not author intent.",
+        "members": [
+          "delivery/request.py|delivery.request.submit_order",
+          "delivery/status.py|delivery.status.present_status",
+          "policies/pricing.py|policies.pricing.calculate_total"
+        ]
+      },
+      "2": {
+        "name": "Order responsibility 2",
+        "description": "Format cancellation; not part of the submit flow. Compute a total, then ask the store to return an order identifier. P0 grouping rationale: responsibilities are inferred from the inspected fixture, not author intent.",
+        "members": [
+          "orchestration/cancel.py|orchestration.cancel.cancel_order",
+          "orchestration/order.py|orchestration.order.place_order"
+        ]
+      },
+      "3": {
+        "name": "Order responsibility 3",
+        "description": "Format a receipt; no storage side effect. Format an order identifier; this fixture does not persist to a database. P0 grouping rationale: responsibilities are inferred from the inspected fixture, not author intent.",
+        "members": [
+          "persistence/receipt.py|persistence.receipt.format_receipt",
+          "persistence/store.py|persistence.store.save_order"
+        ]
+      },
+      "4": {
+        "name": "Order responsibility 4",
+        "description": "Subtract one with a zero floor; not called by place_order. Multiply quantity by ten; no external pricing service is called. P0 grouping rationale: responsibilities are inferred from the inspected fixture, not author intent.",
+        "members": [
+          "policies/discount.py|policies.discount.apply_discount"
+        ]
+      }
+    },
+    "after_refresh": {
+      "1": {
+        "name": "Order responsibility 1",
+        "description": "Validate positive quantity and enter the order flow. Present an accepted identifier; not called by submit_order. P0 grouping rationale: responsibilities are inferred from the inspected fixture, not author intent.",
+        "members": [
+          "delivery/request.py|delivery.request.submit_order",
+          "delivery/status.py|delivery.status.present_status"
+        ]
+      },
+      "2": {
+        "name": "Order responsibility 2",
+        "description": "Format cancellation; not part of the submit flow. Compute a total, then ask the store to return an order identifier. P0 grouping rationale: responsibilities are inferred from the inspected fixture, not author intent.",
+        "members": [
+          "orchestration/cancel.py|orchestration.cancel.cancel_order",
+          "orchestration/order.py|orchestration.order.place_order"
+        ]
+      },
+      "3": {
+        "name": "Order responsibility 3",
+        "description": "Format a receipt; no storage side effect. Format an order identifier; this fixture does not persist to a database. P0 grouping rationale: responsibilities are inferred from the inspected fixture, not author intent.",
+        "members": [
+          "persistence/receipt.py|persistence.receipt.format_receipt",
+          "persistence/store.py|persistence.store.save_order"
+        ]
+      },
+      "4": {
+        "name": "Order responsibility 4",
+        "description": "Subtract one with a zero floor; not called by place_order. Multiply quantity by ten; no external pricing service is called. P0 grouping rationale: responsibilities are inferred from the inspected fixture, not author intent.",
+        "members": [
+          "policies/discount.py|policies.discount.apply_discount",
+          "policies/pricing.py|policies.pricing.calculate_total"
+        ]
+      }
+    },
+    "guard_attempts": [
+      "socket.connect"
+    ],
+    "environment": {
+      "codeboarding": "0.15.3",
+      "pydantic": "2.12.5",
+      "jsonschema": "4.25.0",
+      "tree-sitter": "0.25.2",
+      "tree-sitter-python": "0.25.0",
+      "networkx": "3.4.2"
+    },
+    "python": "3.12.13",
+    "fixture_hash": "f89db7e0ca7ffbf7268fcbde329b353011204c976cc1e28ef0d3aa1091bc45d0"
+  },
+  "cases": [
+    {
+      "name": "caught",
+      "test_status": "PASS",
+      "probe_exit": 1,
+      "report": {
+        "status": "FAIL",
+        "guard_attempts": [
+          "socket.connect"
+        ],
+        "started_at": "2026-11-04T09:39:06.299495+00:00",
+        "platform": "win32",
+        "probe_source_sha256": {
+          "experiment.py": "cfe0c527c7589427ce5f0b6cea061b9fd3298a705aa6e187e22b9a082345a527",
+          "p0_guard.py": "fb9f67f701fddfc1a9b87c2b9cb5bd086048f08e32291da319fd2a57b9a339ce",
+          "check-render.cjs": "80770293661738a85d863d626d8843b97e5b64b1ee1d3f0cd8bd83f39ca8a4a6"
+        },
+        "unfinished_threads": [],
+        "telemetry_client_absent": false
+      }
+    },
+    {
+      "name": "thread",
+      "test_status": "PASS",
+      "probe_exit": 1,
+      "report": {
+        "status": "FAIL",
+        "guard_attempts": [
+          "socket.connect"
+        ],
+        "started_at": "2026-11-04T09:39:06.937104+00:00",
+        "platform": "win32",
+        "probe_source_sha256": {
+          "experiment.py": "cfe0c527c7589427ce5f0b6cea061b9fd3298a705aa6e187e22b9a082345a527",
+          "p0_guard.py": "fb9f67f701fddfc1a9b87c2b9cb5bd086048f08e32291da319fd2a57b9a339ce",
+          "check-render.cjs": "80770293661738a85d863d626d8843b97e5b64b1ee1d3f0cd8bd83f39ca8a4a6"
+        },
+        "unfinished_threads": [],
+        "telemetry_client_absent": false
+      }
+    },
+    {
+      "name": "exit",
+      "test_status": "PASS",
+      "probe_exit": 1,
+      "report": {
+        "status": "FAIL",
+        "guard_attempts": [
+          "socket.connect"
+        ],
+        "started_at": "2026-11-04T09:39:07.551468+00:00",
+        "platform": "win32",
+        "probe_source_sha256": {
+          "experiment.py": "cfe0c527c7589427ce5f0b6cea061b9fd3298a705aa6e187e22b9a082345a527",
+          "p0_guard.py": "fb9f67f701fddfc1a9b87c2b9cb5bd086048f08e32291da319fd2a57b9a339ce",
+          "check-render.cjs": "80770293661738a85d863d626d8843b97e5b64b1ee1d3f0cd8bd83f39ca8a4a6"
+        },
+        "unfinished_threads": [],
+        "telemetry_client_absent": false
+      }
+    }
+  ]
+}

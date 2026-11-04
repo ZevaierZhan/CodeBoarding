@@ -1,0 +1,465 @@
+{
+  "metadata": {
+    "generated_at": "2026-11-04T09:13:48.447604+00:00",
+    "source_tree_hash": "f89db7e0ca7ffbf7268fcbde329b353011204c976cc1e28ef0d3aa1091bc45d0",
+    "repo_name": "p0-order-fixture",
+    "depth_level": 1,
+    "depth_cap": 1,
+    "file_coverage_summary": {
+      "total_files": 0,
+      "analyzed": 0,
+      "not_analyzed": 0,
+      "not_analyzed_by_reason": {}
+    },
+    "tree_spec": {
+      "version": 4,
+      "grouper": "affinity",
+      "machinery": [],
+      "scopes": {
+        "root": {
+          "axis": "structural",
+          "rung": "frontier",
+          "leaf_reason": "",
+          "last_id": 4,
+          "rules": [
+            {
+              "id": "1",
+              "name": "delivery",
+              "origin": "box",
+              "prefixes": [
+                [
+                  "delivery"
+                ]
+              ],
+              "terms": [
+                "delivery"
+              ]
+            },
+            {
+              "id": "2",
+              "name": "orchestration",
+              "origin": "box",
+              "prefixes": [
+                [
+                  "orchestration"
+                ]
+              ],
+              "terms": [
+                "orchestration"
+              ]
+            },
+            {
+              "id": "3",
+              "name": "persistence",
+              "origin": "box",
+              "prefixes": [
+                [
+                  "persistence"
+                ]
+              ]
+            },
+            {
+              "id": "4",
+              "name": "policies",
+              "origin": "box",
+              "prefixes": [
+                [
+                  "policies"
+                ]
+              ],
+              "terms": [
+                "policy"
+              ]
+            }
+          ]
+        },
+        "1": {
+          "axis": "",
+          "rung": "leaf",
+          "leaf_reason": "small: 2 units, at most 7; nothing to un-merge",
+          "last_id": 0,
+          "rules": []
+        },
+        "2": {
+          "axis": "",
+          "rung": "leaf",
+          "leaf_reason": "small: 2 units, at most 7; nothing to un-merge",
+          "last_id": 0,
+          "rules": []
+        },
+        "3": {
+          "axis": "",
+          "rung": "leaf",
+          "leaf_reason": "small: 2 units, at most 7; nothing to un-merge",
+          "last_id": 0,
+          "rules": []
+        },
+        "4": {
+          "axis": "",
+          "rung": "leaf",
+          "leaf_reason": "small: 2 units, at most 7; nothing to un-merge",
+          "last_id": 0,
+          "rules": []
+        }
+      }
+    }
+  },
+  "description": "Static explanation of the order fixture. This is not an execution trace.",
+  "files": {
+    "delivery/request.py": {
+      "method_keys": [
+        "delivery/request.py|delivery.request.submit_order"
+      ],
+      "content_hash": "c5b5d2998f6fada8",
+      "module_hash": "1c012d85f71e1bd1"
+    },
+    "delivery/status.py": {
+      "method_keys": [
+        "delivery/status.py|delivery.status.present_status"
+      ],
+      "content_hash": "e7e27426f513e6cf",
+      "module_hash": "e3b0c44298fc1c14"
+    },
+    "policies/pricing.py": {
+      "method_keys": [
+        "policies/pricing.py|policies.pricing.calculate_total"
+      ],
+      "content_hash": "88f189288b6d7668",
+      "module_hash": "e3b0c44298fc1c14"
+    },
+    "orchestration/cancel.py": {
+      "method_keys": [
+        "orchestration/cancel.py|orchestration.cancel.cancel_order"
+      ],
+      "content_hash": "2263c0aac1e19fa5",
+      "module_hash": "e3b0c44298fc1c14"
+    },
+    "orchestration/order.py": {
+      "method_keys": [
+        "orchestration/order.py|orchestration.order.place_order"
+      ],
+      "content_hash": "fbb1a778ebf6d0c5",
+      "module_hash": "9326e3ba7a7f7420"
+    },
+    "persistence/receipt.py": {
+      "method_keys": [
+        "persistence/receipt.py|persistence.receipt.format_receipt"
+      ],
+      "content_hash": "41c2171572a33f86",
+      "module_hash": "e3b0c44298fc1c14"
+    },
+    "persistence/store.py": {
+      "method_keys": [
+        "persistence/store.py|persistence.store.save_order"
+      ],
+      "content_hash": "412d18b9ca9044ae",
+      "module_hash": "e3b0c44298fc1c14"
+    },
+    "policies/discount.py": {
+      "method_keys": [
+        "policies/discount.py|policies.discount.apply_discount"
+      ],
+      "content_hash": "fa6aafb63ea2cb4a",
+      "module_hash": "e3b0c44298fc1c14"
+    }
+  },
+  "methods_index": {
+    "delivery/request.py|delivery.request.submit_order": {
+      "file_path": "delivery/request.py",
+      "qualified_name": "delivery.request.submit_order",
+      "start_line": 4,
+      "end_line": 7,
+      "type": "FUNCTION",
+      "content_hash": "63c98f0da52be5a0"
+    },
+    "delivery/status.py|delivery.status.present_status": {
+      "file_path": "delivery/status.py",
+      "qualified_name": "delivery.status.present_status",
+      "start_line": 1,
+      "end_line": 2,
+      "type": "FUNCTION",
+      "content_hash": "e7e27426f513e6cf"
+    },
+    "policies/pricing.py|policies.pricing.calculate_total": {
+      "file_path": "policies/pricing.py",
+      "qualified_name": "policies.pricing.calculate_total",
+      "start_line": 1,
+      "end_line": 2,
+      "type": "FUNCTION",
+      "content_hash": "88f189288b6d7668"
+    },
+    "orchestration/cancel.py|orchestration.cancel.cancel_order": {
+      "file_path": "orchestration/cancel.py",
+      "qualified_name": "orchestration.cancel.cancel_order",
+      "start_line": 1,
+      "end_line": 2,
+      "type": "FUNCTION",
+      "content_hash": "2263c0aac1e19fa5"
+    },
+    "orchestration/order.py|orchestration.order.place_order": {
+      "file_path": "orchestration/order.py",
+      "qualified_name": "orchestration.order.place_order",
+      "start_line": 5,
+      "end_line": 7,
+      "type": "FUNCTION",
+      "content_hash": "8708fdc78830d73b"
+    },
+    "persistence/receipt.py|persistence.receipt.format_receipt": {
+      "file_path": "persistence/receipt.py",
+      "qualified_name": "persistence.receipt.format_receipt",
+      "start_line": 1,
+      "end_line": 2,
+      "type": "FUNCTION",
+      "content_hash": "41c2171572a33f86"
+    },
+    "persistence/store.py|persistence.store.save_order": {
+      "file_path": "persistence/store.py",
+      "qualified_name": "persistence.store.save_order",
+      "start_line": 1,
+      "end_line": 2,
+      "type": "FUNCTION",
+      "content_hash": "412d18b9ca9044ae"
+    },
+    "policies/discount.py|policies.discount.apply_discount": {
+      "file_path": "policies/discount.py",
+      "qualified_name": "policies.discount.apply_discount",
+      "start_line": 1,
+      "end_line": 2,
+      "type": "FUNCTION",
+      "content_hash": "fa6aafb63ea2cb4a"
+    }
+  },
+  "components": [
+    {
+      "name": "Order responsibility 1",
+      "description": "Validate positive quantity and enter the order flow. Present an accepted identifier; not called by submit_order. P0 grouping rationale: responsibilities are inferred from the inspected fixture, not author intent.",
+      "key_entities": [
+        {
+          "qualified_name": "delivery.request.submit_order",
+          "reference_file": "delivery/request.py",
+          "reference_start_line": 4,
+          "reference_end_line": 7
+        },
+        {
+          "qualified_name": "delivery.status.present_status",
+          "reference_file": "delivery/status.py",
+          "reference_start_line": 1,
+          "reference_end_line": 2
+        }
+      ],
+      "source_cluster_ids": [
+        "0",
+        "1"
+      ],
+      "file_methods": [
+        {
+          "file_path": "delivery/request.py",
+          "methods": [
+            "delivery.request.submit_order"
+          ]
+        },
+        {
+          "file_path": "delivery/status.py",
+          "methods": [
+            "delivery.status.present_status"
+          ]
+        },
+        {
+          "file_path": "policies/pricing.py",
+          "methods": [
+            "policies.pricing.calculate_total"
+          ]
+        }
+      ],
+      "component_id": "1",
+      "can_expand": true,
+      "components": [],
+      "components_relations": []
+    },
+    {
+      "name": "Order responsibility 2",
+      "description": "Format cancellation; not part of the submit flow. Compute a total, then ask the store to return an order identifier. P0 grouping rationale: responsibilities are inferred from the inspected fixture, not author intent.",
+      "key_entities": [
+        {
+          "qualified_name": "orchestration.cancel.cancel_order",
+          "reference_file": "orchestration/cancel.py",
+          "reference_start_line": 1,
+          "reference_end_line": 2
+        },
+        {
+          "qualified_name": "orchestration.order.place_order",
+          "reference_file": "orchestration/order.py",
+          "reference_start_line": 5,
+          "reference_end_line": 7
+        }
+      ],
+      "source_cluster_ids": [
+        "2",
+        "3"
+      ],
+      "file_methods": [
+        {
+          "file_path": "orchestration/cancel.py",
+          "methods": [
+            "orchestration.cancel.cancel_order"
+          ]
+        },
+        {
+          "file_path": "orchestration/order.py",
+          "methods": [
+            "orchestration.order.place_order"
+          ]
+        }
+      ],
+      "component_id": "2",
+      "can_expand": true,
+      "components": [],
+      "components_relations": []
+    },
+    {
+      "name": "Order responsibility 3",
+      "description": "Format a receipt; no storage side effect. Format an order identifier; this fixture does not persist to a database. P0 grouping rationale: responsibilities are inferred from the inspected fixture, not author intent.",
+      "key_entities": [
+        {
+          "qualified_name": "persistence.receipt.format_receipt",
+          "reference_file": "persistence/receipt.py",
+          "reference_start_line": 1,
+          "reference_end_line": 2
+        },
+        {
+          "qualified_name": "persistence.store.save_order",
+          "reference_file": "persistence/store.py",
+          "reference_start_line": 1,
+          "reference_end_line": 2
+        }
+      ],
+      "source_cluster_ids": [
+        "4",
+        "5"
+      ],
+      "file_methods": [
+        {
+          "file_path": "persistence/receipt.py",
+          "methods": [
+            "persistence.receipt.format_receipt"
+          ]
+        },
+        {
+          "file_path": "persistence/store.py",
+          "methods": [
+            "persistence.store.save_order"
+          ]
+        }
+      ],
+      "component_id": "3",
+      "can_expand": true,
+      "components": [],
+      "components_relations": []
+    },
+    {
+      "name": "Order responsibility 4",
+      "description": "Subtract one with a zero floor; not called by place_order. Multiply quantity by ten; no external pricing service is called. P0 grouping rationale: responsibilities are inferred from the inspected fixture, not author intent.",
+      "key_entities": [
+        {
+          "qualified_name": "policies.discount.apply_discount",
+          "reference_file": "policies/discount.py",
+          "reference_start_line": 1,
+          "reference_end_line": 2
+        },
+        {
+          "qualified_name": "policies.pricing.calculate_total",
+          "reference_file": "policies/pricing.py",
+          "reference_start_line": 1,
+          "reference_end_line": 2
+        }
+      ],
+      "source_cluster_ids": [
+        "6",
+        "7"
+      ],
+      "file_methods": [
+        {
+          "file_path": "policies/discount.py",
+          "methods": [
+            "policies.discount.apply_discount"
+          ]
+        }
+      ],
+      "component_id": "4",
+      "can_expand": true,
+      "components": [],
+      "components_relations": []
+    }
+  ],
+  "components_relations": [
+    {
+      "relation": "passes order data",
+      "src_name": "Order responsibility 1",
+      "dst_name": "Order responsibility 2",
+      "evidence": "Inspected static fixture call; not a runtime observation.",
+      "key_edges": [],
+      "src_id": "1",
+      "dst_id": "2",
+      "is_static": true,
+      "all_edges": [
+        {
+          "source": "delivery/request.py|delivery.request.submit_order",
+          "target": "orchestration/order.py|orchestration.order.place_order",
+          "call_sites": [
+            {
+              "line": 7,
+              "column": 12
+            }
+          ],
+          "description": ""
+        }
+      ]
+    },
+    {
+      "relation": "passes order data",
+      "src_name": "Order responsibility 2",
+      "dst_name": "Order responsibility 3",
+      "evidence": "Inspected static fixture call; not a runtime observation.",
+      "key_edges": [],
+      "src_id": "2",
+      "dst_id": "3",
+      "is_static": true,
+      "all_edges": [
+        {
+          "source": "orchestration/order.py|orchestration.order.place_order",
+          "target": "persistence/store.py|persistence.store.save_order",
+          "call_sites": [
+            {
+              "line": 7,
+              "column": 12
+            }
+          ],
+          "description": ""
+        }
+      ]
+    },
+    {
+      "relation": "passes order data",
+      "src_name": "Order responsibility 2",
+      "dst_name": "Order responsibility 4",
+      "evidence": "Inspected static fixture call; not a runtime observation.",
+      "key_edges": [],
+      "src_id": "2",
+      "dst_id": "4",
+      "is_static": true,
+      "all_edges": [
+        {
+          "source": "orchestration/order.py|orchestration.order.place_order",
+          "target": "policies/pricing.py|policies.pricing.calculate_total",
+          "call_sites": [
+            {
+              "line": 6,
+              "column": 13
+            }
+          ],
+          "description": ""
+        }
+      ]
+    }
+  ]
+}

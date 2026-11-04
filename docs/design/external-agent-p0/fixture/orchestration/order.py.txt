@@ -1,0 +1,7 @@
+from persistence.store import save_order
+from policies.pricing import calculate_total
+
+
+def place_order(quantity: int) -> str:
+    total = calculate_total(quantity)
+    return save_order(total)

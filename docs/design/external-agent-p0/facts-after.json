@@ -1,0 +1,97 @@
+{
+  "source_tree_hash": "24d7aa5e55bebbf3d28b65cdf139b2b59ea972b63c977172143afe15e93e6888",
+  "nodes": [
+    {
+      "name": "delivery.request.submit_order",
+      "file": "delivery/request.py",
+      "start": 4,
+      "end": 7,
+      "kind": "FUNCTION"
+    },
+    {
+      "name": "delivery.status.present_status",
+      "file": "delivery/status.py",
+      "start": 1,
+      "end": 2,
+      "kind": "FUNCTION"
+    },
+    {
+      "name": "orchestration.cancel.cancel_order",
+      "file": "orchestration/cancel.py",
+      "start": 1,
+      "end": 2,
+      "kind": "FUNCTION"
+    },
+    {
+      "name": "orchestration.order.place_order",
+      "file": "orchestration/order.py",
+      "start": 5,
+      "end": 7,
+      "kind": "FUNCTION"
+    },
+    {
+      "name": "persistence.receipt.format_receipt",
+      "file": "persistence/receipt.py",
+      "start": 1,
+      "end": 2,
+      "kind": "FUNCTION"
+    },
+    {
+      "name": "persistence.store.save_order",
+      "file": "persistence/store.py",
+      "start": 1,
+      "end": 2,
+      "kind": "FUNCTION"
+    },
+    {
+      "name": "policies.discount.apply_discount",
+      "file": "policies/discount.py",
+      "start": 1,
+      "end": 2,
+      "kind": "FUNCTION"
+    },
+    {
+      "name": "policies.pricing.calculate_total",
+      "file": "policies/pricing.py",
+      "start": 1,
+      "end": 2,
+      "kind": "FUNCTION"
+    }
+  ],
+  "edges": [
+    {
+      "source": "delivery.request.submit_order",
+      "target": "orchestration.order.place_order",
+      "sites": [
+        {
+          "line": 7,
+          "file": "delivery/request.py",
+          "column": 12
+        }
+      ]
+    },
+    {
+      "source": "orchestration.order.place_order",
+      "target": "persistence.store.save_order",
+      "sites": [
+        {
+          "line": 7,
+          "file": "orchestration/order.py",
+          "column": 12
+        }
+      ]
+    },
+    {
+      "source": "orchestration.order.place_order",
+      "target": "policies.pricing.calculate_total",
+      "sites": [
+        {
+          "line": 6,
+          "file": "orchestration/order.py",
+          "column": 13
+        }
+      ]
+    }
+  ],
+  "reference_edges": []
+}

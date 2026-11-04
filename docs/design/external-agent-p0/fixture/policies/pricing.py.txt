@@ -1,0 +1,2 @@
+def calculate_total(quantity: int) -> int:
+    return quantity * 10
