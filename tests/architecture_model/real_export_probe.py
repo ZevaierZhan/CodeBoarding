@@ -46,6 +46,24 @@ def main() -> None:
     with pytest.raises(ModelError) as raised:
         export_facts(source, "p", output, node, pyright, tokei)
     assert raised.value.code == "ALREADY_EXISTS"
+    blocked = source / "blocked"
+    blocked.mkdir()
+    (blocked / "hidden.py").write_text("VALUE = 1\n")
+    original_iterdir = Path.iterdir
+
+    def deny_directory(path: Path):
+        if path == blocked:
+            raise PermissionError("unreadable source directory")
+        return original_iterdir(path)
+
+    with patch.object(Path, "iterdir", deny_directory):
+        with pytest.raises(PermissionError, match="unreadable source directory"):
+            worker.extract(source, "p", node, pyright, tokei)
+    with patch.object(worker.PythonAdapter, "discover_source_files", return_value=[]):
+        with pytest.raises(ValueError, match="Native discovery differs"):
+            worker.extract(source, "p", node, pyright, tokei)
+    (blocked / "hidden.py").unlink()
+    blocked.rmdir()
     (source / "app.py").write_text("def broken(:\n")
     with pytest.raises(SyntaxError):
         worker.extract(source, "p", node, pyright, tokei)

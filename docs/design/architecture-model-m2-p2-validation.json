@@ -1,0 +1,236 @@
+{
+  "date": "2026-11-04",
+  "timezone": "Asia/Shanghai",
+  "pr": "https://github.com/ZevaierZhan/CodeBoarding/pull/3",
+  "draft": true,
+  "branch": "m2/source-maintenance",
+  "base": "main",
+  "reviewed_sha": "a09f2033bd23ad3929f3d11070301e3bf926f708",
+  "verified_code_sha": "1294be7a66f7cbe7db51fe6a305a0476e2bfdccb",
+  "red_feedback": {
+    "failed": 7,
+    "passed": 27,
+    "seconds": 18.9,
+    "cases": [
+      "tests/architecture_model/test_maintenance.py::test_shared_scenario_gets_current_review_scope[False]",
+      "tests/architecture_model/test_maintenance.py::test_shared_scenario_gets_current_review_scope[True]",
+      "tests/architecture_model/test_maintenance.py::test_edited_explanation_does_not_inherit_confirmation[components-component-value0]",
+      "tests/architecture_model/test_maintenance.py::test_edited_explanation_does_not_inherit_confirmation[scenarios-scenario-value1]",
+      "tests/architecture_model/test_maintenance.py::test_rebind_recovers_version_only_m1_state",
+      "tests/architecture_model/test_maintenance.py::test_cli_new_scenario_review_survives_process_boundaries[False]",
+      "tests/architecture_model/test_maintenance.py::test_cli_new_scenario_review_survives_process_boundaries[True]"
+    ]
+  },
+  "checks": [
+    {
+      "name": "models",
+      "command": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pytest",
+        "tests/architecture_model",
+        "-q",
+        "--cov=architecture_model",
+        "--cov-report=term-missing",
+        "--cov-fail-under=80"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "timeout_seconds": 360,
+      "elapsed_seconds": 151.19
+    },
+    {
+      "name": "local-repository",
+      "command": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pytest",
+        "tests/static_analyzer/test_call_graph.py",
+        "tests/infra/repo_utils/test_ignore.py",
+        "tests/infra/test_registry_coverage.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "timeout_seconds": 120,
+      "elapsed_seconds": 25.47
+    },
+    {
+      "name": "black",
+      "command": [
+        "uv",
+        "run",
+        "--no-sync",
+        "black",
+        ".",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "timeout_seconds": 120,
+      "elapsed_seconds": 1.44
+    },
+    {
+      "name": "mypy",
+      "command": [
+        "uv",
+        "run",
+        "--no-sync",
+        "mypy",
+        "."
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "timeout_seconds": 120,
+      "elapsed_seconds": 2.53
+    },
+    {
+      "name": "linux-mypy",
+      "command": [
+        "wsl.exe",
+        "-d",
+        "Debian",
+        "--",
+        "env",
+        "UV_PROJECT_ENVIRONMENT=/home/zhan/.cache/codeboarding-m1-p2-venv",
+        "/home/zhan/.local/bin/uv",
+        "run",
+        "--no-sync",
+        "mypy",
+        "--cache-dir",
+        "/tmp/codeboarding-m2-p2-mypy",
+        "."
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "timeout_seconds": 180,
+      "elapsed_seconds": 38.09
+    }
+  ],
+  "models": {
+    "passed": 124,
+    "failed": 0,
+    "skipped": 0,
+    "new_cases": 14,
+    "coverage_percent": 96.88,
+    "statements": 1024,
+    "missed": 32,
+    "pytest_seconds": 148.45,
+    "platform": "Windows/CPython 3.12.13"
+  },
+  "local_repository": {
+    "passed": 51,
+    "failed": 0,
+    "pytest_seconds": 23.18,
+    "scope": "Inspected local graph/ignore/registry-metadata tests only; no whole-suite rerun"
+  },
+  "coverage_contract": {
+    "version": "objects-v1",
+    "unit": "conservative whole affected interpretation set",
+    "source_key": [
+      "binding_id",
+      "basis snapshot/version/location",
+      "target_snapshot_id"
+    ],
+    "object_versions": "SHA-256 of complete component/relation/scenario/step definitions",
+    "observation_identity": "source comparison key plus affected object_versions",
+    "automatic_materialization": "ordinary shared candidate transactions; read-only current projections",
+    "history": "preserve earlier objects, fingerprints, author, reason and target; no widening",
+    "unrelated_edits": "excluded from coverage identity",
+    "repeat": "same context reuses previous observation and resolution",
+    "legacy": "retain unknown historical coverage; new explicit current context, no invented hashes"
+  },
+  "new_regression_categories": [
+    "pending shared B (library and CLI)",
+    "confirmed A then shared B (library and CLI)",
+    "stable-ID component responsibility and scenario claim edits",
+    "unchanged repeated refresh and independent object creation",
+    "historical confirmation cannot close new coverage; stale edit fails intact",
+    "revised review returning to an already confirmed context preserves its original author/reason",
+    "old revision and old preview token rejected after model evolution",
+    "pre-fix M2 resolution retained without fabricated content coverage",
+    "M1 version-only recovery, history prefix, failed candidate/save and repeat selection",
+    "version-only recovery through separate CLI processes; pending review retained",
+    "deleted binding keeps historical review; invalid interpretation patch fails intact"
+  ],
+  "history_fields": [
+    "snapshot_id",
+    "source_version",
+    "location"
+  ],
+  "facts_export_and_strict_inventory_unchanged_from_review": true,
+  "continuous": {
+    "m2_revision": 24,
+    "m1_revision": 10,
+    "p0_symbols": 8,
+    "p0_calls": 3,
+    "m2_model_sha256": "d06c5a4bda5a227cfabfaa66c6655d9154205305965461485cb13dcf106999a7",
+    "m1_model_sha256": "d003687d8bfcdcb17475fe64b4c40d8d0b95e2f1dd6d47f25fb5e7512bbdb13b",
+    "m2_pending_final": 12,
+    "review_input_files": 7
+  },
+  "native_guard": {
+    "status": "PASS",
+    "attempts": [],
+    "unfinished_threads": [],
+    "telemetry_client_absent": true,
+    "symbols": 8,
+    "calls": 3
+  },
+  "artifacts": {
+    "status": "PASS",
+    "schema_matches_runtime": true,
+    "legacy_model_bytes_unchanged": true,
+    "legacy_revision": 21,
+    "legacy_facts_unchanged": true,
+    "legacy_resolution_fields_preserved": true,
+    "derived_legacy_current_pending": 16,
+    "current_revision": 24,
+    "export_files": 12,
+    "unique_imported_catalogs": 9,
+    "wheel_modules_match": 11,
+    "wheel_sha256": "c4c44516543ad7182b76ef7bb6d4a16ad344c26ed3a62055e498d985dc075726"
+  },
+  "baseline_remaining": {
+    "windows_mypy": "workspace_dependencies.py:78 SIGKILL attr-defined, unchanged baseline; 356 files checked",
+    "upstream_tests": "Previously reproduced baseline failures retained; not expanded into this fix"
+  },
+  "environment_or_approval_limits": {
+    "whole_suite": "Not rerun: user reports cloud whole-suite unexpected GitHub egress rejected by automatic approval",
+    "test_url_payload_for_cloud_rejection": "Not supplied or identified in this local run; no blind replay or approval bypass",
+    "repo_80_percent": "unconfirmed",
+    "private_integration": "not run",
+    "env_file": "absent; provider-free explicit tools require no .env"
+  },
+  "unattributed": "Earlier whole-suite failures and initial M1 race transient remain historical; no new failure in current scoped checks",
+  "source_sha256": {
+    "architecture_model/__init__.py": "d1419d4aebc2e72a5d525a2759915501dd6a378904daca75567587432bb9c04a",
+    "architecture_model/__main__.py": "39bead821a699e667c3c4bbc24ba6a68f4e00c9527f556d9c065a2a081d4ee0b",
+    "architecture_model/cli.py": "095ed239094afb75457a7cdac0752fb8d28389c58aa87b11e2e1071a7f13b667",
+    "architecture_model/errors.py": "8e0b7e53af71a083a55e509f410c0447ff58e1207e187e9ddebb97129f2d6dcf",
+    "architecture_model/facts.py": "4b12da02f420441599fcf07160c6f025d28201adba7ab703eddba83b7fc97d8f",
+    "architecture_model/facts_worker.py": "87fb04bd66e00dfab6df343f9fc1c4158dafcacc75d4a4b05d22425258eba638",
+    "architecture_model/maintenance.py": "5a5b716ea70e411a3377ba89229eeb80f1917369c34faf6ecccd66efa37154a3",
+    "architecture_model/maintenance_coverage.py": "b77854b9ecd620a15350eb5cb877dd3e0c64f568c56d1b0ac4dac01ecf717683",
+    "architecture_model/schema.py": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+    "architecture_model/store.py": "ccac6978f387c01d959dab78d36f0ca95fb6b595e052a006690d619991ac8ae3",
+    "architecture_model/validation.py": "9ba10877bc6a01dfd37bd70b7a8d39553cee90301d319600a940fc6077c041b9",
+    "docs/architecture-model-v1.schema.json": "628c5dc383c08e9bcddd5a4f9a455b0ad0641f02564d757b1da5d559087c737d",
+    "examples/architecture_model/maintenance_demo.py": "aaef671be3a8e3323768ab635f816ca949088faf251f5f9058cd254ea7fcfe7f",
+    "tests/architecture_model/test_maintenance.py": "f1f0ddb1570ff60052394f347bc153583efc78638d55237c583b1007e5abe017"
+  },
+  "log_sha256": {
+    "temp/m2-p2-release-checks/models.log": "ac741d2116f0572c1d4cc87f11fd757f02fbb12ecff01102e36cf1e7c401b03c",
+    "temp/m2-p2-release-checks/local-repository.log": "427390437a02a83b59f8b1a8fcd31dc197a08ae9fdedb1f75966bb522caee8dc",
+    "temp/m2-p2-release-checks/black.log": "4ceeef12c6af8d22910c5e2e2fb7fb34913defe703fbbb614ed3fca1001358c4",
+    "temp/m2-p2-release-checks/mypy.log": "84016582c8afd43a16dc1997ae8b85022ea6c873355e4dfeb0bc94e2ff662429",
+    "temp/m2-p2-release-checks/linux-mypy.log": "c53213418e4b1daddacb9f61b0792fea560a0a4b778bc557c0a0dffed13745ad",
+    "temp/m2-p2-red.log": "64ec193e9e55b3e5e24ab14ec592d12f036694b8cccd60a27b96ab264e7134a2",
+    "temp/m2-p2-demo.log": "94ad6365ba17d4275ad8801562f3c6dc907020b77cbca4b5b42c6b6c4fe091e9",
+    "temp/m2-p2-m1-demo.log": "8428d09f5332d64f8f5b8f6bc4675b7343629a69468ab37531aa1e7931ab7001",
+    "temp/m2-p2-native-guard.log": "a2765cbd652ce52672921191434579d706a5b89acaf27dc0ffa40008309fc65a",
+    "temp/m2-p2-wheel.log": "0e2688e47b9e02b4cc26f49ed90b11bf0d7787178dc41499ee299c48fdfc2733"
+  }
+}

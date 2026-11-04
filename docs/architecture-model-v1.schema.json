@@ -367,6 +367,252 @@
       "title": "Location",
       "type": "object"
     },
+    "Maintenance": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "binding_id": {
+          "minLength": 1,
+          "title": "Binding Id",
+          "type": "string"
+        },
+        "basis": {
+          "$ref": "#/$defs/HistoricalLocation"
+        },
+        "target_snapshot_id": {
+          "minLength": 1,
+          "title": "Target Snapshot Id",
+          "type": "string"
+        },
+        "target_source_version": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Target Source Version",
+          "type": "string"
+        },
+        "compared_revision": {
+          "minimum": 0,
+          "title": "Compared Revision",
+          "type": "integer"
+        },
+        "disposition": {
+          "enum": [
+            "unchanged",
+            "changed",
+            "missing",
+            "ambiguous",
+            "indeterminate"
+          ],
+          "title": "Disposition",
+          "type": "string"
+        },
+        "reasons": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "candidates": {
+          "items": {
+            "$ref": "#/$defs/MaintenanceCandidate"
+          },
+          "title": "Candidates",
+          "type": "array"
+        },
+        "component_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Component Ids",
+          "type": "array"
+        },
+        "relation_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Relation Ids",
+          "type": "array"
+        },
+        "scenario_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Scenario Ids",
+          "type": "array"
+        },
+        "step_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Step Ids",
+          "type": "array"
+        },
+        "call_changes": {
+          "additionalProperties": {
+            "items": {
+              "$ref": "#/$defs/Call"
+            },
+            "type": "array"
+          },
+          "propertyNames": {
+            "enum": [
+              "before",
+              "after"
+            ]
+          },
+          "title": "Call Changes",
+          "type": "object"
+        },
+        "resolution": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MaintenanceResolution"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "coverage_version": {
+          "default": "",
+          "enum": [
+            "",
+            "objects-v1"
+          ],
+          "title": "Coverage Version",
+          "type": "string"
+        },
+        "object_versions": {
+          "additionalProperties": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          },
+          "propertyNames": {
+            "minLength": 1
+          },
+          "title": "Object Versions",
+          "type": "object"
+        }
+      },
+      "required": [
+        "id",
+        "binding_id",
+        "basis",
+        "target_snapshot_id",
+        "target_source_version",
+        "compared_revision",
+        "disposition",
+        "reasons",
+        "candidates",
+        "component_ids",
+        "relation_ids",
+        "scenario_ids",
+        "step_ids",
+        "call_changes"
+      ],
+      "title": "Maintenance",
+      "type": "object"
+    },
+    "MaintenanceCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "minLength": 1,
+          "title": "Key",
+          "type": "string"
+        },
+        "location": {
+          "$ref": "#/$defs/Location"
+        },
+        "reasons": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        }
+      },
+      "required": [
+        "key",
+        "location",
+        "reasons"
+      ],
+      "title": "MaintenanceCandidate",
+      "type": "object"
+    },
+    "MaintenanceResolution": {
+      "additionalProperties": false,
+      "properties": {
+        "outcome": {
+          "enum": [
+            "confirmed",
+            "revised"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        },
+        "author": {
+          "minLength": 1,
+          "title": "Author",
+          "type": "string"
+        },
+        "reason": {
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        },
+        "source_version": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Source Version",
+          "type": "string"
+        },
+        "timestamp": {
+          "minLength": 1,
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "object_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Object Ids",
+          "type": "array"
+        },
+        "object_versions": {
+          "additionalProperties": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          },
+          "propertyNames": {
+            "minLength": 1
+          },
+          "title": "Object Versions",
+          "type": "object"
+        }
+      },
+      "required": [
+        "outcome",
+        "author",
+        "reason",
+        "source_version",
+        "timestamp",
+        "object_ids"
+      ],
+      "title": "MaintenanceResolution",
+      "type": "object"
+    },
     "Opinion": {
       "additionalProperties": false,
       "properties": {
@@ -860,6 +1106,18 @@
       },
       "title": "Revisions",
       "type": "array"
+    },
+    "maintenance": {
+      "items": {
+        "$ref": "#/$defs/Maintenance"
+      },
+      "title": "Maintenance",
+      "type": "array"
+    },
+    "maintenance_target_snapshot_id": {
+      "default": "",
+      "title": "Maintenance Target Snapshot Id",
+      "type": "string"
     }
   },
   "required": [

@@ -1,4 +1,4 @@
-# Architecture model CLI (M1)
+# Architecture model CLI (M1 + M2)
 
 An external Agent reads source, writes its interpretation, and revises the same
 logical objects over successive sessions. CodeBoarding validates declared structure,
@@ -237,6 +237,224 @@ Python library; CLI messages are compact machine-readable summaries.
 
 See [the example guide](../examples/architecture_model/README.md) and the
 [actual validation record](design/architecture-model-m1-results.md). M1 provides
-Agent maintenance and structured review. Automatic refresh/rename/rebinding (M2),
-interactive diagrams and scenario playback (M3), MCP, internal business generation,
+Agent modeling and structured review. M2 source maintenance is described below.
+Interactive diagrams and scenario playback (M3), MCP, internal business generation,
 accounts and approval workflows are not implemented.
+
+## M2 source maintenance
+
+Run every command through `uv run codeboarding-model`, using `model --file PATH`
+to select the same model. Export a fresh **complete** Python snapshot using the
+explicit-tool `facts export` command above. Exporting facts never edits a model.
+
+```sh
+uv run codeboarding-model model --file model.json maintenance-preview --facts target.json
+uv run codeboarding-model model --file model.json maintenance-refresh --facts target.json \
+  --expected-revision 3 --token TOKEN_FROM_PREVIEW --author business-agent
+uv run codeboarding-model model --file model.json maintenance --scenario business-A
+uv run codeboarding-model model --file model.json maintenance --component pricing
+uv run codeboarding-model model --file model.json maintenance --binding bind-total
+```
+
+Preview validates the target snapshot/project and compares **each binding against
+its own saved baseline**. It includes model ID/revision, target snapshot, content
+version and Git context, original version/location/hash, new candidates and their
+reasons, incident calls before/after, and affected components/relations/scenarios/
+steps. `pending_ids` includes earlier unresolved observations and proposed ones.
+The token covers the complete preview and revision. Preview leaves bytes intact.
+Refresh requires that token and expected revision, then recomputes within the same
+ModelStore lock used by apply. It imports the immutable facts once and appends
+new observations. It does not edit bindings, business explanations, opinions or
+verification records. A stale revision fails before any write; a wrong token
+fails with `PREVIEW_CONFLICT`.
+
+There are three independent concepts:
+
+| Field | Meaning |
+|---|---|
+| `binding.snapshot_id/source_version/location/status` | Evidence currently cited by that binding. `current` still means exact agreement with **that saved snapshot**. |
+| `maintenance_target_snapshot_id` | Most recently committed comparison target; it does not advance binding evidence. |
+| `maintenance[].disposition/resolution` | Observation against a particular target; unresolved non-unchanged observations need Agent review. |
+
+Full and scoped `model read` retain maintenance history. `model maintenance`
+filters observations by binding/component/scenario and lists unresolved IDs.
+Maintenance observations retain historical object IDs even after explicit object
+deletion; these are audit references, not live membership requirements.
+
+### Judgement and candidates
+
+`unchanged` means the exact same immutable snapshot, or equal containing-file
+bytes and equal incident call endpoints under matching extraction descriptors.
+Different global source digests alone do not trigger review. Different Git context
+alone is mechanical metadata. Positions and call sites are reported; static calls
+are not an execution trace.
+
+`changed` means file bytes/call endpoints differ, or one plausible replacement
+exists. Every binding to a changed file is conservatively affected, including
+insertion of blank lines and changes to **another function in that file**. There
+is no function-body precision. `ambiguous` retains multiple plausible candidates;
+the engine does not rank and adopt the first. Candidate reasons include matching
+file bytes, terminal symbol name/kind, and same-file/kind rename possibilities.
+File-byte matches are deliberately weak symbol evidence: multiple functions can
+share the same file hash. File moves and renames always require Agent inspection.
+
+`missing` means the original location is absent under comparable complete
+extraction rules and no heuristic candidate exists. It is an evidence judgement,
+not deletion of the binding or a proof that equivalent business behavior vanished.
+`indeterminate` means the old catalog is unavailable/inconsistent or extraction
+descriptors are absent/different. Excluded files are never reported deleted on the
+strength of an equal project ID or human-readable scope string.
+
+New exports store `tools.maintenance_scope`, a canonical descriptor containing
+the Python discovery/static-engine/ignore implementation digest, effective ignore
+patterns (including defaults), explicit executable/Pyright entry-file hashes,
+root Pyright/pyproject/setup configuration hashes and completion declaration.
+The implementation digest includes the exporter. An independent strict inventory
+rejects unreadable directories/files, escaping/repeated symlink directories and
+differences from native discovery; native silent skips cannot establish deletion.
+The worker checks rules and source before/after extraction and rejects errors,
+syntax failures and incomplete results. This does not fingerprint all installed
+packages, Pyright dependency contents, environment or external libraries. Supplied
+snapshots are local trusted artifacts, not cryptographically authenticated exports.
+
+### Explicit rebinding and explanation review
+
+```sh
+uv run codeboarding-model model --file model.json maintenance-rebind \
+  --item OBSERVATION_ID --candidate 'policies/rates.py|policies.rates.total' \
+  --expected-revision 4 --author business-agent --reason 'Inspected moved pricing implementation'
+```
+
+This chooses exactly a candidate saved in the observation, imports no new facts,
+preserves binding ID and appends its previous location/version/reason to M1 history.
+The append decision and history validator use the same snapshot ID, source version
+and location fields. A non-current M1 binding with only a different source version
+can therefore recover to a valid saved candidate; its unmatched version is retained
+in history. Repeating an exactly equal evidence triple adds no history entry.
+It does **not** close review or rewrite explanations. Selection from an older
+observation explicitly selects that historical target; the engine does not replace
+it with the latest target. A same-evidence selection is a no-op with one revision.
+
+Write a review JSON file, then submit it:
+
+```json
+{
+  "author": "business-agent",
+  "reason": "Inspected the target pricing change and its A/B consumers; both explanations still hold.",
+  "outcome": "confirmed",
+  "source_version": "EXACT_64_HEX_TARGET_SOURCE_DIGEST",
+  "operations": []
+}
+```
+
+```sh
+uv run codeboarding-model model --file model.json maintenance-resolve \
+  --item OBSERVATION_ID --review review.json --expected-revision 5
+```
+
+The Agent reviews all affected interpretation IDs listed by the selected
+observation. The record saves those IDs, author, timestamp, reason, outcome and
+exact target content version. `confirmed` permits keeping original text;
+`revised` requires an actual change to an affected component/relation/scenario.
+Optional `operations` use ordinary M1 patch semantics and commit together with
+the resolution. They may edit components, relations, scenarios, opinions and
+verifications; facts and bindings are handled separately. Neither accepting a
+candidate nor user acceptance proves business correctness. Previous verification
+versions and results remain historical; a new check requires explicit submission.
+
+Only the named observation closes. Other target-version reviews remain pending.
+S0→S1→S2 therefore retains unresolved S1 changes even if S2 changes only an
+unrelated file or reverts the source. Bindings still citing an older baseline may
+have another observation for S2; Agent review is deliberately version-specific.
+Repeating an identical binding-basis/target and interpretation-coverage state reuses
+the saved observation, including a completed resolution. It never resets it or duplicates facts. Every
+successful refresh, including a no-op, consumes exactly one revision like M1 apply.
+General patches cannot edit/delete maintenance observations.
+
+### Interpretation coverage after model edits
+
+Source comparison and interpretation review have different identities. The source
+comparison key remains binding ID, original snapshot/version/location and target
+snapshot. Its disposition, reasons, candidates and static call evidence can be
+reused because the fact catalogs are immutable. They do not freeze model impact.
+
+Each observation now captures `coverage_version: "objects-v1"` and
+`object_versions`, a map from affected component/relation/scenario/step IDs to
+SHA-256 of their complete serialized definitions. Observation identity also
+includes that map. This is a conservative **whole affected set** rule: adding B
+to a shared binding/component, or changing related explanation text, boundaries,
+membership, steps or transitions, creates a new review context for the affected
+set. It does not transfer A's previous confirmation to B. Unchanged A may appear
+again in the new A/B context; this is deliberate conservative review scope, not
+a claim that A's earlier review never happened. Unrelated definitions, opinions,
+verification records and global model revision are excluded from the fingerprint.
+
+Ordinary `model apply`, `validate --patch` and `diff` derive the same new contexts
+through the shared candidate builder. Apply persists them in the same revision
+and transaction as the explanation change, with no source export or provider
+call. Read-only previews/queries derive the current view too. A related edit is
+visible immediately, before another refresh. A no-op, unrelated edit or repeated
+refresh does not reopen an identical already reviewed context. Reverting to an
+exact previously reviewed context may reuse its existing confirmation, preserving
+its original author and reason.
+
+Old observations and their resolutions remain intact. `maintenance` returns:
+
+- `observations`: matching historical and current contexts.
+- `current_coverage_ids`: contexts matching the current definitions for each
+  known source comparison, restricted to this query's scope. This does not mean
+  their source target is the latest exported version.
+- `current_pending_ids`: unresolved changed/ambiguous/missing/indeterminate
+  contexts within `current_coverage_ids`.
+- `pending_ids`: **all** unresolved contexts, including historical interpretation
+  states and older source targets. A newer context never erases these.
+
+Resolutions save their exact `object_ids` and `object_versions`, author, reason,
+timestamp and target source version. Confirming a historical observation closes
+only that saved scope; it cannot confirm current B or changed definitions. Patches
+within resolve require the selected context to match current definitions, or
+return `REVIEW_INVALID` without writing. A valid revised patch records handling
+of the selected old state and review of its resulting state in separate contexts
+within one transaction. It never overwrites an earlier confirmation of a reused
+resulting state. Other source-version/context reviews remain explicit.
+
+Pre-fix M2 files lack coverage fingerprints. They read with `coverage_version: ""`
+and empty `object_versions`; the old covered IDs, author, reason and target remain
+historical, but the reader cannot infer which explanation contents were reviewed.
+Current views therefore derive one unreviewed `objects-v1` context. The next
+successful write persists it. Historical fields are never backfilled to pretend
+they covered current definitions; identical subsequent reads/refreshes reuse the
+new context. Fact catalogs and their IDs are untouched.
+
+### M1 compatibility and errors
+
+The strict v1 model envelope adds optional `maintenance` (default `[]`) and
+`maintenance_target_snapshot_id` (default `""`). M1 files read directly without a
+write or revision change. Their first successful M2 write serializes these fields,
+preserving existing identities, explanations, revision history and fact catalogs.
+Use the M2 reader afterwards: older M1 binaries reject the additional fields.
+The raw v1 JSON Schema is regenerated to include these strict optional fields.
+There is no broad migration platform or automatic revision reset.
+
+Historical **facts** retain their exact original schema/content/digest. M2 never
+adds descriptors to old catalogs or recomputes their IDs. Comparing an old M1
+snapshot to a different export produces `indeterminate`; the Agent can inspect
+new evidence, explicitly rebind to a candidate and explicitly resolve the review
+to establish its M2 baseline. Re-exporting does not silently upgrade the old one.
+
+| Additional error | Meaning |
+|---|---|
+| `COMPARISON_INVALID` | Malformed extraction descriptor; no successful comparison or write |
+| `PREVIEW_CONFLICT` | Token does not describe this revision/model/target |
+| `MAINTENANCE_INVALID` | Stored maintenance target/candidate/review contradicts its catalog |
+| `CANDIDATE_INVALID` | Explicit selection absent from the stored observation |
+| `REVIEW_INVALID` | Wrong review version, already closed/unchanged item, forbidden operations or ineffective revision |
+
+M1 `REVISION_CONFLICT`, schema/reference/history and atomic-save errors still apply.
+Uncertainty is a persisted disposition, not a fake successful deletion. Failed
+exports publish nothing. All pre-commit failures preserve bytes and revision;
+output failures after replacement retain exit 2 and may already have committed.
+
+See the [M2 design](design/architecture-model-m2.md),
+[continuous example](../examples/architecture_model/README.md) and
+[M2 validation](design/architecture-model-m2-results.md).

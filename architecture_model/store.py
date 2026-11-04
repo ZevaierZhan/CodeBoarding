@@ -4,12 +4,16 @@ import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
+from collections.abc import Callable
 
 from filelock import FileLock, Timeout
 
 from architecture_model.errors import ModelError
-from architecture_model.schema import Model, Patch, Project, Revision
+from architecture_model.maintenance_coverage import maintained_observations
+from architecture_model.schema import Maintenance, Model, Patch, Project, Revision
 from architecture_model.validation import COLLECTIONS, parse, validate_model
+
+BINDING_EVIDENCE_FIELDS = ("snapshot_id", "source_version", "location")
 
 
 def load_json(path: Path) -> object:
@@ -55,6 +59,13 @@ def model_diff(before: Model, after: Model) -> dict:
     component_ids = set(changes.get("components", {}))
     binding_ids = set(changes.get("bindings", {}))
     relation_ids = set(changes.get("relations", {}))
+    maintenance_scenarios: set[str] = set()
+    for change in changes.get("maintenance", {}).values():
+        for item in (change["before"], change["after"]):
+            if item is not None and item["disposition"] != "unchanged":
+                component_ids.update(item["component_ids"])
+                relation_ids.update(item["relation_ids"])
+                maintenance_scenarios.update(item["scenario_ids"])
     for model in (before, after):
         for component in model.components:
             if binding_ids.intersection(component.binding_ids + component.claim.binding_ids):
@@ -69,7 +80,7 @@ def model_diff(before: Model, after: Model) -> dict:
             for relation in model.relations
             if component_ids.intersection((relation.source_id, relation.target_id))
         )
-    scenarios = set(changes.get("scenarios", {}))
+    scenarios = set(changes.get("scenarios", {})) | maintenance_scenarios
     record_targets: set[str] = set()
     for collection in ("opinions", "verifications"):
         for change in changes.get(collection, {}).values():
@@ -100,9 +111,18 @@ def model_diff(before: Model, after: Model) -> dict:
     }
 
 
-def candidate(current: Model, patch_value: object) -> tuple[Model, dict]:
+def candidate(current: Model, patch_value: object, maintenance: list[Maintenance] | None = None) -> tuple[Model, dict]:
+    proposed, patch = patched_model(current, patch_value, maintenance)
+    return revision_candidate(current, proposed, patch.author, patch.summary)
+
+
+def patched_model(
+    current: Model, patch_value: object, maintenance: list[Maintenance] | None = None
+) -> tuple[Model, Patch]:
     patch = parse(Patch, patch_value)
     value = current.model_dump()
+    if maintenance is not None:
+        value["maintenance"] = [item.model_dump() for item in maintenance]
     reserved = {item.id for collection in COLLECTIONS for item in getattr(current, collection)}
     reserved.update(step.id for scenario in current.scenarios for step in scenario.steps)
     reserved.update((current.id, current.project.id))
@@ -128,7 +148,11 @@ def candidate(current: Model, patch_value: object) -> tuple[Model, dict]:
                 if operation.value:
                     raise ModelError("SCHEMA_INVALID", location, "Delete value must be empty")
                 items.remove(existing)
-    proposed = validate_model(value)
+    return validate_model(value), patch
+
+
+def revision_candidate(current: Model, proposed: Model, author: str, summary: str) -> tuple[Model, dict]:
+    proposed.maintenance = maintained_observations(proposed, model_diff)
     previous_bindings = {binding.id: binding.model_dump() for binding in current.bindings}
     for binding in proposed.bindings:
         if binding.id in previous_bindings:
@@ -136,13 +160,16 @@ def candidate(current: Model, patch_value: object) -> tuple[Model, dict]:
     difference = model_diff(current, proposed)
     proposed.revision += 1
     proposed.revisions.append(
-        Revision(
-            revision=proposed.revision,
-            author=patch.author,
-            summary=patch.summary,
-            timestamp=datetime.now(timezone.utc).isoformat(),
-            object_ids=difference["object_ids"],
-            scenario_ids=difference["scenario_ids"],
+        parse(
+            Revision,
+            {
+                "revision": proposed.revision,
+                "author": author,
+                "summary": summary,
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "object_ids": difference["object_ids"],
+                "scenario_ids": difference["scenario_ids"],
+            },
         )
     )
     return validate_model(proposed.model_dump()), difference
@@ -186,6 +213,9 @@ class ModelStore:
         return candidate(self.read(), patch)
 
     def apply(self, expected_revision: int, patch: object) -> dict:
+        return self.commit(expected_revision, lambda current: candidate(current, patch))
+
+    def commit(self, expected_revision: int, build: Callable[[Model], tuple[Model, dict]]) -> dict:
         try:
             with self.lock:
                 current = self.read()
@@ -193,7 +223,7 @@ class ModelStore:
                     raise ModelError(
                         "REVISION_CONFLICT", "/revision", f"Expected {expected_revision}, found {current.revision}"
                     )
-                proposed, difference = candidate(current, patch)
+                proposed, difference = build(current)
                 result = {"committed": True, "revision": proposed.revision, "diff": difference}
                 atomic_write(self.path, proposed.model_dump())
                 return result
@@ -202,6 +232,7 @@ class ModelStore:
 
     def read_scope(self, component_id: str = "", scenario_id: str = "") -> dict:
         model = self.read()
+        model.maintenance = maintained_observations(model, model_diff)
         value = model.model_dump()
         scope = {"component_id": component_id, "scenario_id": scenario_id}
         if not (component_id or scenario_id):
@@ -234,8 +265,8 @@ def _unique_keys(pairs: list[tuple[str, object]]) -> dict:
 def _preserve_binding_history(old: dict, update: dict, location: str) -> None:
     if update.get("history", old["history"])[: len(old["history"])] != old["history"]:
         raise ModelError("HISTORY_REQUIRED", location, "Binding history is append-only")
-    if any(key in update and update[key] != old[key] for key in ("snapshot_id", "source_version", "location")):
+    if any(key in update and update[key] != old[key] for key in BINDING_EVIDENCE_FIELDS):
         history = update.get("history", [])
-        previous = {key: old[key] for key in ("snapshot_id", "source_version", "location")}
+        previous = {key: old[key] for key in BINDING_EVIDENCE_FIELDS}
         if not any(all(entry.get(key) == item for key, item in previous.items()) for entry in history):
             raise ModelError("HISTORY_REQUIRED", location, "Rebinding requires the previous version and location")

@@ -8,8 +8,10 @@ from filelock import Timeout
 
 from architecture_model.errors import ModelError
 from architecture_model.facts import export_facts
-from architecture_model.schema import Model
+from architecture_model.maintenance import preview, query, rebind, refresh, resolve
+from architecture_model.schema import Facts, Model
 from architecture_model.store import ModelStore, load_json
+from architecture_model.validation import parse
 
 
 class Parser(argparse.ArgumentParser):
@@ -29,6 +31,28 @@ def run(arguments: list[str]) -> dict:
     read = actions.add_parser("read")
     read.add_argument("--component", default="")
     read.add_argument("--scenario", default="")
+    maintenance = actions.add_parser(
+        "maintenance", help="Show current interpretation coverage and historical observations"
+    )
+    for name in ("binding", "component", "scenario"):
+        maintenance.add_argument(f"--{name}", default="")
+    for name in ("maintenance-preview", "maintenance-refresh"):
+        action = actions.add_parser(name)
+        action.add_argument("--facts", type=Path, required=True)
+        if name == "maintenance-refresh":
+            action.add_argument("--token", required=True)
+            action.add_argument("--author", required=True)
+            action.add_argument("--expected-revision", type=int, required=True)
+    for name in ("maintenance-rebind", "maintenance-resolve"):
+        action = actions.add_parser(name)
+        action.add_argument("--item", required=True)
+        action.add_argument("--expected-revision", type=int, required=True)
+        if name == "maintenance-rebind":
+            action.add_argument("--candidate", required=True)
+            action.add_argument("--author", required=True)
+            action.add_argument("--reason", required=True)
+        else:
+            action.add_argument("--review", type=Path, required=True)
     for name in ("validate", "diff", "apply"):
         action = actions.add_parser(name)
         action.add_argument("--patch", type=Path, required=name in ("diff", "apply"))
@@ -57,6 +81,16 @@ def run(arguments: list[str]) -> dict:
         return {"model_id": initialized.id, "revision": initialized.revision, "committed": True}
     if args.action == "read":
         return store.read_scope(args.component, args.scenario)
+    if args.action == "maintenance":
+        return query(store.read(), args.binding, args.component, args.scenario)
+    if args.action == "maintenance-preview":
+        return preview(store.read(), parse(Facts, load_json(args.facts)))
+    if args.action == "maintenance-refresh":
+        return refresh(store, parse(Facts, load_json(args.facts)), args.expected_revision, args.token, args.author)
+    if args.action == "maintenance-rebind":
+        return rebind(store, args.item, args.candidate, args.expected_revision, args.author, args.reason)
+    if args.action == "maintenance-resolve":
+        return resolve(store, args.item, load_json(args.review), args.expected_revision)
     if args.action == "apply":
         return store.apply(args.expected_revision, load_json(args.patch))
     if args.patch:

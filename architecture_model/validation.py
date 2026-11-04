@@ -6,7 +6,7 @@ from pydantic import ValidationError
 from architecture_model.errors import ModelError
 from architecture_model.schema import Facts, Model, Opinion, Strict, Verification
 
-COLLECTIONS = ("facts", "bindings", "components", "relations", "scenarios", "opinions", "verifications")
+COLLECTIONS = ("facts", "bindings", "components", "relations", "scenarios", "opinions", "verifications", "maintenance")
 
 
 def digest(value: object) -> str:
@@ -62,6 +62,8 @@ def validate_model(value: object) -> Model:
         for step in scenario.steps:
             _register(objects, step.id, f"/scenarios/{scenario.id}/steps/{step.id}")
     facts = {item.id: item for item in model.facts}
+    if model.maintenance_target_snapshot_id:
+        _references([model.maintenance_target_snapshot_id], set(facts), "/maintenance_target_snapshot_id")
     for snapshot in model.facts:
         validate_facts(snapshot)
         if snapshot.project_id != model.project.id:
@@ -117,6 +119,32 @@ def validate_model(value: object) -> Model:
     versions = {snapshot.source.digest for snapshot in model.facts}
     for verification in model.verifications:
         _references([verification.source_version], versions, f"/verifications/{verification.id}/source_version")
+    for item in model.maintenance:
+        location = f"/maintenance/{item.id}"
+        _references([item.target_snapshot_id], set(facts), location)
+        target = facts[item.target_snapshot_id]
+        if item.target_source_version != target.source.digest or item.compared_revision > model.revision:
+            raise ModelError("MAINTENANCE_INVALID", location, "Target version/revision contradicts model")
+        for choice in item.candidates:
+            expected = target.symbols.get(choice.key) or target.file_locations.get(choice.key)
+            if choice.location != expected:
+                raise ModelError("MAINTENANCE_INVALID", location, "Candidate contradicts target snapshot")
+        if item.resolution and (
+            item.resolution.source_version != item.target_source_version or item.disposition == "unchanged"
+        ):
+            raise ModelError("MAINTENANCE_INVALID", location, "Resolution must address a changed target version")
+        if item.coverage_version:
+            covered = set(item.component_ids + item.relation_ids + item.scenario_ids + item.step_ids)
+            if set(item.object_versions) != covered:
+                raise ModelError(
+                    "MAINTENANCE_INVALID", location, "Coverage must fingerprint every affected interpretation"
+                )
+            if item.resolution and (
+                set(item.resolution.object_ids) != covered or item.resolution.object_versions != item.object_versions
+            ):
+                raise ModelError(
+                    "MAINTENANCE_INVALID", location, "Resolution must retain the reviewed interpretation state"
+                )
     if [revision.revision for revision in model.revisions] != list(range(model.revision + 1)):
         raise ModelError("REVISION_INVALID", "/revisions", "Revision history must run from zero to current revision")
     return model

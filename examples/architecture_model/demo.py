@@ -154,8 +154,10 @@ sys.exit(result.returncode)
         for process in processes:
             if process.poll() is None:
                 process.kill()
-    assert sorted(process.returncode for process in processes) == [0, 1]
-    assert [response["error"]["code"] for response in responses if not response["ok"]] == ["REVISION_CONFLICT"]
+    assert sorted(process.returncode for process in processes) == [0, 1], responses
+    assert [response["error"]["code"] for response in responses if not response["ok"]] == [
+        "REVISION_CONFLICT"
+    ], responses
     return responses
 
 

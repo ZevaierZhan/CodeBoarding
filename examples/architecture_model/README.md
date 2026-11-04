@@ -68,6 +68,72 @@ created Python threads must settle. These guards are test-only and do not import
 P0's experimental audit/atexit machinery into the production library. They are not
 a network sandbox for third-party LSP subprocesses.
 
+## M2: maintain interpretations after source changes
+
+From the repository root, choose a fresh output directory and the same explicit
+real tools (Python 3.12 through `uv run`; no provider or `.env` is required):
+
+```powershell
+uv run python -m examples.architecture_model.maintenance_demo `
+  --output temp/m2-demo `
+  --node (Get-Command node).Source `
+  --pyright temp/p0-tools/node_modules/pyright/langserver.index.js `
+  --tokei temp/p0-tools/tokei.exe
+```
+
+This is a second continuous example; the original M1/P0 experiment above remains
+unchanged. It materializes the same real Python fixture in a temporary source
+tree. All facts come from complete native StaticAnalyzer/Pyright exports; the
+Agent's explanation patches are explicit inputs. Every model/facts command runs
+in an independent process. A failed assertion stops the replay; existing output
+directories are refused.
+
+| Acceptance | Actual replay |
+|---|---|
+| No changes/repeated target | Export S0 twice with identical contents, refresh twice, assert no pending review or duplicate snapshot/observation |
+| Shared A/B change | Change pricing's multiplier; affected scenarios are A/B, original explanations and binding evidence remain intact |
+| Unrelated source | Add unrelated Python function; other bindings remain unchanged despite global digest change |
+| Granularity/positions | Insert blank lines and auxiliary function, then change only auxiliary; pricing still needs conservative whole-file review |
+| Move/rename | Move pricing file and rename total; inspect candidates and explicitly rebind the original binding ID, retaining history |
+| Missing | Delete both replacement pricing files; store missing with original path/version and read scenario B in a new process |
+| Ambiguity | Copy pricing to two replacements; assert ambiguous and explicitly choose rates3, retaining other candidates |
+| Continuous refresh | S1's pending issue survives unrelated S2 and S3; rebinding itself leaves pending review |
+| Review outcome | Revise policy once, confirm other target-specific interpretations, read reasons/versions from new processes |
+| Rebuild | Completely export again with no cache; facts ID matches, existing logical IDs/explanations remain |
+| Failure/scope | Syntax failure publishes nothing; excluding previously included delivery directory produces indeterminate preview with unchanged model bytes |
+| Conflict | Preview, commit another refresh, reject the stale preview with REVISION_CONFLICT and byte equality |
+
+`results.json` stores previews, commits and errors. The final model retains
+unresolved later source changes intentionally: the example demonstrates their
+survival, not automatic clearance. All source changes stay in the output tree.
+The repository's source templates and P0 history are preserved.
+
+For an external business Agent, the normal loop is:
+
+1. Read the same model and its scoped `maintenance` query; inspect prior reasons.
+2. Run `facts export` with explicit tools into a new output path.
+3. Run `maintenance-preview`; inspect basis, target, file-granularity reasons,
+   static calls, impacted scenarios and every plausible candidate.
+4. Submit `maintenance-refresh` with its token and expected revision.
+5. If relocating evidence, use `maintenance-rebind` with the chosen candidate.
+6. Inspect source and submit `maintenance-resolve` for each intended target version,
+   using confirmed or a revised explanation patch and a concrete reason.
+7. Read again in another process. Older unresolved versions remain visible.
+
+Review coverage also follows model edits. Shared new scenarios and changed related
+definitions create a new context without extending any old confirmation. Query
+`current_pending_ids` for current definitions and `pending_ids` for all unresolved
+history. A revised review can create new contexts for other source targets; the
+replay re-queries pending work after each explicit outcome and processes these
+separately. With the P2 coverage rule its final revision is **24** (the earlier
+revision-21 record remains historical). Pre-fix M2 confirmations retain their IDs,
+authors, reasons and declared object sets, with unknown content coverage until a
+new context is explicitly reviewed.
+
+The [protocol](../../docs/architecture-model.md#m2-source-maintenance) documents
+commands, strict review JSON, M1 compatibility and failure semantics. Extend the
+M1 test command above to include all M2 regressions in the same directory.
+
 Real worker API checks run in a child process and assert that the pytest parent's
 configuration, environment and native module state are unchanged. `.coveragerc`
 enables subprocess measurement so those checks remain part of coverage. Additional

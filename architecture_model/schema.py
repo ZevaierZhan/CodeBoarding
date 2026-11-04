@@ -194,6 +194,42 @@ class Project(Strict):
     boundary: Text
 
 
+class MaintenanceCandidate(Strict):
+    key: Text
+    location: Location
+    reasons: list[Text]
+
+
+class MaintenanceResolution(Strict):
+    outcome: Literal["confirmed", "revised"]
+    author: Text
+    reason: Text
+    source_version: Digest
+    timestamp: Text
+    object_ids: list[Text]
+    object_versions: dict[Text, Digest] = Field(default_factory=dict)
+
+
+class Maintenance(Strict):
+    id: Text
+    binding_id: Text
+    basis: HistoricalLocation
+    target_snapshot_id: Text
+    target_source_version: Digest
+    compared_revision: Annotated[int, Field(ge=0)]
+    disposition: Literal["unchanged", "changed", "missing", "ambiguous", "indeterminate"]
+    reasons: list[Text]
+    candidates: list[MaintenanceCandidate]
+    component_ids: list[Text]
+    relation_ids: list[Text]
+    scenario_ids: list[Text]
+    step_ids: list[Text]
+    call_changes: dict[Literal["before", "after"], list[Call]]
+    resolution: MaintenanceResolution | None = None
+    coverage_version: Literal["", "objects-v1"] = ""
+    object_versions: dict[Text, Digest] = Field(default_factory=dict)
+
+
 class Model(Strict):
     schema_version: Literal[1] = 1
     id: Text
@@ -207,6 +243,8 @@ class Model(Strict):
     opinions: list[Opinion] = Field(default_factory=list)
     verifications: list[Verification] = Field(default_factory=list)
     revisions: list[Revision] = Field(default_factory=list)
+    maintenance: list[Maintenance] = Field(default_factory=list)
+    maintenance_target_snapshot_id: str = ""
 
 
 class Operation(Strict):
