@@ -8,6 +8,7 @@ import os
 import subprocess
 import sys
 import tempfile
+from stat import S_ISDIR, S_ISREG
 from pathlib import Path
 
 # The worker owns its process environment, before any native telemetry imports.
@@ -165,7 +166,12 @@ def main() -> int:
 
 
 def _manifest(repo: Path) -> tuple[dict[str, str], dict[str, ast.Module]]:
-    files = PythonAdapter().discover_source_files(repo, RepoIgnoreManager(repo))
+    adapter = PythonAdapter()
+    manager = RepoIgnoreManager(repo)
+    files = [path for path in _strict_files(repo, repo, manager, set()) if path.suffix in adapter.file_extensions]
+    discovered = adapter.discover_source_files(repo, manager)
+    if set(files) != set(discovered):
+        raise ValueError("Native discovery differs from strict source inventory")
     manifest: dict[str, str] = {}
     trees: dict[str, ast.Module] = {}
     for path in sorted(files):
@@ -174,6 +180,25 @@ def _manifest(repo: Path) -> tuple[dict[str, str], dict[str, ast.Module]]:
         trees[relative] = ast.parse(content, filename=relative)
         manifest[relative] = hashlib.sha256(content).hexdigest()
     return manifest, trees
+
+
+def _strict_files(root: Path, directory: Path, manager: RepoIgnoreManager, visited: set[Path]) -> list[Path]:
+    resolved = directory.resolve()
+    if not resolved.is_relative_to(root) or resolved in visited:
+        raise ValueError("Source discovery encountered an escaping or repeated directory")
+    visited.add(resolved)
+    files = []
+    for entry in sorted(directory.iterdir()):
+        if manager.should_ignore(entry):
+            continue
+        mode = entry.stat().st_mode
+        if S_ISDIR(mode):
+            files.extend(_strict_files(root, entry, manager, visited))
+        elif S_ISREG(mode):
+            if not entry.resolve().is_relative_to(root):
+                raise ValueError("Source discovery encountered an escaping file")
+            files.append(entry)
+    return files
 
 
 def _extraction_scope(repo: Path, python_command: list[str], tokei_command: list[str]) -> str:
@@ -188,6 +213,7 @@ def _extraction_scope(repo: Path, python_command: list[str], tokei_command: list
         if "servers" not in path.relative_to(engine_root).parts
     }
     implementation["ignore"] = hashlib.sha256(Path(inspect.getfile(RepoIgnoreManager)).read_bytes()).hexdigest()
+    implementation["exporter"] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     descriptor = {
         "protocol": "python-file-v1",
         "complete": True,

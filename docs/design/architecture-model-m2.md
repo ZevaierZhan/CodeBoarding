@@ -24,7 +24,9 @@ in tools metadata: discovery implementation hashes, effective ignore patterns,
 engine configuration/tool hashes and completeness declaration. The descriptor is
 checked before and after extraction. Old snapshots remain byte/摘要 compatible;
 absent or different descriptors yield indeterminate, never deleted. Export errors
-publish nothing. A complete comparable export can establish missing evidence.
+publish nothing. An independent strict inventory rejects traversal/stat/read errors
+and native discovery disagreement. A complete comparable export can establish
+missing evidence.
 
 ## Operations and compatibility
 

@@ -309,6 +309,9 @@ New exports store `tools.maintenance_scope`, a canonical descriptor containing
 the Python discovery/static-engine/ignore implementation digest, effective ignore
 patterns (including defaults), explicit executable/Pyright entry-file hashes,
 root Pyright/pyproject/setup configuration hashes and completion declaration.
+The implementation digest includes the exporter. An independent strict inventory
+rejects unreadable directories/files, escaping/repeated symlink directories and
+differences from native discovery; native silent skips cannot establish deletion.
 The worker checks rules and source before/after extraction and rejects errors,
 syntax failures and incomplete results. This does not fingerprint all installed
 packages, Pyright dependency contents, environment or external libraries. Supplied
