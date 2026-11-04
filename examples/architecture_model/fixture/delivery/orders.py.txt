@@ -1,0 +1,12 @@
+from persistence.store import save
+from policies.pricing import total
+
+
+def buy(quantity: int) -> str:
+    if quantity <= 0:
+        raise ValueError("quantity must be positive")
+    return save(total(quantity))
+
+
+def quote(quantity: int) -> int:
+    return total(quantity)

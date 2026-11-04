@@ -1,0 +1,394 @@
+{
+  "recorded_at": "2026-11-04T12:18:12.672268+00:00",
+  "review_base": "cbb121b49aba9f7b32520ba0e16705980b0cdcde",
+  "branch": "m1/architecture-model-cli",
+  "pr": "https://github.com/ZevaierZhan/CodeBoarding/pull/2",
+  "draft": true,
+  "pr_base": "d02b718e26fcb5ee68c07398fe85a6aea1ac3e39",
+  "environment": {
+    "platform": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.13",
+    "coverage": "7.13.1"
+  },
+  "red_signals": {
+    "resolver_and_record_tests": {
+      "passed": 1,
+      "failed": 8
+    },
+    "real_explicit_tools": {
+      "passed": 0,
+      "failed": 3
+    },
+    "order_alone": {
+      "passed": 2,
+      "failed": 0
+    },
+    "order_after_real_export": {
+      "passed": 1,
+      "failed": 2
+    },
+    "linux_target_mypy": {
+      "exit_code": 1,
+      "error": "architecture_model/facts.py:59 CREATE_NEW_PROCESS_GROUP attr-defined"
+    }
+  },
+  "focused": {
+    "command": "uv run pytest tests/architecture_model -q --cov=architecture_model --cov-report=term-missing --cov-fail-under=80",
+    "exit_code": 0,
+    "passed": 84,
+    "failed": 0,
+    "skipped": 0,
+    "duration_seconds": 165.68,
+    "coverage_percent": 97.0,
+    "covered_statements": 647,
+    "total_statements": 667,
+    "subprocess_measurement": ".coveragerc patch=subprocess, including isolated real worker"
+  },
+  "new_regressions": {
+    "exit_code": 0,
+    "passed": 12,
+    "failed": 0,
+    "skipped": 0,
+    "duration_seconds": 24.73,
+    "record_lifecycle": {
+      "cases": 4,
+      "stages_per_case": 5,
+      "verified": [
+        "scenario reference",
+        "step ownership",
+        "create",
+        "update body/result",
+        "retarget before/after union",
+        "delete",
+        "preview preserves bytes",
+        "revision/diff consistency"
+      ]
+    }
+  },
+  "explicit_tool_evidence": [
+    {
+      "case": "success",
+      "session": "pytest-488",
+      "facts_published": true,
+      "tokei_actual_arguments": "-o json",
+      "python_process_marker": {
+        "node": "E:\\Temp\\pytest-of-BW011222\\pytest-488\\test_real_export_uses_explicit0\\requested-node.exe",
+        "argv": [
+          "--stdio"
+        ]
+      },
+      "installed_pyright_used": false,
+      "model_revision_after": 0,
+      "snapshot_tools": {
+        "engine": "StaticAnalyzer/PythonAdapter",
+        "node": "E:\\Temp\\pytest-of-BW011222\\pytest-488\\test_real_export_uses_explicit0\\requested-node.exe",
+        "pyright_js": "E:\\Temp\\pytest-of-BW011222\\pytest-488\\test_real_export_uses_explicit0\\requested-pyright.js",
+        "tokei": "E:\\Temp\\pytest-of-BW011222\\pytest-488\\test_real_export_uses_explicit0\\requested-tokei.cmd",
+        "python_command": "[\"E:\\\\Temp\\\\pytest-of-BW011222\\\\pytest-488\\\\test_real_export_uses_explicit0\\\\requested-node.exe\", \"E:\\\\Temp\\\\pytest-of-BW011222\\\\pytest-488\\\\test_real_export_uses_explicit0\\\\requested-pyright.js\", \"--stdio\"]",
+        "tokei_command": "[\"E:\\\\Temp\\\\pytest-of-BW011222\\\\pytest-488\\\\test_real_export_uses_explicit0\\\\requested-tokei.cmd\", \"-o\", \"json\"]"
+      },
+      "error_code_asserted_by_test": "",
+      "model_bytes_preserved_asserted_by_test": true
+    },
+    {
+      "case": "tokei",
+      "session": "pytest-488",
+      "facts_published": false,
+      "tokei_actual_arguments": "-o json",
+      "python_process_marker": {},
+      "installed_pyright_used": false,
+      "model_revision_after": 0,
+      "snapshot_tools": {},
+      "error_code_asserted_by_test": "FACTS_FAILED",
+      "model_bytes_preserved_asserted_by_test": true
+    },
+    {
+      "case": "pyright",
+      "session": "pytest-488",
+      "facts_published": false,
+      "tokei_actual_arguments": "-o json",
+      "python_process_marker": {
+        "node": "E:\\Temp\\pytest-of-BW011222\\pytest-488\\test_real_export_uses_explicit2\\requested-node.exe",
+        "argv": [
+          "--stdio"
+        ]
+      },
+      "installed_pyright_used": false,
+      "model_revision_after": 0,
+      "snapshot_tools": {},
+      "error_code_asserted_by_test": "FACTS_FAILED",
+      "model_bytes_preserved_asserted_by_test": true
+    }
+  ],
+  "order_after_fix": {
+    "alone": {
+      "exit_code": 0,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 1.16
+    },
+    "after_real_export": {
+      "exit_code": 0,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 101.01
+    },
+    "parent_state_assertions": [
+      "VSCODE_CONFIG equal",
+      "environment equal",
+      "worker module identity unchanged",
+      "telemetry module identity unchanged"
+    ]
+  },
+  "linux": {
+    "environment": "Debian WSL, real Linux CPython 3.12.13; frozen repo dependencies in an isolated Linux venv",
+    "current_mypy": {
+      "exit_code": 0,
+      "files": 352,
+      "output": "warning: The `tool.uv.dev-dependencies` field (used in `pyproject.toml`) is deprecated and will be removed in a future release; use `dependency-groups.dev` instead\nSuccess: no issues found in 352 source files"
+    },
+    "base_mypy": {
+      "exit_code": 0,
+      "files": 333,
+      "output": "Success: no issues found in 333 source files\nwarning: The `tool.uv.dev-dependencies` field (used in `pyproject.toml`) is deprecated and will be removed in a future release; use `dependency-groups.dev` instead"
+    },
+    "selected_regressions": {
+      "exit_code": 0,
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 2.31
+    }
+  },
+  "engineering": [
+    {
+      "name": "black",
+      "command": [
+        "uv",
+        "run",
+        "black",
+        ".",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "timeout_seconds": 120,
+      "elapsed_seconds": 6.86
+    },
+    {
+      "name": "mypy",
+      "command": [
+        "uv",
+        "run",
+        "mypy",
+        "."
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "timeout_seconds": 120,
+      "elapsed_seconds": 3.36
+    },
+    {
+      "name": "full",
+      "command": [
+        "uv",
+        "run",
+        "pytest",
+        "--cov=.",
+        "--cov-report=term",
+        "--cov-fail-under=80"
+      ],
+      "exit_code": 1,
+      "timed_out": true,
+      "timeout_seconds": 300,
+      "elapsed_seconds": 300.38
+    }
+  ],
+  "full_suite": {
+    "collected": 2783,
+    "last_progress": "tests/infra/repo_utils/test_non_ascii_paths.py, about 37%",
+    "coverage_threshold_confirmed": false,
+    "final_coverage_report_produced": false,
+    "observed_failures": "Outside M1; not individually attributed",
+    "private_integration": "Not run",
+    "bounded_driver_exit_code": 0,
+    "whole_repository_gate_passed": false
+  },
+  "windows_infra": {
+    "exit_code": 1,
+    "passed": 131,
+    "failed": 4,
+    "skipped": 4,
+    "duration_seconds": 65.03,
+    "baseline_reproduction": {
+      "exit_code": 1,
+      "failed": 4,
+      "duration_seconds": 1.13,
+      "ref": "origin/main",
+      "tests": [
+        "test_install_node_tools_prefers_embedded_npm",
+        "test_rejects_non_executable_node_binary",
+        "test_full_install_flow_with_mocked_download",
+        "test_gz_asset_is_decompressed_and_chmod_set"
+      ]
+    }
+  },
+  "continuous": {
+    "status": "PASS",
+    "revision": 10,
+    "model_sha256": "07c09494645f1a2b918c3bdf40d3e59d28343d5d25f0eec0c74c0408c3934475",
+    "output": "temp/m1-p2-demo",
+    "p0_symbols": 8,
+    "p0_calls": 3,
+    "source_change_detected": true,
+    "facts_did_not_modify_model": true,
+    "race_successes": 1,
+    "race_errors": [
+      "REVISION_CONFLICT"
+    ],
+    "stages": [
+      {
+        "summary": "Save startup explanation",
+        "revision": 1,
+        "error": null,
+        "affected_scenarios": [
+          "startup"
+        ]
+      },
+      {
+        "summary": "Add business A",
+        "revision": 2,
+        "error": null,
+        "affected_scenarios": [
+          "business-A"
+        ]
+      },
+      {
+        "summary": "Add business B sharing policy",
+        "revision": 3,
+        "error": null,
+        "affected_scenarios": [
+          "business-B"
+        ]
+      },
+      {
+        "summary": "Clarify shared policy",
+        "revision": 4,
+        "error": null,
+        "affected_scenarios": [
+          "business-A",
+          "business-B"
+        ]
+      },
+      {
+        "summary": "Cross-directory members, split formatter, rename and reparent",
+        "revision": 5,
+        "error": null,
+        "affected_scenarios": [
+          "business-A",
+          "business-B"
+        ]
+      },
+      {
+        "summary": "Reject deletion with one omitted scenario reference",
+        "revision": null,
+        "error": "DANGLING_REFERENCE",
+        "affected_scenarios": []
+      },
+      {
+        "summary": "Finish split with explicit reference repair",
+        "revision": 6,
+        "error": null,
+        "affected_scenarios": [
+          "business-A"
+        ]
+      },
+      {
+        "summary": "Merge formatter into policy without deleting steps",
+        "revision": 7,
+        "error": null,
+        "affected_scenarios": [
+          "business-A"
+        ]
+      },
+      {
+        "summary": "Reject parent cycle",
+        "revision": null,
+        "error": "PARENT_CYCLE",
+        "affected_scenarios": []
+      },
+      {
+        "summary": "Save explicitly hypothetical business loop",
+        "revision": 8,
+        "error": null,
+        "affected_scenarios": [
+          "business-B"
+        ]
+      },
+      {
+        "summary": "Keep missing source evidence",
+        "revision": 10,
+        "error": null,
+        "affected_scenarios": [
+          "business-A",
+          "business-B"
+        ]
+      },
+      {
+        "summary": "Reject internal missing binding",
+        "revision": null,
+        "error": "DANGLING_REFERENCE",
+        "affected_scenarios": []
+      }
+    ]
+  },
+  "native_guard": {
+    "status": "PASS",
+    "attempts": [],
+    "unfinished_threads": [],
+    "telemetry_client_absent": true,
+    "symbols": 8,
+    "calls": 3
+  },
+  "attribution": {
+    "fixed_pr_regressions": [
+      "explicit tools replaced by discovery",
+      "review records omitted from scenario impact",
+      "real-export test global pollution",
+      "Linux CREATE_NEW_PROCESS_GROUP mypy error"
+    ],
+    "remaining_windows_type_error": "Unchanged SIGKILL attr-defined at static_analyzer/workspace_dependencies.py:78; baseline-reproduced in prior validation",
+    "other_full_suite_failures": "Unattributed; whole repository 80% remains unconfirmed"
+  },
+  "source_sha256": {
+    ".coveragerc": "67a37850f985c25d82b8da5454ef6d7031a9967035e6e12d0f1e3347bb4c61d7",
+    "architecture_model/cli.py": "58f362323254d83e43c2f61e8e60336501793599b5a0437498193f0f6246bba6",
+    "architecture_model/errors.py": "8e0b7e53af71a083a55e509f410c0447ff58e1207e187e9ddebb97129f2d6dcf",
+    "architecture_model/facts.py": "4b12da02f420441599fcf07160c6f025d28201adba7ab703eddba83b7fc97d8f",
+    "architecture_model/facts_worker.py": "e4fc4a58b4a489716a89222253128b07783a47307720ae10540a471d92b7bc54",
+    "architecture_model/schema.py": "854f30300b52dcff1a2d1fa4114dcf510c3811fad8a355e53c1d725bff339e80",
+    "architecture_model/store.py": "750a38ae7b2044fbc555fbe1f6f72c8a58f1f4da38021b46d1a68a5c94ed219c",
+    "architecture_model/validation.py": "4eeb9d5e27beda19374d78d643d6714e64edfb058b124378ec8d8d0fb0903e29",
+    "architecture_model/__init__.py": "d1419d4aebc2e72a5d525a2759915501dd6a378904daca75567587432bb9c04a",
+    "architecture_model/__main__.py": "39bead821a699e667c3c4bbc24ba6a68f4e00c9527f556d9c065a2a081d4ee0b",
+    "infra/tool_registry/manifest.py": "f7cb43af69d3abe9f0ff08ccc781dea312419a5adff983ef64b52be4f62939bd",
+    "tests/architecture_model/conftest.py": "6315eda92dc47e7490d3687f223c661ea9d11e8c92d88cae64708c3eb42eecf0",
+    "tests/architecture_model/native_probe.py": "3a0927534e366a68f1c778770c0a015f900a13941c335813a70ad996e2351058",
+    "tests/architecture_model/real_export_probe.py": "32979af21decc74505588fc0e4938c49268cc802e915466a62f97460d4369a85",
+    "tests/architecture_model/test_cli.py": "998bf407f8e06b02b35c0f10c6aa24629a29960683c69c7de39a843df1c05e57",
+    "tests/architecture_model/test_facts.py": "1222ffa6b33afe3e88d870a241a61b0ad2f518fb94ae8cd5c5284509265b740d",
+    "tests/architecture_model/test_processes.py": "b80ef7f318e3ac237c0bf2139c43338148f52fdc9c743460cc92f3c7fe36ea28",
+    "tests/architecture_model/test_record_impact.py": "10b368436ad57a3dd19cdd3745946f1c7414fb3905f9cb9bf5bca8d9b04f8174",
+    "tests/architecture_model/test_store.py": "ba7efa0bcfbe4df3cc4ffac8bbee27e74b0a7fb7590b75cc48aba892cc30f787",
+    "tests/architecture_model/test_tool_priority.py": "eadba56c2b2150886d682cbdb499d1945e9f926a6e4ab9328df4fad546ca57ec",
+    "examples/architecture_model/demo.py": "5f18cd84a467cacf3de6727b6270ecbba2f1a48bceafc05f3657c20ed90b5e2d"
+  },
+  "packaging": {
+    "wheel_exit_code": 0,
+    "modules_match_current_source": 10,
+    "installed_cli_validation_revision": 10,
+    "schema_matches_runtime": true
+  }
+}

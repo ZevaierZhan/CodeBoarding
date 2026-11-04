@@ -1,0 +1,5 @@
+from delivery.orders import buy, quote
+
+
+def start() -> dict:
+    return {"buy": buy, "quote": quote}

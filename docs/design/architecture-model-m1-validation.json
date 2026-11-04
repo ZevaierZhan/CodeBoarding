@@ -1,0 +1,466 @@
+{
+  "recorded_at": "2026-11-04T11:14:18.361353+00:00",
+  "development_base": "d02b718e26fcb5ee68c07398fe85a6aea1ac3e39",
+  "branch": "m1/architecture-model-cli",
+  "pr_base": "main",
+  "python": "3.12.13",
+  "platform": "Windows-11-10.0.26100-SP0",
+  "node": "v24.20.0",
+  "pyright": "1.1.400",
+  "tokei": "tokei 14.0.0 compiled with serialization support: json",
+  "focused": {
+    "exit_code": 0,
+    "passed": 72,
+    "skipped": 0,
+    "duration_seconds": 36.71,
+    "coverage_percent": 96.94,
+    "covered_statements": 634,
+    "total_statements": 654,
+    "command": "uv run pytest tests/architecture_model -q --cov=architecture_model --cov-report=term-missing --cov-fail-under=80",
+    "real_engine_enabled": "M1_NODE, M1_PYRIGHT, M1_TOKEI explicitly configured"
+  },
+  "native_guard": {
+    "status": "PASS",
+    "attempts": [],
+    "unfinished_threads": [],
+    "telemetry_client_absent": true,
+    "symbols": 8,
+    "calls": 3
+  },
+  "continuous": {
+    "status": "PASS",
+    "final_revision": 10,
+    "model_sha256": "42a200810fd7f4020af9d6515f2f8df3c3ad3706e105aff00fd7175d0bd7933f",
+    "command": "uv run python examples/architecture_model/demo.py --output temp/m1-demo-delivery --node <explicit-node> --pyright temp/p0-tools/node_modules/pyright/langserver.index.js --tokei temp/p0-tools/tokei.exe",
+    "original_source_version": "8df9a3ab494a8955629a64754a296eec285d3b6c31dd483ec705d41da65f6203",
+    "changed_source_version": "8f75fbdcc2e7fb64549121d149cd12d6ff3f183ea8f24b49f8162d805cf8391e",
+    "original_calls": [
+      {
+        "source": "delivery.request.submit_order",
+        "target": "orchestration.order.place_order",
+        "sites": [
+          {
+            "path": "delivery/request.py",
+            "line": 7,
+            "column": 12
+          }
+        ]
+      },
+      {
+        "source": "orchestration.order.place_order",
+        "target": "persistence.store.save_order",
+        "sites": [
+          {
+            "path": "orchestration/order.py",
+            "line": 7,
+            "column": 12
+          }
+        ]
+      },
+      {
+        "source": "orchestration.order.place_order",
+        "target": "policies.pricing.calculate_total",
+        "sites": [
+          {
+            "path": "orchestration/order.py",
+            "line": 6,
+            "column": 13
+          }
+        ]
+      }
+    ],
+    "changed_calls": [
+      {
+        "source": "delivery.request.submit_order",
+        "target": "orchestration.order.place_order",
+        "sites": [
+          {
+            "path": "delivery/request.py",
+            "line": 7,
+            "column": 12
+          }
+        ]
+      },
+      {
+        "source": "orchestration.order.place_order",
+        "target": "persistence.receipt.format_receipt",
+        "sites": [
+          {
+            "path": "orchestration/order.py",
+            "line": 7,
+            "column": 12
+          }
+        ]
+      },
+      {
+        "source": "orchestration.order.place_order",
+        "target": "policies.pricing.calculate_total",
+        "sites": [
+          {
+            "path": "orchestration/order.py",
+            "line": 6,
+            "column": 13
+          }
+        ]
+      }
+    ],
+    "original_symbol_locations": {
+      "delivery/request.py|delivery.request.submit_order": {
+        "path": "delivery/request.py",
+        "symbol": "delivery.request.submit_order",
+        "kind": "FUNCTION",
+        "content_hash": "6a3e64ffc06b20b21dea36417b7e94175bdca5febe9906c1e79d858010e2d606",
+        "start": 4,
+        "end": 7
+      },
+      "delivery/status.py|delivery.status.present_status": {
+        "path": "delivery/status.py",
+        "symbol": "delivery.status.present_status",
+        "kind": "FUNCTION",
+        "content_hash": "262d0e5d294115290440bc035eeec1d27fbaaa1adb823c71969e5c8679357320",
+        "start": 1,
+        "end": 2
+      },
+      "orchestration/cancel.py|orchestration.cancel.cancel_order": {
+        "path": "orchestration/cancel.py",
+        "symbol": "orchestration.cancel.cancel_order",
+        "kind": "FUNCTION",
+        "content_hash": "65455c1734d2c1e50b4aa602c2ac887efd6510828c6a85e2eef80d94c9ee3c0c",
+        "start": 1,
+        "end": 2
+      },
+      "orchestration/order.py|orchestration.order.place_order": {
+        "path": "orchestration/order.py",
+        "symbol": "orchestration.order.place_order",
+        "kind": "FUNCTION",
+        "content_hash": "82a0dc95da6dce83d49f29bc8d217d25c45f9b82d75638f67ddc493516a6dba8",
+        "start": 5,
+        "end": 7
+      },
+      "persistence/receipt.py|persistence.receipt.format_receipt": {
+        "path": "persistence/receipt.py",
+        "symbol": "persistence.receipt.format_receipt",
+        "kind": "FUNCTION",
+        "content_hash": "c11b36cc4468612397051784dd9a85bda7acec31efacf6668f63164a3defb724",
+        "start": 1,
+        "end": 2
+      },
+      "persistence/store.py|persistence.store.save_order": {
+        "path": "persistence/store.py",
+        "symbol": "persistence.store.save_order",
+        "kind": "FUNCTION",
+        "content_hash": "0187c72063e4c96d99958f6270317d7c87c48beac66d596fc1c7e4d64a9d1f14",
+        "start": 1,
+        "end": 2
+      },
+      "policies/discount.py|policies.discount.apply_discount": {
+        "path": "policies/discount.py",
+        "symbol": "policies.discount.apply_discount",
+        "kind": "FUNCTION",
+        "content_hash": "631560ccc62e263951ae54c321114f1c7df11d404c6ac157e64c72802ab8e9b9",
+        "start": 1,
+        "end": 2
+      },
+      "policies/pricing.py|policies.pricing.calculate_total": {
+        "path": "policies/pricing.py",
+        "symbol": "policies.pricing.calculate_total",
+        "kind": "FUNCTION",
+        "content_hash": "b3bfcd0675e118d9c5509c94d5e313964c146311c47745cbc8e70c2519582543",
+        "start": 1,
+        "end": 2
+      }
+    },
+    "facts_did_not_modify_model": true,
+    "stages": [
+      {
+        "summary": "Save startup explanation",
+        "revision": 1,
+        "error": null,
+        "changed_collections": [
+          "facts",
+          "bindings",
+          "components",
+          "scenarios"
+        ],
+        "affected_scenarios": [
+          "startup"
+        ]
+      },
+      {
+        "summary": "Add business A",
+        "revision": 2,
+        "error": null,
+        "changed_collections": [
+          "scenarios"
+        ],
+        "affected_scenarios": [
+          "business-A"
+        ]
+      },
+      {
+        "summary": "Add business B sharing policy",
+        "revision": 3,
+        "error": null,
+        "changed_collections": [
+          "scenarios"
+        ],
+        "affected_scenarios": [
+          "business-B"
+        ]
+      },
+      {
+        "summary": "Clarify shared policy",
+        "revision": 4,
+        "error": null,
+        "changed_collections": [
+          "components"
+        ],
+        "affected_scenarios": [
+          "business-A",
+          "business-B"
+        ]
+      },
+      {
+        "summary": "Cross-directory members, split formatter, rename and reparent",
+        "revision": 5,
+        "error": null,
+        "changed_collections": [
+          "components"
+        ],
+        "affected_scenarios": [
+          "business-A",
+          "business-B"
+        ]
+      },
+      {
+        "summary": "Reject deletion with one omitted scenario reference",
+        "revision": null,
+        "error": "DANGLING_REFERENCE",
+        "changed_collections": [],
+        "affected_scenarios": []
+      },
+      {
+        "summary": "Finish split with explicit reference repair",
+        "revision": 6,
+        "error": null,
+        "changed_collections": [
+          "components",
+          "scenarios"
+        ],
+        "affected_scenarios": [
+          "business-A"
+        ]
+      },
+      {
+        "summary": "Merge formatter into policy without deleting steps",
+        "revision": 7,
+        "error": null,
+        "changed_collections": [
+          "components",
+          "scenarios"
+        ],
+        "affected_scenarios": [
+          "business-A"
+        ]
+      },
+      {
+        "summary": "Reject parent cycle",
+        "revision": null,
+        "error": "PARENT_CYCLE",
+        "changed_collections": [],
+        "affected_scenarios": []
+      },
+      {
+        "summary": "Save explicitly hypothetical business loop",
+        "revision": 8,
+        "error": null,
+        "changed_collections": [
+          "scenarios"
+        ],
+        "affected_scenarios": [
+          "business-B"
+        ]
+      },
+      {
+        "summary": "Keep missing source evidence",
+        "revision": 10,
+        "error": null,
+        "changed_collections": [
+          "bindings"
+        ],
+        "affected_scenarios": [
+          "business-A",
+          "business-B"
+        ]
+      },
+      {
+        "summary": "Reject internal missing binding",
+        "revision": null,
+        "error": "DANGLING_REFERENCE",
+        "changed_collections": [],
+        "affected_scenarios": []
+      }
+    ],
+    "race_successes": 1,
+    "race_errors": [
+      "REVISION_CONFLICT"
+    ],
+    "shared_component": "policy",
+    "final_scenarios": {
+      "startup": {
+        "order": [
+          "startup-register"
+        ],
+        "component_ids": [
+          [
+            "application"
+          ]
+        ]
+      },
+      "business-A": {
+        "order": [
+          "business-A-buy",
+          "business-A-price",
+          "business-A-format"
+        ],
+        "component_ids": [
+          [
+            "entry"
+          ],
+          [
+            "policy"
+          ],
+          [
+            "policy"
+          ]
+        ]
+      },
+      "business-B": {
+        "order": [
+          "business-B-quote",
+          "business-B-price"
+        ],
+        "component_ids": [
+          [
+            "entry"
+          ],
+          [
+            "policy"
+          ]
+        ]
+      }
+    },
+    "review_binding": {
+      "id": "bind-total",
+      "snapshot_id": "d7c5c971ae89e13313dba76b0bb5ff424eab34833b157d68a6f419d1272b8f5e",
+      "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+      "location": {
+        "path": "policies/pricing.py",
+        "symbol": "policies.pricing.total",
+        "kind": "FUNCTION",
+        "content_hash": "42868ea99cc362de16f58190ac37c79d345533641e5662adcad76de06154c77c",
+        "start": 1,
+        "end": 2
+      },
+      "status": "missing",
+      "reason": "Agent observed pricing.py deleted; historical location retained.",
+      "history": []
+    }
+  },
+  "engineering": [
+    {
+      "name": "black",
+      "command": [
+        "uv",
+        "run",
+        "black",
+        "."
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 2.25
+    },
+    {
+      "name": "mypy",
+      "command": [
+        "uv",
+        "run",
+        "mypy",
+        "."
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "elapsed_seconds": 5.14
+    },
+    {
+      "name": "full",
+      "command": [
+        "uv",
+        "run",
+        "pytest",
+        "--cov=.",
+        "--cov-report=term",
+        "--cov-fail-under=80"
+      ],
+      "exit_code": 1,
+      "timed_out": true,
+      "elapsed_seconds": 180.25
+    }
+  ],
+  "full_suite": {
+    "collected": 2771,
+    "stopped_near": "test_call_graph_builder.py, about 60%",
+    "coverage_threshold_confirmed": false,
+    "other_failures": "Observed; not individually attributed",
+    "subsequent_change": "Worker switched to shared stderr logging; focused tests, native probe, CLI replay, Black, mypy and wheel rerun afterwards."
+  },
+  "baseline_reproduction": {
+    "ref": "d02b718e26fcb5ee68c07398fe85a6aea1ac3e39",
+    "types": {
+      "exit_code": 1,
+      "files": 333,
+      "error": "Same Windows signal.SIGKILL attr-defined at static_analyzer/workspace_dependencies.py:78"
+    },
+    "scope": {
+      "exit_code": 1,
+      "passed": 20,
+      "failed": 2,
+      "duration_seconds": 6.72,
+      "tests": [
+        "test_fallback_descriptions_name_files_relative_to_the_repository",
+        "test_populates_only_authoritative_members_across_languages"
+      ]
+    },
+    "source_comparison": "Both affected production files unchanged relative to origin/main"
+  },
+  "existing_focused": {
+    "exit_code": 1,
+    "passed": 63,
+    "failed": 2,
+    "duration_seconds": 5.04,
+    "failures": "Same baseline ScopeAssembler Windows paths"
+  },
+  "wheel": {
+    "command": "uv build --wheel",
+    "exit_code": 0,
+    "architecture_modules": 9,
+    "console_entrypoint_present": true
+  },
+  "private_integration": "Not run; private CodeBoarding-tests unavailable",
+  "source_sha256": {
+    "architecture_model/cli.py": "58f362323254d83e43c2f61e8e60336501793599b5a0437498193f0f6246bba6",
+    "architecture_model/errors.py": "8e0b7e53af71a083a55e509f410c0447ff58e1207e187e9ddebb97129f2d6dcf",
+    "architecture_model/facts.py": "5f7f1e7aa39c9cdef3e3d21aa43e74854eb12c6de591c3a59478530dedf9ec02",
+    "architecture_model/facts_worker.py": "e06317dbe553fb0fad9a08f294ed99703a3547fc250bee9bcc0a61ced6a9d89f",
+    "architecture_model/schema.py": "854f30300b52dcff1a2d1fa4114dcf510c3811fad8a355e53c1d725bff339e80",
+    "architecture_model/store.py": "f955050cce31d80e25107b77e2d51c3eda745c74970a0da1c1696a72803c2e84",
+    "architecture_model/validation.py": "4eeb9d5e27beda19374d78d643d6714e64edfb058b124378ec8d8d0fb0903e29",
+    "architecture_model/__init__.py": "d1419d4aebc2e72a5d525a2759915501dd6a378904daca75567587432bb9c04a",
+    "architecture_model/__main__.py": "39bead821a699e667c3c4bbc24ba6a68f4e00c9527f556d9c065a2a081d4ee0b",
+    "examples/architecture_model/demo.py": "5f18cd84a467cacf3de6727b6270ecbba2f1a48bceafc05f3657c20ed90b5e2d",
+    "tests/architecture_model/native_probe.py": "3a0927534e366a68f1c778770c0a015f900a13941c335813a70ad996e2351058",
+    "docs/architecture-model-v1.schema.json": "1173f8daf63228bfbaec4e18a518123f2925dd73ede7bc3a24d44e2eb5dbaab3"
+  },
+  "record_scope": "Historical initial M1 validation at cbb121b4; use latest_validation for the review fixes",
+  "latest_validation": "architecture-model-m1-p2-validation.json"
+}

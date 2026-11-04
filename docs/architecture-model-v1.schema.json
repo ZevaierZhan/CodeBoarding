@@ -1,0 +1,871 @@
+{
+  "$defs": {
+    "Binding": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "minLength": 1,
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_version": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Source Version",
+          "type": "string"
+        },
+        "location": {
+          "$ref": "#/$defs/Location"
+        },
+        "status": {
+          "enum": [
+            "current",
+            "changed",
+            "missing",
+            "ambiguous"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "reason": {
+          "default": "",
+          "title": "Reason",
+          "type": "string"
+        },
+        "history": {
+          "items": {
+            "$ref": "#/$defs/HistoricalLocation"
+          },
+          "title": "History",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "snapshot_id",
+        "source_version",
+        "location",
+        "status"
+      ],
+      "title": "Binding",
+      "type": "object"
+    },
+    "Call": {
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "minLength": 1,
+          "title": "Source",
+          "type": "string"
+        },
+        "target": {
+          "minLength": 1,
+          "title": "Target",
+          "type": "string"
+        },
+        "sites": {
+          "items": {
+            "$ref": "#/$defs/CallSite"
+          },
+          "title": "Sites",
+          "type": "array"
+        }
+      },
+      "required": [
+        "source",
+        "target",
+        "sites"
+      ],
+      "title": "Call",
+      "type": "object"
+    },
+    "CallSite": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        },
+        "line": {
+          "minimum": 1,
+          "title": "Line",
+          "type": "integer"
+        },
+        "column": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Column",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "line"
+      ],
+      "title": "CallSite",
+      "type": "object"
+    },
+    "Claim": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "code_fact",
+            "inference",
+            "intent_hypothesis"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "explanation": {
+          "minLength": 1,
+          "title": "Explanation",
+          "type": "string"
+        },
+        "binding_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Binding Ids",
+          "type": "array"
+        },
+        "assumptions": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Assumptions",
+          "type": "array"
+        },
+        "issues": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Issues",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "explanation",
+        "binding_ids"
+      ],
+      "title": "Claim",
+      "type": "object"
+    },
+    "Component": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "responsibility": {
+          "minLength": 1,
+          "title": "Responsibility",
+          "type": "string"
+        },
+        "rationale": {
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "parent_id": {
+          "default": "",
+          "title": "Parent Id",
+          "type": "string"
+        },
+        "binding_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Binding Ids",
+          "type": "array"
+        },
+        "claim": {
+          "$ref": "#/$defs/Claim"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "responsibility",
+        "rationale",
+        "binding_ids",
+        "claim"
+      ],
+      "title": "Component",
+      "type": "object"
+    },
+    "Facts": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "project_id": {
+          "minLength": 1,
+          "title": "Project Id",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceVersion"
+        },
+        "symbols": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Location"
+          },
+          "propertyNames": {
+            "minLength": 1
+          },
+          "title": "Symbols",
+          "type": "object"
+        },
+        "file_locations": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Location"
+          },
+          "propertyNames": {
+            "minLength": 1
+          },
+          "title": "File Locations",
+          "type": "object"
+        },
+        "calls": {
+          "items": {
+            "$ref": "#/$defs/Call"
+          },
+          "title": "Calls",
+          "type": "array"
+        },
+        "tools": {
+          "additionalProperties": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "propertyNames": {
+            "minLength": 1
+          },
+          "title": "Tools",
+          "type": "object"
+        },
+        "limitations": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "project_id",
+        "source",
+        "symbols",
+        "calls",
+        "tools",
+        "limitations"
+      ],
+      "title": "Facts",
+      "type": "object"
+    },
+    "HistoricalLocation": {
+      "additionalProperties": false,
+      "properties": {
+        "snapshot_id": {
+          "minLength": 1,
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_version": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Source Version",
+          "type": "string"
+        },
+        "location": {
+          "$ref": "#/$defs/Location"
+        },
+        "reason": {
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "snapshot_id",
+        "source_version",
+        "location",
+        "reason"
+      ],
+      "title": "HistoricalLocation",
+      "type": "object"
+    },
+    "Location": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        },
+        "symbol": {
+          "default": "",
+          "title": "Symbol",
+          "type": "string"
+        },
+        "kind": {
+          "minLength": 1,
+          "title": "Kind",
+          "type": "string"
+        },
+        "content_hash": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Content Hash",
+          "type": "string"
+        },
+        "start": {
+          "minimum": 1,
+          "title": "Start",
+          "type": "integer"
+        },
+        "end": {
+          "minimum": 1,
+          "title": "End",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "kind",
+        "content_hash",
+        "start",
+        "end"
+      ],
+      "title": "Location",
+      "type": "object"
+    },
+    "Opinion": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "author": {
+          "minLength": 1,
+          "title": "Author",
+          "type": "string"
+        },
+        "text": {
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "stance": {
+          "enum": [
+            "accept",
+            "correct",
+            "disagree",
+            "question"
+          ],
+          "title": "Stance",
+          "type": "string"
+        },
+        "object_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Object Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "author",
+        "text",
+        "stance",
+        "object_ids"
+      ],
+      "title": "Opinion",
+      "type": "object"
+    },
+    "Project": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "boundary": {
+          "minLength": 1,
+          "title": "Boundary",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "boundary"
+      ],
+      "title": "Project",
+      "type": "object"
+    },
+    "Relation": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "source_id": {
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        },
+        "target_id": {
+          "minLength": 1,
+          "title": "Target Id",
+          "type": "string"
+        },
+        "meaning": {
+          "minLength": 1,
+          "title": "Meaning",
+          "type": "string"
+        },
+        "claim": {
+          "$ref": "#/$defs/Claim"
+        }
+      },
+      "required": [
+        "id",
+        "source_id",
+        "target_id",
+        "meaning",
+        "claim"
+      ],
+      "title": "Relation",
+      "type": "object"
+    },
+    "Revision": {
+      "additionalProperties": false,
+      "properties": {
+        "revision": {
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "author": {
+          "minLength": 1,
+          "title": "Author",
+          "type": "string"
+        },
+        "summary": {
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string"
+        },
+        "timestamp": {
+          "minLength": 1,
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "object_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Object Ids",
+          "type": "array"
+        },
+        "scenario_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Scenario Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "revision",
+        "author",
+        "summary",
+        "timestamp",
+        "object_ids",
+        "scenario_ids"
+      ],
+      "title": "Revision",
+      "type": "object"
+    },
+    "Scenario": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "entry_step_id": {
+          "minLength": 1,
+          "title": "Entry Step Id",
+          "type": "string"
+        },
+        "steps": {
+          "items": {
+            "$ref": "#/$defs/Step"
+          },
+          "title": "Steps",
+          "type": "array"
+        },
+        "order": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Order",
+          "type": "array"
+        },
+        "transitions": {
+          "items": {
+            "$ref": "#/$defs/Transition"
+          },
+          "title": "Transitions",
+          "type": "array"
+        },
+        "claim": {
+          "$ref": "#/$defs/Claim"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "entry_step_id",
+        "steps",
+        "order",
+        "transitions",
+        "claim"
+      ],
+      "title": "Scenario",
+      "type": "object"
+    },
+    "SourceVersion": {
+      "additionalProperties": false,
+      "properties": {
+        "digest": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Digest",
+          "type": "string"
+        },
+        "git_commit": {
+          "default": "",
+          "title": "Git Commit",
+          "type": "string"
+        },
+        "files": {
+          "additionalProperties": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          },
+          "propertyNames": {
+            "minLength": 1
+          },
+          "title": "Files",
+          "type": "object"
+        },
+        "scope": {
+          "minLength": 1,
+          "title": "Scope",
+          "type": "string"
+        }
+      },
+      "required": [
+        "digest",
+        "files",
+        "scope"
+      ],
+      "title": "SourceVersion",
+      "type": "object"
+    },
+    "Step": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "component_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Component Ids",
+          "type": "array"
+        },
+        "binding_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Binding Ids",
+          "type": "array"
+        },
+        "claim": {
+          "$ref": "#/$defs/Claim"
+        }
+      },
+      "required": [
+        "id",
+        "component_ids",
+        "binding_ids",
+        "claim"
+      ],
+      "title": "Step",
+      "type": "object"
+    },
+    "Transition": {
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        },
+        "target_id": {
+          "minLength": 1,
+          "title": "Target Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "next",
+            "branch",
+            "return",
+            "loop"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "condition": {
+          "minLength": 1,
+          "title": "Condition",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "target_id",
+        "kind",
+        "condition"
+      ],
+      "title": "Transition",
+      "type": "object"
+    },
+    "Verification": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "planned",
+            "executed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "object_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Object Ids",
+          "type": "array"
+        },
+        "command": {
+          "minLength": 1,
+          "title": "Command",
+          "type": "string"
+        },
+        "environment": {
+          "minLength": 1,
+          "title": "Environment",
+          "type": "string"
+        },
+        "inputs": {
+          "minLength": 1,
+          "title": "Inputs",
+          "type": "string"
+        },
+        "source_version": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Source Version",
+          "type": "string"
+        },
+        "executor": {
+          "default": "",
+          "title": "Executor",
+          "type": "string"
+        },
+        "executed_at": {
+          "default": "",
+          "title": "Executed At",
+          "type": "string"
+        },
+        "exit_code": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exit Code"
+        },
+        "result": {
+          "default": "",
+          "title": "Result",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "status",
+        "object_ids",
+        "command",
+        "environment",
+        "inputs",
+        "source_version"
+      ],
+      "title": "Verification",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "id": {
+      "minLength": 1,
+      "title": "Id",
+      "type": "string"
+    },
+    "project": {
+      "$ref": "#/$defs/Project"
+    },
+    "revision": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Revision",
+      "type": "integer"
+    },
+    "facts": {
+      "items": {
+        "$ref": "#/$defs/Facts"
+      },
+      "title": "Facts",
+      "type": "array"
+    },
+    "bindings": {
+      "items": {
+        "$ref": "#/$defs/Binding"
+      },
+      "title": "Bindings",
+      "type": "array"
+    },
+    "components": {
+      "items": {
+        "$ref": "#/$defs/Component"
+      },
+      "title": "Components",
+      "type": "array"
+    },
+    "relations": {
+      "items": {
+        "$ref": "#/$defs/Relation"
+      },
+      "title": "Relations",
+      "type": "array"
+    },
+    "scenarios": {
+      "items": {
+        "$ref": "#/$defs/Scenario"
+      },
+      "title": "Scenarios",
+      "type": "array"
+    },
+    "opinions": {
+      "items": {
+        "$ref": "#/$defs/Opinion"
+      },
+      "title": "Opinions",
+      "type": "array"
+    },
+    "verifications": {
+      "items": {
+        "$ref": "#/$defs/Verification"
+      },
+      "title": "Verifications",
+      "type": "array"
+    },
+    "revisions": {
+      "items": {
+        "$ref": "#/$defs/Revision"
+      },
+      "title": "Revisions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "project"
+  ],
+  "title": "Model",
+  "type": "object"
+}
