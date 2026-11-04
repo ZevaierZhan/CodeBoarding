@@ -4,11 +4,12 @@ import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
+from collections.abc import Callable
 
 from filelock import FileLock, Timeout
 
 from architecture_model.errors import ModelError
-from architecture_model.schema import Model, Patch, Project, Revision
+from architecture_model.schema import Maintenance, Model, Patch, Project, Revision
 from architecture_model.validation import COLLECTIONS, parse, validate_model
 
 
@@ -55,6 +56,13 @@ def model_diff(before: Model, after: Model) -> dict:
     component_ids = set(changes.get("components", {}))
     binding_ids = set(changes.get("bindings", {}))
     relation_ids = set(changes.get("relations", {}))
+    maintenance_scenarios: set[str] = set()
+    for change in changes.get("maintenance", {}).values():
+        for item in (change["before"], change["after"]):
+            if item is not None and item["disposition"] != "unchanged":
+                component_ids.update(item["component_ids"])
+                relation_ids.update(item["relation_ids"])
+                maintenance_scenarios.update(item["scenario_ids"])
     for model in (before, after):
         for component in model.components:
             if binding_ids.intersection(component.binding_ids + component.claim.binding_ids):
@@ -69,7 +77,7 @@ def model_diff(before: Model, after: Model) -> dict:
             for relation in model.relations
             if component_ids.intersection((relation.source_id, relation.target_id))
         )
-    scenarios = set(changes.get("scenarios", {}))
+    scenarios = set(changes.get("scenarios", {})) | maintenance_scenarios
     record_targets: set[str] = set()
     for collection in ("opinions", "verifications"):
         for change in changes.get(collection, {}).values():
@@ -100,9 +108,11 @@ def model_diff(before: Model, after: Model) -> dict:
     }
 
 
-def candidate(current: Model, patch_value: object) -> tuple[Model, dict]:
+def candidate(current: Model, patch_value: object, maintenance: list[Maintenance] | None = None) -> tuple[Model, dict]:
     patch = parse(Patch, patch_value)
     value = current.model_dump()
+    if maintenance is not None:
+        value["maintenance"] = [item.model_dump() for item in maintenance]
     reserved = {item.id for collection in COLLECTIONS for item in getattr(current, collection)}
     reserved.update(step.id for scenario in current.scenarios for step in scenario.steps)
     reserved.update((current.id, current.project.id))
@@ -128,7 +138,10 @@ def candidate(current: Model, patch_value: object) -> tuple[Model, dict]:
                 if operation.value:
                     raise ModelError("SCHEMA_INVALID", location, "Delete value must be empty")
                 items.remove(existing)
-    proposed = validate_model(value)
+    return revision_candidate(current, validate_model(value), patch.author, patch.summary)
+
+
+def revision_candidate(current: Model, proposed: Model, author: str, summary: str) -> tuple[Model, dict]:
     previous_bindings = {binding.id: binding.model_dump() for binding in current.bindings}
     for binding in proposed.bindings:
         if binding.id in previous_bindings:
@@ -136,13 +149,16 @@ def candidate(current: Model, patch_value: object) -> tuple[Model, dict]:
     difference = model_diff(current, proposed)
     proposed.revision += 1
     proposed.revisions.append(
-        Revision(
-            revision=proposed.revision,
-            author=patch.author,
-            summary=patch.summary,
-            timestamp=datetime.now(timezone.utc).isoformat(),
-            object_ids=difference["object_ids"],
-            scenario_ids=difference["scenario_ids"],
+        parse(
+            Revision,
+            {
+                "revision": proposed.revision,
+                "author": author,
+                "summary": summary,
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "object_ids": difference["object_ids"],
+                "scenario_ids": difference["scenario_ids"],
+            },
         )
     )
     return validate_model(proposed.model_dump()), difference
@@ -186,6 +202,9 @@ class ModelStore:
         return candidate(self.read(), patch)
 
     def apply(self, expected_revision: int, patch: object) -> dict:
+        return self.commit(expected_revision, lambda current: candidate(current, patch))
+
+    def commit(self, expected_revision: int, build: Callable[[Model], tuple[Model, dict]]) -> dict:
         try:
             with self.lock:
                 current = self.read()
@@ -193,7 +212,7 @@ class ModelStore:
                     raise ModelError(
                         "REVISION_CONFLICT", "/revision", f"Expected {expected_revision}, found {current.revision}"
                     )
-                proposed, difference = candidate(current, patch)
+                proposed, difference = build(current)
                 result = {"committed": True, "revision": proposed.revision, "diff": difference}
                 atomic_write(self.path, proposed.model_dump())
                 return result

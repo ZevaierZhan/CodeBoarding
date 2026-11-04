@@ -1,6 +1,7 @@
 import ast
 import contextlib
 import hashlib
+import inspect
 import json
 import logging
 import os
@@ -18,7 +19,7 @@ from architecture_model.store import atomic_write
 from architecture_model.validation import digest, validate_facts
 from infra.logging_config import setup_logging
 from infra.monitoring.telemetry.service import telemetry
-from infra.repo_utils.ignore import RepoIgnoreManager
+from infra.repo_utils.ignore import CODEBOARDINGIGNORE_TEMPLATE, RepoIgnoreManager
 from infra.utils import get_config
 from infra.vscode_constants import VSCODE_CONFIG
 from static_analyzer import StaticAnalyzer
@@ -43,6 +44,7 @@ def extract(repo: Path, project_id: str, node: Path, pyright: Path, tokei: Path)
     VSCODE_CONFIG["tools"]["tokei"]["command"] = [str(tokei), "-o", "json"]
     python_command = get_config("lsp_servers")["python"]["command"]
     tokei_command = get_config("tools")["tokei"]["command"]
+    extraction_scope = _extraction_scope(repo, python_command, tokei_command)
     before, trees = _manifest(repo)
     if not before:
         raise ValueError("No Python source files in extraction scope")
@@ -131,6 +133,7 @@ def extract(repo: Path, project_id: str, node: Path, pyright: Path, tokei: Path)
             "tokei": tokei_command[0],
             "python_command": json.dumps(python_command),
             "tokei_command": json.dumps(tokei_command),
+            "maintenance_scope": extraction_scope,
         },
         limitations=[
             "Static call records are not runtime execution or a complete dynamic call graph.",
@@ -142,6 +145,8 @@ def extract(repo: Path, project_id: str, node: Path, pyright: Path, tokei: Path)
     facts.id = digest(facts.model_dump(exclude={"id"}))
     if _manifest(repo)[0] != before:
         raise ValueError("Source changed during extraction; rerun on a stable working tree")
+    if _extraction_scope(repo, python_command, tokei_command) != extraction_scope:
+        raise ValueError("Extraction configuration changed during analysis")
     validate_facts(facts)
     return facts
 
@@ -169,6 +174,35 @@ def _manifest(repo: Path) -> tuple[dict[str, str], dict[str, ast.Module]]:
         trees[relative] = ast.parse(content, filename=relative)
         manifest[relative] = hashlib.sha256(content).hexdigest()
     return manifest, trees
+
+
+def _extraction_scope(repo: Path, python_command: list[str], tokei_command: list[str]) -> str:
+    patterns = []
+    for relative, fallback in ((".gitignore", ""), (".codeboarding/.codeboardingignore", CODEBOARDINGIGNORE_TEMPLATE)):
+        path = repo / relative
+        patterns.extend((path.read_text(encoding="utf-8") if path.exists() else fallback).splitlines(keepends=True))
+    engine_root = Path(__file__).resolve().parents[1] / "static_analyzer"
+    implementation = {
+        path.relative_to(engine_root).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in engine_root.rglob("*.py")
+        if "servers" not in path.relative_to(engine_root).parts
+    }
+    implementation["ignore"] = hashlib.sha256(Path(inspect.getfile(RepoIgnoreManager)).read_bytes()).hexdigest()
+    descriptor = {
+        "protocol": "python-file-v1",
+        "complete": True,
+        "implementation": digest(implementation),
+        "patterns": patterns,
+        "tools": [
+            hashlib.sha256(Path(path).read_bytes()).hexdigest() for path in (*python_command[:2], tokei_command[0])
+        ],
+        "configuration": {
+            name: hashlib.sha256((repo / name).read_bytes()).hexdigest()
+            for name in ("pyrightconfig.json", "pyproject.toml", "setup.cfg")
+            if (repo / name).exists()
+        },
+    }
+    return json.dumps(descriptor, sort_keys=True, separators=(",", ":"))
 
 
 if __name__ == "__main__":
