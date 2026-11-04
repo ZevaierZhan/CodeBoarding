@@ -1,0 +1,488 @@
+{
+  "date": "2026-11-04",
+  "timezone": "Asia/Shanghai",
+  "pr": "https://github.com/ZevaierZhan/CodeBoarding/pull/3",
+  "branch": "m2/source-maintenance",
+  "base": "main",
+  "base_sha": "d265acc51968cfcdbfc827a394dba522e6c56512",
+  "reviewed_m1_sha": "df5b692034a97b9a855e333541d9a9a57e654f72",
+  "verified_code_sha": "4530239d06e1e3f6e5d60a1e4fdb8fdea4b924b9",
+  "checks": [
+    {
+      "name": "focused",
+      "command": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pytest",
+        "tests/architecture_model",
+        "-q",
+        "--cov=architecture_model",
+        "--cov-report=term-missing",
+        "--cov-fail-under=80"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "timeout_seconds": 300,
+      "elapsed_seconds": 119.64
+    },
+    {
+      "name": "full",
+      "command": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pytest",
+        "--cov=.",
+        "--cov-report=term",
+        "--cov-fail-under=80"
+      ],
+      "exit_code": 1,
+      "timed_out": true,
+      "timeout_seconds": 300,
+      "elapsed_seconds": 300.2
+    },
+    {
+      "name": "black",
+      "command": [
+        "uv",
+        "run",
+        "--no-sync",
+        "black",
+        ".",
+        "--check"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "timeout_seconds": 120,
+      "elapsed_seconds": 1.44
+    },
+    {
+      "name": "mypy",
+      "command": [
+        "uv",
+        "run",
+        "--no-sync",
+        "mypy",
+        "."
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "timeout_seconds": 120,
+      "elapsed_seconds": 3.44
+    },
+    {
+      "name": "linux-mypy",
+      "command": [
+        "wsl.exe",
+        "-d",
+        "Debian",
+        "--",
+        "env",
+        "UV_PROJECT_ENVIRONMENT=/home/zhan/.cache/codeboarding-m1-p2-venv",
+        "/home/zhan/.local/bin/uv",
+        "run",
+        "--no-sync",
+        "mypy",
+        "--cache-dir",
+        "/tmp/codeboarding-m2-mypy",
+        "."
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "timeout_seconds": 120,
+      "elapsed_seconds": 42.47
+    }
+  ],
+  "focused": {
+    "passed": 110,
+    "failed": 0,
+    "skipped": 0,
+    "coverage_percent": 96.67,
+    "statements": 960,
+    "missed": 32,
+    "real_probe_includes_unreadable_traversal_and_native_disagreement": true
+  },
+  "continuous": {
+    "m2_revision": 21,
+    "m1_revision": 10,
+    "p0_symbols": 8,
+    "p0_calls": 3,
+    "pending_final": 12,
+    "m2_model_sha256": "aa9bca1dc182a3e02c188d97af3b22c72c58d3bdf5a922b2b0103affb698d9af",
+    "m1_model_sha256": "1784faf8b709a24762106095ab2e2764b052e07b3e1d84741f4853d8b7a00f5f"
+  },
+  "maintenance_stages": [
+    {
+      "stage": "initial refresh",
+      "revision": 1,
+      "target_snapshot_id": "28adecd386cbfd601638293a4c2187c412fda5f1428bf1c9d3ecd97fd4872f41",
+      "dispositions": {
+        "bind-start": "unchanged",
+        "bind-buy": "unchanged",
+        "bind-quote": "unchanged",
+        "bind-save": "unchanged",
+        "bind-total": "unchanged"
+      },
+      "scenarios": {}
+    },
+    {
+      "stage": "same snapshot refresh",
+      "revision": 2,
+      "target_snapshot_id": "28adecd386cbfd601638293a4c2187c412fda5f1428bf1c9d3ecd97fd4872f41",
+      "dispositions": {
+        "bind-start": "unchanged",
+        "bind-buy": "unchanged",
+        "bind-quote": "unchanged",
+        "bind-save": "unchanged",
+        "bind-total": "unchanged"
+      },
+      "scenarios": {}
+    },
+    {
+      "stage": "shared implementation",
+      "revision": 3,
+      "target_snapshot_id": "bbbef4e111fcfe317836a46e7695888a65ac43088ca06371e55a97404e03f843",
+      "dispositions": {
+        "bind-start": "unchanged",
+        "bind-buy": "unchanged",
+        "bind-quote": "unchanged",
+        "bind-save": "unchanged",
+        "bind-total": "changed"
+      },
+      "scenarios": {
+        "bind-total": [
+          "business-A",
+          "business-B"
+        ]
+      }
+    },
+    {
+      "stage": "unrelated source with pending shared change",
+      "revision": 4,
+      "target_snapshot_id": "e46293415cb69fe99ec67654dac89963803d528c7adb297cf7cd44b8ee1363ee",
+      "dispositions": {
+        "bind-start": "unchanged",
+        "bind-buy": "unchanged",
+        "bind-quote": "unchanged",
+        "bind-save": "unchanged",
+        "bind-total": "changed"
+      },
+      "scenarios": {
+        "bind-total": [
+          "business-A",
+          "business-B"
+        ]
+      }
+    },
+    {
+      "stage": "line insertion and same-file function addition",
+      "revision": 5,
+      "target_snapshot_id": "d146ebfd15bba5d208172c7ef04056e26579f4b562ddc6ea4ac9fc303bade550",
+      "dispositions": {
+        "bind-start": "unchanged",
+        "bind-buy": "unchanged",
+        "bind-quote": "unchanged",
+        "bind-save": "unchanged",
+        "bind-total": "changed"
+      },
+      "scenarios": {
+        "bind-total": [
+          "business-A",
+          "business-B"
+        ]
+      }
+    },
+    {
+      "stage": "only another function changes in the same file",
+      "revision": 7,
+      "target_snapshot_id": "13e3af3a6bf0d6195b43915d7bf988922a8af85b9ca3e3c90ae91af95b767580",
+      "dispositions": {
+        "bind-start": "unchanged",
+        "bind-buy": "unchanged",
+        "bind-quote": "unchanged",
+        "bind-save": "unchanged",
+        "bind-total": "changed"
+      },
+      "scenarios": {
+        "bind-total": [
+          "business-A",
+          "business-B"
+        ]
+      }
+    },
+    {
+      "stage": "resolved target repeat",
+      "revision": 12,
+      "target_snapshot_id": "d146ebfd15bba5d208172c7ef04056e26579f4b562ddc6ea4ac9fc303bade550",
+      "dispositions": {
+        "bind-start": "unchanged",
+        "bind-buy": "unchanged",
+        "bind-quote": "unchanged",
+        "bind-save": "unchanged",
+        "bind-total": "unchanged"
+      },
+      "scenarios": {}
+    },
+    {
+      "stage": "file move",
+      "revision": 13,
+      "target_snapshot_id": "548d6e0c1fbb2455b5f357784bbf3b5582bf467bfcfc4629cbe15e5d99f9ad40",
+      "dispositions": {
+        "bind-start": "unchanged",
+        "bind-buy": "changed",
+        "bind-quote": "changed",
+        "bind-save": "unchanged",
+        "bind-total": "changed"
+      },
+      "scenarios": {
+        "bind-buy": [
+          "business-A",
+          "business-B"
+        ],
+        "bind-quote": [
+          "business-B"
+        ],
+        "bind-total": [
+          "business-A",
+          "business-B"
+        ]
+      }
+    },
+    {
+      "stage": "symbol rename",
+      "revision": 15,
+      "target_snapshot_id": "daeaa4185df532ccd95fe23845d3551fd496a0f48d2f74c8927c63b008374271",
+      "dispositions": {
+        "bind-start": "unchanged",
+        "bind-buy": "changed",
+        "bind-quote": "changed",
+        "bind-save": "unchanged",
+        "bind-total": "ambiguous"
+      },
+      "scenarios": {
+        "bind-buy": [
+          "business-A",
+          "business-B"
+        ],
+        "bind-quote": [
+          "business-B"
+        ],
+        "bind-total": [
+          "business-A",
+          "business-B"
+        ]
+      }
+    },
+    {
+      "stage": "multiple replacements",
+      "revision": 17,
+      "target_snapshot_id": "5d1da473b7615e7cf490926a3af9da0d38ab7c14a1737c1d816adb619ca12c43",
+      "dispositions": {
+        "bind-start": "unchanged",
+        "bind-buy": "changed",
+        "bind-quote": "changed",
+        "bind-save": "unchanged",
+        "bind-total": "ambiguous"
+      },
+      "scenarios": {
+        "bind-buy": [
+          "business-A",
+          "business-B"
+        ],
+        "bind-quote": [
+          "business-B"
+        ],
+        "bind-total": [
+          "business-A",
+          "business-B"
+        ]
+      }
+    },
+    {
+      "stage": "source deleted",
+      "revision": 19,
+      "target_snapshot_id": "ba17c486ffd9ef4ed246c6f66d3239c183f8f764061ce145eba79af032a5aeaa",
+      "dispositions": {
+        "bind-start": "unchanged",
+        "bind-buy": "changed",
+        "bind-quote": "changed",
+        "bind-save": "unchanged",
+        "bind-total": "missing"
+      },
+      "scenarios": {
+        "bind-buy": [
+          "business-A",
+          "business-B"
+        ],
+        "bind-quote": [
+          "business-B"
+        ],
+        "bind-total": [
+          "business-A",
+          "business-B"
+        ]
+      }
+    },
+    {
+      "stage": "scope uncertainty",
+      "revision": 20,
+      "target_snapshot_id": "6d7726c960da974e0f286757da0496a358d28ac21b3442f6aa9d79690cbd969e",
+      "dispositions": {
+        "bind-start": "indeterminate",
+        "bind-buy": "indeterminate",
+        "bind-quote": "indeterminate",
+        "bind-save": "indeterminate",
+        "bind-total": "indeterminate"
+      },
+      "scenarios": {
+        "bind-start": [
+          "startup"
+        ],
+        "bind-buy": [
+          "business-A",
+          "business-B"
+        ],
+        "bind-quote": [
+          "business-B"
+        ],
+        "bind-save": [],
+        "bind-total": [
+          "business-A",
+          "business-B"
+        ]
+      }
+    },
+    {
+      "stage": "failed",
+      "error": {
+        "code": "FACTS_FAILED",
+        "location": "/facts",
+        "message": "Static worker exited 1; see stderr"
+      }
+    },
+    {
+      "stage": "full rebuild",
+      "revision": 20,
+      "target_snapshot_id": "ba17c486ffd9ef4ed246c6f66d3239c183f8f764061ce145eba79af032a5aeaa",
+      "dispositions": {
+        "bind-start": "unchanged",
+        "bind-buy": "changed",
+        "bind-quote": "changed",
+        "bind-save": "unchanged",
+        "bind-total": "missing"
+      },
+      "scenarios": {
+        "bind-buy": [
+          "business-A",
+          "business-B"
+        ],
+        "bind-quote": [
+          "business-B"
+        ],
+        "bind-total": [
+          "business-A",
+          "business-B"
+        ]
+      }
+    },
+    {
+      "stage": "stale preview",
+      "error": {
+        "code": "REVISION_CONFLICT",
+        "location": "/revision",
+        "message": "Expected 20, found 21"
+      }
+    }
+  ],
+  "native_guard": {
+    "status": "PASS",
+    "attempts": [],
+    "unfinished_threads": [],
+    "telemetry_client_absent": true,
+    "symbols": 8,
+    "calls": 3
+  },
+  "artifacts": {
+    "status": "PASS",
+    "schema_matches_runtime": true,
+    "model_revision": 21,
+    "facts_files_validated": 12,
+    "immutable_fact_catalogs_match": true,
+    "unique_fact_catalogs": 9,
+    "wheel_modules_match": 10,
+    "wheel_sha256": "b86e7efcdc2bf19d8604e03be83cf685824442c331d506e20ca2873a40aa7f56"
+  },
+  "full_suite": {
+    "collected": 2809,
+    "final_log_lines": [
+      "tests\\static_analyzer\\test_csharp_config_scanner.py .................    [ 66%]",
+      "tests\\static_analyzer\\test_definition_resolution_parity.py ............. [ 67%]",
+      "...........                                                              [ 67%]",
+      "tests\\static_analyzer\\test_discover_file_dependencies.py ...             [ 67%]",
+      "tests\\static_analyzer\\test_dotnet_sdk.py ..FF                            [ 67%]",
+      "tests\\static_analyzer\\test_dotnet_solution.py ........                   [ 68%]",
+      "tests\\static_analyzer\\test_edge_builder.py ............FF..............F [ 69%]",
+      "......................."
+    ],
+    "repository_80_percent": "unconfirmed",
+    "private_integration": "not run"
+  },
+  "baseline_reproduced": {
+    "archive_sha": "d265acc51968cfcdbfc827a394dba522e6c56512",
+    "tests": [
+      "tests/infra/test_tool_registry.py::TestToolRegistry::test_install_node_tools_prefers_embedded_npm",
+      "tests/infra/test_tool_registry.py::TestInstallEmbeddedNode::test_rejects_non_executable_node_binary",
+      "tests/infra/test_tool_registry.py::TestInstallEmbeddedNodeEndToEnd::test_full_install_flow_with_mocked_download",
+      "tests/infra/test_tool_registry.py::TestInstallNativeToolsCompressed::test_gz_asset_is_decompressed_and_chmod_set",
+      "tests/agents/test_llm_renderers.py::TestRenderScopeContext::test_includes_all_group_files_boundary_reasons_and_directed_calls",
+      "tests/agents/test_llm_renderers.py::TestScopeContextSize::test_a_full_run_sends_compact_json_without_repeated_defaults",
+      "tests/agents/test_llm_renderers.py::TestScopeContextSize::test_further_over_keeps_one_example_then_bare_paths",
+      "tests/agents/test_llm_renderers.py::TestScopeContextSize::test_over_budget_drops_bordering_files_first"
+    ],
+    "passed": 143,
+    "failed": 8,
+    "skipped": 4,
+    "windows_mypy": "static_analyzer/workspace_dependencies.py:78 SIGKILL attr-defined, 352 baseline files"
+  },
+  "unattributed": [
+    "Other full-suite failures; no final summary before owned-tree timeout",
+    "First concurrent M1 replay failed without error payload; five synchronized races and two complete reruns passed"
+  ],
+  "environment": {
+    "python": "3.12.13",
+    "env_file": "absent; explicit provider-free path requires no .env",
+    "no_isolation_build": "BackendUnavailable: setuptools.build_meta absent; isolated uv build succeeded"
+  },
+  "source_sha256": {
+    "architecture_model/__init__.py": "d1419d4aebc2e72a5d525a2759915501dd6a378904daca75567587432bb9c04a",
+    "architecture_model/__main__.py": "39bead821a699e667c3c4bbc24ba6a68f4e00c9527f556d9c065a2a081d4ee0b",
+    "architecture_model/cli.py": "6401f2105e30cbede02f4891908739e76b9c882de28fd4db4de5961a13318bed",
+    "architecture_model/errors.py": "8e0b7e53af71a083a55e509f410c0447ff58e1207e187e9ddebb97129f2d6dcf",
+    "architecture_model/facts.py": "4b12da02f420441599fcf07160c6f025d28201adba7ab703eddba83b7fc97d8f",
+    "architecture_model/facts_worker.py": "87fb04bd66e00dfab6df343f9fc1c4158dafcacc75d4a4b05d22425258eba638",
+    "architecture_model/maintenance.py": "9aa4c3df2c94842c82de810ad093b421ce7905f545e6b9161420df752396715d",
+    "architecture_model/schema.py": "6a18c75f76e942efbfc42af4633db03b203f8b2eda65d00f669d88ff8d2874e7",
+    "architecture_model/store.py": "8ce7eb0e4d1183585bf1720b479da3b54504d6cb1471d0bc848ff3f1710ba715",
+    "architecture_model/validation.py": "b8bdd7f3299a53cb9b37e464d598b5af14a494e5f78bbfc1c94b8c385358159c",
+    "docs/architecture-model-v1.schema.json": "bb06f1a8e43ff36aa866a8c60d8da1fe3e2ccc99b116b2101ef727e19515952e",
+    "examples/architecture_model/demo.py": "801136fd40ca8bf76f616241bfc0fbd3582a460656308ff7fe3947673f9b7b0c",
+    "examples/architecture_model/maintenance_demo.py": "4e1e86475316441c4e73e73fac852f4bb68dfa6374fe3ac20eac1320777b9434",
+    "tests/architecture_model/real_export_probe.py": "a79c79f4f853e03a9dc282f18f9f701df732a5027902d0e33f1262ca95760777",
+    "tests/architecture_model/test_maintenance.py": "cf4ce85d7629342bf1be71bd67e8226ee6eaf43e5cb9da11414256ba625d44ab"
+  },
+  "log_sha256": {
+    "temp/m2-release-checks/focused.log": "0886e1df513bcea46dc129dd87000625dbd4e797e178ae28ccda8a9b8f699b8f",
+    "temp/m2-release-checks/full.log": "edc65318f35188b07e246a78d1aa7ebb725badc5332069f2ac862273231f3844",
+    "temp/m2-release-checks/black.log": "6a7263a99f75c462711d89031a0bb701c1ec5b2d30438cece74f0f49e95fd09f",
+    "temp/m2-release-checks/mypy.log": "2ed003398583f78b5616449991f0710455a574da5631a89fe67b8f309f81c18a",
+    "temp/m2-release-checks/linux-mypy.log": "541918993faa891df8bf830f1604e89885b086d74ad546ec8de06a9a643f0f9d",
+    "temp/m2-baseline-mypy.log": "865874d7723c04eea073f07768b1c3fe058eeb21e040b83f7440a110ef15ee49",
+    "temp/m2-baseline-tests.log": "b415da62b3a5ab8edf8c14e356c65294e18d219bbf2d43e58d7c8fab847458e7",
+    "temp/m2-demo-release.log": "b78a3ae40052878c0110e6c6bea20fa99cb4a2fb31ec4d7ce39a84fa26776a0b",
+    "temp/m2-m1-demo-release.log": "789f90242e7dd2bed7b2796eb26bf40f74bbd1e366316a750b3e99c858aa8cbd",
+    "temp/m2-race-probe.log": "2f7dad06c5512bb23dc22bb446d4aafb3dff23f3ebd7801a33f34c97c5099807",
+    "temp/m2-m1-demo.log": "dbaf996e6fb67af4c9f0a180b987cebcca1c80816e252dbc181612e6d5d4f915",
+    "temp/m2-wheel-isolated.log": "8d1610737405b8654dfbb7e58b907fd87e3ba52a498fc563226a7464932a943a"
+  }
+}
