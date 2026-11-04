@@ -1,0 +1,93 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "version": "baseline",
+      "fault": "report",
+      "violation": "guard",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "report_status": "RUNNING"
+    },
+    {
+      "version": "current",
+      "fault": "report",
+      "violation": "guard",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "report_status": "RUNNING"
+    },
+    {
+      "version": "current",
+      "fault": "report",
+      "violation": "clean",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "report_status": "RUNNING"
+    },
+    {
+      "version": "current",
+      "fault": "log",
+      "violation": "guard",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "report_status": "FAIL"
+    },
+    {
+      "version": "current",
+      "fault": "log",
+      "violation": "clean",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "report_status": "FAIL"
+    },
+    {
+      "version": "current",
+      "fault": "stdout",
+      "violation": "guard",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "report_status": "FAIL"
+    },
+    {
+      "version": "current",
+      "fault": "stdout",
+      "violation": "clean",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "report_status": "FAIL"
+    },
+    {
+      "version": "current",
+      "fault": "stderr",
+      "violation": "guard",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "report_status": "FAIL"
+    },
+    {
+      "version": "current",
+      "fault": "stderr",
+      "violation": "clean",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "report_status": "FAIL"
+    },
+    {
+      "version": "current",
+      "fault": "diagnostic",
+      "violation": "guard",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "report_status": "FAIL"
+    },
+    {
+      "version": "current",
+      "fault": "diagnostic",
+      "violation": "clean",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "report_status": "FAIL"
+    }
+  ]
+}

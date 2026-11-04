@@ -1,4 +1,26 @@
-# P2 整改实测：2026-11-04（Asia/Shanghai）
+# P2 退出收尾补充验证：2026-11-04（Asia/Shanghai）
+
+本次仅修复 `p0_guard.py:finish()` 的收尾异常可能被 atexit 忽略并退出 0 的问题；未改引擎、fixture、renderer、依赖或 M1 范围。执行起点为 `a5b405ac2f4df71131b9006563ff3a3e46013d09`，初始工作区干净，验证时包含未提交的收尾修复与负例脚本。新机器证据独立放在 [finish-validation](finish-validation/)，此前根目录产物和后续章节均属前一轮证据。
+
+修复默认保持失败标记，只在报告、日志、两个流的 flush 全部完成后允许成功；最外层 finally 执行失败退出。异常分支尝试写 FAIL 并记录 traceback，两步再次抛异常也无法绕过 `os._exit(1)`。持续写入失败时磁盘可保留启动时的 RUNNING，本身不是最终成功报告；退出码为 1。
+
+新增 `check-finish-negatives.py` 先在固定上一轮版本复现 report+guard 退出 0，再检查当前版本。guard 使用 `sys.audit("socket.connect")` 命中并捕获异常，没有创建连接。故障包括报告写入、普通日志、stdout flush、stderr flush、普通日志加异常诊断日志双重失败；每项同时覆盖已命中 guard 与无命中。修复前驱动真实退出 1（断言收到 0）；修复后驱动退出 0，十个当前探针全部退出 1。报告失败探针磁盘状态为 RUNNING，其余为 FAIL。
+
+| 本次实际执行 | 退出码与结果 |
+|---|---|
+| 新增收尾负例驱动 | 0；固定上轮 report+guard 对照为 0，当前十个故障探针均为 1，见 finish-negative-results.json |
+| 既有 guard 负例驱动 | 0；caught/thread/exit 分别为 1，报告 FAIL，guard 各一次 |
+| 清除父进程遥测关闭变量后运行真实核心 | 0；本地 17:38:17 启动，8 callable/3 调用边、有限语义保存重读、成员重放恢复、内容 hash 变化、未知字段丢失等所有既有断言通过；telemetry client absent、guard=[]、unfinished_threads=[] |
+| `uv run black . --check` | 0；333 文件 |
+| `uv run mypy .` | 1；333 文件，仅已有 Windows signal.SIGKILL 错误 |
+| 四个指定聚焦测试文件 | 1；63 passed、2 failed，5.93s；与上轮已基线复现的两个 Windows 路径断言一致 |
+| 全仓覆盖率命令（180 秒上限） | 测试进程退出 1；180 秒总时限到后终止所属进程树，约 67% 的 test_edge_builder.py 附近结束；已见失败，无最终 coverage 报告，80% 门槛未确认；限时驱动自身退出 0 |
+
+全仓其他失败未逐一归因；private integration 未执行。收尾改动未影响浏览器检查器，本次不把前一轮截图和浏览器运行冒充重新执行。精确命令、退出码及时间限制见 [engineering-results.json](finish-validation/engineering-results.json)；核心新结果见 [results.json](finish-validation/results.json)，其记录新 guard 的实际字节 hash 和启动时间。复现命令见 README 的“P2 退出收尾补充验证”。此前声明的源码跳转、跨进程 TreeSpec 恢复及产品能力限制保持不变。
+
+---
+
+# 上轮 P2 整改实测：2026-11-04（历史记录）
 
 两项整改均已完成并重跑真实链路。下列为本轮证据；后面的“历史 P0”章节保留首次交付的调查与运行记录，其工程检查数值不代表本轮。当前 results.json、facts、semantics、snapshots、browser-results.json 和 renderer.png 均来自 `temp/p2-final-verified` 新执行，未沿用历史成功产物。
 

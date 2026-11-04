@@ -124,3 +124,20 @@ profile 覆盖主线程及新建 Python 线程的指定 LLM 配置/调用入口�
 浏览器在导航前监听 pageerror、console error 和脚本加载失败，等待真实 Cytoscape core ready。只读探针读取原生库在 `#cy._cyreg.cy` 注册的实例，核对非 headless、有效可见绘制表面、每个节点/边的可见性与渲染边界、四个节点和 1→2、2→3、2→4 三条关系。该内部注册点属于固定 Cytoscape 3.23.0 的验证适配；库升级需要复核。canvas 仅用于确认有实际绘制表面，不以数量验收。检查一直覆盖到截图及隔离 context 关闭，随后统一判定页面异常。没有修改 renderer 或构造替代图。
 
 实验 B 的重放参数仍是同进程内 `service.spec`，不能称已从磁盘重新加载 TreeSpec 后跨进程恢复；该验收留给 M1。保存/重读 analysis.json 已验证，与跨进程 spec 恢复是不同证据。
+
+
+## P2 退出收尾补充验证
+
+`finish()` 默认保持失败标记；报告写入、日志、stdout/stderr flush 全部完成后才允许成功。最外层 finally 执行 `os._exit(1)`，保证异常不会被 atexit 忽略后变成退出 0。收尾异常时尝试写 FAIL 并记录 traceback；这两步再次失败也不能跳过非零退出。磁盘持续不可写时，启动时的 RUNNING 文件可能留存，不能视为成功，进程退出码仍为 1。
+
+```powershell
+uv run python docs/design/external-agent-p0/check-finish-negatives.py temp/p2-finish-final
+# 驱动期望 0：固定 a5b405ac 基线的 report+guard 为 0（复现缺口），新版十个故障探针均为 1。
+$env:PATH = (Resolve-Path temp/p0-tools).Path + ';' + $env:PATH
+Remove-Item Env:CODEBOARDING_TELEMETRY -ErrorAction SilentlyContinue
+Remove-Item Env:DO_NOT_TRACK -ErrorAction SilentlyContinue
+uv run python docs/design/external-agent-p0/experiment.py --output temp/p2-finish-core --pyright-js temp/p0-tools/node_modules/pyright/langserver.index.js
+uv run python docs/design/external-agent-p0/check-guard-negatives.py temp/p2-finish-core temp/p0-tools/node_modules/pyright/langserver.index.js
+```
+
+新增负例通过 `sys.audit("socket.connect")` 命中并吞掉 guard 异常，不创建连接；分别注入 write_report、warning、stdout.flush、stderr.flush 及 warning/exception 双重日志失败。每种故障同时验证 guard 已命中和未命中的情况，确认最终报告写入失败本身也退出 1。真实核心与既有 caught/thread/exit 继续走原路径。最新证据单列在 `finish-validation/`，原有浏览器证据属于前一轮，本次未修改 renderer 或浏览器检查器。

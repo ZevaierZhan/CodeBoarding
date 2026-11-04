@@ -79,22 +79,32 @@ class ProbeProtection:
         return [t.name for t in threading.enumerate() if t not in self.threads]
 
     def finish(self) -> None:
-        alive = self.settle_threads()
-        passed = self.completed and not self.attempts and not alive
-        self.report.update(
-            self.run_metadata,
-            status="PASS" if passed else "FAIL",
-            guard_attempts=self.attempts,
-            unfinished_threads=alive,
-            telemetry_client_absent=self.report.get("telemetry_client_absent", False),
-        )
-        self.write_report()
-        logging.getLogger(__name__).warning("P0 probes %s: %s", self.report["status"], self.output)
-        if not passed:
-            # atexit exceptions do not change Python's exit status.
+        failed = True
+        try:
+            alive = self.settle_threads()
+            passed = self.completed and not self.attempts and not alive
+            self.report.update(
+                self.run_metadata,
+                status="PASS" if passed else "FAIL",
+                guard_attempts=self.attempts,
+                unfinished_threads=alive,
+                telemetry_client_absent=self.report.get("telemetry_client_absent", False),
+            )
+            self.write_report()
+            logging.getLogger(__name__).warning("P0 probes %s: %s", self.report["status"], self.output)
             sys.stdout.flush()
             sys.stderr.flush()
-            os._exit(1)
+            failed = not passed
+        except BaseException:
+            self.report["status"] = "FAIL"
+            try:
+                self.write_report()
+            finally:
+                logging.getLogger(__name__).exception("P0 finalization failed")
+        finally:
+            # atexit ignores exceptions, including failures in diagnostic output.
+            if failed:
+                os._exit(1)
 
 
 protection = ProbeProtection()

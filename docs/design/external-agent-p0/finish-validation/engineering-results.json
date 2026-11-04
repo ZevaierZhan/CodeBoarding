@@ -1,0 +1,66 @@
+{
+  "execution_base": "a5b405ac2f4df71131b9006563ff3a3e46013d09",
+  "execution_worktree": "Initially clean; ran with uncommitted finalization fix and its regression driver",
+  "core": {
+    "command": "uv run python docs/design/external-agent-p0/experiment.py --output temp/p2-finish-core --pyright-js temp/p0-tools/node_modules/pyright/langserver.index.js",
+    "exit_code": 0,
+    "inherited_telemetry_opt_out": false
+  },
+  "finish_negatives": {
+    "command": "uv run python docs/design/external-agent-p0/check-finish-negatives.py temp/p2-finish-final",
+    "exit_code": 0,
+    "before_fix_driver_exit": 1,
+    "baseline_report_guard_probe_exit": 0,
+    "current_probe_exits": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  "existing_negatives": {
+    "command": "uv run python docs/design/external-agent-p0/check-guard-negatives.py temp/p2-finish-core temp/p0-tools/node_modules/pyright/langserver.index.js",
+    "exit_code": 0,
+    "caught_thread_exit": [
+      1,
+      1,
+      1
+    ]
+  },
+  "format": {
+    "command": "uv run black . --check",
+    "exit_code": 0
+  },
+  "types": {
+    "command": "uv run mypy .",
+    "exit_code": 1,
+    "result": "333 files; existing Windows signal.SIGKILL attr-defined error"
+  },
+  "focused": {
+    "command": "uv run pytest tests/diagram_analysis/test_scope_assembly.py tests/output_generators/test_rendering.py tests/static_analyzer/test_warmstart_changed_files.py tests/diagram_analysis/test_scope_plan.py -q",
+    "exit_code": 1,
+    "passed": 63,
+    "failed": 2,
+    "duration_seconds": 5.93,
+    "attribution": "Same two Windows path failures reproduced on fixed production baseline in previous round"
+  },
+  "full": {
+    "command": "uv run pytest --cov=. --cov-report=term --cov-fail-under=80",
+    "exit_code": 1,
+    "timeout_seconds": 180,
+    "timed_out": true,
+    "elapsed_seconds": 180.24,
+    "driver_exit_code": 0,
+    "coverage_threshold_confirmed": false,
+    "stopped_near": "tests/static_analyzer/test_edge_builder.py (~67%)",
+    "other_failures": "Observed, not individually attributed; no final coverage report"
+  },
+  "browser": "Not rerun in this narrow finalization follow-up; previous round browser evidence retained separately",
+  "private_integration": "Not run"
+}
