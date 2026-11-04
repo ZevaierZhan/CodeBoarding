@@ -1,0 +1,2557 @@
+{
+  "schema_version": 1,
+  "id": "7da6dde8-e345-41f7-b535-95fa7633ef7e",
+  "project": {
+    "id": "orders",
+    "name": "Orders · shared architecture",
+    "boundary": "Purchase and quotation; save formats an ID, with no database or server execution."
+  },
+  "revision": 8,
+  "facts": [
+    {
+      "schema_version": 1,
+      "id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+      "project_id": "orders",
+      "source": {
+        "digest": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+        "git_commit": "8bc2754c3a1a5220de638e132d1e7ad66a8a52ef",
+        "files": {
+          "app.py": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413",
+          "delivery/orders.py": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+          "persistence/store.py": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4",
+          "policies/pricing.py": "42868ea99cc362de16f58190ac37c79d345533641e5662adcad76de06154c77c"
+        },
+        "scope": "All Python files discovered by PythonAdapter and repository ignore rules"
+      },
+      "symbols": {
+        "app.py|app.start": {
+          "path": "app.py",
+          "symbol": "app.start",
+          "kind": "FUNCTION",
+          "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413",
+          "start": 4,
+          "end": 5
+        },
+        "delivery/orders.py|delivery.orders.buy": {
+          "path": "delivery/orders.py",
+          "symbol": "delivery.orders.buy",
+          "kind": "FUNCTION",
+          "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+          "start": 5,
+          "end": 8
+        },
+        "delivery/orders.py|delivery.orders.quote": {
+          "path": "delivery/orders.py",
+          "symbol": "delivery.orders.quote",
+          "kind": "FUNCTION",
+          "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+          "start": 11,
+          "end": 12
+        },
+        "persistence/store.py|persistence.store.save": {
+          "path": "persistence/store.py",
+          "symbol": "persistence.store.save",
+          "kind": "FUNCTION",
+          "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4",
+          "start": 1,
+          "end": 2
+        },
+        "policies/pricing.py|policies.pricing.total": {
+          "path": "policies/pricing.py",
+          "symbol": "policies.pricing.total",
+          "kind": "FUNCTION",
+          "content_hash": "42868ea99cc362de16f58190ac37c79d345533641e5662adcad76de06154c77c",
+          "start": 1,
+          "end": 2
+        }
+      },
+      "file_locations": {
+        "app.py": {
+          "path": "app.py",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413",
+          "start": 1,
+          "end": 5
+        },
+        "delivery/orders.py": {
+          "path": "delivery/orders.py",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+          "start": 1,
+          "end": 12
+        },
+        "persistence/store.py": {
+          "path": "persistence/store.py",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4",
+          "start": 1,
+          "end": 2
+        },
+        "policies/pricing.py": {
+          "path": "policies/pricing.py",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "42868ea99cc362de16f58190ac37c79d345533641e5662adcad76de06154c77c",
+          "start": 1,
+          "end": 2
+        }
+      },
+      "calls": [
+        {
+          "source": "app.start",
+          "target": "delivery.orders.buy",
+          "sites": [
+            {
+              "path": "app.py",
+              "line": 5,
+              "column": 20
+            }
+          ]
+        },
+        {
+          "source": "app.start",
+          "target": "delivery.orders.quote",
+          "sites": [
+            {
+              "path": "app.py",
+              "line": 5,
+              "column": 34
+            }
+          ]
+        },
+        {
+          "source": "delivery.orders.buy",
+          "target": "persistence.store.save",
+          "sites": [
+            {
+              "path": "delivery/orders.py",
+              "line": 8,
+              "column": 12
+            }
+          ]
+        },
+        {
+          "source": "delivery.orders.buy",
+          "target": "policies.pricing.total",
+          "sites": [
+            {
+              "path": "delivery/orders.py",
+              "line": 8,
+              "column": 17
+            }
+          ]
+        },
+        {
+          "source": "delivery.orders.quote",
+          "target": "policies.pricing.total",
+          "sites": [
+            {
+              "path": "delivery/orders.py",
+              "line": 12,
+              "column": 12
+            }
+          ]
+        }
+      ],
+      "tools": {
+        "engine": "StaticAnalyzer/PythonAdapter",
+        "node": "D:\\Progrm Files\\nvm\\v24.20.0\\node.exe",
+        "pyright_js": "F:\\CodeBoarding\\temp\\p0-tools\\node_modules\\pyright\\langserver.index.js",
+        "tokei": "F:\\CodeBoarding\\temp\\p0-tools\\tokei.exe",
+        "python_command": "[\"D:\\\\Progrm Files\\\\nvm\\\\v24.20.0\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\langserver.index.js\", \"--stdio\"]",
+        "tokei_command": "[\"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\", \"-o\", \"json\"]",
+        "maintenance_scope": "{\"complete\":true,\"configuration\":{},\"implementation\":\"01580c909ce2948d6401fbc9781e29a3a5dbafc3ee67fa3ea90a2c042326dd05\",\"patterns\":[\"# CodeBoarding Ignore File\\n\",\"# Add patterns here for files and directories that should be excluded from CodeBoarding analysis.\\n\",\"# Use the same format as .gitignore (gitignore syntax / gitwildmatch patterns).\\n\",\"#\\n\",\"# To stop ignoring a pattern, prefix it with ! (e.g., !important_file.txt)\\n\",\"#\\n\",\"# NOTE: The following are ALWAYS excluded (not configurable):\\n\",\"#   - Hidden directories (starting with .)\\n\",\"#   - .git/, .codeboarding/, node_modules/, __pycache__/\\n\",\"#   - Build output: build/, dist/, coverage/\\n\",\"#\\n\",\"# This file is automatically loaded by CodeBoarding analysis tools to exclude\\n\",\"# specified paths from code analysis, architecture generation, and other processing.\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Ignored directories (customizable \\u2014 remove lines to include them)\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Python virtual environments\\n\",\"venv/\\n\",\"env/\\n\",\"*.egg-info/\\n\",\"\\n\",\"# Java (Maven/Gradle) and Rust (Cargo) build output. Both ecosystems\\n\",\"# produce a top-level ``target/`` directory full of compiled artifacts \\u2014\\n\",\"# kept here as well as in ``_ALWAYS_IGNORED_DIRS`` so users who customize\\n\",\"# their ``.codeboardingignore`` continue to skip it even after edits.\\n\",\"target/\\n\",\"bin/\\n\",\"out/\\n\",\"\\n\",\"# .NET / C# build output\\n\",\"obj/\\n\",\"\\n\",\"# Go\\n\",\"vendor/\\n\",\"testdata/\\n\",\"\\n\",\"# PHP\\n\",\"cache/\\n\",\"\\n\",\"# Custom\\n\",\"temp/\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Test and infrastructure files\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Test directories\\n\",\"**/__tests__/**\\n\",\"**/tests/**\\n\",\"**/test/**\\n\",\"**/__test__/**\\n\",\"**/testing/**\\n\",\"**/testutil/**\\n\",\"\\n\",\"# Java/Kotlin test directories (Maven/Gradle structure)\\n\",\"**/src/test/**\\n\",\"**/src/testFixtures/**\\n\",\"**/src/integration-test/**\\n\",\"**/src/jmh/**\\n\",\"**/src/contractTest/**\\n\",\"**/osgi-tests/**\\n\",\"\\n\",\"# Test files by naming convention\\n\",\"*.test.*\\n\",\"*.spec.*\\n\",\"*_test.*\\n\",\"*test_*.py\\n\",\"test_*.py\\n\",\"*Test.java\\n\",\"*IT.java\\n\",\"*Test.kt\\n\",\"*IT.kt\\n\",\"*Tests.java\\n\",\"\\n\",\"# Mock, fixture, and stub directories\\n\",\"**/__mocks__/**\\n\",\"**/mocks/**\\n\",\"**/fixtures/**\\n\",\"**/fixture/**\\n\",\"**/stubs/**\\n\",\"**/stub/**\\n\",\"**/fakes/**\\n\",\"**/fake/**\\n\",\"\\n\",\"# E2E and integration test directories\\n\",\"**/e2e/**\\n\",\"**/integration-tests/**\\n\",\"**/integration_test*/**\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Non-production code\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Example and documentation code\\n\",\"**/examples/**\\n\",\"**/documentation/examples/**\\n\",\"\\n\",\"# Generated code\\n\",\"*.pb.go\\n\",\"**/generated_parser*\\n\",\"\\n\",\"# Java/Kotlin metadata files\\n\",\"module-info.java\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build artifacts and minified files\\n\",\"# ============================================================================\\n\",\"\\n\",\"*.bundle.js\\n\",\"*.bundle.js.map\\n\",\"*.min.js\\n\",\"*.min.css\\n\",\"*.chunk.js\\n\",\"*.chunk.js.map\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build tool configs and infrastructure\\n\",\"# ============================================================================\\n\",\"\\n\",\"esbuild*\\n\",\"webpack*\\n\",\"rollup*\\n\",\"vite.config.*\\n\",\"gulpfile*\\n\",\"gruntfile*\\n\",\"*.config.*\\n\"],\"protocol\":\"python-file-v1\",\"tools\":[\"5c976096e04e5c2c1f091938926234cc9fbebfe9787ddd149351b3b0ecc707b5\",\"f200762078eb9880faf421a5b30f9ef3055b1d85c6f10780d75db4da8d8499f1\",\"7db547cb6bfa1722e89ca52a43426fb212aa53603a60256af25fb6e59ca12099\"]}"
+      },
+      "limitations": [
+        "Static call records are not runtime execution or a complete dynamic call graph.",
+        "Names, clustering, responsibilities and design intent are not extracted code facts.",
+        "content_hash is SHA-256 of exact file bytes; source digest covers the declared Python scope.",
+        "Git commit is context only; the content manifest identifies dirty and untracked source."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+      "project_id": "orders",
+      "source": {
+        "digest": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
+        "git_commit": "8bc2754c3a1a5220de638e132d1e7ad66a8a52ef",
+        "files": {
+          "app.py": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413",
+          "delivery/orders.py": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+          "persistence/store.py": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4",
+          "policies/pricing.py": "9a3b9694e8263a75bf2b0a1d3570cb15a5ba363d7061d88f231d9b2b83fd3877"
+        },
+        "scope": "All Python files discovered by PythonAdapter and repository ignore rules"
+      },
+      "symbols": {
+        "app.py|app.start": {
+          "path": "app.py",
+          "symbol": "app.start",
+          "kind": "FUNCTION",
+          "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413",
+          "start": 4,
+          "end": 5
+        },
+        "delivery/orders.py|delivery.orders.buy": {
+          "path": "delivery/orders.py",
+          "symbol": "delivery.orders.buy",
+          "kind": "FUNCTION",
+          "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+          "start": 5,
+          "end": 8
+        },
+        "delivery/orders.py|delivery.orders.quote": {
+          "path": "delivery/orders.py",
+          "symbol": "delivery.orders.quote",
+          "kind": "FUNCTION",
+          "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+          "start": 11,
+          "end": 12
+        },
+        "persistence/store.py|persistence.store.save": {
+          "path": "persistence/store.py",
+          "symbol": "persistence.store.save",
+          "kind": "FUNCTION",
+          "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4",
+          "start": 1,
+          "end": 2
+        },
+        "policies/pricing.py|policies.pricing.total": {
+          "path": "policies/pricing.py",
+          "symbol": "policies.pricing.total",
+          "kind": "FUNCTION",
+          "content_hash": "9a3b9694e8263a75bf2b0a1d3570cb15a5ba363d7061d88f231d9b2b83fd3877",
+          "start": 1,
+          "end": 2
+        }
+      },
+      "file_locations": {
+        "app.py": {
+          "path": "app.py",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413",
+          "start": 1,
+          "end": 5
+        },
+        "delivery/orders.py": {
+          "path": "delivery/orders.py",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+          "start": 1,
+          "end": 12
+        },
+        "persistence/store.py": {
+          "path": "persistence/store.py",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4",
+          "start": 1,
+          "end": 2
+        },
+        "policies/pricing.py": {
+          "path": "policies/pricing.py",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "9a3b9694e8263a75bf2b0a1d3570cb15a5ba363d7061d88f231d9b2b83fd3877",
+          "start": 1,
+          "end": 2
+        }
+      },
+      "calls": [
+        {
+          "source": "app.start",
+          "target": "delivery.orders.buy",
+          "sites": [
+            {
+              "path": "app.py",
+              "line": 5,
+              "column": 20
+            }
+          ]
+        },
+        {
+          "source": "app.start",
+          "target": "delivery.orders.quote",
+          "sites": [
+            {
+              "path": "app.py",
+              "line": 5,
+              "column": 34
+            }
+          ]
+        },
+        {
+          "source": "delivery.orders.buy",
+          "target": "persistence.store.save",
+          "sites": [
+            {
+              "path": "delivery/orders.py",
+              "line": 8,
+              "column": 12
+            }
+          ]
+        },
+        {
+          "source": "delivery.orders.buy",
+          "target": "policies.pricing.total",
+          "sites": [
+            {
+              "path": "delivery/orders.py",
+              "line": 8,
+              "column": 17
+            }
+          ]
+        },
+        {
+          "source": "delivery.orders.quote",
+          "target": "policies.pricing.total",
+          "sites": [
+            {
+              "path": "delivery/orders.py",
+              "line": 12,
+              "column": 12
+            }
+          ]
+        }
+      ],
+      "tools": {
+        "engine": "StaticAnalyzer/PythonAdapter",
+        "node": "D:\\Progrm Files\\nvm\\v24.20.0\\node.exe",
+        "pyright_js": "F:\\CodeBoarding\\temp\\p0-tools\\node_modules\\pyright\\langserver.index.js",
+        "tokei": "F:\\CodeBoarding\\temp\\p0-tools\\tokei.exe",
+        "python_command": "[\"D:\\\\Progrm Files\\\\nvm\\\\v24.20.0\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\langserver.index.js\", \"--stdio\"]",
+        "tokei_command": "[\"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\", \"-o\", \"json\"]",
+        "maintenance_scope": "{\"complete\":true,\"configuration\":{},\"implementation\":\"01580c909ce2948d6401fbc9781e29a3a5dbafc3ee67fa3ea90a2c042326dd05\",\"patterns\":[\"# CodeBoarding Ignore File\\n\",\"# Add patterns here for files and directories that should be excluded from CodeBoarding analysis.\\n\",\"# Use the same format as .gitignore (gitignore syntax / gitwildmatch patterns).\\n\",\"#\\n\",\"# To stop ignoring a pattern, prefix it with ! (e.g., !important_file.txt)\\n\",\"#\\n\",\"# NOTE: The following are ALWAYS excluded (not configurable):\\n\",\"#   - Hidden directories (starting with .)\\n\",\"#   - .git/, .codeboarding/, node_modules/, __pycache__/\\n\",\"#   - Build output: build/, dist/, coverage/\\n\",\"#\\n\",\"# This file is automatically loaded by CodeBoarding analysis tools to exclude\\n\",\"# specified paths from code analysis, architecture generation, and other processing.\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Ignored directories (customizable \\u2014 remove lines to include them)\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Python virtual environments\\n\",\"venv/\\n\",\"env/\\n\",\"*.egg-info/\\n\",\"\\n\",\"# Java (Maven/Gradle) and Rust (Cargo) build output. Both ecosystems\\n\",\"# produce a top-level ``target/`` directory full of compiled artifacts \\u2014\\n\",\"# kept here as well as in ``_ALWAYS_IGNORED_DIRS`` so users who customize\\n\",\"# their ``.codeboardingignore`` continue to skip it even after edits.\\n\",\"target/\\n\",\"bin/\\n\",\"out/\\n\",\"\\n\",\"# .NET / C# build output\\n\",\"obj/\\n\",\"\\n\",\"# Go\\n\",\"vendor/\\n\",\"testdata/\\n\",\"\\n\",\"# PHP\\n\",\"cache/\\n\",\"\\n\",\"# Custom\\n\",\"temp/\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Test and infrastructure files\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Test directories\\n\",\"**/__tests__/**\\n\",\"**/tests/**\\n\",\"**/test/**\\n\",\"**/__test__/**\\n\",\"**/testing/**\\n\",\"**/testutil/**\\n\",\"\\n\",\"# Java/Kotlin test directories (Maven/Gradle structure)\\n\",\"**/src/test/**\\n\",\"**/src/testFixtures/**\\n\",\"**/src/integration-test/**\\n\",\"**/src/jmh/**\\n\",\"**/src/contractTest/**\\n\",\"**/osgi-tests/**\\n\",\"\\n\",\"# Test files by naming convention\\n\",\"*.test.*\\n\",\"*.spec.*\\n\",\"*_test.*\\n\",\"*test_*.py\\n\",\"test_*.py\\n\",\"*Test.java\\n\",\"*IT.java\\n\",\"*Test.kt\\n\",\"*IT.kt\\n\",\"*Tests.java\\n\",\"\\n\",\"# Mock, fixture, and stub directories\\n\",\"**/__mocks__/**\\n\",\"**/mocks/**\\n\",\"**/fixtures/**\\n\",\"**/fixture/**\\n\",\"**/stubs/**\\n\",\"**/stub/**\\n\",\"**/fakes/**\\n\",\"**/fake/**\\n\",\"\\n\",\"# E2E and integration test directories\\n\",\"**/e2e/**\\n\",\"**/integration-tests/**\\n\",\"**/integration_test*/**\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Non-production code\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Example and documentation code\\n\",\"**/examples/**\\n\",\"**/documentation/examples/**\\n\",\"\\n\",\"# Generated code\\n\",\"*.pb.go\\n\",\"**/generated_parser*\\n\",\"\\n\",\"# Java/Kotlin metadata files\\n\",\"module-info.java\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build artifacts and minified files\\n\",\"# ============================================================================\\n\",\"\\n\",\"*.bundle.js\\n\",\"*.bundle.js.map\\n\",\"*.min.js\\n\",\"*.min.css\\n\",\"*.chunk.js\\n\",\"*.chunk.js.map\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build tool configs and infrastructure\\n\",\"# ============================================================================\\n\",\"\\n\",\"esbuild*\\n\",\"webpack*\\n\",\"rollup*\\n\",\"vite.config.*\\n\",\"gulpfile*\\n\",\"gruntfile*\\n\",\"*.config.*\\n\"],\"protocol\":\"python-file-v1\",\"tools\":[\"5c976096e04e5c2c1f091938926234cc9fbebfe9787ddd149351b3b0ecc707b5\",\"f200762078eb9880faf421a5b30f9ef3055b1d85c6f10780d75db4da8d8499f1\",\"7db547cb6bfa1722e89ca52a43426fb212aa53603a60256af25fb6e59ca12099\"]}"
+      },
+      "limitations": [
+        "Static call records are not runtime execution or a complete dynamic call graph.",
+        "Names, clustering, responsibilities and design intent are not extracted code facts.",
+        "content_hash is SHA-256 of exact file bytes; source digest covers the declared Python scope.",
+        "Git commit is context only; the content manifest identifies dirty and untracked source."
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "acbf9dc379123f6f81226411dee455ad77eeadc22f785caba0bf90019c7aafaf",
+      "project_id": "orders",
+      "source": {
+        "digest": "afa343cbe30ebbdf1f165744438f92c68556a58bbb2b91cb07e6612468c65a1c",
+        "git_commit": "8bc2754c3a1a5220de638e132d1e7ad66a8a52ef",
+        "files": {
+          "app.py": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413",
+          "delivery/orders.py": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+          "persistence/store.py": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4",
+          "policies/pricing.py": "9a3b9694e8263a75bf2b0a1d3570cb15a5ba363d7061d88f231d9b2b83fd3877",
+          "unrelated.py": "66b4b56b028bb81ffe87acb431af0e9bfb37b19229db5a2694941fc74bfe5689"
+        },
+        "scope": "All Python files discovered by PythonAdapter and repository ignore rules"
+      },
+      "symbols": {
+        "app.py|app.start": {
+          "path": "app.py",
+          "symbol": "app.start",
+          "kind": "FUNCTION",
+          "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413",
+          "start": 4,
+          "end": 5
+        },
+        "delivery/orders.py|delivery.orders.buy": {
+          "path": "delivery/orders.py",
+          "symbol": "delivery.orders.buy",
+          "kind": "FUNCTION",
+          "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+          "start": 5,
+          "end": 8
+        },
+        "delivery/orders.py|delivery.orders.quote": {
+          "path": "delivery/orders.py",
+          "symbol": "delivery.orders.quote",
+          "kind": "FUNCTION",
+          "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+          "start": 11,
+          "end": 12
+        },
+        "persistence/store.py|persistence.store.save": {
+          "path": "persistence/store.py",
+          "symbol": "persistence.store.save",
+          "kind": "FUNCTION",
+          "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4",
+          "start": 1,
+          "end": 2
+        },
+        "policies/pricing.py|policies.pricing.total": {
+          "path": "policies/pricing.py",
+          "symbol": "policies.pricing.total",
+          "kind": "FUNCTION",
+          "content_hash": "9a3b9694e8263a75bf2b0a1d3570cb15a5ba363d7061d88f231d9b2b83fd3877",
+          "start": 1,
+          "end": 2
+        },
+        "unrelated.py|unrelated.memo": {
+          "path": "unrelated.py",
+          "symbol": "unrelated.memo",
+          "kind": "FUNCTION",
+          "content_hash": "66b4b56b028bb81ffe87acb431af0e9bfb37b19229db5a2694941fc74bfe5689",
+          "start": 1,
+          "end": 2
+        }
+      },
+      "file_locations": {
+        "app.py": {
+          "path": "app.py",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413",
+          "start": 1,
+          "end": 5
+        },
+        "delivery/orders.py": {
+          "path": "delivery/orders.py",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+          "start": 1,
+          "end": 12
+        },
+        "persistence/store.py": {
+          "path": "persistence/store.py",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4",
+          "start": 1,
+          "end": 2
+        },
+        "policies/pricing.py": {
+          "path": "policies/pricing.py",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "9a3b9694e8263a75bf2b0a1d3570cb15a5ba363d7061d88f231d9b2b83fd3877",
+          "start": 1,
+          "end": 2
+        },
+        "unrelated.py": {
+          "path": "unrelated.py",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "66b4b56b028bb81ffe87acb431af0e9bfb37b19229db5a2694941fc74bfe5689",
+          "start": 1,
+          "end": 2
+        }
+      },
+      "calls": [
+        {
+          "source": "app.start",
+          "target": "delivery.orders.buy",
+          "sites": [
+            {
+              "path": "app.py",
+              "line": 5,
+              "column": 20
+            }
+          ]
+        },
+        {
+          "source": "app.start",
+          "target": "delivery.orders.quote",
+          "sites": [
+            {
+              "path": "app.py",
+              "line": 5,
+              "column": 34
+            }
+          ]
+        },
+        {
+          "source": "delivery.orders.buy",
+          "target": "persistence.store.save",
+          "sites": [
+            {
+              "path": "delivery/orders.py",
+              "line": 8,
+              "column": 12
+            }
+          ]
+        },
+        {
+          "source": "delivery.orders.buy",
+          "target": "policies.pricing.total",
+          "sites": [
+            {
+              "path": "delivery/orders.py",
+              "line": 8,
+              "column": 17
+            }
+          ]
+        },
+        {
+          "source": "delivery.orders.quote",
+          "target": "policies.pricing.total",
+          "sites": [
+            {
+              "path": "delivery/orders.py",
+              "line": 12,
+              "column": 12
+            }
+          ]
+        }
+      ],
+      "tools": {
+        "engine": "StaticAnalyzer/PythonAdapter",
+        "node": "D:\\Progrm Files\\nvm\\v24.20.0\\node.exe",
+        "pyright_js": "F:\\CodeBoarding\\temp\\p0-tools\\node_modules\\pyright\\langserver.index.js",
+        "tokei": "F:\\CodeBoarding\\temp\\p0-tools\\tokei.exe",
+        "python_command": "[\"D:\\\\Progrm Files\\\\nvm\\\\v24.20.0\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\langserver.index.js\", \"--stdio\"]",
+        "tokei_command": "[\"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\", \"-o\", \"json\"]",
+        "maintenance_scope": "{\"complete\":true,\"configuration\":{},\"implementation\":\"01580c909ce2948d6401fbc9781e29a3a5dbafc3ee67fa3ea90a2c042326dd05\",\"patterns\":[\"# CodeBoarding Ignore File\\n\",\"# Add patterns here for files and directories that should be excluded from CodeBoarding analysis.\\n\",\"# Use the same format as .gitignore (gitignore syntax / gitwildmatch patterns).\\n\",\"#\\n\",\"# To stop ignoring a pattern, prefix it with ! (e.g., !important_file.txt)\\n\",\"#\\n\",\"# NOTE: The following are ALWAYS excluded (not configurable):\\n\",\"#   - Hidden directories (starting with .)\\n\",\"#   - .git/, .codeboarding/, node_modules/, __pycache__/\\n\",\"#   - Build output: build/, dist/, coverage/\\n\",\"#\\n\",\"# This file is automatically loaded by CodeBoarding analysis tools to exclude\\n\",\"# specified paths from code analysis, architecture generation, and other processing.\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Ignored directories (customizable \\u2014 remove lines to include them)\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Python virtual environments\\n\",\"venv/\\n\",\"env/\\n\",\"*.egg-info/\\n\",\"\\n\",\"# Java (Maven/Gradle) and Rust (Cargo) build output. Both ecosystems\\n\",\"# produce a top-level ``target/`` directory full of compiled artifacts \\u2014\\n\",\"# kept here as well as in ``_ALWAYS_IGNORED_DIRS`` so users who customize\\n\",\"# their ``.codeboardingignore`` continue to skip it even after edits.\\n\",\"target/\\n\",\"bin/\\n\",\"out/\\n\",\"\\n\",\"# .NET / C# build output\\n\",\"obj/\\n\",\"\\n\",\"# Go\\n\",\"vendor/\\n\",\"testdata/\\n\",\"\\n\",\"# PHP\\n\",\"cache/\\n\",\"\\n\",\"# Custom\\n\",\"temp/\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Test and infrastructure files\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Test directories\\n\",\"**/__tests__/**\\n\",\"**/tests/**\\n\",\"**/test/**\\n\",\"**/__test__/**\\n\",\"**/testing/**\\n\",\"**/testutil/**\\n\",\"\\n\",\"# Java/Kotlin test directories (Maven/Gradle structure)\\n\",\"**/src/test/**\\n\",\"**/src/testFixtures/**\\n\",\"**/src/integration-test/**\\n\",\"**/src/jmh/**\\n\",\"**/src/contractTest/**\\n\",\"**/osgi-tests/**\\n\",\"\\n\",\"# Test files by naming convention\\n\",\"*.test.*\\n\",\"*.spec.*\\n\",\"*_test.*\\n\",\"*test_*.py\\n\",\"test_*.py\\n\",\"*Test.java\\n\",\"*IT.java\\n\",\"*Test.kt\\n\",\"*IT.kt\\n\",\"*Tests.java\\n\",\"\\n\",\"# Mock, fixture, and stub directories\\n\",\"**/__mocks__/**\\n\",\"**/mocks/**\\n\",\"**/fixtures/**\\n\",\"**/fixture/**\\n\",\"**/stubs/**\\n\",\"**/stub/**\\n\",\"**/fakes/**\\n\",\"**/fake/**\\n\",\"\\n\",\"# E2E and integration test directories\\n\",\"**/e2e/**\\n\",\"**/integration-tests/**\\n\",\"**/integration_test*/**\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Non-production code\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Example and documentation code\\n\",\"**/examples/**\\n\",\"**/documentation/examples/**\\n\",\"\\n\",\"# Generated code\\n\",\"*.pb.go\\n\",\"**/generated_parser*\\n\",\"\\n\",\"# Java/Kotlin metadata files\\n\",\"module-info.java\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build artifacts and minified files\\n\",\"# ============================================================================\\n\",\"\\n\",\"*.bundle.js\\n\",\"*.bundle.js.map\\n\",\"*.min.js\\n\",\"*.min.css\\n\",\"*.chunk.js\\n\",\"*.chunk.js.map\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build tool configs and infrastructure\\n\",\"# ============================================================================\\n\",\"\\n\",\"esbuild*\\n\",\"webpack*\\n\",\"rollup*\\n\",\"vite.config.*\\n\",\"gulpfile*\\n\",\"gruntfile*\\n\",\"*.config.*\\n\"],\"protocol\":\"python-file-v1\",\"tools\":[\"5c976096e04e5c2c1f091938926234cc9fbebfe9787ddd149351b3b0ecc707b5\",\"f200762078eb9880faf421a5b30f9ef3055b1d85c6f10780d75db4da8d8499f1\",\"7db547cb6bfa1722e89ca52a43426fb212aa53603a60256af25fb6e59ca12099\"]}"
+      },
+      "limitations": [
+        "Static call records are not runtime execution or a complete dynamic call graph.",
+        "Names, clustering, responsibilities and design intent are not extracted code facts.",
+        "content_hash is SHA-256 of exact file bytes; source digest covers the declared Python scope.",
+        "Git commit is context only; the content manifest identifies dirty and untracked source."
+      ]
+    }
+  ],
+  "bindings": [
+    {
+      "id": "bind-start",
+      "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+      "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+      "location": {
+        "path": "app.py",
+        "symbol": "app.start",
+        "kind": "FUNCTION",
+        "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413",
+        "start": 4,
+        "end": 5
+      },
+      "status": "current",
+      "reason": "",
+      "history": []
+    },
+    {
+      "id": "bind-buy",
+      "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+      "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+      "location": {
+        "path": "delivery/orders.py",
+        "symbol": "delivery.orders.buy",
+        "kind": "FUNCTION",
+        "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+        "start": 5,
+        "end": 8
+      },
+      "status": "current",
+      "reason": "",
+      "history": []
+    },
+    {
+      "id": "bind-quote",
+      "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+      "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+      "location": {
+        "path": "delivery/orders.py",
+        "symbol": "delivery.orders.quote",
+        "kind": "FUNCTION",
+        "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+        "start": 11,
+        "end": 12
+      },
+      "status": "current",
+      "reason": "",
+      "history": []
+    },
+    {
+      "id": "bind-save",
+      "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+      "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+      "location": {
+        "path": "persistence/store.py",
+        "symbol": "persistence.store.save",
+        "kind": "FUNCTION",
+        "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4",
+        "start": 1,
+        "end": 2
+      },
+      "status": "current",
+      "reason": "",
+      "history": []
+    },
+    {
+      "id": "bind-total",
+      "snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+      "source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
+      "location": {
+        "path": "policies/pricing.py",
+        "symbol": "policies.pricing.total",
+        "kind": "FUNCTION",
+        "content_hash": "9a3b9694e8263a75bf2b0a1d3570cb15a5ba363d7061d88f231d9b2b83fd3877",
+        "start": 1,
+        "end": 2
+      },
+      "status": "current",
+      "reason": "Inspected multiplier 12; same pricing responsibility",
+      "history": [
+        {
+          "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+          "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+          "location": {
+            "path": "policies/pricing.py",
+            "symbol": "policies.pricing.total",
+            "kind": "FUNCTION",
+            "content_hash": "42868ea99cc362de16f58190ac37c79d345533641e5662adcad76de06154c77c",
+            "start": 1,
+            "end": 2
+          },
+          "reason": "Inspected multiplier 12; same pricing responsibility"
+        }
+      ]
+    }
+  ],
+  "components": [
+    {
+      "id": "application",
+      "name": "application",
+      "responsibility": "Explain application",
+      "rationale": "Separate entry, policy and formatting responsibilities.",
+      "parent_id": "",
+      "binding_ids": [
+        "bind-start"
+      ],
+      "claim": {
+        "kind": "inference",
+        "explanation": "Logical boundary around application.",
+        "binding_ids": [
+          "bind-start"
+        ],
+        "assumptions": [
+          "Responsibility is an interpretation of inspected source, not author intent."
+        ],
+        "issues": []
+      }
+    },
+    {
+      "id": "entry",
+      "name": "entry",
+      "responsibility": "Explain entry",
+      "rationale": "Separate entry, policy and formatting responsibilities.",
+      "parent_id": "application",
+      "binding_ids": [
+        "bind-buy"
+      ],
+      "claim": {
+        "kind": "inference",
+        "explanation": "Logical boundary around entry.",
+        "binding_ids": [
+          "bind-buy"
+        ],
+        "assumptions": [
+          "Responsibility is an interpretation of inspected source, not author intent."
+        ],
+        "issues": []
+      }
+    },
+    {
+      "id": "policy",
+      "name": "policy",
+      "responsibility": "Explain policy",
+      "rationale": "Both buy and quote call total; share this pricing responsibility while keeping entry and formatting separate.",
+      "parent_id": "application",
+      "binding_ids": [
+        "bind-total"
+      ],
+      "claim": {
+        "kind": "inference",
+        "explanation": "Logical boundary around policy.",
+        "binding_ids": [
+          "bind-total"
+        ],
+        "assumptions": [
+          "Responsibility is an interpretation of inspected source, not author intent."
+        ],
+        "issues": []
+      }
+    },
+    {
+      "id": "storage",
+      "name": "storage",
+      "responsibility": "Explain storage",
+      "rationale": "Separate entry, policy and formatting responsibilities.",
+      "parent_id": "application",
+      "binding_ids": [
+        "bind-save"
+      ],
+      "claim": {
+        "kind": "inference",
+        "explanation": "Logical boundary around storage.",
+        "binding_ids": [
+          "bind-save"
+        ],
+        "assumptions": [
+          "Responsibility is an interpretation of inspected source, not author intent."
+        ],
+        "issues": []
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "entry-pricing",
+      "source_id": "entry",
+      "target_id": "policy",
+      "meaning": "Purchase and quotation call shared pricing",
+      "claim": {
+        "kind": "inference",
+        "explanation": "buy invokes total before save; quote invokes the same total.",
+        "binding_ids": [
+          "bind-buy"
+        ],
+        "assumptions": [
+          "Responsibility is an interpretation of inspected source, not author intent."
+        ],
+        "issues": []
+      }
+    },
+    {
+      "id": "entry-storage",
+      "source_id": "entry",
+      "target_id": "storage",
+      "meaning": "Purchase formats the order after pricing",
+      "claim": {
+        "kind": "inference",
+        "explanation": "buy passes total's result to save.",
+        "binding_ids": [
+          "bind-buy"
+        ],
+        "assumptions": [
+          "Responsibility is an interpretation of inspected source, not author intent."
+        ],
+        "issues": []
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "business-A",
+      "name": "A · Purchase and validation",
+      "entry_step_id": "business-A-validate",
+      "steps": [
+        {
+          "id": "business-A-validate",
+          "component_ids": [
+            "entry"
+          ],
+          "binding_ids": [
+            "bind-buy"
+          ],
+          "claim": {
+            "kind": "inference",
+            "explanation": "buy rejects quantity <= 0 before total and save. Branch conditions describe that code; the player does not evaluate quantity.",
+            "binding_ids": [
+              "bind-buy"
+            ],
+            "assumptions": [
+              "Responsibility is an interpretation of inspected source, not author intent."
+            ],
+            "issues": []
+          }
+        },
+        {
+          "id": "business-A-price",
+          "component_ids": [
+            "policy"
+          ],
+          "binding_ids": [
+            "bind-total"
+          ],
+          "claim": {
+            "kind": "inference",
+            "explanation": "Inspect price; static explanation, not an observed execution.",
+            "binding_ids": [
+              "bind-total"
+            ],
+            "assumptions": [
+              "Responsibility is an interpretation of inspected source, not author intent."
+            ],
+            "issues": []
+          }
+        },
+        {
+          "id": "business-A-save",
+          "component_ids": [
+            "storage"
+          ],
+          "binding_ids": [
+            "bind-save"
+          ],
+          "claim": {
+            "kind": "inference",
+            "explanation": "Inspect save; static explanation, not an observed execution.",
+            "binding_ids": [
+              "bind-save"
+            ],
+            "assumptions": [
+              "Responsibility is an interpretation of inspected source, not author intent."
+            ],
+            "issues": []
+          }
+        },
+        {
+          "id": "business-A-reject",
+          "component_ids": [
+            "entry"
+          ],
+          "binding_ids": [
+            "bind-buy"
+          ],
+          "claim": {
+            "kind": "intent_hypothesis",
+            "explanation": "ValueError ends this invocation. A user may retry in a new invocation; the retry loop is a demonstration hypothesis, not an internal loop.",
+            "binding_ids": [
+              "bind-buy"
+            ],
+            "assumptions": [
+              "Responsibility is an interpretation of inspected source, not author intent."
+            ],
+            "issues": [
+              "No caller retry or cancel implementation exists in this fixture."
+            ]
+          }
+        },
+        {
+          "id": "business-A-abandon",
+          "component_ids": [
+            "entry"
+          ],
+          "binding_ids": [
+            "bind-buy"
+          ],
+          "claim": {
+            "kind": "intent_hypothesis",
+            "explanation": "Abandoning after rejection is a modeled caller intention; no cancellation handler is implemented.",
+            "binding_ids": [
+              "bind-buy"
+            ],
+            "assumptions": [
+              "Responsibility is an interpretation of inspected source, not author intent."
+            ],
+            "issues": []
+          }
+        }
+      ],
+      "order": [
+        "business-A-save",
+        "business-A-validate",
+        "business-A-reject",
+        "business-A-price",
+        "business-A-abandon"
+      ],
+      "transitions": [
+        {
+          "source_id": "business-A-validate",
+          "target_id": "business-A-price",
+          "kind": "branch",
+          "condition": "quantity > 0; described guard, not evaluated"
+        },
+        {
+          "source_id": "business-A-validate",
+          "target_id": "business-A-reject",
+          "kind": "branch",
+          "condition": "quantity <= 0; ValueError before pricing"
+        },
+        {
+          "source_id": "business-A-price",
+          "target_id": "business-A-save",
+          "kind": "next",
+          "condition": "total returns normally to buy"
+        },
+        {
+          "source_id": "business-A-reject",
+          "target_id": "business-A-validate",
+          "kind": "loop",
+          "condition": "Hypothetical caller retries with a new invocation; no retry implementation"
+        },
+        {
+          "source_id": "business-A-reject",
+          "target_id": "business-A-abandon",
+          "kind": "return",
+          "condition": "Hypothetical caller abandons after rejection; no cancellation handler"
+        }
+      ],
+      "claim": {
+        "kind": "inference",
+        "explanation": "Handwritten explanation based on the fixture source.",
+        "binding_ids": [
+          "bind-buy"
+        ],
+        "assumptions": [
+          "Responsibility is an interpretation of inspected source, not author intent."
+        ],
+        "issues": []
+      }
+    },
+    {
+      "id": "business-B",
+      "name": "B · Quotation",
+      "entry_step_id": "business-B-quote",
+      "steps": [
+        {
+          "id": "business-B-quote",
+          "component_ids": [
+            "entry"
+          ],
+          "binding_ids": [
+            "bind-quote"
+          ],
+          "claim": {
+            "kind": "inference",
+            "explanation": "Inspect quote; static explanation, not an observed execution.",
+            "binding_ids": [
+              "bind-quote"
+            ],
+            "assumptions": [
+              "Responsibility is an interpretation of inspected source, not author intent."
+            ],
+            "issues": []
+          }
+        },
+        {
+          "id": "business-B-price",
+          "component_ids": [
+            "policy"
+          ],
+          "binding_ids": [
+            "bind-total"
+          ],
+          "claim": {
+            "kind": "inference",
+            "explanation": "Inspect price; static explanation, not an observed execution.",
+            "binding_ids": [
+              "bind-total"
+            ],
+            "assumptions": [
+              "Responsibility is an interpretation of inspected source, not author intent."
+            ],
+            "issues": []
+          }
+        }
+      ],
+      "order": [
+        "business-B-quote",
+        "business-B-price"
+      ],
+      "transitions": [
+        {
+          "source_id": "business-B-quote",
+          "target_id": "business-B-price",
+          "kind": "next",
+          "condition": "Prior operation returns normally"
+        }
+      ],
+      "claim": {
+        "kind": "inference",
+        "explanation": "Handwritten explanation based on the fixture source.",
+        "binding_ids": [
+          "bind-quote"
+        ],
+        "assumptions": [
+          "Responsibility is an interpretation of inspected source, not author intent."
+        ],
+        "issues": []
+      }
+    }
+  ],
+  "opinions": [
+    {
+      "id": "feedback-pricing",
+      "author": "example-user",
+      "text": "Please explain why pricing is shared. Agent reply: both buy and quote import total; responsibility remains an interpretation.",
+      "stance": "question",
+      "object_ids": [
+        "policy",
+        "maintenance-416fa769517d35edc96fb382dcbb536ef454dea157f7f8923d77ec3253cdb520"
+      ]
+    }
+  ],
+  "verifications": [
+    {
+      "id": "planned-purchase",
+      "status": "planned",
+      "object_ids": [
+        "business-A"
+      ],
+      "command": "python -c \"from delivery.orders import buy; assert buy(2)\"",
+      "environment": "Fixture Python; proposed, not executed",
+      "inputs": "quantity=2; business assertion remains planned",
+      "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+      "executor": "",
+      "executed_at": "",
+      "exit_code": null,
+      "result": ""
+    },
+    {
+      "id": "executed-export",
+      "status": "executed",
+      "object_ids": [
+        "application"
+      ],
+      "command": "[\"F:\\\\CodeBoarding\\\\.venv\\\\Scripts\\\\python.exe\", \"-m\", \"architecture_model\", \"facts\", \"export\", \"--repo\", \"F:\\\\CodeBoarding\\\\temp\\\\m3-complete\\\\source\", \"--project-id\", \"orders\", \"--output\", \"F:\\\\CodeBoarding\\\\temp\\\\m3-complete\\\\facts-s0.json\", \"--node\", \"D:\\\\Progrm Files\\\\nvm\\\\v24.20.0\\\\node.exe\", \"--pyright\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\langserver.index.js\", \"--tokei\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\"]",
+      "environment": "Python 3.12.13 / Windows-11-10.0.26100-SP0",
+      "inputs": "Complete fixture source tree, static export only; no business invocation",
+      "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+      "executor": "viewer_demo",
+      "executed_at": "2026-11-04T16:08:49.754761+00:00",
+      "exit_code": 0,
+      "result": "Native fact export completed. Does not verify business explanations or hypothetical retry."
+    }
+  ],
+  "revisions": [
+    {
+      "revision": 0,
+      "author": "business-agent",
+      "summary": "Initialize architecture model",
+      "timestamp": "2026-11-04T16:08:43.539169+00:00",
+      "object_ids": [],
+      "scenario_ids": []
+    },
+    {
+      "revision": 1,
+      "author": "business-agent",
+      "summary": "establish-purchase",
+      "timestamp": "2026-11-04T16:08:51.690077+00:00",
+      "object_ids": [
+        "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "application",
+        "bind-buy",
+        "bind-quote",
+        "bind-save",
+        "bind-start",
+        "bind-total",
+        "business-A",
+        "entry",
+        "entry-pricing",
+        "entry-storage",
+        "executed-export",
+        "planned-purchase",
+        "policy",
+        "storage"
+      ],
+      "scenario_ids": [
+        "business-A"
+      ]
+    },
+    {
+      "revision": 2,
+      "author": "business-agent",
+      "summary": "add-quotation-reusing-policy",
+      "timestamp": "2026-11-04T16:08:56.605467+00:00",
+      "object_ids": [
+        "business-B"
+      ],
+      "scenario_ids": [
+        "business-B"
+      ]
+    },
+    {
+      "revision": 3,
+      "author": "business-agent",
+      "summary": "Record source maintenance",
+      "timestamp": "2026-11-04T16:09:11.050989+00:00",
+      "object_ids": [
+        "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+        "maintenance-0439454bd333e0308ce4d2c55901e4a694b176de67979838127482db9540ca55",
+        "maintenance-1f9a68dc1701103ba2d2b45d4ec92f82bf2cbd138aa0269609b713edf897d8d9",
+        "maintenance-22cc931938e9b80a00821eb566270643516c89f774ed62aca26767946c4ef7ee",
+        "maintenance-6652e436b87eb490e4d7f063e85d880168bbc57e888a09b2a42208304a1d3139",
+        "maintenance-e5d99186dd033d2dcf4a3cb3017ee83061f794c0bc04f134efc23aa0fff27a55"
+      ],
+      "scenario_ids": [
+        "business-A",
+        "business-B"
+      ]
+    },
+    {
+      "revision": 4,
+      "author": "business-agent",
+      "summary": "clarify-shared-boundary",
+      "timestamp": "2026-11-04T16:09:16.625532+00:00",
+      "object_ids": [
+        "maintenance-416fa769517d35edc96fb382dcbb536ef454dea157f7f8923d77ec3253cdb520",
+        "maintenance-76181ef9429e5c806846ceefe02726572ccd9a279146eaaf335bd473bd97a501",
+        "policy"
+      ],
+      "scenario_ids": [
+        "business-A",
+        "business-B"
+      ]
+    },
+    {
+      "revision": 5,
+      "author": "business-agent",
+      "summary": "Inspected multiplier 12; same pricing responsibility",
+      "timestamp": "2026-11-04T16:09:20.142985+00:00",
+      "object_ids": [
+        "bind-total"
+      ],
+      "scenario_ids": [
+        "business-A",
+        "business-B"
+      ]
+    },
+    {
+      "revision": 6,
+      "author": "business-agent",
+      "summary": "Inspected new multiplier and both consumers. Boundaries and explicit flow still hold; no runtime correctness claim.",
+      "timestamp": "2026-11-04T16:09:22.714405+00:00",
+      "object_ids": [
+        "maintenance-416fa769517d35edc96fb382dcbb536ef454dea157f7f8923d77ec3253cdb520"
+      ],
+      "scenario_ids": [
+        "business-A",
+        "business-B"
+      ]
+    },
+    {
+      "revision": 7,
+      "author": "business-agent",
+      "summary": "record-session-feedback",
+      "timestamp": "2026-11-04T16:09:25.160115+00:00",
+      "object_ids": [
+        "feedback-pricing"
+      ],
+      "scenario_ids": []
+    },
+    {
+      "revision": 8,
+      "author": "business-agent",
+      "summary": "Record source maintenance",
+      "timestamp": "2026-11-04T16:09:36.554060+00:00",
+      "object_ids": [
+        "acbf9dc379123f6f81226411dee455ad77eeadc22f785caba0bf90019c7aafaf",
+        "maintenance-3867e28b5c64bb26545fe9a1c826e58bc78c915d0fd828242fd18cc47049d3f6",
+        "maintenance-40040f0244bea239ab93ef7f29b3923a25546ea2c0f300e0b07176ecf21a1140",
+        "maintenance-80ecf0229657c15779be546f402f414d343018c731f26cca521dd086375bf640",
+        "maintenance-9b1340e67b8c7b937a1f9db2a92fd2c77fa68700ca7de1d5f4fea0db066ef872",
+        "maintenance-af68c7be4fdc91696aa63cafdd3f912f95252d05a51ba9f8aafdb7898bc8085c"
+      ],
+      "scenario_ids": []
+    }
+  ],
+  "maintenance": [
+    {
+      "id": "maintenance-6652e436b87eb490e4d7f063e85d880168bbc57e888a09b2a42208304a1d3139",
+      "binding_id": "bind-start",
+      "basis": {
+        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+        "location": {
+          "path": "app.py",
+          "symbol": "app.start",
+          "kind": "FUNCTION",
+          "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413",
+          "start": 4,
+          "end": 5
+        },
+        "reason": "Evidence at comparison time"
+      },
+      "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+      "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
+      "compared_revision": 2,
+      "disposition": "unchanged",
+      "reasons": [
+        "File bytes and incident call endpoints unchanged"
+      ],
+      "candidates": [
+        {
+          "key": "app.py|app.start",
+          "location": {
+            "path": "app.py",
+            "symbol": "app.start",
+            "kind": "FUNCTION",
+            "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413",
+            "start": 4,
+            "end": 5
+          },
+          "reasons": [
+            "Exact path and symbol identity"
+          ]
+        }
+      ],
+      "component_ids": [
+        "application"
+      ],
+      "relation_ids": [],
+      "scenario_ids": [],
+      "step_ids": [],
+      "call_changes": {
+        "before": [
+          {
+            "source": "app.start",
+            "target": "delivery.orders.buy",
+            "sites": [
+              {
+                "path": "app.py",
+                "line": 5,
+                "column": 20
+              }
+            ]
+          },
+          {
+            "source": "app.start",
+            "target": "delivery.orders.quote",
+            "sites": [
+              {
+                "path": "app.py",
+                "line": 5,
+                "column": 34
+              }
+            ]
+          }
+        ],
+        "after": [
+          {
+            "source": "app.start",
+            "target": "delivery.orders.buy",
+            "sites": [
+              {
+                "path": "app.py",
+                "line": 5,
+                "column": 20
+              }
+            ]
+          },
+          {
+            "source": "app.start",
+            "target": "delivery.orders.quote",
+            "sites": [
+              {
+                "path": "app.py",
+                "line": 5,
+                "column": 34
+              }
+            ]
+          }
+        ]
+      },
+      "resolution": null,
+      "coverage_version": "objects-v1",
+      "object_versions": {
+        "application": "4fbdca6cf65a2f0024dbc9c70256af5c2a68228bcbcfa97bd8ce82873623333c"
+      }
+    },
+    {
+      "id": "maintenance-1f9a68dc1701103ba2d2b45d4ec92f82bf2cbd138aa0269609b713edf897d8d9",
+      "binding_id": "bind-buy",
+      "basis": {
+        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+        "location": {
+          "path": "delivery/orders.py",
+          "symbol": "delivery.orders.buy",
+          "kind": "FUNCTION",
+          "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+          "start": 5,
+          "end": 8
+        },
+        "reason": "Evidence at comparison time"
+      },
+      "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+      "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
+      "compared_revision": 2,
+      "disposition": "unchanged",
+      "reasons": [
+        "File bytes and incident call endpoints unchanged"
+      ],
+      "candidates": [
+        {
+          "key": "delivery/orders.py|delivery.orders.buy",
+          "location": {
+            "path": "delivery/orders.py",
+            "symbol": "delivery.orders.buy",
+            "kind": "FUNCTION",
+            "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+            "start": 5,
+            "end": 8
+          },
+          "reasons": [
+            "Exact path and symbol identity"
+          ]
+        }
+      ],
+      "component_ids": [
+        "entry",
+        "policy",
+        "storage"
+      ],
+      "relation_ids": [
+        "entry-pricing",
+        "entry-storage"
+      ],
+      "scenario_ids": [
+        "business-A",
+        "business-B"
+      ],
+      "step_ids": [
+        "business-A-abandon",
+        "business-A-price",
+        "business-A-reject",
+        "business-A-save",
+        "business-A-validate",
+        "business-B-price",
+        "business-B-quote"
+      ],
+      "call_changes": {
+        "before": [
+          {
+            "source": "app.start",
+            "target": "delivery.orders.buy",
+            "sites": [
+              {
+                "path": "app.py",
+                "line": 5,
+                "column": 20
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.buy",
+            "target": "persistence.store.save",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 12
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.buy",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 17
+              }
+            ]
+          }
+        ],
+        "after": [
+          {
+            "source": "app.start",
+            "target": "delivery.orders.buy",
+            "sites": [
+              {
+                "path": "app.py",
+                "line": 5,
+                "column": 20
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.buy",
+            "target": "persistence.store.save",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 12
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.buy",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 17
+              }
+            ]
+          }
+        ]
+      },
+      "resolution": null,
+      "coverage_version": "objects-v1",
+      "object_versions": {
+        "entry": "62901f61ec38b70c60db7449d6ed7043604be7e8a25268f6ff7b1379d00f6530",
+        "policy": "d5ae95be2835a30ac67304ec90380663fb6709a57e8428294b3a87566c7ec174",
+        "storage": "67d9f095777e52e99f7c5ef585bf0a58f5dd54b0e25c02c58ae296d4ca8d2af5",
+        "entry-pricing": "ecb73642a5c4618a5b2b93fc794b506f98a8c603c771a863d46f9a7194e8a962",
+        "entry-storage": "b07cda78f0e9b8872a41ff8097ab85cb9cc405a2a7a40c968a150c82d783bbc9",
+        "business-A": "2d39d54db339ce7ea537db319ba2a3307f4e62bc38faec817e6e4321b5f15a9c",
+        "business-B": "c920d5c71acbc3c6f4b7d0eaf572a17d5aaa1762572cb53ddf9f5b748567d74d",
+        "business-A-validate": "977715cd22f9ff873d8b46fd9dc1bbd9dc3a8bbf530ebf087107c97e3ae52587",
+        "business-A-price": "0a9bcc6a7797b5e21c10221e36cc5bf91de4222166899f39edba7d7a9d03e905",
+        "business-A-save": "73585cab071e5cb9ae4bde470c393f9b9e399448d188a1bcc819812f3f2209be",
+        "business-A-reject": "762dd7bc9c4e623262197b7a5eebd85d938c77eaf63f2faebde1159818d851b7",
+        "business-A-abandon": "726ea19d1186a8936c1b6cde58b9d2c05f256d9deaa8839a42b498e7d1977aa5",
+        "business-B-quote": "d0c86666804b4e9aa17a542034cd4ddfddf834814d57ad721c2c6b5de6f58e8d",
+        "business-B-price": "b07d030e082f4a8faac9cdf006407feb4592a2369d08c8d76f36332f5f8b9c6c"
+      }
+    },
+    {
+      "id": "maintenance-0439454bd333e0308ce4d2c55901e4a694b176de67979838127482db9540ca55",
+      "binding_id": "bind-quote",
+      "basis": {
+        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+        "location": {
+          "path": "delivery/orders.py",
+          "symbol": "delivery.orders.quote",
+          "kind": "FUNCTION",
+          "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+          "start": 11,
+          "end": 12
+        },
+        "reason": "Evidence at comparison time"
+      },
+      "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+      "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
+      "compared_revision": 2,
+      "disposition": "unchanged",
+      "reasons": [
+        "File bytes and incident call endpoints unchanged"
+      ],
+      "candidates": [
+        {
+          "key": "delivery/orders.py|delivery.orders.quote",
+          "location": {
+            "path": "delivery/orders.py",
+            "symbol": "delivery.orders.quote",
+            "kind": "FUNCTION",
+            "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+            "start": 11,
+            "end": 12
+          },
+          "reasons": [
+            "Exact path and symbol identity"
+          ]
+        }
+      ],
+      "component_ids": [],
+      "relation_ids": [],
+      "scenario_ids": [
+        "business-B"
+      ],
+      "step_ids": [
+        "business-B-quote"
+      ],
+      "call_changes": {
+        "before": [
+          {
+            "source": "app.start",
+            "target": "delivery.orders.quote",
+            "sites": [
+              {
+                "path": "app.py",
+                "line": 5,
+                "column": 34
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.quote",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 12,
+                "column": 12
+              }
+            ]
+          }
+        ],
+        "after": [
+          {
+            "source": "app.start",
+            "target": "delivery.orders.quote",
+            "sites": [
+              {
+                "path": "app.py",
+                "line": 5,
+                "column": 34
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.quote",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 12,
+                "column": 12
+              }
+            ]
+          }
+        ]
+      },
+      "resolution": null,
+      "coverage_version": "objects-v1",
+      "object_versions": {
+        "business-B": "c920d5c71acbc3c6f4b7d0eaf572a17d5aaa1762572cb53ddf9f5b748567d74d",
+        "business-B-quote": "d0c86666804b4e9aa17a542034cd4ddfddf834814d57ad721c2c6b5de6f58e8d"
+      }
+    },
+    {
+      "id": "maintenance-e5d99186dd033d2dcf4a3cb3017ee83061f794c0bc04f134efc23aa0fff27a55",
+      "binding_id": "bind-save",
+      "basis": {
+        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+        "location": {
+          "path": "persistence/store.py",
+          "symbol": "persistence.store.save",
+          "kind": "FUNCTION",
+          "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4",
+          "start": 1,
+          "end": 2
+        },
+        "reason": "Evidence at comparison time"
+      },
+      "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+      "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
+      "compared_revision": 2,
+      "disposition": "unchanged",
+      "reasons": [
+        "File bytes and incident call endpoints unchanged"
+      ],
+      "candidates": [
+        {
+          "key": "persistence/store.py|persistence.store.save",
+          "location": {
+            "path": "persistence/store.py",
+            "symbol": "persistence.store.save",
+            "kind": "FUNCTION",
+            "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4",
+            "start": 1,
+            "end": 2
+          },
+          "reasons": [
+            "Exact path and symbol identity"
+          ]
+        }
+      ],
+      "component_ids": [
+        "storage"
+      ],
+      "relation_ids": [
+        "entry-storage"
+      ],
+      "scenario_ids": [
+        "business-A"
+      ],
+      "step_ids": [
+        "business-A-save"
+      ],
+      "call_changes": {
+        "before": [
+          {
+            "source": "delivery.orders.buy",
+            "target": "persistence.store.save",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 12
+              }
+            ]
+          }
+        ],
+        "after": [
+          {
+            "source": "delivery.orders.buy",
+            "target": "persistence.store.save",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 12
+              }
+            ]
+          }
+        ]
+      },
+      "resolution": null,
+      "coverage_version": "objects-v1",
+      "object_versions": {
+        "storage": "67d9f095777e52e99f7c5ef585bf0a58f5dd54b0e25c02c58ae296d4ca8d2af5",
+        "entry-storage": "b07cda78f0e9b8872a41ff8097ab85cb9cc405a2a7a40c968a150c82d783bbc9",
+        "business-A": "2d39d54db339ce7ea537db319ba2a3307f4e62bc38faec817e6e4321b5f15a9c",
+        "business-A-save": "73585cab071e5cb9ae4bde470c393f9b9e399448d188a1bcc819812f3f2209be"
+      }
+    },
+    {
+      "id": "maintenance-22cc931938e9b80a00821eb566270643516c89f774ed62aca26767946c4ef7ee",
+      "binding_id": "bind-total",
+      "basis": {
+        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+        "location": {
+          "path": "policies/pricing.py",
+          "symbol": "policies.pricing.total",
+          "kind": "FUNCTION",
+          "content_hash": "42868ea99cc362de16f58190ac37c79d345533641e5662adcad76de06154c77c",
+          "start": 1,
+          "end": 2
+        },
+        "reason": "Evidence at comparison time"
+      },
+      "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+      "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
+      "compared_revision": 2,
+      "disposition": "changed",
+      "reasons": [
+        "Containing-file bytes or incident call endpoints changed",
+        "Location metadata changed; content judgement uses whole-file bytes"
+      ],
+      "candidates": [
+        {
+          "key": "policies/pricing.py|policies.pricing.total",
+          "location": {
+            "path": "policies/pricing.py",
+            "symbol": "policies.pricing.total",
+            "kind": "FUNCTION",
+            "content_hash": "9a3b9694e8263a75bf2b0a1d3570cb15a5ba363d7061d88f231d9b2b83fd3877",
+            "start": 1,
+            "end": 2
+          },
+          "reasons": [
+            "Exact path and symbol identity"
+          ]
+        }
+      ],
+      "component_ids": [
+        "policy"
+      ],
+      "relation_ids": [
+        "entry-pricing"
+      ],
+      "scenario_ids": [
+        "business-A",
+        "business-B"
+      ],
+      "step_ids": [
+        "business-A-price",
+        "business-B-price"
+      ],
+      "call_changes": {
+        "before": [
+          {
+            "source": "delivery.orders.buy",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 17
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.quote",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 12,
+                "column": 12
+              }
+            ]
+          }
+        ],
+        "after": [
+          {
+            "source": "delivery.orders.buy",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 17
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.quote",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 12,
+                "column": 12
+              }
+            ]
+          }
+        ]
+      },
+      "resolution": null,
+      "coverage_version": "objects-v1",
+      "object_versions": {
+        "policy": "d5ae95be2835a30ac67304ec90380663fb6709a57e8428294b3a87566c7ec174",
+        "entry-pricing": "ecb73642a5c4618a5b2b93fc794b506f98a8c603c771a863d46f9a7194e8a962",
+        "business-A": "2d39d54db339ce7ea537db319ba2a3307f4e62bc38faec817e6e4321b5f15a9c",
+        "business-B": "c920d5c71acbc3c6f4b7d0eaf572a17d5aaa1762572cb53ddf9f5b748567d74d",
+        "business-A-price": "0a9bcc6a7797b5e21c10221e36cc5bf91de4222166899f39edba7d7a9d03e905",
+        "business-B-price": "b07d030e082f4a8faac9cdf006407feb4592a2369d08c8d76f36332f5f8b9c6c"
+      }
+    },
+    {
+      "id": "maintenance-76181ef9429e5c806846ceefe02726572ccd9a279146eaaf335bd473bd97a501",
+      "binding_id": "bind-buy",
+      "basis": {
+        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+        "location": {
+          "path": "delivery/orders.py",
+          "symbol": "delivery.orders.buy",
+          "kind": "FUNCTION",
+          "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+          "start": 5,
+          "end": 8
+        },
+        "reason": "Evidence at comparison time"
+      },
+      "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+      "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
+      "compared_revision": 3,
+      "disposition": "unchanged",
+      "reasons": [
+        "File bytes and incident call endpoints unchanged"
+      ],
+      "candidates": [
+        {
+          "key": "delivery/orders.py|delivery.orders.buy",
+          "location": {
+            "path": "delivery/orders.py",
+            "symbol": "delivery.orders.buy",
+            "kind": "FUNCTION",
+            "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+            "start": 5,
+            "end": 8
+          },
+          "reasons": [
+            "Exact path and symbol identity"
+          ]
+        }
+      ],
+      "component_ids": [
+        "entry",
+        "policy",
+        "storage"
+      ],
+      "relation_ids": [
+        "entry-pricing",
+        "entry-storage"
+      ],
+      "scenario_ids": [
+        "business-A",
+        "business-B"
+      ],
+      "step_ids": [
+        "business-A-abandon",
+        "business-A-price",
+        "business-A-reject",
+        "business-A-save",
+        "business-A-validate",
+        "business-B-price",
+        "business-B-quote"
+      ],
+      "call_changes": {
+        "before": [
+          {
+            "source": "app.start",
+            "target": "delivery.orders.buy",
+            "sites": [
+              {
+                "path": "app.py",
+                "line": 5,
+                "column": 20
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.buy",
+            "target": "persistence.store.save",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 12
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.buy",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 17
+              }
+            ]
+          }
+        ],
+        "after": [
+          {
+            "source": "app.start",
+            "target": "delivery.orders.buy",
+            "sites": [
+              {
+                "path": "app.py",
+                "line": 5,
+                "column": 20
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.buy",
+            "target": "persistence.store.save",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 12
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.buy",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 17
+              }
+            ]
+          }
+        ]
+      },
+      "resolution": null,
+      "coverage_version": "objects-v1",
+      "object_versions": {
+        "entry": "62901f61ec38b70c60db7449d6ed7043604be7e8a25268f6ff7b1379d00f6530",
+        "policy": "c7fe9ad30a0c01ab888ef215821dbcc4a0176620ef33fc61dc2c5374578885b9",
+        "storage": "67d9f095777e52e99f7c5ef585bf0a58f5dd54b0e25c02c58ae296d4ca8d2af5",
+        "entry-pricing": "ecb73642a5c4618a5b2b93fc794b506f98a8c603c771a863d46f9a7194e8a962",
+        "entry-storage": "b07cda78f0e9b8872a41ff8097ab85cb9cc405a2a7a40c968a150c82d783bbc9",
+        "business-A": "2d39d54db339ce7ea537db319ba2a3307f4e62bc38faec817e6e4321b5f15a9c",
+        "business-B": "c920d5c71acbc3c6f4b7d0eaf572a17d5aaa1762572cb53ddf9f5b748567d74d",
+        "business-A-validate": "977715cd22f9ff873d8b46fd9dc1bbd9dc3a8bbf530ebf087107c97e3ae52587",
+        "business-A-price": "0a9bcc6a7797b5e21c10221e36cc5bf91de4222166899f39edba7d7a9d03e905",
+        "business-A-save": "73585cab071e5cb9ae4bde470c393f9b9e399448d188a1bcc819812f3f2209be",
+        "business-A-reject": "762dd7bc9c4e623262197b7a5eebd85d938c77eaf63f2faebde1159818d851b7",
+        "business-A-abandon": "726ea19d1186a8936c1b6cde58b9d2c05f256d9deaa8839a42b498e7d1977aa5",
+        "business-B-quote": "d0c86666804b4e9aa17a542034cd4ddfddf834814d57ad721c2c6b5de6f58e8d",
+        "business-B-price": "b07d030e082f4a8faac9cdf006407feb4592a2369d08c8d76f36332f5f8b9c6c"
+      }
+    },
+    {
+      "id": "maintenance-416fa769517d35edc96fb382dcbb536ef454dea157f7f8923d77ec3253cdb520",
+      "binding_id": "bind-total",
+      "basis": {
+        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+        "location": {
+          "path": "policies/pricing.py",
+          "symbol": "policies.pricing.total",
+          "kind": "FUNCTION",
+          "content_hash": "42868ea99cc362de16f58190ac37c79d345533641e5662adcad76de06154c77c",
+          "start": 1,
+          "end": 2
+        },
+        "reason": "Evidence at comparison time"
+      },
+      "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+      "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
+      "compared_revision": 3,
+      "disposition": "changed",
+      "reasons": [
+        "Containing-file bytes or incident call endpoints changed",
+        "Location metadata changed; content judgement uses whole-file bytes"
+      ],
+      "candidates": [
+        {
+          "key": "policies/pricing.py|policies.pricing.total",
+          "location": {
+            "path": "policies/pricing.py",
+            "symbol": "policies.pricing.total",
+            "kind": "FUNCTION",
+            "content_hash": "9a3b9694e8263a75bf2b0a1d3570cb15a5ba363d7061d88f231d9b2b83fd3877",
+            "start": 1,
+            "end": 2
+          },
+          "reasons": [
+            "Exact path and symbol identity"
+          ]
+        }
+      ],
+      "component_ids": [
+        "policy"
+      ],
+      "relation_ids": [
+        "entry-pricing"
+      ],
+      "scenario_ids": [
+        "business-A",
+        "business-B"
+      ],
+      "step_ids": [
+        "business-A-price",
+        "business-B-price"
+      ],
+      "call_changes": {
+        "before": [
+          {
+            "source": "delivery.orders.buy",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 17
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.quote",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 12,
+                "column": 12
+              }
+            ]
+          }
+        ],
+        "after": [
+          {
+            "source": "delivery.orders.buy",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 17
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.quote",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 12,
+                "column": 12
+              }
+            ]
+          }
+        ]
+      },
+      "resolution": {
+        "outcome": "confirmed",
+        "author": "business-agent",
+        "reason": "Inspected new multiplier and both consumers. Boundaries and explicit flow still hold; no runtime correctness claim.",
+        "source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
+        "timestamp": "2026-11-04T16:09:22.706397+00:00",
+        "object_ids": [
+          "business-A",
+          "business-A-price",
+          "business-B",
+          "business-B-price",
+          "entry-pricing",
+          "policy"
+        ],
+        "object_versions": {
+          "policy": "c7fe9ad30a0c01ab888ef215821dbcc4a0176620ef33fc61dc2c5374578885b9",
+          "entry-pricing": "ecb73642a5c4618a5b2b93fc794b506f98a8c603c771a863d46f9a7194e8a962",
+          "business-A": "2d39d54db339ce7ea537db319ba2a3307f4e62bc38faec817e6e4321b5f15a9c",
+          "business-B": "c920d5c71acbc3c6f4b7d0eaf572a17d5aaa1762572cb53ddf9f5b748567d74d",
+          "business-A-price": "0a9bcc6a7797b5e21c10221e36cc5bf91de4222166899f39edba7d7a9d03e905",
+          "business-B-price": "b07d030e082f4a8faac9cdf006407feb4592a2369d08c8d76f36332f5f8b9c6c"
+        }
+      },
+      "coverage_version": "objects-v1",
+      "object_versions": {
+        "policy": "c7fe9ad30a0c01ab888ef215821dbcc4a0176620ef33fc61dc2c5374578885b9",
+        "entry-pricing": "ecb73642a5c4618a5b2b93fc794b506f98a8c603c771a863d46f9a7194e8a962",
+        "business-A": "2d39d54db339ce7ea537db319ba2a3307f4e62bc38faec817e6e4321b5f15a9c",
+        "business-B": "c920d5c71acbc3c6f4b7d0eaf572a17d5aaa1762572cb53ddf9f5b748567d74d",
+        "business-A-price": "0a9bcc6a7797b5e21c10221e36cc5bf91de4222166899f39edba7d7a9d03e905",
+        "business-B-price": "b07d030e082f4a8faac9cdf006407feb4592a2369d08c8d76f36332f5f8b9c6c"
+      }
+    },
+    {
+      "id": "maintenance-80ecf0229657c15779be546f402f414d343018c731f26cca521dd086375bf640",
+      "binding_id": "bind-start",
+      "basis": {
+        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+        "location": {
+          "path": "app.py",
+          "symbol": "app.start",
+          "kind": "FUNCTION",
+          "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413",
+          "start": 4,
+          "end": 5
+        },
+        "reason": "Evidence at comparison time"
+      },
+      "target_snapshot_id": "acbf9dc379123f6f81226411dee455ad77eeadc22f785caba0bf90019c7aafaf",
+      "target_source_version": "afa343cbe30ebbdf1f165744438f92c68556a58bbb2b91cb07e6612468c65a1c",
+      "compared_revision": 7,
+      "disposition": "unchanged",
+      "reasons": [
+        "File bytes and incident call endpoints unchanged"
+      ],
+      "candidates": [
+        {
+          "key": "app.py|app.start",
+          "location": {
+            "path": "app.py",
+            "symbol": "app.start",
+            "kind": "FUNCTION",
+            "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413",
+            "start": 4,
+            "end": 5
+          },
+          "reasons": [
+            "Exact path and symbol identity"
+          ]
+        }
+      ],
+      "component_ids": [
+        "application"
+      ],
+      "relation_ids": [],
+      "scenario_ids": [],
+      "step_ids": [],
+      "call_changes": {
+        "before": [
+          {
+            "source": "app.start",
+            "target": "delivery.orders.buy",
+            "sites": [
+              {
+                "path": "app.py",
+                "line": 5,
+                "column": 20
+              }
+            ]
+          },
+          {
+            "source": "app.start",
+            "target": "delivery.orders.quote",
+            "sites": [
+              {
+                "path": "app.py",
+                "line": 5,
+                "column": 34
+              }
+            ]
+          }
+        ],
+        "after": [
+          {
+            "source": "app.start",
+            "target": "delivery.orders.buy",
+            "sites": [
+              {
+                "path": "app.py",
+                "line": 5,
+                "column": 20
+              }
+            ]
+          },
+          {
+            "source": "app.start",
+            "target": "delivery.orders.quote",
+            "sites": [
+              {
+                "path": "app.py",
+                "line": 5,
+                "column": 34
+              }
+            ]
+          }
+        ]
+      },
+      "resolution": null,
+      "coverage_version": "objects-v1",
+      "object_versions": {
+        "application": "4fbdca6cf65a2f0024dbc9c70256af5c2a68228bcbcfa97bd8ce82873623333c"
+      }
+    },
+    {
+      "id": "maintenance-3867e28b5c64bb26545fe9a1c826e58bc78c915d0fd828242fd18cc47049d3f6",
+      "binding_id": "bind-buy",
+      "basis": {
+        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+        "location": {
+          "path": "delivery/orders.py",
+          "symbol": "delivery.orders.buy",
+          "kind": "FUNCTION",
+          "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+          "start": 5,
+          "end": 8
+        },
+        "reason": "Evidence at comparison time"
+      },
+      "target_snapshot_id": "acbf9dc379123f6f81226411dee455ad77eeadc22f785caba0bf90019c7aafaf",
+      "target_source_version": "afa343cbe30ebbdf1f165744438f92c68556a58bbb2b91cb07e6612468c65a1c",
+      "compared_revision": 7,
+      "disposition": "unchanged",
+      "reasons": [
+        "File bytes and incident call endpoints unchanged"
+      ],
+      "candidates": [
+        {
+          "key": "delivery/orders.py|delivery.orders.buy",
+          "location": {
+            "path": "delivery/orders.py",
+            "symbol": "delivery.orders.buy",
+            "kind": "FUNCTION",
+            "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+            "start": 5,
+            "end": 8
+          },
+          "reasons": [
+            "Exact path and symbol identity"
+          ]
+        }
+      ],
+      "component_ids": [
+        "entry",
+        "policy",
+        "storage"
+      ],
+      "relation_ids": [
+        "entry-pricing",
+        "entry-storage"
+      ],
+      "scenario_ids": [
+        "business-A",
+        "business-B"
+      ],
+      "step_ids": [
+        "business-A-abandon",
+        "business-A-price",
+        "business-A-reject",
+        "business-A-save",
+        "business-A-validate",
+        "business-B-price",
+        "business-B-quote"
+      ],
+      "call_changes": {
+        "before": [
+          {
+            "source": "app.start",
+            "target": "delivery.orders.buy",
+            "sites": [
+              {
+                "path": "app.py",
+                "line": 5,
+                "column": 20
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.buy",
+            "target": "persistence.store.save",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 12
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.buy",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 17
+              }
+            ]
+          }
+        ],
+        "after": [
+          {
+            "source": "app.start",
+            "target": "delivery.orders.buy",
+            "sites": [
+              {
+                "path": "app.py",
+                "line": 5,
+                "column": 20
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.buy",
+            "target": "persistence.store.save",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 12
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.buy",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 17
+              }
+            ]
+          }
+        ]
+      },
+      "resolution": null,
+      "coverage_version": "objects-v1",
+      "object_versions": {
+        "entry": "62901f61ec38b70c60db7449d6ed7043604be7e8a25268f6ff7b1379d00f6530",
+        "policy": "c7fe9ad30a0c01ab888ef215821dbcc4a0176620ef33fc61dc2c5374578885b9",
+        "storage": "67d9f095777e52e99f7c5ef585bf0a58f5dd54b0e25c02c58ae296d4ca8d2af5",
+        "entry-pricing": "ecb73642a5c4618a5b2b93fc794b506f98a8c603c771a863d46f9a7194e8a962",
+        "entry-storage": "b07cda78f0e9b8872a41ff8097ab85cb9cc405a2a7a40c968a150c82d783bbc9",
+        "business-A": "2d39d54db339ce7ea537db319ba2a3307f4e62bc38faec817e6e4321b5f15a9c",
+        "business-B": "c920d5c71acbc3c6f4b7d0eaf572a17d5aaa1762572cb53ddf9f5b748567d74d",
+        "business-A-validate": "977715cd22f9ff873d8b46fd9dc1bbd9dc3a8bbf530ebf087107c97e3ae52587",
+        "business-A-price": "0a9bcc6a7797b5e21c10221e36cc5bf91de4222166899f39edba7d7a9d03e905",
+        "business-A-save": "73585cab071e5cb9ae4bde470c393f9b9e399448d188a1bcc819812f3f2209be",
+        "business-A-reject": "762dd7bc9c4e623262197b7a5eebd85d938c77eaf63f2faebde1159818d851b7",
+        "business-A-abandon": "726ea19d1186a8936c1b6cde58b9d2c05f256d9deaa8839a42b498e7d1977aa5",
+        "business-B-quote": "d0c86666804b4e9aa17a542034cd4ddfddf834814d57ad721c2c6b5de6f58e8d",
+        "business-B-price": "b07d030e082f4a8faac9cdf006407feb4592a2369d08c8d76f36332f5f8b9c6c"
+      }
+    },
+    {
+      "id": "maintenance-40040f0244bea239ab93ef7f29b3923a25546ea2c0f300e0b07176ecf21a1140",
+      "binding_id": "bind-quote",
+      "basis": {
+        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+        "location": {
+          "path": "delivery/orders.py",
+          "symbol": "delivery.orders.quote",
+          "kind": "FUNCTION",
+          "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+          "start": 11,
+          "end": 12
+        },
+        "reason": "Evidence at comparison time"
+      },
+      "target_snapshot_id": "acbf9dc379123f6f81226411dee455ad77eeadc22f785caba0bf90019c7aafaf",
+      "target_source_version": "afa343cbe30ebbdf1f165744438f92c68556a58bbb2b91cb07e6612468c65a1c",
+      "compared_revision": 7,
+      "disposition": "unchanged",
+      "reasons": [
+        "File bytes and incident call endpoints unchanged"
+      ],
+      "candidates": [
+        {
+          "key": "delivery/orders.py|delivery.orders.quote",
+          "location": {
+            "path": "delivery/orders.py",
+            "symbol": "delivery.orders.quote",
+            "kind": "FUNCTION",
+            "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+            "start": 11,
+            "end": 12
+          },
+          "reasons": [
+            "Exact path and symbol identity"
+          ]
+        }
+      ],
+      "component_ids": [],
+      "relation_ids": [],
+      "scenario_ids": [
+        "business-B"
+      ],
+      "step_ids": [
+        "business-B-quote"
+      ],
+      "call_changes": {
+        "before": [
+          {
+            "source": "app.start",
+            "target": "delivery.orders.quote",
+            "sites": [
+              {
+                "path": "app.py",
+                "line": 5,
+                "column": 34
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.quote",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 12,
+                "column": 12
+              }
+            ]
+          }
+        ],
+        "after": [
+          {
+            "source": "app.start",
+            "target": "delivery.orders.quote",
+            "sites": [
+              {
+                "path": "app.py",
+                "line": 5,
+                "column": 34
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.quote",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 12,
+                "column": 12
+              }
+            ]
+          }
+        ]
+      },
+      "resolution": null,
+      "coverage_version": "objects-v1",
+      "object_versions": {
+        "business-B": "c920d5c71acbc3c6f4b7d0eaf572a17d5aaa1762572cb53ddf9f5b748567d74d",
+        "business-B-quote": "d0c86666804b4e9aa17a542034cd4ddfddf834814d57ad721c2c6b5de6f58e8d"
+      }
+    },
+    {
+      "id": "maintenance-af68c7be4fdc91696aa63cafdd3f912f95252d05a51ba9f8aafdb7898bc8085c",
+      "binding_id": "bind-save",
+      "basis": {
+        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+        "location": {
+          "path": "persistence/store.py",
+          "symbol": "persistence.store.save",
+          "kind": "FUNCTION",
+          "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4",
+          "start": 1,
+          "end": 2
+        },
+        "reason": "Evidence at comparison time"
+      },
+      "target_snapshot_id": "acbf9dc379123f6f81226411dee455ad77eeadc22f785caba0bf90019c7aafaf",
+      "target_source_version": "afa343cbe30ebbdf1f165744438f92c68556a58bbb2b91cb07e6612468c65a1c",
+      "compared_revision": 7,
+      "disposition": "unchanged",
+      "reasons": [
+        "File bytes and incident call endpoints unchanged"
+      ],
+      "candidates": [
+        {
+          "key": "persistence/store.py|persistence.store.save",
+          "location": {
+            "path": "persistence/store.py",
+            "symbol": "persistence.store.save",
+            "kind": "FUNCTION",
+            "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4",
+            "start": 1,
+            "end": 2
+          },
+          "reasons": [
+            "Exact path and symbol identity"
+          ]
+        }
+      ],
+      "component_ids": [
+        "storage"
+      ],
+      "relation_ids": [
+        "entry-storage"
+      ],
+      "scenario_ids": [
+        "business-A"
+      ],
+      "step_ids": [
+        "business-A-save"
+      ],
+      "call_changes": {
+        "before": [
+          {
+            "source": "delivery.orders.buy",
+            "target": "persistence.store.save",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 12
+              }
+            ]
+          }
+        ],
+        "after": [
+          {
+            "source": "delivery.orders.buy",
+            "target": "persistence.store.save",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 12
+              }
+            ]
+          }
+        ]
+      },
+      "resolution": null,
+      "coverage_version": "objects-v1",
+      "object_versions": {
+        "storage": "67d9f095777e52e99f7c5ef585bf0a58f5dd54b0e25c02c58ae296d4ca8d2af5",
+        "entry-storage": "b07cda78f0e9b8872a41ff8097ab85cb9cc405a2a7a40c968a150c82d783bbc9",
+        "business-A": "2d39d54db339ce7ea537db319ba2a3307f4e62bc38faec817e6e4321b5f15a9c",
+        "business-A-save": "73585cab071e5cb9ae4bde470c393f9b9e399448d188a1bcc819812f3f2209be"
+      }
+    },
+    {
+      "id": "maintenance-9b1340e67b8c7b937a1f9db2a92fd2c77fa68700ca7de1d5f4fea0db066ef872",
+      "binding_id": "bind-total",
+      "basis": {
+        "snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+        "source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
+        "location": {
+          "path": "policies/pricing.py",
+          "symbol": "policies.pricing.total",
+          "kind": "FUNCTION",
+          "content_hash": "9a3b9694e8263a75bf2b0a1d3570cb15a5ba363d7061d88f231d9b2b83fd3877",
+          "start": 1,
+          "end": 2
+        },
+        "reason": "Evidence at comparison time"
+      },
+      "target_snapshot_id": "acbf9dc379123f6f81226411dee455ad77eeadc22f785caba0bf90019c7aafaf",
+      "target_source_version": "afa343cbe30ebbdf1f165744438f92c68556a58bbb2b91cb07e6612468c65a1c",
+      "compared_revision": 7,
+      "disposition": "unchanged",
+      "reasons": [
+        "File bytes and incident call endpoints unchanged"
+      ],
+      "candidates": [
+        {
+          "key": "policies/pricing.py|policies.pricing.total",
+          "location": {
+            "path": "policies/pricing.py",
+            "symbol": "policies.pricing.total",
+            "kind": "FUNCTION",
+            "content_hash": "9a3b9694e8263a75bf2b0a1d3570cb15a5ba363d7061d88f231d9b2b83fd3877",
+            "start": 1,
+            "end": 2
+          },
+          "reasons": [
+            "Exact path and symbol identity"
+          ]
+        }
+      ],
+      "component_ids": [
+        "policy"
+      ],
+      "relation_ids": [
+        "entry-pricing"
+      ],
+      "scenario_ids": [
+        "business-A",
+        "business-B"
+      ],
+      "step_ids": [
+        "business-A-price",
+        "business-B-price"
+      ],
+      "call_changes": {
+        "before": [
+          {
+            "source": "delivery.orders.buy",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 17
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.quote",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 12,
+                "column": 12
+              }
+            ]
+          }
+        ],
+        "after": [
+          {
+            "source": "delivery.orders.buy",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 8,
+                "column": 17
+              }
+            ]
+          },
+          {
+            "source": "delivery.orders.quote",
+            "target": "policies.pricing.total",
+            "sites": [
+              {
+                "path": "delivery/orders.py",
+                "line": 12,
+                "column": 12
+              }
+            ]
+          }
+        ]
+      },
+      "resolution": null,
+      "coverage_version": "objects-v1",
+      "object_versions": {
+        "policy": "c7fe9ad30a0c01ab888ef215821dbcc4a0176620ef33fc61dc2c5374578885b9",
+        "entry-pricing": "ecb73642a5c4618a5b2b93fc794b506f98a8c603c771a863d46f9a7194e8a962",
+        "business-A": "2d39d54db339ce7ea537db319ba2a3307f4e62bc38faec817e6e4321b5f15a9c",
+        "business-B": "c920d5c71acbc3c6f4b7d0eaf572a17d5aaa1762572cb53ddf9f5b748567d74d",
+        "business-A-price": "0a9bcc6a7797b5e21c10221e36cc5bf91de4222166899f39edba7d7a9d03e905",
+        "business-B-price": "b07d030e082f4a8faac9cdf006407feb4592a2369d08c8d76f36332f5f8b9c6c"
+      }
+    }
+  ],
+  "maintenance_target_snapshot_id": "acbf9dc379123f6f81226411dee455ad77eeadc22f785caba0bf90019c7aafaf"
+}

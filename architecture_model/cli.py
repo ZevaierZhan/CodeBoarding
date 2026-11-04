@@ -12,6 +12,7 @@ from architecture_model.maintenance import preview, query, rebind, refresh, reso
 from architecture_model.schema import Facts, Model
 from architecture_model.store import ModelStore, load_json
 from architecture_model.validation import parse
+from architecture_model.viewer import export_html
 
 
 class Parser(argparse.ArgumentParser):
@@ -59,6 +60,9 @@ def run(arguments: list[str]) -> dict:
         if name == "apply":
             action.add_argument("--expected-revision", type=int, required=True)
     actions.add_parser("schema")
+    export = actions.add_parser("export-html", help="Export one complete revision as an offline read-only document")
+    export.add_argument("--output", type=Path, required=True)
+    export.add_argument("--source-root", type=Path)
     facts = commands.add_parser("facts").add_subparsers(dest="action", required=True).add_parser("export")
     for name in ("repo", "output", "node", "pyright", "tokei"):
         facts.add_argument(f"--{name}", type=Path, required=True)
@@ -81,6 +85,8 @@ def run(arguments: list[str]) -> dict:
         return {"model_id": initialized.id, "revision": initialized.revision, "committed": True}
     if args.action == "read":
         return store.read_scope(args.component, args.scenario)
+    if args.action == "export-html":
+        return export_html(store.read(), args.output, args.source_root)
     if args.action == "maintenance":
         return query(store.read(), args.binding, args.component, args.scenario)
     if args.action == "maintenance-preview":

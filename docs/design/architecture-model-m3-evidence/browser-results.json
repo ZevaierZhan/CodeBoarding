@@ -1,0 +1,23 @@
+{
+  "browser": "138.0.7204.184",
+  "checks": [
+    "A: real SVG graph, entry differs from first display step",
+    "Hierarchy collapse/expand and focus preserve step; A/B share policy ID; switching restores A step; hash-verified source visible",
+    "Explicit branches pause; loop requires selection; return exits; back follows actual path; reset and automatic next stop at missing outgoing transition",
+    "Source mismatch withholds body; historical pending survives; current confirmation explicitly names older source target; author/reason, actual fingerprints, feedback and selected business/step metadata visible",
+    "Script-closing and javascript URL payloads rendered inert as text",
+    "390px responsive page: no document-level overflow; visible scroll instruction and focus outline; ArrowRight scrolls the diagram",
+    "Offline file loading: no external requests, no page errors; model hash/revision unchanged"
+  ],
+  "errors": [],
+  "requests": [
+    "file:///F:/CodeBoarding/temp/m3-complete/01-purchase.html",
+    "file:///F:/CodeBoarding/temp/m3-complete/02-shared-businesses.html",
+    "file:///F:/CodeBoarding/temp/m3-complete/03-source-pending.html",
+    "file:///F:/CodeBoarding/temp/m3-complete/04-reviewed.html",
+    "file:///F:/CodeBoarding/temp/m3-complete/untrusted.html",
+    "file:///F:/CodeBoarding/temp/m3-complete/04-reviewed.html"
+  ],
+  "model_sha256_before": "d1c2d652388043dc69d9df8a784d3cf467857269d02e8254fa7241830f6c3538",
+  "model_sha256_after": "d1c2d652388043dc69d9df8a784d3cf467857269d02e8254fa7241830f6c3538"
+}

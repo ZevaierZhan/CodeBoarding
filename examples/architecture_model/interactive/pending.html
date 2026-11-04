@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>CodeBoarding · Architecture explorer</title><style>:root{color-scheme:light;--ink:#213646;--muted:#506676;--paper:#f3f6f8;--line:#cbd6dd;--accent:#005e69;--active:#d5f0ec;--warn:#7f440a;--white:#fff;font-family:Segoe UI,system-ui,sans-serif;font-size:14px}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink)}header{display:flex;justify-content:space-between;gap:28px;padding:24px 30px;background:#e4edf2}h1{font-size:27px;letter-spacing:-.02em;margin:0 0 8px}h2{font-size:16px;margin:0 0 14px}h3{font-size:15px;margin:22px 0 10px}p{line-height:1.6;margin:6px 0}small,.muted{color:var(--muted)}button,select{font:inherit;color:var(--ink);background:var(--white);border:1px solid var(--line);border-radius:5px;padding:8px 11px;cursor:pointer}button:hover{background:#e5eef2}button:disabled{opacity:.5;cursor:default}button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px}button.active{background:var(--accent);color:white;border-color:var(--accent)}::selection{background:#b4ddd6;color:#123b41}*{scrollbar-color:#9aadb9 #edf2f5;scrollbar-width:thin}input{accent-color:var(--accent)}
+.provenance{display:flex;gap:22px;align-items:center;padding:10px 30px;border-bottom:1px solid var(--line);font-size:12px;flex-wrap:wrap}.provenance button{margin-left:auto}.toolbar{display:flex;gap:8px;align-items:center;padding:16px 30px 8px;flex-wrap:wrap}.toolbar label{display:flex;align-items:center;gap:8px}.toolbar select{max-width:260px}.notice{padding:4px 30px 14px;color:var(--muted);font-size:12px;margin:0}main{display:grid;grid-template-columns:220px minmax(400px,1fr) minmax(310px,380px);border-top:1px solid var(--line);min-height:75vh}nav,aside{padding:22px 18px;background:var(--white)}nav{border-right:1px solid var(--line)}aside{border-left:1px solid var(--line);overflow-wrap:anywhere}nav h2:not(:first-child){margin-top:28px}.workspace{padding:22px;min-width:0}.workspace-heading{display:flex;gap:12px;justify-content:space-between;align-items:baseline}.workspace-heading span{font-size:12px;color:var(--muted)}
+.tree-row{display:flex;align-items:center;gap:5px;margin:6px 0}.tree-row button{padding:6px;min-width:30px}.tree-row .object{border:0;text-align:left;min-width:0;overflow-wrap:anywhere}.step{display:block;text-align:left;width:100%;margin:6px 0;overflow-wrap:anywhere}.step small{display:block}.step.active small{color:#def2ef}#canvas{position:relative;overflow:auto;min-height:200px;background:#edf3f6;border:1px solid var(--line);border-radius:8px}#graph{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}#nodes{position:relative;min-width:340px}.node{position:absolute;width:190px;text-align:left;padding:12px;min-height:78px;border-radius:8px;transition:background .18s ease-out}.node strong{display:block}.node small{display:block;margin-top:5px}.node.current{background:var(--active);border:2px solid var(--accent)}.node.unrelated{opacity:.35}.node .inside{color:var(--accent);font-size:12px;display:block;margin-top:5px}.player{margin:18px 0 24px;padding:18px 0;border-bottom:1px solid var(--line)}#choices{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}#choices button{text-align:left;max-width:100%;overflow-wrap:anywhere}.warning{color:var(--warn)}.relation{display:block;width:100%;text-align:left;margin:7px 0;overflow-wrap:anywhere}.field{margin:10px 0}.field b{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}pre{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;font:12px/1.6 Consolas,monospace;background:#eef3f5;padding:12px;border-radius:5px;max-height:380px;overflow:auto}details{margin:12px 0;padding-bottom:10px;border-bottom:1px solid var(--line)}summary{cursor:pointer;line-height:1.6;font-weight:600}.badge{font-size:12px;color:var(--accent);background:var(--active);padding:3px 6px;display:inline-block;border-radius:3px}.record{margin-top:16px;padding-top:10px;border-top:1px solid var(--line)}.record h3{margin-top:8px}ul{padding-left:18px;line-height:1.6}svg text{font:11px Segoe UI,sans-serif;fill:var(--ink)}#incoming{font-size:12px;color:var(--muted);margin-top:10px}
+.diagram-help{font-size:12px;color:var(--muted);margin:0 0 12px}#canvas:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media(max-width:1100px){main{grid-template-columns:190px minmax(350px,1fr)}aside{grid-column:1/-1;border-left:0;border-top:1px solid var(--line)}.workspace-heading{display:block}}
+@media(max-width:600px){header{padding:20px;display:block}.toolbar,.provenance{padding:12px 16px}.notice{padding:8px 16px}main{display:block}nav{border-right:0;border-bottom:1px solid var(--line)}.workspace{padding:16px}.toolbar select{max-width:210px}#canvas{max-width:100%}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head>
+<body>
+<header><div><h1 id="project">Architecture explorer</h1><p id="boundary"></p></div><div><strong>CodeBoarding</strong><p>Read-only model explorer</p></div></header>
+<section class="provenance"><span id="identity"></span><span id="exported"></span><button id="metadata">Snapshots &amp; model metadata</button></section>
+<section class="toolbar" aria-label="Business playback controls">
+<label>Business <select id="scenario"></select></label>
+<button id="inspect-business">Business explanation</button>
+<button id="reset">Reset</button><button id="back">Back</button><button id="play">Play</button><button id="next">Step forward</button>
+<label><input id="focus" type="checkbox"> Focus business</label><button id="expand-all">Expand all</button><button id="collapse-all">Collapse all</button>
+</section>
+<p class="notice">Modeled business path · conditions are descriptions, never evaluated. Playback is not a runtime trace.</p>
+<main>
+<nav aria-label="Component hierarchy"><h2>Project structure</h2><div id="tree"></div><h2>Steps <small>display order</small></h2><div id="steps"></div></nav>
+<section class="workspace" aria-label="Architecture and business path"><div class="workspace-heading"><h2>Shared architecture</h2><span>Stable component identities</span></div><p class="diagram-help" id="diagram-help">Scroll the diagram horizontally to explore depth. Keyboard: focus the diagram and use arrow keys.</p><div id="canvas" tabindex="0" role="region" aria-label="Scrollable architecture diagram" aria-describedby="diagram-help"><svg id="graph" role="img" aria-label="Component relationships and explicit business transitions"></svg><div id="nodes"></div></div><section class="player" aria-live="polite"><h2 id="current"></h2><p id="playback-status"></p><div id="choices"></div><div id="incoming"></div></section><section><h2>Component relationships</h2><div id="relations"></div></section></section>
+<aside aria-label="Explanation, evidence and maintenance"><h2>Inspector</h2><div id="detail"></div></aside>
+</main>
+<script type="application/json" id="model-data">{"model": {"schema_version": 1, "id": "7da6dde8-e345-41f7-b535-95fa7633ef7e", "project": {"id": "orders", "name": "Orders \u00b7 shared architecture", "boundary": "Purchase and quotation; save formats an ID, with no database or server execution."}, "revision": 3, "facts": [{"schema_version": 1, "id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "project_id": "orders", "source": {"digest": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "git_commit": "8bc2754c3a1a5220de638e132d1e7ad66a8a52ef", "files": {"app.py": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413", "delivery/orders.py": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "persistence/store.py": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4", "policies/pricing.py": "42868ea99cc362de16f58190ac37c79d345533641e5662adcad76de06154c77c"}, "scope": "All Python files discovered by PythonAdapter and repository ignore rules"}, "symbols": {"app.py|app.start": {"path": "app.py", "symbol": "app.start", "kind": "FUNCTION", "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413", "start": 4, "end": 5}, "delivery/orders.py|delivery.orders.buy": {"path": "delivery/orders.py", "symbol": "delivery.orders.buy", "kind": "FUNCTION", "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "start": 5, "end": 8}, "delivery/orders.py|delivery.orders.quote": {"path": "delivery/orders.py", "symbol": "delivery.orders.quote", "kind": "FUNCTION", "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "start": 11, "end": 12}, "persistence/store.py|persistence.store.save": {"path": "persistence/store.py", "symbol": "persistence.store.save", "kind": "FUNCTION", "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4", "start": 1, "end": 2}, "policies/pricing.py|policies.pricing.total": {"path": "policies/pricing.py", "symbol": "policies.pricing.total", "kind": "FUNCTION", "content_hash": "42868ea99cc362de16f58190ac37c79d345533641e5662adcad76de06154c77c", "start": 1, "end": 2}}, "file_locations": {"app.py": {"path": "app.py", "symbol": "", "kind": "FILE", "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413", "start": 1, "end": 5}, "delivery/orders.py": {"path": "delivery/orders.py", "symbol": "", "kind": "FILE", "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "start": 1, "end": 12}, "persistence/store.py": {"path": "persistence/store.py", "symbol": "", "kind": "FILE", "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4", "start": 1, "end": 2}, "policies/pricing.py": {"path": "policies/pricing.py", "symbol": "", "kind": "FILE", "content_hash": "42868ea99cc362de16f58190ac37c79d345533641e5662adcad76de06154c77c", "start": 1, "end": 2}}, "calls": [{"source": "app.start", "target": "delivery.orders.buy", "sites": [{"path": "app.py", "line": 5, "column": 20}]}, {"source": "app.start", "target": "delivery.orders.quote", "sites": [{"path": "app.py", "line": 5, "column": 34}]}, {"source": "delivery.orders.buy", "target": "persistence.store.save", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 12}]}, {"source": "delivery.orders.buy", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 17}]}, {"source": "delivery.orders.quote", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 12, "column": 12}]}], "tools": {"engine": "StaticAnalyzer/PythonAdapter", "node": "D:\\Progrm Files\\nvm\\v24.20.0\\node.exe", "pyright_js": "F:\\CodeBoarding\\temp\\p0-tools\\node_modules\\pyright\\langserver.index.js", "tokei": "F:\\CodeBoarding\\temp\\p0-tools\\tokei.exe", "python_command": "[\"D:\\\\Progrm Files\\\\nvm\\\\v24.20.0\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\langserver.index.js\", \"--stdio\"]", "tokei_command": "[\"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\", \"-o\", \"json\"]", "maintenance_scope": "{\"complete\":true,\"configuration\":{},\"implementation\":\"01580c909ce2948d6401fbc9781e29a3a5dbafc3ee67fa3ea90a2c042326dd05\",\"patterns\":[\"# CodeBoarding Ignore File\\n\",\"# Add patterns here for files and directories that should be excluded from CodeBoarding analysis.\\n\",\"# Use the same format as .gitignore (gitignore syntax / gitwildmatch patterns).\\n\",\"#\\n\",\"# To stop ignoring a pattern, prefix it with ! (e.g., !important_file.txt)\\n\",\"#\\n\",\"# NOTE: The following are ALWAYS excluded (not configurable):\\n\",\"#   - Hidden directories (starting with .)\\n\",\"#   - .git/, .codeboarding/, node_modules/, __pycache__/\\n\",\"#   - Build output: build/, dist/, coverage/\\n\",\"#\\n\",\"# This file is automatically loaded by CodeBoarding analysis tools to exclude\\n\",\"# specified paths from code analysis, architecture generation, and other processing.\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Ignored directories (customizable \\u2014 remove lines to include them)\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Python virtual environments\\n\",\"venv/\\n\",\"env/\\n\",\"*.egg-info/\\n\",\"\\n\",\"# Java (Maven/Gradle) and Rust (Cargo) build output. Both ecosystems\\n\",\"# produce a top-level ``target/`` directory full of compiled artifacts \\u2014\\n\",\"# kept here as well as in ``_ALWAYS_IGNORED_DIRS`` so users who customize\\n\",\"# their ``.codeboardingignore`` continue to skip it even after edits.\\n\",\"target/\\n\",\"bin/\\n\",\"out/\\n\",\"\\n\",\"# .NET / C# build output\\n\",\"obj/\\n\",\"\\n\",\"# Go\\n\",\"vendor/\\n\",\"testdata/\\n\",\"\\n\",\"# PHP\\n\",\"cache/\\n\",\"\\n\",\"# Custom\\n\",\"temp/\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Test and infrastructure files\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Test directories\\n\",\"**/__tests__/**\\n\",\"**/tests/**\\n\",\"**/test/**\\n\",\"**/__test__/**\\n\",\"**/testing/**\\n\",\"**/testutil/**\\n\",\"\\n\",\"# Java/Kotlin test directories (Maven/Gradle structure)\\n\",\"**/src/test/**\\n\",\"**/src/testFixtures/**\\n\",\"**/src/integration-test/**\\n\",\"**/src/jmh/**\\n\",\"**/src/contractTest/**\\n\",\"**/osgi-tests/**\\n\",\"\\n\",\"# Test files by naming convention\\n\",\"*.test.*\\n\",\"*.spec.*\\n\",\"*_test.*\\n\",\"*test_*.py\\n\",\"test_*.py\\n\",\"*Test.java\\n\",\"*IT.java\\n\",\"*Test.kt\\n\",\"*IT.kt\\n\",\"*Tests.java\\n\",\"\\n\",\"# Mock, fixture, and stub directories\\n\",\"**/__mocks__/**\\n\",\"**/mocks/**\\n\",\"**/fixtures/**\\n\",\"**/fixture/**\\n\",\"**/stubs/**\\n\",\"**/stub/**\\n\",\"**/fakes/**\\n\",\"**/fake/**\\n\",\"\\n\",\"# E2E and integration test directories\\n\",\"**/e2e/**\\n\",\"**/integration-tests/**\\n\",\"**/integration_test*/**\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Non-production code\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Example and documentation code\\n\",\"**/examples/**\\n\",\"**/documentation/examples/**\\n\",\"\\n\",\"# Generated code\\n\",\"*.pb.go\\n\",\"**/generated_parser*\\n\",\"\\n\",\"# Java/Kotlin metadata files\\n\",\"module-info.java\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build artifacts and minified files\\n\",\"# ============================================================================\\n\",\"\\n\",\"*.bundle.js\\n\",\"*.bundle.js.map\\n\",\"*.min.js\\n\",\"*.min.css\\n\",\"*.chunk.js\\n\",\"*.chunk.js.map\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build tool configs and infrastructure\\n\",\"# ============================================================================\\n\",\"\\n\",\"esbuild*\\n\",\"webpack*\\n\",\"rollup*\\n\",\"vite.config.*\\n\",\"gulpfile*\\n\",\"gruntfile*\\n\",\"*.config.*\\n\"],\"protocol\":\"python-file-v1\",\"tools\":[\"5c976096e04e5c2c1f091938926234cc9fbebfe9787ddd149351b3b0ecc707b5\",\"f200762078eb9880faf421a5b30f9ef3055b1d85c6f10780d75db4da8d8499f1\",\"7db547cb6bfa1722e89ca52a43426fb212aa53603a60256af25fb6e59ca12099\"]}"}, "limitations": ["Static call records are not runtime execution or a complete dynamic call graph.", "Names, clustering, responsibilities and design intent are not extracted code facts.", "content_hash is SHA-256 of exact file bytes; source digest covers the declared Python scope.", "Git commit is context only; the content manifest identifies dirty and untracked source."]}, {"schema_version": 1, "id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13", "project_id": "orders", "source": {"digest": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21", "git_commit": "8bc2754c3a1a5220de638e132d1e7ad66a8a52ef", "files": {"app.py": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413", "delivery/orders.py": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "persistence/store.py": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4", "policies/pricing.py": "9a3b9694e8263a75bf2b0a1d3570cb15a5ba363d7061d88f231d9b2b83fd3877"}, "scope": "All Python files discovered by PythonAdapter and repository ignore rules"}, "symbols": {"app.py|app.start": {"path": "app.py", "symbol": "app.start", "kind": "FUNCTION", "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413", "start": 4, "end": 5}, "delivery/orders.py|delivery.orders.buy": {"path": "delivery/orders.py", "symbol": "delivery.orders.buy", "kind": "FUNCTION", "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "start": 5, "end": 8}, "delivery/orders.py|delivery.orders.quote": {"path": "delivery/orders.py", "symbol": "delivery.orders.quote", "kind": "FUNCTION", "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "start": 11, "end": 12}, "persistence/store.py|persistence.store.save": {"path": "persistence/store.py", "symbol": "persistence.store.save", "kind": "FUNCTION", "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4", "start": 1, "end": 2}, "policies/pricing.py|policies.pricing.total": {"path": "policies/pricing.py", "symbol": "policies.pricing.total", "kind": "FUNCTION", "content_hash": "9a3b9694e8263a75bf2b0a1d3570cb15a5ba363d7061d88f231d9b2b83fd3877", "start": 1, "end": 2}}, "file_locations": {"app.py": {"path": "app.py", "symbol": "", "kind": "FILE", "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413", "start": 1, "end": 5}, "delivery/orders.py": {"path": "delivery/orders.py", "symbol": "", "kind": "FILE", "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "start": 1, "end": 12}, "persistence/store.py": {"path": "persistence/store.py", "symbol": "", "kind": "FILE", "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4", "start": 1, "end": 2}, "policies/pricing.py": {"path": "policies/pricing.py", "symbol": "", "kind": "FILE", "content_hash": "9a3b9694e8263a75bf2b0a1d3570cb15a5ba363d7061d88f231d9b2b83fd3877", "start": 1, "end": 2}}, "calls": [{"source": "app.start", "target": "delivery.orders.buy", "sites": [{"path": "app.py", "line": 5, "column": 20}]}, {"source": "app.start", "target": "delivery.orders.quote", "sites": [{"path": "app.py", "line": 5, "column": 34}]}, {"source": "delivery.orders.buy", "target": "persistence.store.save", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 12}]}, {"source": "delivery.orders.buy", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 17}]}, {"source": "delivery.orders.quote", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 12, "column": 12}]}], "tools": {"engine": "StaticAnalyzer/PythonAdapter", "node": "D:\\Progrm Files\\nvm\\v24.20.0\\node.exe", "pyright_js": "F:\\CodeBoarding\\temp\\p0-tools\\node_modules\\pyright\\langserver.index.js", "tokei": "F:\\CodeBoarding\\temp\\p0-tools\\tokei.exe", "python_command": "[\"D:\\\\Progrm Files\\\\nvm\\\\v24.20.0\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\langserver.index.js\", \"--stdio\"]", "tokei_command": "[\"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\", \"-o\", \"json\"]", "maintenance_scope": "{\"complete\":true,\"configuration\":{},\"implementation\":\"01580c909ce2948d6401fbc9781e29a3a5dbafc3ee67fa3ea90a2c042326dd05\",\"patterns\":[\"# CodeBoarding Ignore File\\n\",\"# Add patterns here for files and directories that should be excluded from CodeBoarding analysis.\\n\",\"# Use the same format as .gitignore (gitignore syntax / gitwildmatch patterns).\\n\",\"#\\n\",\"# To stop ignoring a pattern, prefix it with ! (e.g., !important_file.txt)\\n\",\"#\\n\",\"# NOTE: The following are ALWAYS excluded (not configurable):\\n\",\"#   - Hidden directories (starting with .)\\n\",\"#   - .git/, .codeboarding/, node_modules/, __pycache__/\\n\",\"#   - Build output: build/, dist/, coverage/\\n\",\"#\\n\",\"# This file is automatically loaded by CodeBoarding analysis tools to exclude\\n\",\"# specified paths from code analysis, architecture generation, and other processing.\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Ignored directories (customizable \\u2014 remove lines to include them)\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Python virtual environments\\n\",\"venv/\\n\",\"env/\\n\",\"*.egg-info/\\n\",\"\\n\",\"# Java (Maven/Gradle) and Rust (Cargo) build output. Both ecosystems\\n\",\"# produce a top-level ``target/`` directory full of compiled artifacts \\u2014\\n\",\"# kept here as well as in ``_ALWAYS_IGNORED_DIRS`` so users who customize\\n\",\"# their ``.codeboardingignore`` continue to skip it even after edits.\\n\",\"target/\\n\",\"bin/\\n\",\"out/\\n\",\"\\n\",\"# .NET / C# build output\\n\",\"obj/\\n\",\"\\n\",\"# Go\\n\",\"vendor/\\n\",\"testdata/\\n\",\"\\n\",\"# PHP\\n\",\"cache/\\n\",\"\\n\",\"# Custom\\n\",\"temp/\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Test and infrastructure files\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Test directories\\n\",\"**/__tests__/**\\n\",\"**/tests/**\\n\",\"**/test/**\\n\",\"**/__test__/**\\n\",\"**/testing/**\\n\",\"**/testutil/**\\n\",\"\\n\",\"# Java/Kotlin test directories (Maven/Gradle structure)\\n\",\"**/src/test/**\\n\",\"**/src/testFixtures/**\\n\",\"**/src/integration-test/**\\n\",\"**/src/jmh/**\\n\",\"**/src/contractTest/**\\n\",\"**/osgi-tests/**\\n\",\"\\n\",\"# Test files by naming convention\\n\",\"*.test.*\\n\",\"*.spec.*\\n\",\"*_test.*\\n\",\"*test_*.py\\n\",\"test_*.py\\n\",\"*Test.java\\n\",\"*IT.java\\n\",\"*Test.kt\\n\",\"*IT.kt\\n\",\"*Tests.java\\n\",\"\\n\",\"# Mock, fixture, and stub directories\\n\",\"**/__mocks__/**\\n\",\"**/mocks/**\\n\",\"**/fixtures/**\\n\",\"**/fixture/**\\n\",\"**/stubs/**\\n\",\"**/stub/**\\n\",\"**/fakes/**\\n\",\"**/fake/**\\n\",\"\\n\",\"# E2E and integration test directories\\n\",\"**/e2e/**\\n\",\"**/integration-tests/**\\n\",\"**/integration_test*/**\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Non-production code\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Example and documentation code\\n\",\"**/examples/**\\n\",\"**/documentation/examples/**\\n\",\"\\n\",\"# Generated code\\n\",\"*.pb.go\\n\",\"**/generated_parser*\\n\",\"\\n\",\"# Java/Kotlin metadata files\\n\",\"module-info.java\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build artifacts and minified files\\n\",\"# ============================================================================\\n\",\"\\n\",\"*.bundle.js\\n\",\"*.bundle.js.map\\n\",\"*.min.js\\n\",\"*.min.css\\n\",\"*.chunk.js\\n\",\"*.chunk.js.map\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build tool configs and infrastructure\\n\",\"# ============================================================================\\n\",\"\\n\",\"esbuild*\\n\",\"webpack*\\n\",\"rollup*\\n\",\"vite.config.*\\n\",\"gulpfile*\\n\",\"gruntfile*\\n\",\"*.config.*\\n\"],\"protocol\":\"python-file-v1\",\"tools\":[\"5c976096e04e5c2c1f091938926234cc9fbebfe9787ddd149351b3b0ecc707b5\",\"f200762078eb9880faf421a5b30f9ef3055b1d85c6f10780d75db4da8d8499f1\",\"7db547cb6bfa1722e89ca52a43426fb212aa53603a60256af25fb6e59ca12099\"]}"}, "limitations": ["Static call records are not runtime execution or a complete dynamic call graph.", "Names, clustering, responsibilities and design intent are not extracted code facts.", "content_hash is SHA-256 of exact file bytes; source digest covers the declared Python scope.", "Git commit is context only; the content manifest identifies dirty and untracked source."]}], "bindings": [{"id": "bind-start", "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "app.py", "symbol": "app.start", "kind": "FUNCTION", "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413", "start": 4, "end": 5}, "status": "current", "reason": "", "history": []}, {"id": "bind-buy", "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "delivery/orders.py", "symbol": "delivery.orders.buy", "kind": "FUNCTION", "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "start": 5, "end": 8}, "status": "current", "reason": "", "history": []}, {"id": "bind-quote", "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "delivery/orders.py", "symbol": "delivery.orders.quote", "kind": "FUNCTION", "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "start": 11, "end": 12}, "status": "current", "reason": "", "history": []}, {"id": "bind-save", "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "persistence/store.py", "symbol": "persistence.store.save", "kind": "FUNCTION", "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4", "start": 1, "end": 2}, "status": "current", "reason": "", "history": []}, {"id": "bind-total", "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "policies/pricing.py", "symbol": "policies.pricing.total", "kind": "FUNCTION", "content_hash": "42868ea99cc362de16f58190ac37c79d345533641e5662adcad76de06154c77c", "start": 1, "end": 2}, "status": "current", "reason": "", "history": []}], "components": [{"id": "application", "name": "application", "responsibility": "Explain application", "rationale": "Separate entry, policy and formatting responsibilities.", "parent_id": "", "binding_ids": ["bind-start"], "claim": {"kind": "inference", "explanation": "Logical boundary around application.", "binding_ids": ["bind-start"], "assumptions": ["Responsibility is an interpretation of inspected source, not author intent."], "issues": []}}, {"id": "entry", "name": "entry", "responsibility": "Explain entry", "rationale": "Separate entry, policy and formatting responsibilities.", "parent_id": "application", "binding_ids": ["bind-buy"], "claim": {"kind": "inference", "explanation": "Logical boundary around entry.", "binding_ids": ["bind-buy"], "assumptions": ["Responsibility is an interpretation of inspected source, not author intent."], "issues": []}}, {"id": "policy", "name": "policy", "responsibility": "Explain policy", "rationale": "Separate entry, policy and formatting responsibilities.", "parent_id": "application", "binding_ids": ["bind-total"], "claim": {"kind": "inference", "explanation": "Logical boundary around policy.", "binding_ids": ["bind-total"], "assumptions": ["Responsibility is an interpretation of inspected source, not author intent."], "issues": []}}, {"id": "storage", "name": "storage", "responsibility": "Explain storage", "rationale": "Separate entry, policy and formatting responsibilities.", "parent_id": "application", "binding_ids": ["bind-save"], "claim": {"kind": "inference", "explanation": "Logical boundary around storage.", "binding_ids": ["bind-save"], "assumptions": ["Responsibility is an interpretation of inspected source, not author intent."], "issues": []}}], "relations": [{"id": "entry-pricing", "source_id": "entry", "target_id": "policy", "meaning": "Purchase and quotation call shared pricing", "claim": {"kind": "inference", "explanation": "buy invokes total before save; quote invokes the same total.", "binding_ids": ["bind-buy"], "assumptions": ["Responsibility is an interpretation of inspected source, not author intent."], "issues": []}}, {"id": "entry-storage", "source_id": "entry", "target_id": "storage", "meaning": "Purchase formats the order after pricing", "claim": {"kind": "inference", "explanation": "buy passes total's result to save.", "binding_ids": ["bind-buy"], "assumptions": ["Responsibility is an interpretation of inspected source, not author intent."], "issues": []}}], "scenarios": [{"id": "business-A", "name": "A \u00b7 Purchase and validation", "entry_step_id": "business-A-validate", "steps": [{"id": "business-A-validate", "component_ids": ["entry"], "binding_ids": ["bind-buy"], "claim": {"kind": "inference", "explanation": "buy rejects quantity \u003c= 0 before total and save. Branch conditions describe that code; the player does not evaluate quantity.", "binding_ids": ["bind-buy"], "assumptions": ["Responsibility is an interpretation of inspected source, not author intent."], "issues": []}}, {"id": "business-A-price", "component_ids": ["policy"], "binding_ids": ["bind-total"], "claim": {"kind": "inference", "explanation": "Inspect price; static explanation, not an observed execution.", "binding_ids": ["bind-total"], "assumptions": ["Responsibility is an interpretation of inspected source, not author intent."], "issues": []}}, {"id": "business-A-save", "component_ids": ["storage"], "binding_ids": ["bind-save"], "claim": {"kind": "inference", "explanation": "Inspect save; static explanation, not an observed execution.", "binding_ids": ["bind-save"], "assumptions": ["Responsibility is an interpretation of inspected source, not author intent."], "issues": []}}, {"id": "business-A-reject", "component_ids": ["entry"], "binding_ids": ["bind-buy"], "claim": {"kind": "intent_hypothesis", "explanation": "ValueError ends this invocation. A user may retry in a new invocation; the retry loop is a demonstration hypothesis, not an internal loop.", "binding_ids": ["bind-buy"], "assumptions": ["Responsibility is an interpretation of inspected source, not author intent."], "issues": ["No caller retry or cancel implementation exists in this fixture."]}}, {"id": "business-A-abandon", "component_ids": ["entry"], "binding_ids": ["bind-buy"], "claim": {"kind": "intent_hypothesis", "explanation": "Abandoning after rejection is a modeled caller intention; no cancellation handler is implemented.", "binding_ids": ["bind-buy"], "assumptions": ["Responsibility is an interpretation of inspected source, not author intent."], "issues": []}}], "order": ["business-A-save", "business-A-validate", "business-A-reject", "business-A-price", "business-A-abandon"], "transitions": [{"source_id": "business-A-validate", "target_id": "business-A-price", "kind": "branch", "condition": "quantity > 0; described guard, not evaluated"}, {"source_id": "business-A-validate", "target_id": "business-A-reject", "kind": "branch", "condition": "quantity \u003c= 0; ValueError before pricing"}, {"source_id": "business-A-price", "target_id": "business-A-save", "kind": "next", "condition": "total returns normally to buy"}, {"source_id": "business-A-reject", "target_id": "business-A-validate", "kind": "loop", "condition": "Hypothetical caller retries with a new invocation; no retry implementation"}, {"source_id": "business-A-reject", "target_id": "business-A-abandon", "kind": "return", "condition": "Hypothetical caller abandons after rejection; no cancellation handler"}], "claim": {"kind": "inference", "explanation": "Handwritten explanation based on the fixture source.", "binding_ids": ["bind-buy"], "assumptions": ["Responsibility is an interpretation of inspected source, not author intent."], "issues": []}}, {"id": "business-B", "name": "B \u00b7 Quotation", "entry_step_id": "business-B-quote", "steps": [{"id": "business-B-quote", "component_ids": ["entry"], "binding_ids": ["bind-quote"], "claim": {"kind": "inference", "explanation": "Inspect quote; static explanation, not an observed execution.", "binding_ids": ["bind-quote"], "assumptions": ["Responsibility is an interpretation of inspected source, not author intent."], "issues": []}}, {"id": "business-B-price", "component_ids": ["policy"], "binding_ids": ["bind-total"], "claim": {"kind": "inference", "explanation": "Inspect price; static explanation, not an observed execution.", "binding_ids": ["bind-total"], "assumptions": ["Responsibility is an interpretation of inspected source, not author intent."], "issues": []}}], "order": ["business-B-quote", "business-B-price"], "transitions": [{"source_id": "business-B-quote", "target_id": "business-B-price", "kind": "next", "condition": "Prior operation returns normally"}], "claim": {"kind": "inference", "explanation": "Handwritten explanation based on the fixture source.", "binding_ids": ["bind-quote"], "assumptions": ["Responsibility is an interpretation of inspected source, not author intent."], "issues": []}}], "opinions": [], "verifications": [{"id": "planned-purchase", "status": "planned", "object_ids": ["business-A"], "command": "python -c \"from delivery.orders import buy; assert buy(2)\"", "environment": "Fixture Python; proposed, not executed", "inputs": "quantity=2; business assertion remains planned", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "executor": "", "executed_at": "", "exit_code": null, "result": ""}, {"id": "executed-export", "status": "executed", "object_ids": ["application"], "command": "[\"F:\\\\CodeBoarding\\\\.venv\\\\Scripts\\\\python.exe\", \"-m\", \"architecture_model\", \"facts\", \"export\", \"--repo\", \"F:\\\\CodeBoarding\\\\temp\\\\m3-complete\\\\source\", \"--project-id\", \"orders\", \"--output\", \"F:\\\\CodeBoarding\\\\temp\\\\m3-complete\\\\facts-s0.json\", \"--node\", \"D:\\\\Progrm Files\\\\nvm\\\\v24.20.0\\\\node.exe\", \"--pyright\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\langserver.index.js\", \"--tokei\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\"]", "environment": "Python 3.12.13 / Windows-11-10.0.26100-SP0", "inputs": "Complete fixture source tree, static export only; no business invocation", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "executor": "viewer_demo", "executed_at": "2026-11-04T16:08:49.754761+00:00", "exit_code": 0, "result": "Native fact export completed. Does not verify business explanations or hypothetical retry."}], "revisions": [{"revision": 0, "author": "business-agent", "summary": "Initialize architecture model", "timestamp": "2026-11-04T16:08:43.539169+00:00", "object_ids": [], "scenario_ids": []}, {"revision": 1, "author": "business-agent", "summary": "establish-purchase", "timestamp": "2026-11-04T16:08:51.690077+00:00", "object_ids": ["20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "application", "bind-buy", "bind-quote", "bind-save", "bind-start", "bind-total", "business-A", "entry", "entry-pricing", "entry-storage", "executed-export", "planned-purchase", "policy", "storage"], "scenario_ids": ["business-A"]}, {"revision": 2, "author": "business-agent", "summary": "add-quotation-reusing-policy", "timestamp": "2026-11-04T16:08:56.605467+00:00", "object_ids": ["business-B"], "scenario_ids": ["business-B"]}, {"revision": 3, "author": "business-agent", "summary": "Record source maintenance", "timestamp": "2026-11-04T16:09:11.050989+00:00", "object_ids": ["7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13", "maintenance-0439454bd333e0308ce4d2c55901e4a694b176de67979838127482db9540ca55", "maintenance-1f9a68dc1701103ba2d2b45d4ec92f82bf2cbd138aa0269609b713edf897d8d9", "maintenance-22cc931938e9b80a00821eb566270643516c89f774ed62aca26767946c4ef7ee", "maintenance-6652e436b87eb490e4d7f063e85d880168bbc57e888a09b2a42208304a1d3139", "maintenance-e5d99186dd033d2dcf4a3cb3017ee83061f794c0bc04f134efc23aa0fff27a55"], "scenario_ids": ["business-A", "business-B"]}], "maintenance": [{"id": "maintenance-6652e436b87eb490e4d7f063e85d880168bbc57e888a09b2a42208304a1d3139", "binding_id": "bind-start", "basis": {"snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "app.py", "symbol": "app.start", "kind": "FUNCTION", "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413", "start": 4, "end": 5}, "reason": "Evidence at comparison time"}, "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13", "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21", "compared_revision": 2, "disposition": "unchanged", "reasons": ["File bytes and incident call endpoints unchanged"], "candidates": [{"key": "app.py|app.start", "location": {"path": "app.py", "symbol": "app.start", "kind": "FUNCTION", "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413", "start": 4, "end": 5}, "reasons": ["Exact path and symbol identity"]}], "component_ids": ["application"], "relation_ids": [], "scenario_ids": [], "step_ids": [], "call_changes": {"before": [{"source": "app.start", "target": "delivery.orders.buy", "sites": [{"path": "app.py", "line": 5, "column": 20}]}, {"source": "app.start", "target": "delivery.orders.quote", "sites": [{"path": "app.py", "line": 5, "column": 34}]}], "after": [{"source": "app.start", "target": "delivery.orders.buy", "sites": [{"path": "app.py", "line": 5, "column": 20}]}, {"source": "app.start", "target": "delivery.orders.quote", "sites": [{"path": "app.py", "line": 5, "column": 34}]}]}, "resolution": null, "coverage_version": "objects-v1", "object_versions": {"application": "4fbdca6cf65a2f0024dbc9c70256af5c2a68228bcbcfa97bd8ce82873623333c"}}, {"id": "maintenance-1f9a68dc1701103ba2d2b45d4ec92f82bf2cbd138aa0269609b713edf897d8d9", "binding_id": "bind-buy", "basis": {"snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "delivery/orders.py", "symbol": "delivery.orders.buy", "kind": "FUNCTION", "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "start": 5, "end": 8}, "reason": "Evidence at comparison time"}, "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13", "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21", "compared_revision": 2, "disposition": "unchanged", "reasons": ["File bytes and incident call endpoints unchanged"], "candidates": [{"key": "delivery/orders.py|delivery.orders.buy", "location": {"path": "delivery/orders.py", "symbol": "delivery.orders.buy", "kind": "FUNCTION", "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "start": 5, "end": 8}, "reasons": ["Exact path and symbol identity"]}], "component_ids": ["entry", "policy", "storage"], "relation_ids": ["entry-pricing", "entry-storage"], "scenario_ids": ["business-A", "business-B"], "step_ids": ["business-A-abandon", "business-A-price", "business-A-reject", "business-A-save", "business-A-validate", "business-B-price", "business-B-quote"], "call_changes": {"before": [{"source": "app.start", "target": "delivery.orders.buy", "sites": [{"path": "app.py", "line": 5, "column": 20}]}, {"source": "delivery.orders.buy", "target": "persistence.store.save", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 12}]}, {"source": "delivery.orders.buy", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 17}]}], "after": [{"source": "app.start", "target": "delivery.orders.buy", "sites": [{"path": "app.py", "line": 5, "column": 20}]}, {"source": "delivery.orders.buy", "target": "persistence.store.save", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 12}]}, {"source": "delivery.orders.buy", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 17}]}]}, "resolution": null, "coverage_version": "objects-v1", "object_versions": {"entry": "62901f61ec38b70c60db7449d6ed7043604be7e8a25268f6ff7b1379d00f6530", "policy": "d5ae95be2835a30ac67304ec90380663fb6709a57e8428294b3a87566c7ec174", "storage": "67d9f095777e52e99f7c5ef585bf0a58f5dd54b0e25c02c58ae296d4ca8d2af5", "entry-pricing": "ecb73642a5c4618a5b2b93fc794b506f98a8c603c771a863d46f9a7194e8a962", "entry-storage": "b07cda78f0e9b8872a41ff8097ab85cb9cc405a2a7a40c968a150c82d783bbc9", "business-A": "2d39d54db339ce7ea537db319ba2a3307f4e62bc38faec817e6e4321b5f15a9c", "business-B": "c920d5c71acbc3c6f4b7d0eaf572a17d5aaa1762572cb53ddf9f5b748567d74d", "business-A-validate": "977715cd22f9ff873d8b46fd9dc1bbd9dc3a8bbf530ebf087107c97e3ae52587", "business-A-price": "0a9bcc6a7797b5e21c10221e36cc5bf91de4222166899f39edba7d7a9d03e905", "business-A-save": "73585cab071e5cb9ae4bde470c393f9b9e399448d188a1bcc819812f3f2209be", "business-A-reject": "762dd7bc9c4e623262197b7a5eebd85d938c77eaf63f2faebde1159818d851b7", "business-A-abandon": "726ea19d1186a8936c1b6cde58b9d2c05f256d9deaa8839a42b498e7d1977aa5", "business-B-quote": "d0c86666804b4e9aa17a542034cd4ddfddf834814d57ad721c2c6b5de6f58e8d", "business-B-price": "b07d030e082f4a8faac9cdf006407feb4592a2369d08c8d76f36332f5f8b9c6c"}}, {"id": "maintenance-0439454bd333e0308ce4d2c55901e4a694b176de67979838127482db9540ca55", "binding_id": "bind-quote", "basis": {"snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "delivery/orders.py", "symbol": "delivery.orders.quote", "kind": "FUNCTION", "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "start": 11, "end": 12}, "reason": "Evidence at comparison time"}, "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13", "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21", "compared_revision": 2, "disposition": "unchanged", "reasons": ["File bytes and incident call endpoints unchanged"], "candidates": [{"key": "delivery/orders.py|delivery.orders.quote", "location": {"path": "delivery/orders.py", "symbol": "delivery.orders.quote", "kind": "FUNCTION", "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "start": 11, "end": 12}, "reasons": ["Exact path and symbol identity"]}], "component_ids": [], "relation_ids": [], "scenario_ids": ["business-B"], "step_ids": ["business-B-quote"], "call_changes": {"before": [{"source": "app.start", "target": "delivery.orders.quote", "sites": [{"path": "app.py", "line": 5, "column": 34}]}, {"source": "delivery.orders.quote", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 12, "column": 12}]}], "after": [{"source": "app.start", "target": "delivery.orders.quote", "sites": [{"path": "app.py", "line": 5, "column": 34}]}, {"source": "delivery.orders.quote", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 12, "column": 12}]}]}, "resolution": null, "coverage_version": "objects-v1", "object_versions": {"business-B": "c920d5c71acbc3c6f4b7d0eaf572a17d5aaa1762572cb53ddf9f5b748567d74d", "business-B-quote": "d0c86666804b4e9aa17a542034cd4ddfddf834814d57ad721c2c6b5de6f58e8d"}}, {"id": "maintenance-e5d99186dd033d2dcf4a3cb3017ee83061f794c0bc04f134efc23aa0fff27a55", "binding_id": "bind-save", "basis": {"snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "persistence/store.py", "symbol": "persistence.store.save", "kind": "FUNCTION", "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4", "start": 1, "end": 2}, "reason": "Evidence at comparison time"}, "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13", "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21", "compared_revision": 2, "disposition": "unchanged", "reasons": ["File bytes and incident call endpoints unchanged"], "candidates": [{"key": "persistence/store.py|persistence.store.save", "location": {"path": "persistence/store.py", "symbol": "persistence.store.save", "kind": "FUNCTION", "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4", "start": 1, "end": 2}, "reasons": ["Exact path and symbol identity"]}], "component_ids": ["storage"], "relation_ids": ["entry-storage"], "scenario_ids": ["business-A"], "step_ids": ["business-A-save"], "call_changes": {"before": [{"source": "delivery.orders.buy", "target": "persistence.store.save", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 12}]}], "after": [{"source": "delivery.orders.buy", "target": "persistence.store.save", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 12}]}]}, "resolution": null, "coverage_version": "objects-v1", "object_versions": {"storage": "67d9f095777e52e99f7c5ef585bf0a58f5dd54b0e25c02c58ae296d4ca8d2af5", "entry-storage": "b07cda78f0e9b8872a41ff8097ab85cb9cc405a2a7a40c968a150c82d783bbc9", "business-A": "2d39d54db339ce7ea537db319ba2a3307f4e62bc38faec817e6e4321b5f15a9c", "business-A-save": "73585cab071e5cb9ae4bde470c393f9b9e399448d188a1bcc819812f3f2209be"}}, {"id": "maintenance-22cc931938e9b80a00821eb566270643516c89f774ed62aca26767946c4ef7ee", "binding_id": "bind-total", "basis": {"snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "policies/pricing.py", "symbol": "policies.pricing.total", "kind": "FUNCTION", "content_hash": "42868ea99cc362de16f58190ac37c79d345533641e5662adcad76de06154c77c", "start": 1, "end": 2}, "reason": "Evidence at comparison time"}, "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13", "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21", "compared_revision": 2, "disposition": "changed", "reasons": ["Containing-file bytes or incident call endpoints changed", "Location metadata changed; content judgement uses whole-file bytes"], "candidates": [{"key": "policies/pricing.py|policies.pricing.total", "location": {"path": "policies/pricing.py", "symbol": "policies.pricing.total", "kind": "FUNCTION", "content_hash": "9a3b9694e8263a75bf2b0a1d3570cb15a5ba363d7061d88f231d9b2b83fd3877", "start": 1, "end": 2}, "reasons": ["Exact path and symbol identity"]}], "component_ids": ["policy"], "relation_ids": ["entry-pricing"], "scenario_ids": ["business-A", "business-B"], "step_ids": ["business-A-price", "business-B-price"], "call_changes": {"before": [{"source": "delivery.orders.buy", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 17}]}, {"source": "delivery.orders.quote", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 12, "column": 12}]}], "after": [{"source": "delivery.orders.buy", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 17}]}, {"source": "delivery.orders.quote", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 12, "column": 12}]}]}, "resolution": null, "coverage_version": "objects-v1", "object_versions": {"policy": "d5ae95be2835a30ac67304ec90380663fb6709a57e8428294b3a87566c7ec174", "entry-pricing": "ecb73642a5c4618a5b2b93fc794b506f98a8c603c771a863d46f9a7194e8a962", "business-A": "2d39d54db339ce7ea537db319ba2a3307f4e62bc38faec817e6e4321b5f15a9c", "business-B": "c920d5c71acbc3c6f4b7d0eaf572a17d5aaa1762572cb53ddf9f5b748567d74d", "business-A-price": "0a9bcc6a7797b5e21c10221e36cc5bf91de4222166899f39edba7d7a9d03e905", "business-B-price": "b07d030e082f4a8faac9cdf006407feb4592a2369d08c8d76f36332f5f8b9c6c"}}], "maintenance_target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13"}, "maintenance": {"model_id": "7da6dde8-e345-41f7-b535-95fa7633ef7e", "revision": 3, "pending_ids": ["maintenance-22cc931938e9b80a00821eb566270643516c89f774ed62aca26767946c4ef7ee"], "current_coverage_ids": ["maintenance-0439454bd333e0308ce4d2c55901e4a694b176de67979838127482db9540ca55", "maintenance-1f9a68dc1701103ba2d2b45d4ec92f82bf2cbd138aa0269609b713edf897d8d9", "maintenance-22cc931938e9b80a00821eb566270643516c89f774ed62aca26767946c4ef7ee", "maintenance-6652e436b87eb490e4d7f063e85d880168bbc57e888a09b2a42208304a1d3139", "maintenance-e5d99186dd033d2dcf4a3cb3017ee83061f794c0bc04f134efc23aa0fff27a55"], "current_pending_ids": ["maintenance-22cc931938e9b80a00821eb566270643516c89f774ed62aca26767946c4ef7ee"], "latest_target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13", "observations": [{"id": "maintenance-6652e436b87eb490e4d7f063e85d880168bbc57e888a09b2a42208304a1d3139", "binding_id": "bind-start", "basis": {"snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "app.py", "symbol": "app.start", "kind": "FUNCTION", "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413", "start": 4, "end": 5}, "reason": "Evidence at comparison time"}, "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13", "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21", "compared_revision": 2, "disposition": "unchanged", "reasons": ["File bytes and incident call endpoints unchanged"], "candidates": [{"key": "app.py|app.start", "location": {"path": "app.py", "symbol": "app.start", "kind": "FUNCTION", "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413", "start": 4, "end": 5}, "reasons": ["Exact path and symbol identity"]}], "component_ids": ["application"], "relation_ids": [], "scenario_ids": [], "step_ids": [], "call_changes": {"before": [{"source": "app.start", "target": "delivery.orders.buy", "sites": [{"path": "app.py", "line": 5, "column": 20}]}, {"source": "app.start", "target": "delivery.orders.quote", "sites": [{"path": "app.py", "line": 5, "column": 34}]}], "after": [{"source": "app.start", "target": "delivery.orders.buy", "sites": [{"path": "app.py", "line": 5, "column": 20}]}, {"source": "app.start", "target": "delivery.orders.quote", "sites": [{"path": "app.py", "line": 5, "column": 34}]}]}, "resolution": null, "coverage_version": "objects-v1", "object_versions": {"application": "4fbdca6cf65a2f0024dbc9c70256af5c2a68228bcbcfa97bd8ce82873623333c"}}, {"id": "maintenance-1f9a68dc1701103ba2d2b45d4ec92f82bf2cbd138aa0269609b713edf897d8d9", "binding_id": "bind-buy", "basis": {"snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "delivery/orders.py", "symbol": "delivery.orders.buy", "kind": "FUNCTION", "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "start": 5, "end": 8}, "reason": "Evidence at comparison time"}, "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13", "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21", "compared_revision": 2, "disposition": "unchanged", "reasons": ["File bytes and incident call endpoints unchanged"], "candidates": [{"key": "delivery/orders.py|delivery.orders.buy", "location": {"path": "delivery/orders.py", "symbol": "delivery.orders.buy", "kind": "FUNCTION", "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "start": 5, "end": 8}, "reasons": ["Exact path and symbol identity"]}], "component_ids": ["entry", "policy", "storage"], "relation_ids": ["entry-pricing", "entry-storage"], "scenario_ids": ["business-A", "business-B"], "step_ids": ["business-A-abandon", "business-A-price", "business-A-reject", "business-A-save", "business-A-validate", "business-B-price", "business-B-quote"], "call_changes": {"before": [{"source": "app.start", "target": "delivery.orders.buy", "sites": [{"path": "app.py", "line": 5, "column": 20}]}, {"source": "delivery.orders.buy", "target": "persistence.store.save", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 12}]}, {"source": "delivery.orders.buy", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 17}]}], "after": [{"source": "app.start", "target": "delivery.orders.buy", "sites": [{"path": "app.py", "line": 5, "column": 20}]}, {"source": "delivery.orders.buy", "target": "persistence.store.save", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 12}]}, {"source": "delivery.orders.buy", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 17}]}]}, "resolution": null, "coverage_version": "objects-v1", "object_versions": {"entry": "62901f61ec38b70c60db7449d6ed7043604be7e8a25268f6ff7b1379d00f6530", "policy": "d5ae95be2835a30ac67304ec90380663fb6709a57e8428294b3a87566c7ec174", "storage": "67d9f095777e52e99f7c5ef585bf0a58f5dd54b0e25c02c58ae296d4ca8d2af5", "entry-pricing": "ecb73642a5c4618a5b2b93fc794b506f98a8c603c771a863d46f9a7194e8a962", "entry-storage": "b07cda78f0e9b8872a41ff8097ab85cb9cc405a2a7a40c968a150c82d783bbc9", "business-A": "2d39d54db339ce7ea537db319ba2a3307f4e62bc38faec817e6e4321b5f15a9c", "business-B": "c920d5c71acbc3c6f4b7d0eaf572a17d5aaa1762572cb53ddf9f5b748567d74d", "business-A-validate": "977715cd22f9ff873d8b46fd9dc1bbd9dc3a8bbf530ebf087107c97e3ae52587", "business-A-price": "0a9bcc6a7797b5e21c10221e36cc5bf91de4222166899f39edba7d7a9d03e905", "business-A-save": "73585cab071e5cb9ae4bde470c393f9b9e399448d188a1bcc819812f3f2209be", "business-A-reject": "762dd7bc9c4e623262197b7a5eebd85d938c77eaf63f2faebde1159818d851b7", "business-A-abandon": "726ea19d1186a8936c1b6cde58b9d2c05f256d9deaa8839a42b498e7d1977aa5", "business-B-quote": "d0c86666804b4e9aa17a542034cd4ddfddf834814d57ad721c2c6b5de6f58e8d", "business-B-price": "b07d030e082f4a8faac9cdf006407feb4592a2369d08c8d76f36332f5f8b9c6c"}}, {"id": "maintenance-0439454bd333e0308ce4d2c55901e4a694b176de67979838127482db9540ca55", "binding_id": "bind-quote", "basis": {"snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "delivery/orders.py", "symbol": "delivery.orders.quote", "kind": "FUNCTION", "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "start": 11, "end": 12}, "reason": "Evidence at comparison time"}, "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13", "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21", "compared_revision": 2, "disposition": "unchanged", "reasons": ["File bytes and incident call endpoints unchanged"], "candidates": [{"key": "delivery/orders.py|delivery.orders.quote", "location": {"path": "delivery/orders.py", "symbol": "delivery.orders.quote", "kind": "FUNCTION", "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "start": 11, "end": 12}, "reasons": ["Exact path and symbol identity"]}], "component_ids": [], "relation_ids": [], "scenario_ids": ["business-B"], "step_ids": ["business-B-quote"], "call_changes": {"before": [{"source": "app.start", "target": "delivery.orders.quote", "sites": [{"path": "app.py", "line": 5, "column": 34}]}, {"source": "delivery.orders.quote", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 12, "column": 12}]}], "after": [{"source": "app.start", "target": "delivery.orders.quote", "sites": [{"path": "app.py", "line": 5, "column": 34}]}, {"source": "delivery.orders.quote", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 12, "column": 12}]}]}, "resolution": null, "coverage_version": "objects-v1", "object_versions": {"business-B": "c920d5c71acbc3c6f4b7d0eaf572a17d5aaa1762572cb53ddf9f5b748567d74d", "business-B-quote": "d0c86666804b4e9aa17a542034cd4ddfddf834814d57ad721c2c6b5de6f58e8d"}}, {"id": "maintenance-e5d99186dd033d2dcf4a3cb3017ee83061f794c0bc04f134efc23aa0fff27a55", "binding_id": "bind-save", "basis": {"snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "persistence/store.py", "symbol": "persistence.store.save", "kind": "FUNCTION", "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4", "start": 1, "end": 2}, "reason": "Evidence at comparison time"}, "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13", "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21", "compared_revision": 2, "disposition": "unchanged", "reasons": ["File bytes and incident call endpoints unchanged"], "candidates": [{"key": "persistence/store.py|persistence.store.save", "location": {"path": "persistence/store.py", "symbol": "persistence.store.save", "kind": "FUNCTION", "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4", "start": 1, "end": 2}, "reasons": ["Exact path and symbol identity"]}], "component_ids": ["storage"], "relation_ids": ["entry-storage"], "scenario_ids": ["business-A"], "step_ids": ["business-A-save"], "call_changes": {"before": [{"source": "delivery.orders.buy", "target": "persistence.store.save", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 12}]}], "after": [{"source": "delivery.orders.buy", "target": "persistence.store.save", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 12}]}]}, "resolution": null, "coverage_version": "objects-v1", "object_versions": {"storage": "67d9f095777e52e99f7c5ef585bf0a58f5dd54b0e25c02c58ae296d4ca8d2af5", "entry-storage": "b07cda78f0e9b8872a41ff8097ab85cb9cc405a2a7a40c968a150c82d783bbc9", "business-A": "2d39d54db339ce7ea537db319ba2a3307f4e62bc38faec817e6e4321b5f15a9c", "business-A-save": "73585cab071e5cb9ae4bde470c393f9b9e399448d188a1bcc819812f3f2209be"}}, {"id": "maintenance-22cc931938e9b80a00821eb566270643516c89f774ed62aca26767946c4ef7ee", "binding_id": "bind-total", "basis": {"snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "policies/pricing.py", "symbol": "policies.pricing.total", "kind": "FUNCTION", "content_hash": "42868ea99cc362de16f58190ac37c79d345533641e5662adcad76de06154c77c", "start": 1, "end": 2}, "reason": "Evidence at comparison time"}, "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13", "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21", "compared_revision": 2, "disposition": "changed", "reasons": ["Containing-file bytes or incident call endpoints changed", "Location metadata changed; content judgement uses whole-file bytes"], "candidates": [{"key": "policies/pricing.py|policies.pricing.total", "location": {"path": "policies/pricing.py", "symbol": "policies.pricing.total", "kind": "FUNCTION", "content_hash": "9a3b9694e8263a75bf2b0a1d3570cb15a5ba363d7061d88f231d9b2b83fd3877", "start": 1, "end": 2}, "reasons": ["Exact path and symbol identity"]}], "component_ids": ["policy"], "relation_ids": ["entry-pricing"], "scenario_ids": ["business-A", "business-B"], "step_ids": ["business-A-price", "business-B-price"], "call_changes": {"before": [{"source": "delivery.orders.buy", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 17}]}, {"source": "delivery.orders.quote", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 12, "column": 12}]}], "after": [{"source": "delivery.orders.buy", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 8, "column": 17}]}, {"source": "delivery.orders.quote", "target": "policies.pricing.total", "sites": [{"path": "delivery/orders.py", "line": 12, "column": 12}]}]}, "resolution": null, "coverage_version": "objects-v1", "object_versions": {"policy": "d5ae95be2835a30ac67304ec90380663fb6709a57e8428294b3a87566c7ec174", "entry-pricing": "ecb73642a5c4618a5b2b93fc794b506f98a8c603c771a863d46f9a7194e8a962", "business-A": "2d39d54db339ce7ea537db319ba2a3307f4e62bc38faec817e6e4321b5f15a9c", "business-B": "c920d5c71acbc3c6f4b7d0eaf572a17d5aaa1762572cb53ddf9f5b748567d74d", "business-A-price": "0a9bcc6a7797b5e21c10221e36cc5bf91de4222166899f39edba7d7a9d03e905", "business-B-price": "b07d030e082f4a8faac9cdf006407feb4592a2369d08c8d76f36332f5f8b9c6c"}}]}, "exported_at": "2026-11-04T16:09:13.287534+00:00", "snippets": {"bind-start": [{"snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "app.py", "symbol": "app.start", "kind": "FUNCTION", "content_hash": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413", "start": 4, "end": 5}, "status": "verified", "text": "    4  def start() -> dict:\n    5      return {\"buy\": buy, \"quote\": quote}"}], "bind-buy": [{"snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "delivery/orders.py", "symbol": "delivery.orders.buy", "kind": "FUNCTION", "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "start": 5, "end": 8}, "status": "verified", "text": "    5  def buy(quantity: int) -> str:\n    6      if quantity \u003c= 0:\n    7          raise ValueError(\"quantity must be positive\")\n    8      return save(total(quantity))"}], "bind-quote": [{"snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "delivery/orders.py", "symbol": "delivery.orders.quote", "kind": "FUNCTION", "content_hash": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44", "start": 11, "end": 12}, "status": "verified", "text": "   11  def quote(quantity: int) -> int:\n   12      return total(quantity)"}], "bind-save": [{"snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "persistence/store.py", "symbol": "persistence.store.save", "kind": "FUNCTION", "content_hash": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4", "start": 1, "end": 2}, "status": "verified", "text": "    1  def save(amount: int) -> str:\n    2      return f\"order:{amount}\""}], "bind-total": [{"snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14", "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca", "location": {"path": "policies/pricing.py", "symbol": "policies.pricing.total", "kind": "FUNCTION", "content_hash": "42868ea99cc362de16f58190ac37c79d345533641e5662adcad76de06154c77c", "start": 1, "end": 2}, "status": "mismatch", "reason": "Workspace bytes differ from this evidence version; body withheld."}]}}</script><script>/* Pure presentation and playback state; never mutates model objects. */
+"use strict";
+const ArchitectureView = (() => {
+  function visibleAncestor(id, components, expanded) {
+    const byId = new Map(components.map(c => [c.id, c]));
+    let visible = id;
+    let current = byId.get(id);
+    while (current && current.parent_id) {
+      if (!expanded.has(current.parent_id)) visible = current.parent_id;
+      current = byId.get(current.parent_id);
+    }
+    return visible;
+  }
+  function hierarchy(components) {
+    const children = new Map();
+    for (const component of components) {
+      if (!children.has(component.parent_id)) children.set(component.parent_id, []);
+      children.get(component.parent_id).push(component);
+    }
+    const rows = [];
+    function visit(parent, depth) {
+      for (const component of children.get(parent) || []) {
+        rows.push({component, depth, index: rows.length});
+        visit(component.id, depth + 1);
+      }
+    }
+    visit("", 0);
+    return rows;
+  }
+  function projectedEdges(model, scenario, expanded) {
+    const project = id => visibleAncestor(id, model.components, expanded);
+    const edges = model.relations.map(r => ({
+      source: project(r.source_id), target: project(r.target_id),
+      relation_id: r.id, component_ids: [r.source_id, r.target_id], kind: "relation"
+    }));
+    if (!scenario) return edges;
+    const steps = new Map(scenario.steps.map(s => [s.id, s]));
+    scenario.transitions.forEach((transition, index) => {
+      for (const source of steps.get(transition.source_id).component_ids) {
+        for (const target of steps.get(transition.target_id).component_ids) {
+          edges.push({source: project(source), target: project(target), kind: transition.kind,
+            source_step_id: transition.source_id, target_step_id: transition.target_id,
+            transition_index: index, component_ids: [source, target]});
+        }
+      }
+    });
+    return edges;
+  }
+  class Player {
+    constructor(scenario) {
+      this.scenario = scenario;
+      this.reset();
+    }
+    reset() {
+      this.current = this.scenario ? this.scenario.entry_step_id : "";
+      this.history = [];
+      this.incoming = null;
+    }
+    choices() {
+      return this.scenario ? this.scenario.transitions.map((transition, index) => ({transition, index}))
+        .filter(choice => choice.transition.source_id === this.current) : [];
+    }
+    forward(index) {
+      const choice = this.choices().find(c => c.index === index);
+      if (!choice) return false;
+      this.history.push({step: this.current, incoming: this.incoming});
+      this.current = choice.transition.target_id;
+      this.incoming = choice.index;
+      return true;
+    }
+    back() {
+      const previous = this.history.pop();
+      if (!previous) return false;
+      this.current = previous.step;
+      this.incoming = previous.incoming;
+      return true;
+    }
+    inspectStep(id) {
+      if (!this.scenario.steps.some(s => s.id === id)) return false;
+      this.current = id;
+      this.history = [];
+      this.incoming = null;
+      return true;
+    }
+    autoChoice() {
+      const choices = this.choices();
+      if (choices.length !== 1) return null;
+      const choice = choices[0];
+      if (choice.transition.kind === "loop" || this.history.some(h => h.step === choice.transition.target_id)
+          || choice.transition.target_id === this.current) return null;
+      return choice.index;
+    }
+  }
+  return {visibleAncestor, hierarchy, projectedEdges, Player};
+})();
+if (typeof module !== "undefined") module.exports = ArchitectureView;
+
+"use strict";
+(() => {
+  const documentData = JSON.parse(document.getElementById("model-data").textContent);
+  const model = documentData.model;
+  const report = documentData.maintenance;
+  const {visibleAncestor, hierarchy, projectedEdges, Player} = ArchitectureView;
+  const rows = hierarchy(model.components);
+  const byId = new Map([...model.components, ...model.relations, ...model.scenarios,
+    ...model.scenarios.flatMap(s => s.steps), ...model.bindings, ...model.maintenance].map(o => [o.id, o]));
+  const expanded = new Set(model.components.filter(c => !c.parent_id).map(c => c.id));
+  const players = new Map(model.scenarios.map(s => [s.id, new Player(s)]));
+  let scenario = model.scenarios[0] || null;
+  let player = scenario ? players.get(scenario.id) : new Player(null);
+  let selection = player.current || model.components[0]?.id || model.project.id;
+  let timer = null;
+  let message = "";
+  const el = id => document.getElementById(id);
+  const element = (tag, text = "", className = "") => {
+    const node = document.createElement(tag);
+    node.textContent = text;
+    if (className) node.className = className;
+    return node;
+  };
+  function button(text, action, className = "") {
+    const node = element("button", text, className);
+    node.type = "button";
+    node.addEventListener("click", action);
+    return node;
+  }
+  function field(container, label, value) {
+    const node = element("div", "", "field");
+    node.append(element("b", label));
+    node.append(element("div", typeof value === "string" ? value : JSON.stringify(value, null, 2)));
+    container.append(node);
+  }
+  function json(container, value) { container.append(element("pre", JSON.stringify(value, null, 2))); }
+  function details(container, title, value) {
+    const node = element("details");
+    node.append(element("summary", title));
+    json(node, value);
+    container.append(node);
+    return node;
+  }
+  function pause() {
+    if (timer !== null) clearInterval(timer);
+    timer = null;
+    el("play").textContent = "Play";
+  }
+  function select(id) { selection = id; renderDetail(); }
+  function moved() {
+    message = "";
+    selection = player.current;
+    render();
+  }
+  function advance(index) {
+    pause();
+    if (player.forward(index)) moved();
+  }
+  function autoTick() {
+    const index = player.autoChoice();
+    if (index === null) {
+      pause();
+      message = player.choices().length ? "Paused: choose a branch or explicitly enter a cycle." : "Paused at modeled endpoint or unexplained gap.";
+      renderPlayer();
+      return;
+    }
+    player.forward(index);
+    moved();
+  }
+  function renderTree() {
+    el("tree").replaceChildren();
+    for (const {component, depth} of rows) {
+      if (visibleAncestor(component.id, model.components, expanded) !== component.id) continue;
+      const row = element("div", "", "tree-row");
+      row.style.paddingInlineStart = `${depth * 12}px`;
+      if (model.components.some(c => c.parent_id === component.id)) {
+        const toggle = button(expanded.has(component.id) ? "−" : "+", () => {
+          expanded.has(component.id) ? expanded.delete(component.id) : expanded.add(component.id);
+          render();
+        });
+        toggle.setAttribute("aria-label", `Toggle ${component.name}`);
+        toggle.setAttribute("aria-expanded", String(expanded.has(component.id)));
+        row.append(toggle);
+      }
+      row.append(button(component.name, () => select(component.id), "object"));
+      el("tree").append(row);
+    }
+    el("steps").replaceChildren();
+    if (!scenario) { el("steps").append(element("p", "No modeled businesses. Update the model through the external Agent / CLI.")); return; }
+    for (const id of scenario.order) {
+      const step = scenario.steps.find(s => s.id === id);
+      const node = button(id, () => {
+        pause(); player.inspectStep(id); message = "Direct inspection starts a new browsing path.";
+        selection = id; render();
+      }, `step${id === player.current ? " active" : ""}`);
+      node.setAttribute("aria-current", id === player.current ? "step" : "false");
+      node.append(element("small", step.claim.explanation));
+      el("steps").append(node);
+    }
+  }
+  function svgElement(tag, attributes) {
+    const node = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    Object.entries(attributes).forEach(([key, value]) => node.setAttribute(key, String(value)));
+    return node;
+  }
+  function renderGraph() {
+    const active = new Set(scenario?.steps.find(s => s.id === player.current)?.component_ids || []);
+    const involved = new Set(scenario?.steps.flatMap(s => s.component_ids) || []);
+    const project = id => visibleAncestor(id, model.components, expanded);
+    const activeVisible = new Set([...active].map(project));
+    const involvedVisible = new Set([...involved].map(project));
+    const graph = el("graph");
+    const nodes = el("nodes");
+    graph.replaceChildren(); nodes.replaceChildren();
+    const defs = svgElement("defs", {});
+    const marker = svgElement("marker", {id:"arrow",viewBox:"0 0 10 10",refX:9,refY:5,markerWidth:6,markerHeight:6,orient:"auto-start-reverse"});
+    marker.append(svgElement("path", {d:"M 0 0 L 10 5 L 0 10 z",fill:"context-stroke"}));
+    defs.append(marker); graph.append(defs);
+    const width = Math.max(430, ...rows.map(r => r.depth * 230 + 460));
+    const height = Math.max(230, rows.length * 105 + 30);
+    nodes.style.width = `${width}px`; nodes.style.height = `${height}px`;
+    graph.style.width = `${width}px`; graph.style.height = `${height}px`;
+    const positions = new Map(rows.map(r => [r.component.id, {x: r.depth * 230 + 20, y: r.index * 105 + 20}]));
+    const edges = projectedEdges(model, scenario, expanded);
+    const groups = new Map();
+    for (const edge of edges) {
+      const activeEdge = edge.kind !== "relation" && (edge.source_step_id === player.current || edge.transition_index === player.incoming);
+      if (edge.kind !== "relation" && !activeEdge) continue;
+      const key = JSON.stringify([edge.source,edge.target]);
+      if (!groups.has(key)) groups.set(key,[]);
+      groups.get(key).push(edge);
+    }
+    const labelRows = new Map();
+    for (const grouped of groups.values()) {
+      const edge = grouped[0];
+      const transitions = grouped.filter(e => e.kind !== "relation");
+      const highlight = transitions.length > 0;
+      const source = positions.get(edge.source), target = positions.get(edge.target);
+      const stroke = highlight ? "#007c78" : "#9aadb9";
+      let path;
+      if (edge.source === edge.target) {
+        path = `M${source.x+170},${source.y+20} C${source.x+235},${source.y-16} ${source.x+235},${source.y+95} ${source.x+170},${source.y+66}`;
+      } else {
+        path = `M${source.x+190},${source.y+42} C${source.x+220},${source.y+42} ${target.x+220},${target.y+42} ${target.x+190},${target.y+42}`;
+      }
+      const line = svgElement("path", {d:path, fill:"none", stroke, "stroke-width":highlight?3:1.5,
+        "stroke-dasharray":highlight?"6 3":"none", "marker-end":"url(#arrow)"});
+      const title = svgElement("title", {});
+      title.textContent = grouped.map(item => item.kind === "relation" ? item.relation_id : `${item.source_step_id} → ${item.target_step_id} · ${item.kind}`).join("\n");
+      line.append(title); graph.append(line);
+      const labelRow = labelRows.get(edge.source) || 0;
+      labelRows.set(edge.source,labelRow+1);
+      const label = svgElement("text", {x:source.x+198,y:source.y+12+labelRow*15});
+      const relationCount = grouped.length - transitions.length;
+      label.textContent = [relationCount ? `${relationCount} relation${relationCount > 1 ? "s" : ""}` : "", ...new Set(transitions.map(item=>item.kind))].filter(Boolean).join(" · ");
+      graph.append(label);
+    }
+    for (const {component} of rows) {
+      if (project(component.id) !== component.id) continue;
+      const position = positions.get(component.id);
+      const node = button("", () => select(component.id), "node");
+      node.dataset.componentId = component.id;
+      node.style.left = `${position.x}px`; node.style.top = `${position.y}px`;
+      node.classList.toggle("current", activeVisible.has(component.id));
+      node.classList.toggle("unrelated", el("focus").checked && !involvedVisible.has(component.id));
+      node.append(element("strong", component.name), element("small", component.id));
+      if (activeVisible.has(component.id)) {
+        node.append(element("span", active.has(component.id) ? "Current step" : `Current step inside · ${player.current}`, "inside"));
+      }
+      const hidden = rows.filter(r => r.component.id !== component.id && project(r.component.id) === component.id);
+      if (hidden.length) node.append(element("small", `${hidden.length} components inside · expand in structure`));
+      nodes.append(node);
+    }
+    el("relations").replaceChildren();
+    for (const relation of model.relations) {
+      el("relations").append(button(`${relation.source_id} → ${relation.target_id} · ${relation.meaning}`,
+        () => select(relation.id), "relation"));
+    }
+    if (!rows.length) nodes.append(element("p", "No components modeled yet."));
+    if (!model.relations.length) el("relations").append(element("p", "No component relations modeled. Business transitions remain separate."));
+  }
+  function renderPlayer() {
+    el("current").textContent = scenario ? `${scenario.name} / ${player.current}` : "No business selected";
+    el("choices").replaceChildren();
+    const choices = player.choices();
+    el("playback-status").textContent = message || (choices.length === 0
+      ? "No outgoing transition saved. Modeled endpoint or unexplained gap; no next step is inferred from display order."
+      : choices.length > 1 ? "Choose a saved transition. Conditions have not been evaluated."
+      : choices[0].transition.kind === "loop" ? "Loop boundary: paused until explicitly selected. Choose another transition to exit when available." : "Ready to follow the saved transition.");
+    for (const {transition, index} of choices) {
+      el("choices").append(button(`${transition.kind} → ${transition.target_id} · ${transition.condition}`, () => advance(index)));
+    }
+    const incoming = scenario?.transitions[player.incoming];
+    el("incoming").textContent = incoming ? `Last traversed: ${incoming.source_id} → ${incoming.target_id} · ${incoming.kind} · ${incoming.condition}` : "No transition traversed in this browsing path.";
+    el("back").disabled = player.history.length === 0;
+    el("next").disabled = choices.length !== 1;
+    el("play").disabled = !scenario || !choices.length;
+    el("reset").disabled = !scenario;
+  }
+  function renderBindings(container, ids) {
+    container.append(element("h3", "Code evidence"));
+    for (const id of ids) {
+      const binding = byId.get(id);
+      if (!binding) continue;
+      const node = element("details");
+      node.append(element("summary", `${id} · ${binding.location.path}:${binding.location.start} · ${binding.status}`));
+      field(node, "Binding status is relative to its saved evidence", binding.reason || binding.status);
+      for (const [index, snippet] of documentData.snippets[id].entries()) {
+        field(node, index === 0 ? "Referenced evidence" : "Historical binding evidence", snippet.location.symbol || snippet.location.path);
+        json(node, {snapshot_id:snippet.snapshot_id,source_version:snippet.source_version,...snippet.location});
+        if (snippet.status === "verified") node.append(element("p", "Exact file SHA-256 matched this evidence version.", "badge"), element("pre", snippet.text));
+        else node.append(element("p", snippet.reason, "warning"));
+      }
+      details(node, "Binding history metadata", binding.history);
+      container.append(node);
+    }
+  }
+  function renderMaintenance(container, ids) {
+    container.append(element("h3", "Maintenance & review history"));
+    container.append(element("p", "Current means current explanation contents for a saved source comparison. It does not mean latest source verified.", "muted"));
+    field(container, "Latest target snapshot", report.latest_target_snapshot_id || "No source maintenance target saved");
+    const matching = model.maintenance.filter(item => ids.has(item.binding_id) || [...item.component_ids,...item.relation_ids,...item.scenario_ids,...item.step_ids].some(id => ids.has(id)));
+    if (!matching.length) container.append(element("p", "No maintenance observations for this selection. This is not evidence of verification."));
+    for (const item of matching) {
+      const current = report.current_coverage_ids.includes(item.id);
+      const pending = report.pending_ids.includes(item.id);
+      const currentPending = report.current_pending_ids.includes(item.id);
+      const latest = item.target_snapshot_id === report.latest_target_snapshot_id;
+      const node = element("details");
+      node.append(element("summary", `${current ? "Current explanation" : "Historical explanation"} · ${item.disposition} · ${currentPending ? "current pending" : pending ? "historical pending" : item.resolution ? "review recorded" : "unchanged comparison"} · ${latest ? "latest target" : "older target"}`));
+      field(node, "Observation ID", item.id);
+      field(node, "Target snapshot / source version", `${item.target_snapshot_id} / ${item.target_source_version}`);
+      field(node, "Reasons", item.reasons);
+      details(node, "Actual affected scope and content fingerprints", {component_ids:item.component_ids,relation_ids:item.relation_ids,scenario_ids:item.scenario_ids,step_ids:item.step_ids,coverage_version:item.coverage_version,object_versions:item.object_versions});
+      if (item.resolution) details(node, "Confirmation author, reason and actual version coverage", item.resolution).open = true;
+      else field(node, "Review", pending ? "Unresolved" : "No review required by this comparison");
+      details(node, "Source basis, candidates and static call changes", {basis:item.basis,candidates:item.candidates,call_changes:item.call_changes,compared_revision:item.compared_revision});
+      renderRecords(node, new Set([item.id]));
+      container.append(node);
+    }
+    container.append(element("p", "Historical source bodies and old explanation bodies cannot be reconstructed from revisions or fingerprints.", "muted"));
+  }
+  function renderRecords(container, ids) {
+    for (const [name, records] of [["Human opinion", model.opinions], ["Verification", model.verifications]]) {
+      for (const record of records.filter(r => r.object_ids.some(id => ids.has(id)))) {
+        details(container, `${name} · ${record.status || record.stance} · ${record.id}`, record);
+      }
+    }
+  }
+  function renderDetail() {
+    const container = el("detail"); container.replaceChildren();
+    const object = byId.get(selection);
+    if (!object) { json(container, model.project); return; }
+    container.append(element("h3", object.name || object.id));
+    field(container, "Stable object ID", object.id);
+    for (const name of ["responsibility", "rationale", "parent_id", "meaning", "source_id", "target_id", "component_ids"]) {
+      if (object[name]) field(container, name.replaceAll("_", " "), object[name]);
+    }
+    const claim = object.claim;
+    if (claim) {
+      container.append(element("span", claim.kind, "badge"));
+      field(container, "Explanation", claim.explanation);
+      field(container, "Assumptions", claim.assumptions.length ? claim.assumptions : "None declared");
+      field(container, "Issues", claim.issues.length ? claim.issues : "None declared");
+    }
+    const ids = new Set([object.id]);
+    const bindings = new Set([...(object.binding_ids || []), ...(claim?.binding_ids || [])]);
+    if (object.component_ids) {
+      for (const id of object.component_ids) {
+        ids.add(id);
+        container.append(button(`Inspect component ${id}`, () => select(id)));
+        for (const bid of [...byId.get(id).binding_ids, ...byId.get(id).claim.binding_ids]) bindings.add(bid);
+      }
+    }
+    renderBindings(container, bindings);
+    container.append(element("h3", "Opinions & verification"));
+    container.append(element("p", "Planned checks are not executed results. An executed result applies only to its recorded inputs, objects and source version; it does not change claim kind.", "muted"));
+    renderRecords(container, ids);
+    renderMaintenance(container, new Set([...ids, ...bindings]));
+  }
+  function render() { renderTree(); renderGraph(); renderPlayer(); renderDetail(); }
+  el("project").textContent = model.project.name;
+  el("boundary").textContent = model.project.boundary;
+  el("identity").textContent = `Model ${model.id} · revision ${model.revision}`;
+  el("exported").textContent = `Exported ${documentData.exported_at}`;
+  for (const item of model.scenarios) {
+    const option = element("option", item.name); option.value = item.id; el("scenario").append(option);
+  }
+  el("scenario").disabled = !scenario;
+  el("inspect-business").disabled = !scenario;
+  el("inspect-business").addEventListener("click", () => { if (scenario) select(scenario.id); });
+  el("scenario").addEventListener("change", () => {
+    pause(); scenario = model.scenarios.find(s => s.id === el("scenario").value);
+    player = players.get(scenario.id); message = ""; selection = player.current; render();
+  });
+  el("focus").addEventListener("change", renderGraph);
+  el("reset").addEventListener("click", () => { pause(); player.reset(); moved(); });
+  el("back").addEventListener("click", () => { pause(); player.back(); moved(); });
+  el("next").addEventListener("click", () => {
+    const choices = player.choices(); if (choices.length === 1) advance(choices[0].index);
+  });
+  el("play").addEventListener("click", () => {
+    if (timer !== null) { pause(); return; }
+    timer = setInterval(autoTick, 1100); el("play").textContent = "Pause";
+  });
+  el("expand-all").addEventListener("click", () => { model.components.forEach(c => expanded.add(c.id)); render(); });
+  el("collapse-all").addEventListener("click", () => { expanded.clear(); render(); });
+  el("metadata").addEventListener("click", () => {
+    const container = el("detail"); container.replaceChildren();
+    field(container, "Model / revision / export", `${model.id} / ${model.revision} / ${documentData.exported_at}`);
+    field(container, "Selected business / step", `${scenario?.id || "none"} / ${player.current || "none"}`);
+    json(container, model.project);
+    field(container, "Latest source target", report.latest_target_snapshot_id || "none");
+    for (const facts of model.facts) details(container, `Snapshot ${facts.id}`, {id:facts.id, source:facts.source,tools:facts.tools,limitations:facts.limitations});
+    details(container, "Maintenance coverage sets", report);
+    details(container, "Revision metadata (not historical explanation bodies)", model.revisions);
+  });
+  window.addEventListener("pagehide", pause);
+  render();
+})();
+</script>
+</body></html>

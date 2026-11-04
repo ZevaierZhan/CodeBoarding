@@ -140,3 +140,68 @@ enables subprocess measurement so those checks remain part of coverage. Addition
 explicit-tool tests simulate another installation under a temporary home, check
 the actual Node/argv markers, and reject failed Tokei/Pyright executables without
 publishing facts or changing the model.
+
+## M3: offline interactive explorer
+
+Open `examples/architecture_model/interactive/index.html` locally for the reviewed
+model, or `interactive/pending.html` for the source-change stage. Both are fully
+offline. The persisted `interactive/model.json` retains A, B and shared IDs, so
+an external Agent can continue updating it with the ordinary CLI.
+
+Replay from real fixture sources and native facts into a **new** directory:
+
+```powershell
+uv run python -m examples.architecture_model.viewer_demo `
+  --output temp/m3-demo-new `
+  --node (Get-Command node).Source `
+  --pyright temp/p0-tools/node_modules/pyright/langserver.index.js `
+  --tokei temp/p0-tools/tokei.exe
+```
+
+Every fact/model operation launches a separate CLI process. The same helpers,
+fixture, real StaticAnalyzer/Pyright/Tokei export and M2 maintenance protocol are
+reused. Outputs are `01-purchase.html`, `02-shared-businesses.html`,
+`03-source-pending.html`, `04-reviewed.html`, the one persisted model plus frozen
+stage models and `results.json`. A starts at its explicit entry despite its
+deliberately different display order. B is added later and reuses the exact same
+four components. Changing `total` from multiplier 10 to 12 makes both businesses
+pending. Explicit rebinding and confirmation preserve binding history and exact
+review scope. A clarified shared-boundary explanation creates a new review
+context: only that context is confirmed, leaving the earlier explanation's pending
+review visible as history. A final unrelated S2 export keeps the S1 confirmation
+explicitly labeled as an older target. Session feedback is an ordinary opinion; planned/executed checks
+are separate from business assertions.
+
+The quantity validation branch is based on `delivery.orders.buy`. The modeled
+caller retry loop and abandon/return path are **intent hypotheses**: this fixture
+has no retry/cancel caller implementation. Conditions are never evaluated by the
+page. `save` only formats an ID, and the executed static export is not a business
+execution verification.
+
+Generate any one-model document separately:
+
+```powershell
+uv run codeboarding-model model --file temp/m3-demo-new/architecture-model.json `
+  export-html --output temp/m3-demo-new/another-view.html `
+  --source-root temp/m3-demo-new/source
+```
+
+Automate real offline browser acceptance with a locally installed Playwright
+package and Google Chrome (no installation/download occurs in this script):
+
+```powershell
+# Optional: absolute module directory if Playwright is outside Node's module path.
+$env:PLAYWRIGHT_MODULE = 'C:/path/to/node_modules/playwright'
+node examples/architecture_model/check_viewer.cjs temp/m3-demo-new
+node --test tests/architecture_model/viewer_engine.test.cjs
+```
+
+The browser script checks SVG rendering, ancestors/current step, focus, A/B shared
+IDs, explicit branch selection, back, loops/return, source evidence, pending/reviewed
+state, metadata, mobile width, page errors, requests and model byte identity.
+`browser/results.json` and PNG screenshots are written below the chosen output.
+It also checks hostile text when `untrusted.html` is present. Python security
+regressions run with the architecture_model pytest suite. The runtime ships in
+the HTML; Node/Playwright are verification tools only. See
+[reader/Agent instructions](../../docs/architecture-model-viewer.md) and
+[M3 design](../../docs/design/architecture-model-m3.md).
