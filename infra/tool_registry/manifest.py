@@ -204,6 +204,10 @@ def resolve_config(base_dir: Path) -> dict[str, Any]:
     node_ext = ".cmd" if platform.system() == "Windows" else ""
 
     for dep in TOOL_REGISTRY:
+        # Absolute caller commands take precedence over installed tool discovery.
+        command = config[dep.config_section][dep.key].get("command", [])
+        if any(Path(part).is_absolute() for part in command):
+            continue
         if dep.kind is ToolKind.NATIVE:
             binary_path = bin_dir / f"{dep.binary_name}{native_ext}"
             if native_binary_ok(binary_path):
@@ -251,6 +255,9 @@ def resolve_config_from_path() -> dict[str, Any]:
     config = deepcopy(VSCODE_CONFIG)
 
     for dep in TOOL_REGISTRY:
+        command = config[dep.config_section][dep.key].get("command", [])
+        if any(Path(part).is_absolute() for part in command):
+            continue
         path = None
         if dep.kind in (ToolKind.NATIVE, ToolKind.NODE, ToolKind.PACKAGE_MANAGER) or (
             dep.kind is ToolKind.ARCHIVE and dep.archive_entry

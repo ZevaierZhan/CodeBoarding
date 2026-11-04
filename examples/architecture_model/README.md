@@ -67,3 +67,10 @@ attempts are forbidden, attempts are accumulated, telemetry is absent, and newly
 created Python threads must settle. These guards are test-only and do not import
 P0's experimental audit/atexit machinery into the production library. They are not
 a network sandbox for third-party LSP subprocesses.
+
+Real worker API checks run in a child process and assert that the pytest parent's
+configuration, environment and native module state are unchanged. `.coveragerc`
+enables subprocess measurement so those checks remain part of coverage. Additional
+explicit-tool tests simulate another installation under a temporary home, check
+the actual Node/argv markers, and reject failed Tokei/Pyright executables without
+publishing facts or changing the model.

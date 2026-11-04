@@ -50,13 +50,16 @@ def export_facts(repo: Path, project_id: str, output: Path, node: Path, pyright:
 
 
 def run_worker(command: list[str]) -> subprocess.CompletedProcess:
+    creationflags = 0
+    if sys.platform == "win32":
+        creationflags = subprocess.CREATE_NEW_PROCESS_GROUP
     process = subprocess.Popen(
         command,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
         start_new_session=sys.platform != "win32",
-        creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if sys.platform == "win32" else 0,
+        creationflags=creationflags,
     )
     try:
         stdout, stderr = process.communicate(timeout=180)

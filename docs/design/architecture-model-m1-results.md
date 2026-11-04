@@ -1,5 +1,11 @@
 # M1 validation — 2026-11-04 (Asia/Shanghai)
 
+This is the historical initial M1 record for `cbb121b4`. Latest results and the
+four review fixes are in [M1 P2 validation](architecture-model-m1-p2-results.md).
+Review subsequently attributed the registry-parity and embedded-node fallback
+order failures to this PR's real-export test pollution; they are fixed and
+explicitly tracked there, rather than left among the unattributed full-suite failures.
+
 M1 is implemented on `m1/architecture-model-cli` from fork `origin/main`
 `d02b718e`, which includes reviewed P0 `cb23ff82`. No existing native analyzer,
 clustering, semantic pipeline, P0 fixture or P0 branch was changed. The initial

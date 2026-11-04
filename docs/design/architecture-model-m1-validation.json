@@ -460,5 +460,7 @@
     "examples/architecture_model/demo.py": "5f18cd84a467cacf3de6727b6270ecbba2f1a48bceafc05f3657c20ed90b5e2d",
     "tests/architecture_model/native_probe.py": "3a0927534e366a68f1c778770c0a015f900a13941c335813a70ad996e2351058",
     "docs/architecture-model-v1.schema.json": "1173f8daf63228bfbaec4e18a518123f2925dd73ede7bc3a24d44e2eb5dbaab3"
-  }
+  },
+  "record_scope": "Historical initial M1 validation at cbb121b4; use latest_validation for the review fixes",
+  "latest_validation": "architecture-model-m1-p2-validation.json"
 }

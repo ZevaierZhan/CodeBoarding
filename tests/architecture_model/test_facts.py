@@ -1,4 +1,4 @@
-import importlib
+from copy import deepcopy
 import json
 import os
 import subprocess
@@ -12,6 +12,7 @@ from architecture_model.errors import ModelError
 from architecture_model.facts import export_facts, run_worker
 from architecture_model.schema import Facts
 from architecture_model.validation import digest, parse, validate_facts
+from infra.vscode_constants import VSCODE_CONFIG
 
 
 @pytest.mark.parametrize("corruption", ["digest", "symbol", "call", "site", "file"])
@@ -103,9 +104,12 @@ def test_worker_timeout_terminates_owned_process_group() -> None:
             with pytest.raises(subprocess.TimeoutExpired):
                 run_worker(["worker"])
             if sys.platform == "win32":
+                assert constructor.call_args.kwargs["creationflags"] == subprocess.CREATE_NEW_PROCESS_GROUP
                 assert terminate_tree.call_args.args[0] == ["taskkill", "/PID", "123456", "/T", "/F"]
             else:
+                assert constructor.call_args.kwargs["creationflags"] == 0
                 assert terminate_group.called
+        assert constructor.call_args.kwargs["start_new_session"] == (sys.platform != "win32")
         assert process.communicate.call_count == 2
 
 
@@ -113,48 +117,19 @@ def test_real_python_export_and_failure_paths(tmp_path: Path) -> None:
     required = [os.environ.get(f"M1_{name}", "") for name in ("NODE", "PYRIGHT", "TOKEI")]
     if not all(required):
         pytest.skip("Set M1_NODE, M1_PYRIGHT and M1_TOKEI to run the real native engine")
-    worker = importlib.import_module("architecture_model.facts_worker")
-    node, pyright, tokei = map(Path, required)
-    source = tmp_path / "source"
-    source.mkdir()
-    (source / "app.py").write_text("def helper():\n    return 1\n\ndef run():\n    return helper()\n")
-    facts = worker.extract(source.resolve(), "p", node, pyright, tokei)
-    assert len(facts.symbols) == 2 and len(facts.calls) == 1
-    assert facts.file_locations["app.py"].content_hash == facts.source.files["app.py"]
-    assert worker.telemetry._client is None
-    probe_result = tmp_path / "guard.json"
-    probe = Path(__file__).with_name("native_probe.py")
+    config_before = deepcopy(VSCODE_CONFIG)
+    environment_before = dict(os.environ)
+    worker_before = sys.modules.get("architecture_model.facts_worker")
+    telemetry_before = sys.modules.get("infra.monitoring.telemetry.service")
+    probe = Path(__file__).with_name("real_export_probe.py")
     subprocess.run(
-        [sys.executable, str(probe), str(source), *required, str(probe_result)],
+        [sys.executable, str(probe), str(tmp_path), *required],
         check=True,
         capture_output=True,
         text=True,
-        timeout=60,
+        timeout=150,
     )
-    assert json.loads(probe_result.read_text())["status"] == "PASS"
-    with (
-        patch.object(sys, "argv", ["worker", str(source), "p", str(tmp_path / "worker.json"), *required]),
-        patch.object(worker, "setup_logging"),
-    ):
-        assert worker.main() == 0
-    output = tmp_path / "published.json"
-    exported = export_facts(source, "p", output, node, pyright, tokei)
-    assert exported.source.digest == facts.source.digest
-    with pytest.raises(ModelError) as raised:
-        export_facts(source, "p", output, node, pyright, tokei)
-    assert raised.value.code == "ALREADY_EXISTS"
-    (source / "app.py").write_text("def broken(:\n")
-    with pytest.raises(SyntaxError):
-        worker.extract(source, "p", node, pyright, tokei)
-    with (
-        patch.object(sys, "argv", ["worker", str(source), "p", str(tmp_path / "bad.json"), *required]),
-        patch.object(worker, "setup_logging"),
-    ):
-        assert worker.main() == 1
-    assert not (tmp_path / "bad.json").exists()
-    (source / "app.py").unlink()
-    with pytest.raises(ValueError, match="No Python"):
-        worker.extract(source, "p", node, pyright, tokei)
-    with patch.object(worker.telemetry, "_client", object()):
-        with pytest.raises(RuntimeError, match="Telemetry"):
-            worker.extract(source, "p", node, pyright, tokei)
+    assert VSCODE_CONFIG == config_before
+    assert dict(os.environ) == environment_before
+    assert sys.modules.get("architecture_model.facts_worker") is worker_before
+    assert sys.modules.get("infra.monitoring.telemetry.service") is telemetry_before

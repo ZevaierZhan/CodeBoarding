@@ -70,12 +70,23 @@ def model_diff(before: Model, after: Model) -> dict:
             if component_ids.intersection((relation.source_id, relation.target_id))
         )
     scenarios = set(changes.get("scenarios", {}))
+    record_targets: set[str] = set()
+    for collection in ("opinions", "verifications"):
+        for change in changes.get(collection, {}).values():
+            for record in (change["before"], change["after"]):
+                if record is not None:
+                    record_targets.update(record["object_ids"])
     for model in (before, after):
         for scenario in model.scenarios:
-            if binding_ids.intersection(scenario.claim.binding_ids) or any(
-                component_ids.intersection(step.component_ids)
-                or binding_ids.intersection(step.binding_ids + step.claim.binding_ids)
-                for step in scenario.steps
+            if (
+                scenario.id in record_targets
+                or binding_ids.intersection(scenario.claim.binding_ids)
+                or any(
+                    step.id in record_targets
+                    or component_ids.intersection(step.component_ids)
+                    or binding_ids.intersection(step.binding_ids + step.claim.binding_ids)
+                    for step in scenario.steps
+                )
             ):
                 scenarios.add(scenario.id)
     return {

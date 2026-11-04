@@ -1,6 +1,7 @@
 import ast
 import contextlib
 import hashlib
+import json
 import logging
 import os
 import subprocess
@@ -18,6 +19,7 @@ from architecture_model.validation import digest, validate_facts
 from infra.logging_config import setup_logging
 from infra.monitoring.telemetry.service import telemetry
 from infra.repo_utils.ignore import RepoIgnoreManager
+from infra.utils import get_config
 from infra.vscode_constants import VSCODE_CONFIG
 from static_analyzer import StaticAnalyzer
 from static_analyzer.config import Language
@@ -39,6 +41,8 @@ def extract(repo: Path, project_id: str, node: Path, pyright: Path, tokei: Path)
         raise RuntimeError("Telemetry initialized before opt-out")
     VSCODE_CONFIG["lsp_servers"]["python"]["command"] = [str(node), str(pyright), "--stdio"]
     VSCODE_CONFIG["tools"]["tokei"]["command"] = [str(tokei), "-o", "json"]
+    python_command = get_config("lsp_servers")["python"]["command"]
+    tokei_command = get_config("tools")["tokei"]["command"]
     before, trees = _manifest(repo)
     if not before:
         raise ValueError("No Python source files in extraction scope")
@@ -122,9 +126,11 @@ def extract(repo: Path, project_id: str, node: Path, pyright: Path, tokei: Path)
         calls=sorted(calls, key=lambda call: (call.source, call.target)),
         tools={
             "engine": "StaticAnalyzer/PythonAdapter",
-            "node": str(node),
-            "pyright_js": str(pyright),
-            "tokei": str(tokei),
+            "node": python_command[0],
+            "pyright_js": python_command[1],
+            "tokei": tokei_command[0],
+            "python_command": json.dumps(python_command),
+            "tokei_command": json.dumps(tokei_command),
         },
         limitations=[
             "Static call records are not runtime execution or a complete dynamic call graph.",

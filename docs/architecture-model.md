@@ -54,6 +54,14 @@ sets `CODEBOARDING_TELEMETRY=false` and `DO_NOT_TRACK=1` **before native imports
 The normal model commands do not import StaticAnalyzer or telemetry, open an LSP,
 or read `.env`. No API key is needed.
 
+Explicit absolute commands take precedence over both installed tools and PATH
+discovery in the native resolvers. Their complete argument lists are preserved;
+default unresolved commands continue to use the existing discovery order. A failed
+explicit tool is an export failure, not a request to try another installed tool.
+Snapshot `tools.node`, `tools.pyright_js` and `tools.tokei` come from the resolved
+commands. `tools.python_command` and `tools.tokei_command` store their full argv
+arrays as JSON-encoded strings for auditing.
+
 The worker uses PythonAdapter discovery, AST syntax preflight and the real
 StaticAnalyzer/LSP pipeline with `skip_cache=True`. It closes clients in an exit
 stack even on extraction failure. It rejects mixed-language analysis roots, missing
@@ -169,6 +177,11 @@ IDs, and affected components/relations/scenarios; it does not trust the supplied
 summary. Binding changes propagate to referencing components and steps; component
 changes affect referencing scenarios. Relation changes also affect their endpoints'
 scenarios. No business correctness or automatic source impact inference is claimed.
+
+Creating, updating or deleting an opinion/verification also affects scenarios
+explicitly named in its `object_ids`, and scenarios that own referenced steps.
+Both previous and new targets are considered. Changing only the text/result still
+reports those scenarios. The same computed list is saved in the revision record.
 
 Operations have exactly `action`, `collection`, `id`, `value`:
 
