@@ -1,0 +1,2 @@
+def save(amount: int) -> str:
+    return f"order:{amount}"

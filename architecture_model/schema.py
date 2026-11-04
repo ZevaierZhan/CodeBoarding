@@ -1,0 +1,222 @@
+from pathlib import PurePosixPath
+from typing import Annotated, Literal
+
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+
+Text = Annotated[str, Field(min_length=1)]
+Digest = Annotated[str, Field(pattern=r"^[a-f0-9]{64}$")]
+
+
+class Strict(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+
+    @field_validator("schema_version", mode="before", check_fields=False)
+    @classmethod
+    def integer_version(cls, value: object) -> object:
+        if type(value) is not int:
+            raise ValueError("schema_version must be an integer")
+        return value
+
+
+class Location(Strict):
+    path: Text
+    symbol: str = ""
+    kind: Text
+    content_hash: Digest
+    start: Annotated[int, Field(ge=1)]
+    end: Annotated[int, Field(ge=1)]
+
+    @model_validator(mode="after")
+    def valid_location(self) -> "Location":
+        path = PurePosixPath(self.path)
+        if path.is_absolute() or ".." in path.parts or "\\" in self.path or ":" in self.path:
+            raise ValueError("path must be repository-relative POSIX")
+        if self.end < self.start:
+            raise ValueError("end precedes start")
+        return self
+
+
+class SourceVersion(Strict):
+    digest: Digest
+    git_commit: str = ""
+    files: dict[Text, Digest]
+    scope: Text
+
+
+class CallSite(Strict):
+    path: Text
+    line: Annotated[int, Field(ge=1)]
+    column: Annotated[int, Field(ge=0)] = 0
+
+
+class Call(Strict):
+    source: Text
+    target: Text
+    sites: list[CallSite]
+
+
+class Facts(Strict):
+    schema_version: Literal[1] = 1
+    id: Text
+    project_id: Text
+    source: SourceVersion
+    symbols: dict[Text, Location]
+    file_locations: dict[Text, Location] = Field(default_factory=dict)
+    calls: list[Call]
+    tools: dict[Text, Text]
+    limitations: list[Text]
+
+
+class HistoricalLocation(Strict):
+    snapshot_id: Text
+    source_version: Digest
+    location: Location
+    reason: Text
+
+
+class Binding(Strict):
+    id: Text
+    snapshot_id: Text
+    source_version: Digest
+    location: Location
+    status: Literal["current", "changed", "missing", "ambiguous"]
+    reason: str = ""
+    history: list[HistoricalLocation] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def review_reason(self) -> "Binding":
+        if self.status != "current" and not self.reason.strip():
+            raise ValueError("non-current binding requires a review reason")
+        return self
+
+
+class Claim(Strict):
+    kind: Literal["code_fact", "inference", "intent_hypothesis"]
+    explanation: Text
+    binding_ids: list[Text]
+    assumptions: list[Text] = Field(default_factory=list)
+    issues: list[Text] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def evidence(self) -> "Claim":
+        if not self.binding_ids:
+            raise ValueError("claim requires source evidence")
+        if self.kind != "code_fact" and not (self.assumptions or self.issues):
+            raise ValueError("inference requires explicit assumptions or uncertainty")
+        return self
+
+
+class Component(Strict):
+    id: Text
+    name: Text
+    responsibility: Text
+    rationale: Text
+    parent_id: str = ""
+    binding_ids: list[Text]
+    claim: Claim
+
+
+class Relation(Strict):
+    id: Text
+    source_id: Text
+    target_id: Text
+    meaning: Text
+    claim: Claim
+
+
+class Step(Strict):
+    id: Text
+    component_ids: list[Text]
+    binding_ids: list[Text]
+    claim: Claim
+
+
+class Transition(Strict):
+    source_id: Text
+    target_id: Text
+    kind: Literal["next", "branch", "return", "loop"]
+    condition: Text
+
+
+class Scenario(Strict):
+    id: Text
+    name: Text
+    entry_step_id: Text
+    steps: list[Step]
+    order: list[Text]
+    transitions: list[Transition]
+    claim: Claim
+
+
+class Opinion(Strict):
+    id: Text
+    author: Text
+    text: Text
+    stance: Literal["accept", "correct", "disagree", "question"]
+    object_ids: list[Text]
+
+
+class Verification(Strict):
+    id: Text
+    status: Literal["planned", "executed"]
+    object_ids: list[Text]
+    command: Text
+    environment: Text
+    inputs: Text
+    source_version: Digest
+    executor: str = ""
+    executed_at: str = ""
+    exit_code: int | None = None
+    result: str = ""
+
+    @model_validator(mode="after")
+    def execution_record(self) -> "Verification":
+        details = (self.executor, self.executed_at, self.result)
+        if self.status == "executed" and (self.exit_code is None or not all(details)):
+            raise ValueError("executed verification requires executor, time, exit_code and result")
+        if self.status == "planned" and (self.exit_code is not None or any(details)):
+            raise ValueError("planned verification cannot contain execution results")
+        return self
+
+
+class Revision(Strict):
+    revision: Annotated[int, Field(ge=0)]
+    author: Text
+    summary: Text
+    timestamp: Text
+    object_ids: list[Text]
+    scenario_ids: list[Text]
+
+
+class Project(Strict):
+    id: Text
+    name: Text
+    boundary: Text
+
+
+class Model(Strict):
+    schema_version: Literal[1] = 1
+    id: Text
+    project: Project
+    revision: Annotated[int, Field(ge=0)] = 0
+    facts: list[Facts] = Field(default_factory=list)
+    bindings: list[Binding] = Field(default_factory=list)
+    components: list[Component] = Field(default_factory=list)
+    relations: list[Relation] = Field(default_factory=list)
+    scenarios: list[Scenario] = Field(default_factory=list)
+    opinions: list[Opinion] = Field(default_factory=list)
+    verifications: list[Verification] = Field(default_factory=list)
+    revisions: list[Revision] = Field(default_factory=list)
+
+
+class Operation(Strict):
+    action: Literal["create", "update", "delete"]
+    collection: Literal["facts", "bindings", "components", "relations", "scenarios", "opinions", "verifications"]
+    id: Text
+    value: dict = Field(default_factory=dict)
+
+
+class Patch(Strict):
+    author: Text
+    summary: Text
+    operations: Annotated[list[Operation], Field(min_length=1)]

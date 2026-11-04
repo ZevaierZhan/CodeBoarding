@@ -283,6 +283,12 @@ If you want to improve CodeBoarding, open an [issue](https://github.com/CodeBoar
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup and testing guidance.
 
+## External Agent architecture models
+
+For a persistent model maintained by an external business-analysis Agent, see the
+[M1 model CLI](docs/architecture-model.md) and
+[continuous modeling example](examples/architecture_model/README.md).
+
 ## License
 
 The analysis engine and CLI in this repository are released under the [MIT License](LICENSE).

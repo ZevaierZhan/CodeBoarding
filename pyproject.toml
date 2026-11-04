@@ -78,6 +78,7 @@ all = [
 
 [tool.setuptools]
 packages = [
+    "architecture_model",
     "agents",
     "agents.llm_renderers",
     "agents.prompts",
@@ -114,6 +115,7 @@ static_analyzer = ["typescript_plugin/node_modules/codeboarding-workspace-source
 codeboarding = "codeboarding_cli.main:main"
 codeboarding-setup = "infra.install:main"
 codeboarding-render = "codeboarding_cli.render:main"
+codeboarding-model = "architecture_model.cli:main"
 
 [project.urls]
 Repository = "https://github.com/CodeBoarding/CodeBoarding"
