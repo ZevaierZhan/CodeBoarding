@@ -1,0 +1,56 @@
+{
+  "reviewed_head": "d87eaaa700b574c49fc6c88361f3b5043313543a",
+  "scope": "Cache path identity follow-up in existing Draft PR #7",
+  "cache_path_format": "repo-paths-v1",
+  "cache_tag": "v15",
+  "path_labels": [
+    "relative:",
+    "posix:",
+    "windows:"
+  ],
+  "runs": {
+    "analyzers": {
+      "passed": 1810,
+      "skipped": 48
+    },
+    "windows-path": {
+      "skipped": 4,
+      "passed": 92
+    },
+    "posix-path": {
+      "passed": 95,
+      "skipped": 1
+    },
+    "model-native": {
+      "passed": 220
+    }
+  },
+  "kotlin_skips_unchanged": true,
+  "kotlin_skip_count": 29,
+  "windows_other_skips": {
+    "existing_workspace_prerequisites": 15,
+    "real_posix_files_and_symlink": 4
+  },
+  "node_passed": 7,
+  "black": "passed",
+  "mypy": {
+    "passed": true,
+    "source_files": 382
+  },
+  "windows_python": "3.12.13",
+  "posix_python": "3.12.16",
+  "posix_environment": "WSL Debian; real POSIX files in /tmp; actual StaticAnalysisCache and project dependencies",
+  "posix_whole_suite_or_native_lsp_exports_run": false,
+  "model_and_coverage_config_diff": "",
+  "whole_suite": {
+    "rerun": false,
+    "historical_head": "d87eaaa700b574c49fc6c88361f3b5043313543a",
+    "historical_passed": 2882,
+    "historical_failed": 6,
+    "historical_skipped": 59,
+    "historical_coverage_percent": 39.11,
+    "gate_percent": 80,
+    "gate_status_on_new_head": "not_run",
+    "note": "The 6 failures were not re-investigated; historical coverage is not a new-head measurement."
+  }
+}

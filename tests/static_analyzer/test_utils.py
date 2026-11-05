@@ -1,5 +1,5 @@
 import unittest
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 from unittest.mock import patch
 
 from infra.utils import (
@@ -104,12 +104,12 @@ class TestToAbsolutePath(unittest.TestCase):
 
     def test_windows_backslash_separators_normalised(self):
         # A path written on Windows must resolve correctly on POSIX.
-        windows_relative = "src\\pkg\\module.py"
+        windows_relative = PureWindowsPath("src\\pkg\\module.py")
         result = to_absolute_path(windows_relative, self.repo_root)
         self.assertEqual(result, "/repo/root/src/pkg/module.py")
 
     def test_windows_backslash_nested(self):
-        windows_relative = "a\\b\\c\\file.py"
+        windows_relative = PureWindowsPath("a\\b\\c\\file.py")
         result = to_absolute_path(windows_relative, self.repo_root)
         self.assertEqual(result, "/repo/root/a/b/c/file.py")
 

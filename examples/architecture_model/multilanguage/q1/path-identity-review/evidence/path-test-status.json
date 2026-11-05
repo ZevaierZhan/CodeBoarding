@@ -1,0 +1,966 @@
+{
+  "windows-path": [
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_real_posix_backslash_and_nested_file_keep_distinct_cache_identities[a\\\\b.py-a/b.py]",
+      "outcome": "skipped",
+      "reason": "A literal backslash filename requires a POSIX filesystem"
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_real_posix_backslash_and_nested_file_keep_distinct_cache_identities[a\\\\b #%.py-a/b #%.py]",
+      "outcome": "skipped",
+      "reason": "A literal backslash filename requires a POSIX filesystem"
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_real_posix_backslash_and_nested_file_keep_distinct_cache_identities[C:\\\\b.py-C:/b.py]",
+      "outcome": "skipped",
+      "reason": "A literal backslash filename requires a POSIX filesystem"
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_pure_relative_path_dialects_are_explicit",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_relative_restore_rejects_root_escape[../escape.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_relative_restore_rejects_root_escape[a/../../escape.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_relative_restore_rejects_root_escape[path2]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_relative_restore_rejects_root_escape[path3]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_relative_restore_rejects_symlink_escape",
+      "outcome": "skipped",
+      "reason": "Real symlink containment runs on the POSIX filesystem"
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_cache_rejects_ambiguous_untagged_legacy_relative_backslash[a\\\\b.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_cache_rejects_ambiguous_untagged_legacy_relative_backslash[C:\\\\b.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_cache_rejects_ambiguous_untagged_legacy_relative_backslash[C:/b.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_cache_rejects_ambiguous_untagged_legacy_relative_backslash[//server/share/b.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_cache_reads_unambiguous_untagged_legacy_slash_path",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_cache_restore_stays_in_its_source_root",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_native_windows_relative_input_is_explicit_on_other_hosts",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_windows_absolute_dialects_preserve_identity[root0-file0]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_windows_absolute_dialects_preserve_identity[root1-file1]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_uri_encoding_remains_separate_from_cache_path_serialization",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_old_engine_tag_requires_reanalysis_even_without_sha_gate",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_versioned_cache_rejects_unknown_path_format",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_versioned_cache_rejects_relative_root_escape[../escape.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_versioned_cache_rejects_relative_root_escape[a/../../escape.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_windows_rejects_posix_cache_instead_of_aliasing_a_nested_file",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_native_absolute_cache_path_keeps_its_external_identity",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_foreign_absolute_cache_path_is_not_reinterpreted_locally",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_windows_cross_drive_and_unc_cache_paths_keep_their_absolute_dialect[path0]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_windows_cross_drive_and_unc_cache_paths_keep_their_absolute_dialect[path1]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_invalid_cache_path_labels_are_rejected[relative:/outside.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_invalid_cache_path_labels_are_rejected[unknown:src/a.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_invalid_cache_path_labels_are_rejected[src/a.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestUtils::test_cfg_generation_error",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestUtils::test_create_temp_repo_folder",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestUtils::test_get_config_missing_key_raises",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestUtils::test_get_config_returns_lsp_servers",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestUtils::test_remove_temp_repo_folder_outside_temp_raises_error",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestUtils::test_remove_temp_repo_folder_relative_path_outside_temp",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestUtils::test_remove_temp_repo_folder_success",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToRelativePath::test_absolute_path_under_root_becomes_relative",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToRelativePath::test_nested_path_preserved",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToRelativePath::test_path_outside_root_returned_unchanged",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToRelativePath::test_roundtrip_relative_then_absolute",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToRelativePath::test_uses_forward_slashes",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToAbsolutePath::test_already_absolute_path_returned_unchanged",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToAbsolutePath::test_relative_path_resolved_against_root",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToAbsolutePath::test_roundtrip_absolute_then_relative",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToAbsolutePath::test_windows_backslash_nested",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToAbsolutePath::test_windows_backslash_separators_normalised",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_portable_file_identity[/repo-/repo/src/a b.py-src/a b.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_portable_file_identity[/repo-/elsewhere/a.py-/elsewhere/a.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_portable_file_identity[C:/repo-C:/repo/src/a b.py-src/a b.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_portable_file_identity[C:/repo-c:/REPO/src/a.py-src/a.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_portable_file_identity[C:/repo-D:/repo/a.py-D:/repo/a.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_portable_file_identity[/repo-src/a.py-src/a.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_native_relative_roundtrip",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_foreign_windows_absolute_is_not_prefixed",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_relative_root_is_resolved_against_the_working_directory",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_a_sibling_with_the_same_prefix_is_outside_the_root",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_posix_absolute_names_keep_literal_backslashes",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_initialize_resolves_relative_roots",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_invalid_file_uri_is_not_a_local_identity[file:relative.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_invalid_file_uri_is_not_a_local_identity[file:///tmp/a.py?query]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_invalid_file_uri_is_not_a_local_identity[file:///tmp/a.py#fragment]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_unc_authority_is_preserved_on_windows",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCache::test_artifact_filenames",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCache::test_get_returns_none_for_corrupted_artifact",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCache::test_get_returns_none_for_missing_artifact",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCache::test_save_and_get_roundtrip",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCache::test_save_creates_artifact_directory",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCache::test_save_overwrites_existing_artifact",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCache::test_save_rejects_empty_source_sha",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheShaGate::test_missing_tag_with_expected_sha_returns_none",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheShaGate::test_missing_tag_without_expected_sha_returns_results",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheShaGate::test_sha_match_returns_results",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheShaGate::test_sha_mismatch_returns_none",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheShaGate::test_unknown_tag_version_treated_as_miss",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheLegacyMigration::test_legacy_fallback_disabled_under_sha_gate",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheLegacyMigration::test_reads_legacy_cache_when_new_artifact_absent",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheAtomicWrite::test_no_temp_files_after_save",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheReadTagSha::test_returns_none_when_tag_missing",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheReadTagSha::test_returns_sha_after_tagged_save",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheReadTagSha::test_unknown_version_returns_none",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestFromAnotherEngine::test_a_pkl_tagged_by_another_version_is_from_another_engine",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestFromAnotherEngine::test_a_tag_without_its_pkl_is_not",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestFromAnotherEngine::test_no_artifact_is_not",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestFromAnotherEngine::test_this_builds_own_artifact_is_not",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestLoadWithSha::test_does_not_gate_on_caller_supplied_sha",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestLoadWithSha::test_returns_none_when_pkl_absent",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestLoadWithSha::test_returns_none_when_tag_absent",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestLoadWithSha::test_returns_results_and_sha_when_both_present",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestCopyCacheFiles::test_copied_pkl_is_loadable",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestCopyCacheFiles::test_copies_both_files_and_returns_true",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestCopyCacheFiles::test_missing_pair_returns_false_without_changes",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestCopyCacheFiles::test_overwrites_existing_destination",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestCopyCacheFiles::test_partial_source_refuses_copy",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestCopyCacheFiles::test_sha_copy_failure_removes_destination_pair",
+      "outcome": "passed",
+      "reason": ""
+    }
+  ],
+  "posix-path": [
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_real_posix_backslash_and_nested_file_keep_distinct_cache_identities[a\\\\b.py-a/b.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_real_posix_backslash_and_nested_file_keep_distinct_cache_identities[a\\\\b #%.py-a/b #%.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_real_posix_backslash_and_nested_file_keep_distinct_cache_identities[C:\\\\b.py-C:/b.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_pure_relative_path_dialects_are_explicit",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_relative_restore_rejects_root_escape[../escape.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_relative_restore_rejects_root_escape[a/../../escape.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_relative_restore_rejects_root_escape[path2]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_relative_restore_rejects_root_escape[path3]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_relative_restore_rejects_symlink_escape",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_cache_rejects_ambiguous_untagged_legacy_relative_backslash[a\\\\b.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_cache_rejects_ambiguous_untagged_legacy_relative_backslash[C:\\\\b.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_cache_rejects_ambiguous_untagged_legacy_relative_backslash[C:/b.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_cache_rejects_ambiguous_untagged_legacy_relative_backslash[//server/share/b.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_cache_reads_unambiguous_untagged_legacy_slash_path",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_cache_restore_stays_in_its_source_root",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_native_windows_relative_input_is_explicit_on_other_hosts",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_windows_absolute_dialects_preserve_identity[root0-file0]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_windows_absolute_dialects_preserve_identity[root1-file1]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_uri_encoding_remains_separate_from_cache_path_serialization",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_old_engine_tag_requires_reanalysis_even_without_sha_gate",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_versioned_cache_rejects_unknown_path_format",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_versioned_cache_rejects_relative_root_escape[../escape.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_versioned_cache_rejects_relative_root_escape[a/../../escape.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_windows_rejects_posix_cache_instead_of_aliasing_a_nested_file",
+      "outcome": "skipped",
+      "reason": "Only Windows cannot represent a literal POSIX backslash filename"
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_native_absolute_cache_path_keeps_its_external_identity",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_foreign_absolute_cache_path_is_not_reinterpreted_locally",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_windows_cross_drive_and_unc_cache_paths_keep_their_absolute_dialect[path0]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_windows_cross_drive_and_unc_cache_paths_keep_their_absolute_dialect[path1]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_invalid_cache_path_labels_are_rejected[relative:/outside.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_invalid_cache_path_labels_are_rejected[unknown:src/a.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_cache_path_identity.py::test_invalid_cache_path_labels_are_rejected[src/a.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestUtils::test_cfg_generation_error",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestUtils::test_create_temp_repo_folder",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestUtils::test_get_config_missing_key_raises",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestUtils::test_get_config_returns_lsp_servers",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestUtils::test_remove_temp_repo_folder_outside_temp_raises_error",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestUtils::test_remove_temp_repo_folder_relative_path_outside_temp",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestUtils::test_remove_temp_repo_folder_success",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToRelativePath::test_absolute_path_under_root_becomes_relative",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToRelativePath::test_nested_path_preserved",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToRelativePath::test_path_outside_root_returned_unchanged",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToRelativePath::test_roundtrip_relative_then_absolute",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToRelativePath::test_uses_forward_slashes",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToAbsolutePath::test_already_absolute_path_returned_unchanged",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToAbsolutePath::test_relative_path_resolved_against_root",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToAbsolutePath::test_roundtrip_absolute_then_relative",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToAbsolutePath::test_windows_backslash_nested",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_utils.py::TestToAbsolutePath::test_windows_backslash_separators_normalised",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_portable_file_identity[/repo-/repo/src/a b.py-src/a b.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_portable_file_identity[/repo-/elsewhere/a.py-/elsewhere/a.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_portable_file_identity[C:/repo-C:/repo/src/a b.py-src/a b.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_portable_file_identity[C:/repo-c:/REPO/src/a.py-src/a.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_portable_file_identity[C:/repo-D:/repo/a.py-D:/repo/a.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_portable_file_identity[/repo-src/a.py-src/a.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_native_relative_roundtrip",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_foreign_windows_absolute_is_not_prefixed",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_relative_root_is_resolved_against_the_working_directory",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_a_sibling_with_the_same_prefix_is_outside_the_root",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_posix_absolute_names_keep_literal_backslashes",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_initialize_resolves_relative_roots",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_invalid_file_uri_is_not_a_local_identity[file:relative.py]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_invalid_file_uri_is_not_a_local_identity[file:///tmp/a.py?query]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_invalid_file_uri_is_not_a_local_identity[file:///tmp/a.py#fragment]",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_path_protocol.py::test_unc_authority_is_preserved_on_windows",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCache::test_artifact_filenames",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCache::test_get_returns_none_for_corrupted_artifact",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCache::test_get_returns_none_for_missing_artifact",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCache::test_save_and_get_roundtrip",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCache::test_save_creates_artifact_directory",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCache::test_save_overwrites_existing_artifact",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCache::test_save_rejects_empty_source_sha",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheShaGate::test_missing_tag_with_expected_sha_returns_none",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheShaGate::test_missing_tag_without_expected_sha_returns_results",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheShaGate::test_sha_match_returns_results",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheShaGate::test_sha_mismatch_returns_none",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheShaGate::test_unknown_tag_version_treated_as_miss",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheLegacyMigration::test_legacy_fallback_disabled_under_sha_gate",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheLegacyMigration::test_reads_legacy_cache_when_new_artifact_absent",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheAtomicWrite::test_no_temp_files_after_save",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheReadTagSha::test_returns_none_when_tag_missing",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheReadTagSha::test_returns_sha_after_tagged_save",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestStaticAnalysisCacheReadTagSha::test_unknown_version_returns_none",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestFromAnotherEngine::test_a_pkl_tagged_by_another_version_is_from_another_engine",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestFromAnotherEngine::test_a_tag_without_its_pkl_is_not",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestFromAnotherEngine::test_no_artifact_is_not",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestFromAnotherEngine::test_this_builds_own_artifact_is_not",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestLoadWithSha::test_does_not_gate_on_caller_supplied_sha",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestLoadWithSha::test_returns_none_when_pkl_absent",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestLoadWithSha::test_returns_none_when_tag_absent",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestLoadWithSha::test_returns_results_and_sha_when_both_present",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestCopyCacheFiles::test_copied_pkl_is_loadable",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestCopyCacheFiles::test_copies_both_files_and_returns_true",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestCopyCacheFiles::test_missing_pair_returns_false_without_changes",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestCopyCacheFiles::test_overwrites_existing_destination",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestCopyCacheFiles::test_partial_source_refuses_copy",
+      "outcome": "passed",
+      "reason": ""
+    },
+    {
+      "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestCopyCacheFiles::test_sha_copy_failure_removes_destination_pair",
+      "outcome": "passed",
+      "reason": ""
+    }
+  ]
+}

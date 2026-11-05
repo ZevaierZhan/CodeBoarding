@@ -1,5 +1,7 @@
 # Q1 非 Kotlin 静态分析质量基线
 
+> 本页为 d87eaaa 的初次验收记录；后续缓存路径身份修复的最新格式、兼容策略和验证结果见 [PR #7 路径往返修复](path-identity-review/README.md)。
+
 本轮从 fork main `cca03766` 创建 `qa/non-kotlin-static-baseline`。该 main 已包含 M5 merge `7d38098c3ae975ced36ad67887355efd4fd34a05` 及后续匿名回调身份修复。没有修改 M5 PR，没有向 upstream 推送，也不自动合并。
 
 ## 结果与口径
