@@ -1,6 +1,7 @@
 """Workspace members as the package manager declares them, and the tsserver plugin that resolves calls into them."""
 
 import json
+import os
 import subprocess
 from pathlib import Path
 
@@ -222,16 +223,18 @@ def _definition(repo: Path, file: Path, name: str, configure: bool = True) -> Pa
         },
     ]
     numbered = [{"seq": seq, "type": "request", **request} for seq, request in enumerate(requests, 1)]
-    output = subprocess.run(
+    result = subprocess.run(
         [str(NODE), str(TSSERVER), "--disableAutomaticTypingAcquisition"]
         + ["--globalPlugins", PLUGIN_NAME, "--pluginProbeLocations", str(PLUGIN_LOCATION)],
         input="".join(json.dumps(request) + "\n" for request in numbered),
         capture_output=True,
         text=True,
-        env={"PATH": str(Path(str(NODE)).parent)},
+        env={key: value for key, value in os.environ.items() if key.upper() in {"SYSTEMROOT", "WINDIR", "TEMP", "TMP"}}
+        | {"PATH": str(Path(str(NODE)).parent)},
         timeout=60,
-    ).stdout
-    answers = [json.loads(text) for text in output.splitlines() if text.startswith("{")]
+    )
+    assert result.returncode == 0, result.stderr
+    answers = [json.loads(text) for text in result.stdout.splitlines() if text.startswith("{")]
     answer = next(message for message in answers if message.get("request_seq") == numbered[-1]["seq"])
     files = {Path(location["file"]) for location in answer.get("body") or []} - {file}
     return files.pop() if files else None

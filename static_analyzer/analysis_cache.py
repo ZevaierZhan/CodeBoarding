@@ -336,13 +336,13 @@ def copy_cache_files(src_dir: Path, dest_dir: Path) -> bool:
         with FileLock(dest_dir / STATIC_ANALYSIS_LOCK, timeout=30):
             try:
                 _atomic_copy(src_pkl, dest_pkl)
-            except OSError as e:
-                logger.warning("Failed to copy %s into %s: %s", STATIC_ANALYSIS_PKL, dest_dir, e)
+            except OSError:
+                logger.exception("Failed to copy %s into %s", STATIC_ANALYSIS_PKL, dest_dir)
                 return False
             try:
                 _atomic_copy(src_sha, dest_sha)
-            except OSError as e:
-                logger.warning("Failed to copy %s into %s: %s", STATIC_ANALYSIS_SHA, dest_dir, e)
+            except OSError:
+                logger.exception("Failed to copy %s into %s", STATIC_ANALYSIS_SHA, dest_dir)
                 dest_pkl.unlink(missing_ok=True)
                 dest_sha.unlink(missing_ok=True)
                 return False
@@ -353,13 +353,10 @@ def _atomic_copy(src: Path, dest: Path) -> None:
     """Copy *src* into place at *dest* via tmp+rename so readers see all-or-nothing."""
     fd, tmp_name = tempfile.mkstemp(prefix=f".{dest.name}.", dir=dest.parent)
     tmp_path = Path(tmp_name)
-    os.close(fd)
     try:
-        shutil.copy2(src, tmp_path)
-        # fsync the freshly-copied bytes before the rename commits, so a crash
-        # between rename and writeback can't leave the directory entry pointing
-        # at a not-yet-durable inode.
-        with open(tmp_path, "rb") as f:
+        # Windows requires a writable descriptor for fsync; keep mkstemp's descriptor through copy2.
+        with os.fdopen(fd, "wb") as f:
+            shutil.copy2(src, tmp_path)
             os.fsync(f.fileno())
         tmp_path.replace(dest)
     except Exception:

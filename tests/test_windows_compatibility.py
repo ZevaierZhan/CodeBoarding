@@ -13,6 +13,7 @@ IS_WINDOWS = platform.system() == "Windows"
 
 
 class TestFileURIParsing(unittest.TestCase):
+    @patch("static_analyzer.engine.utils._IS_WINDOWS", False)
     def test_unix_file_uri(self):
         self.assertEqual(
             uri_to_path("file:///home/user/project/file.py"),

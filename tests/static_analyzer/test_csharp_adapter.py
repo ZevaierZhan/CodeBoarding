@@ -463,8 +463,15 @@ class TestLspEnv:
         bin_dir = tmp_path / "bin"
         bin_dir.mkdir()
         dotnet_bin = bin_dir / "dotnet"
-        dotnet_bin.symlink_to(libexec / "dotnet")
+        dotnet_bin.touch()
         (libexec / "dotnet").touch()
+        (libexec / "dotnet.exe").touch()
+        resolve = Path.resolve
+        monkeypatch.setattr(
+            Path,
+            "resolve",
+            lambda path, **kwargs: libexec / "dotnet" if path == dotnet_bin else resolve(path, **kwargs),
+        )
         monkeypatch.setattr("shutil.which", lambda _: str(dotnet_bin))
         adapter = CSharpAdapter()
         env = adapter.get_lsp_env()
@@ -633,10 +640,11 @@ class TestPrepareProject:
         self.failing: set[str] = set()
 
         def fake_run(cmd, **kwargs):
-            self.commands.append(cmd)
+            portable = [*cmd[:2], Path(cmd[2]).as_posix(), *cmd[3:]]
+            self.commands.append(portable)
             self.envs.append(kwargs.get("env", {}))
             self.cwd = kwargs.get("cwd")
-            failed = cmd[2] in self.failing
+            failed = portable[2] in self.failing
             return MagicMock(returncode=1 if failed else 0, stdout="", stderr="NETSDK1147 workload missing")
 
         monkeypatch.setattr("static_analyzer.engine.adapters.csharp_adapter.subprocess.run", fake_run)

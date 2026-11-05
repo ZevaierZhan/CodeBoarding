@@ -116,7 +116,7 @@ class LSPClient:
         commands: list[dict] | None = None,
     ) -> None:
         self._command = command
-        self._project_root = project_root
+        self._project_root = project_root.resolve()
         self._init_options = init_options or {}
         self._default_timeout = default_timeout
         # Bounds ``initialize`` only, which some servers hold until the project's build is imported.
@@ -129,7 +129,7 @@ class LSPClient:
         # How this server's internal errors read; every one is a failure by default.
         self._error_verdict = error_verdict
         # Announced in place of the project folder, for a server handed a workspace described apart from it.
-        self._workspace_folders = workspace_folders or []
+        self._workspace_folders = [folder.resolve() for folder in workspace_folders or []]
         self._commands = commands or []
         self._process: subprocess.Popen | None = None  # type: ignore[type-arg]
         self._stdout_fd: int | None = None

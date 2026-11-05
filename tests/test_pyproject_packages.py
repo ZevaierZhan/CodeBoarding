@@ -7,15 +7,13 @@ REPO_ROOT = Path(__file__).parent.parent
 
 def _find_packages_on_disk() -> set[str]:
     """Return all Python packages (directories with __init__.py) under the repo root."""
-    exclude_prefixes = {".venv", "tests", "repos", "build", "dist"}
+    exclude_prefixes = {".venv", "tests", "repos", "build", "dist", "temp", "node_modules", "servers"}
     packages = set()
-    for init_file in REPO_ROOT.rglob("__init__.py"):
-        parts = init_file.relative_to(REPO_ROOT).parts
-        # Skip excluded top-level directories
-        if parts[0] in exclude_prefixes or any(part.startswith(".") for part in parts):
+    for directory, subdirs, files in REPO_ROOT.walk():
+        subdirs[:] = [name for name in subdirs if name not in exclude_prefixes and not name.startswith(".")]
+        if "__init__.py" not in files:
             continue
-        # The package path is everything except the __init__.py filename
-        pkg = ".".join(parts[:-1])
+        pkg = ".".join(directory.relative_to(REPO_ROOT).parts)
         packages.add(pkg)
     return packages
 
@@ -45,9 +43,9 @@ class TestPyprojectPackages(unittest.TestCase):
         )
 
     def test_no_ghost_packages_in_pyproject(self):
-        on_disk = _find_packages_on_disk()
         declared = _declared_packages()
-        ghost = declared - on_disk
+        # Explicit namespace packages such as viewer_assets need no __init__.py.
+        ghost = {name for name in declared if not REPO_ROOT.joinpath(*name.split(".")).is_dir()}
         self.assertEqual(
             ghost,
             set(),

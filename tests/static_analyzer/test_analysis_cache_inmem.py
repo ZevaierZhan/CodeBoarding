@@ -239,7 +239,7 @@ def _declared(index: GraphIndex, definition: dict) -> Node | None:
 class TestGraphDeclarations(unittest.TestCase):
     def test_a_link_result_names_the_declaration_its_whole_range_does_not(self) -> None:
         """``linkSupport`` is what makes this exact: a bare Location starts at ``function``."""
-        file_path = Path("/repo/unchanged.php")
+        file_path = Path("/repo/unchanged.php").resolve()
         call_graph = CallGraph(language="php")
         call_graph.add_node(
             Node(
@@ -266,7 +266,7 @@ class TestGraphDeclarations(unittest.TestCase):
         self.assertIsNone(_declared(index, whole_declaration))
 
     def test_a_position_before_every_declaration_on_the_line_names_none_of_them(self) -> None:
-        file_path = Path("/repo/pkg/target.php")
+        file_path = Path("/repo/pkg/target.php").resolve()
         call_graph = CallGraph(language="php")
         call_graph.add_node(
             Node(
@@ -296,7 +296,7 @@ class TestGraphDeclarations(unittest.TestCase):
         self.assertIsNone(_declared(GraphIndex(call_graph), definition))
 
     def test_an_implementing_constructor_reaches_its_class(self) -> None:
-        file_path = Path("/repo/pkg/target.php")
+        file_path = Path("/repo/pkg/target.php").resolve()
         call_graph = CallGraph(language="php")
         call_graph.add_node(
             Node(
@@ -331,7 +331,7 @@ class TestGraphDeclarations(unittest.TestCase):
         )
 
     def test_an_implementing_method_does_not_reach_its_class(self) -> None:
-        file_path = Path("/repo/pkg/converter.py")
+        file_path = Path("/repo/pkg/converter.py").resolve()
         call_graph = CallGraph(language="python")
         call_graph.add_node(
             Node(

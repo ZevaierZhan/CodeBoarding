@@ -11,8 +11,8 @@ from static_analyzer.engine.source_inspector import SourceInspector
 from static_analyzer.engine.symbol_table import SymbolTable
 
 # Use absolute path so file_path.as_uri() works and uri_to_path() round-trips
-MOD_PATH = Path("/tmp/test_project/mod.py")
-MOD_PHP_PATH = Path("/tmp/test_project/mod.php")
+MOD_PATH = Path("/tmp/test_project/mod.py").resolve()
+MOD_PHP_PATH = Path("/tmp/test_project/mod.php").resolve()
 
 
 def _sym(
@@ -396,7 +396,7 @@ class TestResolveTypeHierarchyItem:
 class TestResolveBasesByDefinition:
     """Servers without typeHierarchy whose bases are resolved where the header names them (Kotlin)."""
 
-    KT = Path("/tmp/test_project/Zoo.kt")
+    KT = Path("/tmp/test_project/Zoo.kt").resolve()
 
     def _adapter(self) -> MagicMock:
         adapter = _make_adapter()
@@ -406,7 +406,7 @@ class TestResolveBasesByDefinition:
     def test_a_base_resolves_to_the_declaration_its_definition_names(self):
         adapter = self._adapter()
         animal = _sym("Animal", "zoo.Animal", NodeType.CLASS, self.KT, start_line=0, start_char=6)
-        other_animal = _sym("Animal", "farm.Animal", NodeType.CLASS, Path("/tmp/test_project/Farm.kt"), 0, 6)
+        other_animal = _sym("Animal", "farm.Animal", NodeType.CLASS, Path("/tmp/test_project/Farm.kt").resolve(), 0, 6)
         dog = _sym("Dog", "zoo.Dog", NodeType.CLASS, self.KT, start_line=2, start_char=6)
         st = _setup_symbol_table(adapter, [animal, other_animal, dog])
 

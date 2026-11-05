@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from agents.agent_responses import AnalysisInsights, RelationCallSite, RelationEdge, SourceCodeReference
+from infra.repo_utils.path_utils import to_relative_path
 from static_analyzer.analysis_result import StaticAnalysisResults
 from static_analyzer.config import LANGUAGE_EXTENSIONS, Language
 from static_analyzer.internal_references import qualified_symbol_parts
@@ -322,19 +323,19 @@ class StaticReferenceResolver:
         """Convert all reference file paths to relative paths."""
         for component in analysis.components:
             for reference in component.key_entities:
-                if reference.reference_file and reference.reference_file.startswith(str(self.repo_dir)):
-                    reference.reference_file = os.path.relpath(reference.reference_file, self.repo_dir)
+                if reference.reference_file:
+                    reference.reference_file = to_relative_path(reference.reference_file, self.repo_dir)
         for relation in analysis.components_relations:
             for edge in relation.key_edges:
-                if edge.source.reference_file and edge.source.reference_file.startswith(str(self.repo_dir)):
-                    edge.source.reference_file = os.path.relpath(edge.source.reference_file, self.repo_dir)
-                if edge.target.reference_file and edge.target.reference_file.startswith(str(self.repo_dir)):
-                    edge.target.reference_file = os.path.relpath(edge.target.reference_file, self.repo_dir)
+                if edge.source.reference_file:
+                    edge.source.reference_file = to_relative_path(edge.source.reference_file, self.repo_dir)
+                if edge.target.reference_file:
+                    edge.target.reference_file = to_relative_path(edge.target.reference_file, self.repo_dir)
             for edge in relation.all_edges:
-                if edge.source.reference_file and edge.source.reference_file.startswith(str(self.repo_dir)):
-                    edge.source.reference_file = os.path.relpath(edge.source.reference_file, self.repo_dir)
-                if edge.target.reference_file and edge.target.reference_file.startswith(str(self.repo_dir)):
-                    edge.target.reference_file = os.path.relpath(edge.target.reference_file, self.repo_dir)
+                if edge.source.reference_file:
+                    edge.source.reference_file = to_relative_path(edge.source.reference_file, self.repo_dir)
+                if edge.target.reference_file:
+                    edge.target.reference_file = to_relative_path(edge.target.reference_file, self.repo_dir)
         return analysis
 
     @staticmethod
@@ -425,7 +426,7 @@ class StaticReferenceResolver:
                 for end in range(len(qname_segments), 0, -1):
                     prefix_as_path = os.sep.join(qname_segments[:end])
                     if candidate_stem.endswith(prefix_as_path):
-                        reference.reference_file = str(candidate_full)
+                        reference.reference_file = str(Path(candidate_full))
                         logger.info(
                             f"[Reference Resolution] File candidate matched for {reference.qualified_name} in {lang} at {reference.reference_file}"
                         )

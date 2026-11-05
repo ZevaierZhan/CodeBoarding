@@ -82,7 +82,7 @@ class TestAttributionSymbol(unittest.TestCase):
         self.assertEqual(self.st.attribution_symbol(callback).qualified_name, outer.qualified_name)
 
     def _load(self, symbols):
-        self.st.file_symbols["src/github.ts"] = symbols
+        self.st.file_symbols[str(symbols[0].file_path)] = symbols
 
 
 if __name__ == "__main__":

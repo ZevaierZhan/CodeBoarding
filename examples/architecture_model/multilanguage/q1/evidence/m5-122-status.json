@@ -1,0 +1,1466 @@
+[
+  {
+    "nodeid": "tests/agents/test_llm_renderers.py::TestRenderScopeContext::test_includes_all_group_files_boundary_reasons_and_directed_calls",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: Lists differ: [{'changed': False, 'grouping_reason': 'matc[89 chars]py'}] != [{'path': 'client.py', 'grouping_reason': 'm[76 chars]lse}]\n\nFirst differing element 0:\n{'changed': False, 'grouping_reason': 'matc[40 chars].py'}\n{'path': 'client.py', 'grouping_reason': 'm[33 chars]True}\n\n- [{'changed': False,\n?              ^^^^\n\n+ [{'changed': True,\n?              ^^^\n\n    'grouping_reason': 'matches client terms',\n-   'path': '/repo/client.py'},\n?            ------\n\n+   'path': 'client.py'},\n-  {'changed': False, 'path': '/repo/payload.py'}]\n?                              ------\n\n+  {'changed': False, 'path': 'payload.py'}]"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/agents/test_llm_renderers.py::TestScopeContextSize::test_a_full_run_sends_compact_json_without_repeated_defaults",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: {'path': '/repo/a0.py'} != {'path': 'a0.py'}\n- {'path': '/repo/a0.py'}\n?           ------\n\n+ {'path': 'a0.py'}"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/agents/test_llm_renderers.py::TestScopeContextSize::test_further_over_keeps_one_example_then_bare_paths",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: '/repo/a0.py' != 'a0.py'\n- /repo/a0.py\n+ a0.py"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/agents/test_llm_renderers.py::TestScopeContextSize::test_over_budget_drops_bordering_files_first",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: {'path': '/repo/a0.py'} != {'path': 'a0.py'}\n- {'path': '/repo/a0.py'}\n?           ------\n\n+ {'path': 'a0.py'}"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/codeboarding_cli/test_cli_parser.py::test_main_renders_after_any_successful_analysis[codeboarding_cli.main.full_analysis.run_from_args-command_args0]",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: expected call not found.\nExpected: render_output('rst', analysis_path=WindowsPath('/tmp/repo/.codeboarding/analysis.json'), repo_name='repo', output_dir=WindowsPath('/tmp/repo/.codeboarding'))\n  Actual: render_output('rst', analysis_path=WindowsPath('F:/tmp/repo/.codeboarding/analysis.json'), repo_name='repo', output_dir=WindowsPath('F:/tmp/repo/.codeboarding'))"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/codeboarding_cli/test_cli_parser.py::test_main_renders_after_any_successful_analysis[codeboarding_cli.main.incremental_analysis.run_from_args-command_args1]",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: expected call not found.\nExpected: render_output('rst', analysis_path=WindowsPath('/tmp/repo/.codeboarding/analysis.json'), repo_name='repo', output_dir=WindowsPath('/tmp/repo/.codeboarding'))\n  Actual: render_output('rst', analysis_path=WindowsPath('F:/tmp/repo/.codeboarding/analysis.json'), repo_name='repo', output_dir=WindowsPath('F:/tmp/repo/.codeboarding'))"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/codeboarding_cli/test_cli_parser.py::test_main_renders_after_any_successful_analysis[codeboarding_cli.main.partial_analysis.run_from_args-command_args2]",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: expected call not found.\nExpected: render_output('rst', analysis_path=WindowsPath('/tmp/repo/.codeboarding/analysis.json'), repo_name='repo', output_dir=WindowsPath('/tmp/repo/.codeboarding'))\n  Actual: render_output('rst', analysis_path=WindowsPath('F:/tmp/repo/.codeboarding/analysis.json'), repo_name='repo', output_dir=WindowsPath('F:/tmp/repo/.codeboarding'))"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/diagram_analysis/test_diagram_analysis.py::TestAnalysisJsonConversion::test_key_entity_reference_file_is_relativized",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: Lists differ: ['/tmp/some/repo/pkg/mod.py', 'pkg/other.py'] != ['pkg/mod.py', 'pkg/other.py']\n\nFirst differing element 0:\n'/tmp/some/repo/pkg/mod.py'\n'pkg/mod.py'\n\n- ['/tmp/some/repo/pkg/mod.py', 'pkg/other.py']\n?   ---------------\n\n+ ['pkg/mod.py', 'pkg/other.py']"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/diagram_analysis/test_reference_resolve_real_refs.py::TestResolveFromQualifiedNameOnly::test_exact_match_resolves",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: 'core\\\\registry.py' != 'core/registry.py'\n- core\\registry.py\n?     ^\n+ core/registry.py\n?     ^"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/diagram_analysis/test_reference_resolve_real_refs.py::TestResolveFromQualifiedNameOnly::test_loose_match_resolves",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: 'diagram_analysis\\\\scope_assembly.py' != 'diagram_analysis/scope_assembly.py'\n- diagram_analysis\\scope_assembly.py\n?                 ^\n+ diagram_analysis/scope_assembly.py\n?                 ^"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/diagram_analysis/test_reference_resolver.py::TestStaticReferenceResolver::test_fix_source_code_reference_lines_resolves_relation_edges_and_call_sites",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: 'module\\\\file.py' != 'module/file.py'\n- module\\file.py\n?       ^\n+ module/file.py\n?       ^"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/diagram_analysis/test_reference_resolver.py::TestStaticReferenceResolver::test_resolve_reference_uses_matching_file_candidate",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: 'E:\\\\Temp\\\\tmph2ps_4nf\\\\module/file.py' != 'E:\\\\Temp\\\\tmph2ps_4nf\\\\module\\\\file.py'\n- E:\\Temp\\tmph2ps_4nf\\module/file.py\n?                           ^\n+ E:\\Temp\\tmph2ps_4nf\\module\\file.py\n?                           ^"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/diagram_analysis/test_scope_assembly.py::TestScopeAssembler::test_fallback_descriptions_name_files_relative_to_the_repository",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: 'Owns 1 symbols across 1 files: /repo/src/1.py.' != 'Owns 1 symbols across 1 files: src/1.py.'\n- Owns 1 symbols across 1 files: /repo/src/1.py.\n?                                ------\n+ Owns 1 symbols across 1 files: src/1.py."
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/diagram_analysis/test_scope_assembly.py::TestScopeAssembler::test_populates_only_authoritative_members_across_languages",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: Lists differ: ['/repo/main.py'] != ['main.py']\n\nFirst differing element 0:\n'/repo/main.py'\n'main.py'\n\n- ['/repo/main.py']\n?   ------\n\n+ ['main.py']"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/infra/test_tool_registry.py::TestToolRegistry::test_install_node_tools_prefers_embedded_npm",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: 0 not greater than or equal to 2"
+    },
+    "final": {
+      "outcome": "failed",
+      "reason": "AssertionError: 0 not greater than or equal to 2"
+    }
+  },
+  {
+    "nodeid": "tests/infra/test_tool_registry.py::TestInstallEmbeddedNode::test_rejects_non_executable_node_binary",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: True is not false"
+    },
+    "final": {
+      "outcome": "failed",
+      "reason": "AssertionError: True is not false"
+    }
+  },
+  {
+    "nodeid": "tests/infra/test_tool_registry.py::TestInstallEmbeddedNodeEndToEnd::test_full_install_flow_with_mocked_download",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: False is not true : install_embedded_node must succeed end-to-end"
+    },
+    "final": {
+      "outcome": "failed",
+      "reason": "AssertionError: False is not true : install_embedded_node must succeed end-to-end"
+    }
+  },
+  {
+    "nodeid": "tests/infra/test_tool_registry.py::TestInstallNativeToolsCompressed::test_gz_asset_is_decompressed_and_chmod_set",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: 0 != 73"
+    },
+    "final": {
+      "outcome": "failed",
+      "reason": "AssertionError: 0 != 73"
+    }
+  },
+  {
+    "nodeid": "tests/infra/test_tool_registry_java.py::TestFindJava21OrLater::test_java_home_too_old_falls_through_to_scan",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: WindowsPath('D:/Java/jdk-21.0.8') != WindowsPath('/opt/jvm/jdk-21')"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/infra/test_tool_registry_java.py::TestFindJava21OrLater::test_java_home_wins_over_newer_jdk_on_disk",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: WindowsPath('D:/Java/jdk-21.0.8') != WindowsPath('E:/Temp/tmp9kyxbjp6/jdk-21')"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/names/test_end_to_end.py::test_a_two_language_repo_drafts_replays_and_survives_json",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: assert (('\\\\', 'repo', 'backend'),) == (('backend',),)\n  \n  At index 0 diff: ('\\\\', 'repo', 'backend') != ('backend',)\n  Use -v to get more diff"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestCopyCacheFiles::test_copied_pkl_is_loadable",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: unexpectedly None"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestCopyCacheFiles::test_copies_both_files_and_returns_true",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: False is not true"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestCopyCacheFiles::test_overwrites_existing_destination",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: False is not true"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_analysis_cache.py::TestCopyCacheFiles::test_sha_copy_failure_removes_destination_pair",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: True is not false"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_analysis_cache_inmem.py::TestGraphDeclarations::test_a_link_result_names_the_declaration_its_whole_range_does_not",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_analysis_cache_inmem.py::TestGraphDeclarations::test_a_position_before_every_declaration_on_the_line_names_none_of_them",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_analysis_cache_inmem.py::TestGraphDeclarations::test_an_implementing_constructor_reaches_its_class",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_analysis_cache_inmem.py::TestGraphDeclarations::test_an_implementing_method_does_not_reach_its_class",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_attribution_symbol.py::TestAttributionSymbol::test_a_callback_credits_its_enclosing_function",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: 'src.github.listReviewComments.raw.ghPaginate() callback' != 'src.github.listReviewComments'\n- src.github.listReviewComments.raw.ghPaginate() callback\n+ src.github.listReviewComments"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_attribution_symbol.py::TestAttributionSymbol::test_a_callback_inside_a_callback_reaches_the_named_function",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: 'src.github.listRepos.then() callback.map() callback' != 'src.github.listRepos'\n- src.github.listRepos.then() callback.map() callback\n+ src.github.listRepos"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_attribution_symbol.py::TestAttributionSymbol::test_a_module_level_wrapper_is_used_when_nothing_else_encloses",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: 'src.github.raw.ghPaginate() callback' != 'src.github.raw'\n- src.github.raw.ghPaginate() callback\n+ src.github.raw"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_attribution_symbol.py::TestAttributionSymbol::test_a_named_function_still_beats_a_promoted_wrapper",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: 'src.github.listRepos.raw.map() callback' != 'src.github.listRepos'\n- src.github.listRepos.raw.map() callback\n+ src.github.listRepos"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_attribution_symbol.py::TestAttributionSymbol::test_a_promoted_variable_wrapper_is_stepped_past",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: 'src.github.listReviewComments.raw' != 'src.github.listReviewComments'\n- src.github.listReviewComments.raw\n?                              ----\n+ src.github.listReviewComments"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_attribution_symbol.py::TestAttributionSymbol::test_the_innermost_named_enclosure_wins",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: 'src.github.listReviewComments.map() callback' != 'src.github.listReviewComments'\n- src.github.listReviewComments.map() callback\n?                              ---------------\n+ src.github.listReviewComments"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_clustering_service.py::TestFullHierarchy::test_the_default_grouper_folds_along_the_graph",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: ('src', 'Tiny.API') not found in (('\\\\', 'repo', 'src', 'OrderProcessor'), ('\\\\', 'repo', 'src', 'Ordering.API'), ('\\\\', 'repo', 'src', 'Ordering.Domain'), ('\\\\', 'repo', 'src', 'Tiny.API'))"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_clustering_service.py::TestIncrementalHierarchy::test_a_new_directory_becomes_a_new_component_with_a_fresh_id",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: Tuples differ: ('new_scope', (('\\\\', 'repo', 'src', 'Shipping.API'),), ()) != ('new_scope', (('src', 'Shipping.API'),), ())\n\nFirst differing element 1:\n(('\\\\', 'repo', 'src', 'Shipping.API'),)\n(('src', 'Shipping.API'),)\n\n- ('new_scope', (('\\\\', 'repo', 'src', 'Shipping.API'),), ())\n?                 --------------\n\n+ ('new_scope', (('src', 'Shipping.API'),), ())"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_clustering_service.py::TestIncrementalHierarchy::test_a_new_directory_in_a_scope_drawn_from_words_is_still_a_new_component",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: Tuples differ: ('new_scope', (('\\\\', 'repo', 'src', 'Serilog', 'Sampling'),)) != ('new_scope', (('src', 'Serilog', 'Sampling'),))\n\nFirst differing element 1:\n(('\\\\', 'repo', 'src', 'Serilog', 'Sampling'),)\n(('src', 'Serilog', 'Sampling'),)\n\n- ('new_scope', (('\\\\', 'repo', 'src', 'Serilog', 'Sampling'),))\n?                 --------------\n\n+ ('new_scope', (('src', 'Serilog', 'Sampling'),))"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_clustering_service.py::TestIncrementalHierarchy::test_a_new_directory_whose_names_vote_elsewhere_is_still_a_new_component",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: Tuples differ: ('new_scope', (('\\\\', 'repo', 'src', 'Shipping'),)) != ('new_scope', (('src', 'Shipping'),))\n\nFirst differing element 1:\n(('\\\\', 'repo', 'src', 'Shipping'),)\n(('src', 'Shipping'),)\n\n- ('new_scope', (('\\\\', 'repo', 'src', 'Shipping'),))\n?                 --------------\n\n+ ('new_scope', (('src', 'Shipping'),))"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_clustering_service.py::TestIncrementalHierarchy::test_a_single_new_file_nothing_claims_lands_in_the_loose_files",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: 'Loose files in \\\\.repo.src' != 'Loose files in src'\n- Loose files in \\.repo.src\n?                -------\n+ Loose files in src"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_csharp_adapter.py::TestLspEnv::test_resolves_dotnet_root_from_path",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "OSError: [WinError 1314] 客户端没有所需的特权。: 'E:\\\\Temp\\\\pytest-of-BW011222\\\\pytest-703\\\\test_resolves_dotnet_root_from0\\\\opt\\\\dotnet\\\\libexec\\\\dotnet' -> 'E:\\\\Temp\\\\pytest-of-BW011222\\\\pytest-703\\\\test_resolves_dotnet_root_from0\\\\bin\\\\dotnet'"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_csharp_adapter.py::TestPrepareProject::test_restores_each_member_when_the_solution_restore_fails",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: assert ['App.slnx', ...obile.csproj'] == ['App.slnx', ...obile.csproj']\n  \n  At index 1 diff: 'src\\\\Lib\\\\Lib.csproj' != 'src/Lib/Lib.csproj'\n  Use -v to get more diff"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_csharp_adapter.py::TestPrepareProject::test_builds_an_analyzer_project_after_a_solution_restore",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: assert [['restore', ...\\Gen.csproj']] == [['restore', .../Gen.csproj']]\n  \n  At index 1 diff: ['build', 'src\\\\Gen\\\\Gen.csproj'] != ['build', 'src/Gen/Gen.csproj']\n  Use -v to get more diff"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_csharp_adapter.py::TestPrepareProject::test_builds_an_analyzer_project_after_the_per_project_fallback",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: assert [['restore', ...\\Gen.csproj']] == [['restore', .../Gen.csproj']]\n  \n  At index 2 diff: ['build', 'src\\\\Gen\\\\Gen.csproj'] != ['build', 'src/Gen/Gen.csproj']\n  Use -v to get more diff"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_csharp_adapter.py::TestPrepareProject::test_builds_an_analyzer_project_for_a_bare_project_target",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: assert [['restore', ...\\Gen.csproj']] == [['restore', .../Gen.csproj']]\n  \n  At index 1 diff: ['build', 'src\\\\Gen\\\\Gen.csproj'] != ['build', 'src/Gen/Gen.csproj']\n  Use -v to get more diff"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_csharp_adapter.py::TestPrepareProject::test_builds_the_analyzer_even_when_restore_failed",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: assert [['restore', ...\\Gen.csproj']] == [['restore', .../Gen.csproj']]\n  \n  At index 1 diff: ['build', 'src\\\\Gen\\\\Gen.csproj'] != ['build', 'src/Gen/Gen.csproj']\n  Use -v to get more diff"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_csharp_adapter.py::TestPrepareProject::test_warns_when_an_analyzer_project_fails_to_build",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: assert 'only 0 of 1 built' in ''\n +  where '' = <_pytest.logging.LogCaptureFixture object at 0x0000022C0B20BE30>.text"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_dotnet_sdk.py::test_resolve_installs_global_json_sdk_when_system_is_unsatisfied",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "static_analyzer.dotnet_sdk.DotnetSdkError: Unable to resolve the .NET SDK required by E:\\Temp\\pytest-of-BW011222\\pytest-703\\test_resolve_installs_global_j0\\global.json. Install the SDK manually or retry with network access. missing"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_dotnet_sdk.py::test_resolve_installs_tool_sdk_when_no_dotnet_exists",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "static_analyzer.dotnet_sdk.DotnetSdkError: Unable to resolve the .NET SDK. Install the SDK manually or retry with network access."
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_edge_builder.py::TestSymbolIndexResolve::test_exact_match_with_location_format",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_edge_builder.py::TestSymbolIndexResolve::test_exact_match_with_location_link_format",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_edge_builder.py::TestSymbolIndexResolve::test_returns_none_for_missing_position",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_edge_builder.py::TestConstructorCalledThroughItsClass::test_the_constructor_is_picked_by_argument_count",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_edge_builder.py::TestConstructorCalledThroughItsClass::test_a_single_constructor_needs_no_count_and_a_class_without_one_stays",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_edge_builder.py::TestConstructorCalledThroughItsClass::test_a_synthetic_member_answered_with_the_class_is_not_a_construction",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_edge_builder.py::TestConstructorCalledThroughItsClass::test_a_call_answered_with_the_companion_runs_its_invoke",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_edge_builder.py::TestConstructorCalledThroughItsClass::test_same_arity_overloads_keep_the_edge_on_the_class",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_edge_builder.py::TestConstructorCalledThroughItsClass::test_a_call_no_overload_matches_runs_the_primary_constructor",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_edge_builder.py::TestConstructorCalledThroughItsClass::test_an_unreadable_callee_keeps_the_edge_on_the_class",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_hierarchy_builder.py::TestBuildWithTypeHierarchy::test_builds_hierarchy_from_lsp_supertypes",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: assert 'mod.Animal' in []"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_hierarchy_builder.py::TestBuildWithTypeHierarchy::test_builds_hierarchy_from_lsp_subtypes",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: assert 'mod.Cat' in []"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_hierarchy_builder.py::TestBuildWithTypeHierarchy::test_no_duplicates_in_hierarchy",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: assert 0 == 1\n +  where 0 = <built-in method count of list object at 0x0000022C0B5AA740>('mod.A')\n +    where <built-in method count of list object at 0x0000022C0B5AA740> = [].count"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_hierarchy_builder.py::TestResolveTypeHierarchyItem::test_resolves_by_name_and_line",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_hierarchy_builder.py::TestResolveTypeHierarchyItem::test_resolves_by_name_within_one_line",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_hierarchy_builder.py::TestResolveTypeHierarchyItem::test_falls_back_to_name_and_kind",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_hierarchy_builder.py::TestResolveTypeHierarchyItem::test_returns_none_for_unknown_symbol",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_hierarchy_builder.py::TestResolveBasesByDefinition::test_a_base_resolves_to_the_declaration_its_definition_names",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_hierarchy_builder.py::TestResolveBasesByDefinition::test_a_base_written_as_a_constructor_call_links_the_class_declaring_it",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_kotlin_adapter.py::TestRefineDocumentSymbols::test_overloads_constructors_and_kinds_are_told_apart",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_kotlin_adapter.py::TestRefineDocumentSymbols::test_a_classs_constants_and_constructor_values_are_properties",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_kotlin_adapter.py::TestRefineDocumentSymbols::test_objects_and_companions_are_classes",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_lsp_client.py::TestLSPClientInit::test_initialize_waits_the_startup_timeout_and_requests_the_default",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_lsp_client.py::TestExtraClientCapabilitiesMerge::test_no_extra_caps_produces_only_text_document",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_lsp_client.py::TestExtraClientCapabilitiesMerge::test_experimental_block_is_merged_at_top_level",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_lsp_client.py::TestExtraClientCapabilitiesMerge::test_overlapping_top_level_dict_keys_are_shallow_merged",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_lsp_client.py::TestExtraClientCapabilitiesMerge::test_the_project_is_the_workspace_folder_unless_others_are_given",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_lsp_client.py::TestExtraClientCapabilitiesMerge::test_adapter_value_wins_on_scalar_collision",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_lsp_client.py::TestCommands::test_the_commands_are_sent_once_initialized_and_again_on_a_restart",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_lsp_client.py::TestCommands::test_a_command_the_server_rejects_or_does_not_answer_fails_the_start[method-not-found]",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_lsp_client.py::TestCommands::test_a_command_the_server_rejects_or_does_not_answer_fails_the_start[internal-error]",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_lsp_client.py::TestCommands::test_a_command_the_server_rejects_or_does_not_answer_fails_the_start[no-answer]",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_lsp_client.py::TestHandleNotification::test_diagnostics_notification",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_lsp_client.py::TestHandleNotification::test_diagnostics_generation_increments",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_lsp_client.py::TestWaitForDiagnosticsQuiesce::test_extends_wait_when_diagnostics_keep_arriving",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "assert 0.6 <= 0.3120000000053551"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_lsp_client.py::TestServerCapabilities::test_what_initialize_offers_is_remembered",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_lsp_client.py::TestServerCapabilities::test_implementations_are_not_asked_of_a_server_not_offering_them",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_lsp_client.py::TestServerCapabilities::test_implementations_are_asked_of_a_server_offering_them",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_lsp_client.py::TestServerCapabilities::test_a_type_hierarchy_not_offered_reads_as_method_not_found",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "ValueError: relative path can't be expressed as a file URI"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_result_converter.py::TestIgnoredFilesExcluded::test_without_ignore_manager_nothing_is_dropped",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "assert False\n +  where False = any(<generator object TestIgnoredFilesExcluded.test_without_ignore_manager_nothing_is_dropped.<locals>.<genexpr> at 0x0000022C0B299FF0>)"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::test_runtime_references_exclude_bindings_and_annotations[kt-fun f(x: Ignored) {\\n try {} catch (bound: N.ExpectedOne) {}\\n if (x !is ExpectedTwo) {}\\n}]",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::test_runtime_references_exclude_bindings_and_annotations[kt-fun f(x: Ignored) = when (x) { is N.ExpectedOne -> 1; !is ExpectedTwo -> 2; else -> 3 }]",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinCallSites::test_a_call_names_its_callee_and_a_member_call_its_member",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinCallSites::test_a_trailing_lambda_does_not_name_the_call_it_follows_twice",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinCallSites::test_callable_references_are_sites_but_a_class_literal_is_not",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinCallSites::test_a_supertype_constructor_and_a_delegation_call_are_sites",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinCallSites::test_a_call_with_one_type_argument_is_not_read_as_a_comparison",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinSplitConstructorHeader::test_the_rest_of_the_file_is_still_read_at_its_own_positions",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinSplitConstructorHeader::test_the_constructor_is_keyed_where_the_server_starts_it",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinDeclarations::test_signatures_drop_type_arguments_and_package_qualifiers",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinDeclarations::test_a_nested_type_keeps_its_outer_type",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinDeclarations::test_a_function_type_inside_type_arguments_is_dropped_with_them",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinDeclarations::test_a_documented_constructor_is_also_keyed_at_its_kdoc",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinDeclarations::test_kinds_the_server_does_not_tell_apart",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinTypeBases::test_bases_name_the_type_not_its_arguments_or_package",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinTypeBases::test_an_enum_entry_with_a_body_derives_from_its_enum",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinTypeBases::test_a_super_member_is_named_on_the_base",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestCallArgumentCount::test_arguments_and_a_trailing_lambda_are_counted",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestCallArgumentCount::test_a_position_on_no_call_counts_nothing",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "RuntimeError: Q1 offline baseline: kotlin grammar absent; download blocked before loader"
+    },
+    "final": {
+      "outcome": "skipped",
+      "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_utils.py::TestToRelativePath::test_absolute_path_under_root_becomes_relative",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: '/repo/root/src/main.py' != 'src/main.py'\n- /repo/root/src/main.py\n+ src/main.py"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_utils.py::TestToRelativePath::test_nested_path_preserved",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: '/repo/root/a/b/c/file.py' != 'a/b/c/file.py'\n- /repo/root/a/b/c/file.py\n+ a/b/c/file.py"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_utils.py::TestToRelativePath::test_roundtrip_relative_then_absolute",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: '\\\\repo\\\\root\\\\src\\\\app.py' != '/repo/root/src/app.py'\n- \\repo\\root\\src\\app.py\n? ^    ^    ^   ^\n+ /repo/root/src/app.py\n? ^    ^    ^   ^"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_utils.py::TestToRelativePath::test_uses_forward_slashes",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: '/repo/root/src/pkg/module.py' != 'src/pkg/module.py'\n- /repo/root/src/pkg/module.py\n? -----------\n+ src/pkg/module.py"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_utils.py::TestToAbsolutePath::test_already_absolute_path_returned_unchanged",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: '\\\\repo\\\\root\\\\src\\\\main.py' != '/repo/root/src/main.py'\n- \\repo\\root\\src\\main.py\n? ^    ^    ^   ^\n+ /repo/root/src/main.py\n? ^    ^    ^   ^"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_utils.py::TestToAbsolutePath::test_relative_path_resolved_against_root",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: '\\\\repo\\\\root\\\\src\\\\main.py' != '/repo/root/src/main.py'\n- \\repo\\root\\src\\main.py\n? ^    ^    ^   ^\n+ /repo/root/src/main.py\n? ^    ^    ^   ^"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_utils.py::TestToAbsolutePath::test_roundtrip_absolute_then_relative",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: '/repo/root/src/utils.py' != 'src/utils.py'\n- /repo/root/src/utils.py\n+ src/utils.py"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_utils.py::TestToAbsolutePath::test_windows_backslash_nested",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: '\\\\repo\\\\root\\\\a\\\\b\\\\c\\\\file.py' != '/repo/root/a/b/c/file.py'\n- \\repo\\root\\a\\b\\c\\file.py\n? ^    ^    ^ ^ ^ ^\n+ /repo/root/a/b/c/file.py\n? ^    ^    ^ ^ ^ ^"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_utils.py::TestToAbsolutePath::test_windows_backslash_separators_normalised",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: '\\\\repo\\\\root\\\\src\\\\pkg\\\\module.py' != '/repo/root/src/pkg/module.py'\n- \\repo\\root\\src\\pkg\\module.py\n? ^    ^    ^   ^   ^\n+ /repo/root/src/pkg/module.py\n? ^    ^    ^   ^   ^"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/test_devcontainer.py::TestDevcontainer::test_post_create_script_bash_syntax",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: 127 != 0"
+    },
+    "final": {
+      "outcome": "failed",
+      "reason": "AssertionError: 127 != 0"
+    }
+  },
+  {
+    "nodeid": "tests/test_pyproject_packages.py::TestPyprojectPackages::test_all_packages_declared_in_pyproject",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/test_pyproject_packages.py::TestPyprojectPackages::test_no_ghost_packages_in_pyproject",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: Items in the first set but not the second:\n'architecture_model.viewer_assets' : Packages declared in pyproject.toml do not exist on disk:\n  - architecture_model.viewer_assets"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/test_windows_compatibility.py::TestFileURIParsing::test_unix_file_uri",
+    "m5_category": "baseline_existing",
+    "baseline": {
+      "outcome": "failed",
+      "reason": "AssertionError: WindowsPath('F:/home/user/project/file.py') != WindowsPath('/home/user/project/file.py')"
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  },
+  {
+    "nodeid": "tests/test_windows_encoding.py::TestWindowsEncoding::test_no_cp1252_unencodable_characters_in_source",
+    "m5_category": "environment",
+    "baseline": {
+      "outcome": "passed",
+      "reason": ""
+    },
+    "final": {
+      "outcome": "passed",
+      "reason": ""
+    }
+  }
+]
