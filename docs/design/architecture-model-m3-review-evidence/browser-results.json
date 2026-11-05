@@ -1,0 +1,26 @@
+{
+  "browser": "138.0.7204.184",
+  "checks": [
+    "A: real SVG graph, entry differs from first display step",
+    "Hierarchy collapse/expand and focus preserve step; A/B share policy ID; switching restores A step; hash-verified source visible",
+    "Explicit branches pause; loop requires selection; return exits; back follows actual path; reset and automatic next stop at missing outgoing transition",
+    "Source mismatch withholds body; historical pending survives; current confirmation explicitly names older source target; author/reason, actual fingerprints, feedback and selected business/step metadata visible",
+    "Binding opinions, planned/executed checks are visibly readable from component, step and direct binding inspectors; original object_ids/source_version preserved; shared records rendered once with working cross-references; component control and claim kind retained",
+    "Script-closing and javascript URL payloads rendered inert as text",
+    "Real Unicode facts: function lines 3–4 and whole-file final return visibly correct; source script-closing text stays inert",
+    "390px responsive page: no document-level overflow; visible scroll instruction and focus outline; ArrowRight scrolls the diagram",
+    "Offline file loading: no external requests, no page errors; model hash/revision unchanged"
+  ],
+  "errors": [],
+  "requests": [
+    "file:///F:/CodeBoarding/temp/m3-review-final/01-purchase.html",
+    "file:///F:/CodeBoarding/temp/m3-review-final/02-shared-businesses.html",
+    "file:///F:/CodeBoarding/temp/m3-review-final/03-source-pending.html",
+    "file:///F:/CodeBoarding/temp/m3-review-final/04-reviewed.html",
+    "file:///F:/CodeBoarding/temp/m3-review-final/untrusted.html",
+    "file:///F:/CodeBoarding/temp/m3-review-final/unicode.html",
+    "file:///F:/CodeBoarding/temp/m3-review-final/04-reviewed.html"
+  ],
+  "model_sha256_before": "b40ccbcfade13be4cf08590ed5d22457761387b5bd628cc2b46b0323812042a3",
+  "model_sha256_after": "b40ccbcfade13be4cf08590ed5d22457761387b5bd628cc2b46b0323812042a3"
+}

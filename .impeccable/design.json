@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-04T16:07:11.8162055Z",
+  "title": "Design System: CodeBoarding architecture explorer",
+  "extensions": {
+    "colorMeta": {
+      "ink": {"role":"neutral","displayName":"Blue Ink","tonalRamp":["oklch(15% .04 242)","oklch(26% .04 242)","oklch(38% .04 242)","oklch(49% .04 242)","oklch(61% .04 242)","oklch(72% .04 242)","oklch(84% .04 242)","oklch(95% .04 242)"]},
+      "muted": {"role":"neutral","displayName":"Slate Text","tonalRamp":["oklch(15% .035 239)","oklch(26% .035 239)","oklch(38% .035 239)","oklch(49% .035 239)","oklch(61% .035 239)","oklch(72% .035 239)","oklch(84% .035 239)","oklch(95% .035 239)"]},
+      "paper": {"role":"neutral","displayName":"Cool Paper","tonalRamp":["oklch(15% .008 230)","oklch(26% .008 230)","oklch(38% .008 230)","oklch(49% .008 230)","oklch(61% .008 230)","oklch(72% .008 230)","oklch(84% .008 230)","oklch(95% .008 230)"]},
+      "line": {"role":"neutral","displayName":"Mist Rule","tonalRamp":["oklch(15% .02 237)","oklch(26% .02 237)","oklch(38% .02 237)","oklch(49% .02 237)","oklch(61% .02 237)","oklch(72% .02 237)","oklch(84% .02 237)","oklch(95% .02 237)"]},
+      "accent": {"role":"primary","displayName":"Deep Teal","tonalRamp":["oklch(15% .075 209)","oklch(26% .075 209)","oklch(38% .075 209)","oklch(49% .075 209)","oklch(61% .075 209)","oklch(72% .075 209)","oklch(84% .075 209)","oklch(95% .075 209)"]},
+      "active": {"role":"primary","displayName":"Pale Teal","tonalRamp":["oklch(15% .03 180)","oklch(26% .03 180)","oklch(38% .03 180)","oklch(49% .03 180)","oklch(61% .03 180)","oklch(72% .03 180)","oklch(84% .03 180)","oklch(95% .03 180)"]},
+      "warning": {"role":"warning","displayName":"Warning Brown","tonalRamp":["oklch(15% .1 60)","oklch(26% .1 60)","oklch(38% .1 60)","oklch(49% .1 60)","oklch(61% .1 60)","oklch(72% .1 60)","oklch(84% .1 60)","oklch(95% .1 60)"]},
+      "white": {"role":"neutral","displayName":"White Panel","tonalRamp":["oklch(15% 0 0)","oklch(26% 0 0)","oklch(38% 0 0)","oklch(49% 0 0)","oklch(61% 0 0)","oklch(72% 0 0)","oklch(84% 0 0)","oklch(95% 0 0)"]}
+    },
+    "typographyMeta": {
+      "headline":{"displayName":"Project heading","purpose":"Project name at the top of the reading workbench."},
+      "title":{"displayName":"Section heading","purpose":"Hierarchy, diagram, player and inspector sections."},
+      "code":{"displayName":"Source and metadata","purpose":"Line-numbered source and structured JSON evidence."}
+    },
+    "shadows": [],
+    "motion": [{"name":"node-state","value":"background 180ms ease-out","purpose":"Current node background changes; disabled under prefers-reduced-motion."}],
+    "breakpoints": [{"name":"medium","value":"1100px"},{"name":"mobile","value":"600px"}],
+    "focus":{"outline":"3px solid var(--accent)","outlineOffset":"3px"},
+    "tonalRampNote":"Preview ramps are synthesized OKLCH variants; implemented primitives remain normative in DESIGN.md."
+  },
+  "components": [
+    {"name":"Button","kind":"button","refersTo":"button","description":"Native workbench action.","html":"<button class=\"ds-button\">Expand all</button>","css":".ds-button{font:14px Segoe UI,system-ui,sans-serif;color:var(--ink,#213646);background:var(--white,#fff);border:1px solid var(--line,#cbd6dd);border-radius:5px;padding:8px 11px;cursor:pointer}.ds-button:hover{background:#e5eef2}.ds-button:focus-visible{outline:3px solid var(--accent,#005e69);outline-offset:3px}.ds-button:disabled{opacity:.5;cursor:default}"},
+    {"name":"Active step","kind":"nav","refersTo":"button-active","description":"Current step in the labeled display-order list.","html":"<button class=\"ds-step\" aria-current=\"step\">business-A-price<small>Inspect the shared pricing responsibility.</small></button>","css":".ds-step{display:block;text-align:left;font:14px Segoe UI,system-ui,sans-serif;padding:8px 11px;border:1px solid var(--accent,#005e69);border-radius:5px;background:var(--accent,#005e69);color:white;cursor:pointer}.ds-step small{display:block;color:#def2ef;margin-top:4px}.ds-step:hover{background:var(--accent,#005e69);color:white}.ds-step:focus-visible{outline:3px solid var(--accent,#005e69);outline-offset:3px}"},
+    {"name":"Business select","kind":"input","description":"Native selection for modeled business scenarios.","html":"<label class=\"ds-select-label\">Business <select class=\"ds-select\"><option>A · Purchase</option><option>B · Quotation</option></select></label>","css":".ds-select-label{display:flex;align-items:center;gap:8px;font:14px Segoe UI,system-ui,sans-serif}.ds-select{font:inherit;color:var(--ink,#213646);background:var(--white,#fff);border:1px solid var(--line,#cbd6dd);border-radius:5px;padding:8px 11px;cursor:pointer}.ds-select:focus-visible{outline:3px solid var(--accent,#005e69);outline-offset:3px}"},
+    {"name":"Claim kind","kind":"chip","refersTo":"claim-badge","description":"A textual claim classification rather than a verification result.","html":"<span class=\"ds-badge\">inference</span>","css":".ds-badge{display:inline-block;font:12px Segoe UI,system-ui,sans-serif;color:var(--accent,#005e69);background:var(--active,#d5f0ec);padding:3px 6px;border-radius:3px}"},
+    {"name":"Current diagram node","kind":"custom","refersTo":"diagram-node","description":"Stable component identity and current modeled step.","html":"<button class=\"ds-node\"><strong>policy</strong><small>policy</small><span>Current step</span></button>","css":".ds-node{width:190px;min-height:78px;text-align:left;padding:12px;border:2px solid var(--accent,#005e69);border-radius:8px;background:var(--active,#d5f0ec);color:var(--ink,#213646);font:14px Segoe UI,system-ui,sans-serif;transition:background .18s ease-out;cursor:pointer}.ds-node strong,.ds-node small,.ds-node span{display:block}.ds-node small{color:var(--muted,#506676);margin-top:5px}.ds-node span{font-size:12px;color:var(--accent,#005e69);margin-top:5px}.ds-node:hover{background:var(--active,#d5f0ec)}.ds-node:focus-visible{outline:3px solid var(--accent,#005e69);outline-offset:3px}@media(prefers-reduced-motion:reduce){.ds-node{transition:none}}"},
+    {"name":"Evidence disclosure","kind":"custom","description":"Native disclosure for source and review metadata.","html":"<details class=\"ds-evidence\"><summary>Code evidence · bind-total</summary><pre>1  def total(quantity):\n2      return quantity * 10</pre></details>","css":".ds-evidence{font:14px Segoe UI,system-ui,sans-serif;color:var(--ink,#213646);margin:12px 0;padding-bottom:10px;border-bottom:1px solid var(--line,#cbd6dd)}.ds-evidence summary{cursor:pointer;line-height:1.6;font-weight:600}.ds-evidence summary:focus-visible{outline:3px solid var(--accent,#005e69);outline-offset:3px}.ds-evidence pre{font:12px/1.6 Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;background:#eef3f5;padding:12px;border-radius:5px;max-height:380px;overflow:auto}"}
+  ],
+  "narrative": {
+    "northStar":"The Source-backed Workbench",
+    "overview":"This system serves dense reading and inspection. Pale work surfaces separate architecture from white navigation and evidence panels. Familiar native controls keep attention on component identity, explicit transitions and source provenance.",
+    "keyCharacteristics":["Restrained teal marks selection and the current modeled path.","Tonal surfaces and fine rules define work areas without decorative elevation.","Stable diagram positions preserve spatial memory through playback and folding.","Disclosures make detailed evidence available within the same reading workspace."],
+    "rules":[{"name":"The State Color Rule","body":"Teal communicates selection or current modeled state; it is not evidence that a business conclusion has been verified. Warning brown identifies unavailable or mismatched evidence and review qualifications.","section":"colors"},{"name":"The Evidence Type Rule","body":"Monospace identifies code or structured metadata; responsibilities, explanations and actions stay in the UI face.","section":"typography"}],
+    "dos":["Do preserve stable diagram positions while changing the visible depth.","Do retain clear keyboard focus and scroll affordances in bounded diagrams.","Do keep claim kinds, review currency and source targets explicitly labeled.","Do use disclosures to reveal exact evidence without leaving the workspace."],
+    "donts":["Don't use current-step color as a synonym for verified business correctness.","Don't replace source-version qualifications with decorative success markers.","Don't add shadow elevation where tonal regions already express separation."]
+  }
+}

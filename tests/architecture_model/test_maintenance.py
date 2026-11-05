@@ -10,6 +10,7 @@ from architecture_model.maintenance import preview, query, rebind, refresh, reso
 from architecture_model.schema import Facts
 from architecture_model.store import ModelStore
 from architecture_model.validation import digest, parse, validate_model
+from architecture_model.viewer import projection
 from examples.architecture_model.demo import cli, write
 
 SCOPE = json.dumps(
@@ -22,6 +23,58 @@ SCOPE = json.dumps(
         "configuration": {},
     }
 )
+
+
+@pytest.mark.parametrize("surface", ["read", "maintenance"])
+def test_legacy_derived_id_can_be_referenced_by_ordinary_patch(store: ModelStore, surface: str) -> None:
+    record(store, changed(store.read().facts[0]))
+    legacy = store.read().model_dump()
+    for item in legacy["maintenance"]:
+        item["id"] = "maintenance-" + digest(
+            {"binding": item["binding_id"], "basis": item["basis"], "target": item["target_snapshot_id"]}
+        )
+        item.pop("coverage_version")
+        item.pop("object_versions")
+    store.path.write_text(json.dumps(legacy), encoding="utf-8")
+    before = store.path.read_bytes()
+    prefix = ("model", "--file", str(store.path))
+    response = cli(*prefix, surface)
+    observations = response["model"]["maintenance"] if surface == "read" else response["observations"]
+    identity = next(item["id"] for item in observations if item["coverage_version"] == "objects-v1")
+    assert store.path.read_bytes() == before
+    revision = legacy["revision"]
+    patch: dict = {
+        "author": "agent",
+        "summary": "Comment on visible review",
+        "operations": [
+            {
+                "action": "create",
+                "collection": "opinions",
+                "id": "feedback",
+                "value": {"author": "user", "text": "Please inspect", "stance": "question", "object_ids": [identity]},
+            }
+        ],
+    }
+    patch_path = write(store.path.parent / "opinion.json", patch)
+    assert (
+        cli(*prefix, "apply", "--patch", str(patch_path), "--expected-revision", str(revision - 1), success=False)[
+            "code"
+        ]
+        == "REVISION_CONFLICT"
+    )
+    assert store.path.read_bytes() == before
+    invalid = deepcopy(patch)
+    invalid["operations"][0]["value"]["object_ids"].append("absent")
+    with pytest.raises(ModelError) as failure:
+        store.apply(revision, invalid)
+    assert failure.value.code == "DANGLING_REFERENCE"
+    assert store.path.read_bytes() == before
+    cli(*prefix, "apply", "--patch", str(patch_path), "--expected-revision", str(revision))
+    saved = cli(*prefix, "read")["model"]
+    assert saved["revision"] == revision + 1
+    assert saved["opinions"][0]["object_ids"] == [identity]
+    assert saved["maintenance"][: len(legacy["maintenance"])] == validate_model(legacy).model_dump()["maintenance"]
+    assert saved["facts"] == legacy["facts"]
 
 
 def snapshot(value: dict) -> Facts:
@@ -102,6 +155,29 @@ def test_idempotent_refresh_and_legacy_read_preserve_original_facts(maintained: 
     assert after.components == original.components and after.scenarios == original.scenarios
     assert len(after.maintenance) == 1 and not query(after)["pending_ids"]
     assert after.revision == original.revision + 2
+
+
+def test_viewer_keeps_current_coverage_separate_from_latest_source_target(maintained: ModelStore) -> None:
+    original = maintained.read().facts[-1]
+    first_target = changed(original)
+    first = record(maintained, first_target)["observations"][0]
+    resolve(maintained, first["id"], _review(first_target), maintained.read().revision)
+    value = first_target.model_dump()
+    value["source"]["files"]["unrelated.py"] = digest("additional source")
+    latest = snapshot(value)
+    second = record(maintained, latest)["observations"][0]
+    before = maintained.path.read_bytes()
+    view = projection(maintained.read())
+    report = view["maintenance"]
+    assert report == query(maintained.read())
+    assert report["latest_target_snapshot_id"] == latest.id
+    assert first["id"] in report["current_coverage_ids"]
+    assert first["id"] not in report["current_pending_ids"]
+    assert second["id"] in report["current_pending_ids"]
+    prior = next(o for o in view["model"]["maintenance"] if o["id"] == first["id"])
+    assert prior["target_snapshot_id"] != report["latest_target_snapshot_id"]
+    assert prior["resolution"]["source_version"] == first_target.source.digest
+    assert maintained.path.read_bytes() == before
 
 
 def test_pending_survives_unrelated_refresh_rebind_and_explicit_resolution(maintained: ModelStore) -> None:

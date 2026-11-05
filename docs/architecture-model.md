@@ -1,4 +1,4 @@
-# Architecture model CLI (M1 + M2)
+# Architecture model CLI (M1 + M2 + M3)
 
 An external Agent reads source, writes its interpretation, and revises the same
 logical objects over successive sessions. CodeBoarding validates declared structure,
@@ -7,6 +7,11 @@ references, versions and writes. It does not prove an explanation correct.
 Install the repository with `uv sync --dev`. Use `uv run codeboarding-model` or
 `uv run python -m architecture_model`. Neither entry goes through the existing
 analysis bootstrap. Python 3.12 is required by this repository.
+
+M3 adds `model --file MODEL export-html --output NEW.html [--source-root ROOT]`
+to freeze one complete validated revision into a read-only offline explorer.
+See [reader and external Agent instructions](architecture-model-viewer.md) for
+hierarchy, explicit-transition playback, source evidence and maintenance scope.
 
 ## Start a model and continue it in another session
 

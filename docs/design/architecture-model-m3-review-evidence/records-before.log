@@ -1,0 +1,13 @@
+AssertionError [ERR_ASSERTION]: Binding opinion must have a readable disclosure
+
+0 !== 1
+
+    at bindingRecords (F:\CodeBoarding\examples\architecture_model\check_viewer.cjs:27:12)
+    at async F:\CodeBoarding\examples\architecture_model\check_viewer.cjs:75:5 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

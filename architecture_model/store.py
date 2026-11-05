@@ -121,9 +121,10 @@ def patched_model(
 ) -> tuple[Model, Patch]:
     patch = parse(Patch, patch_value)
     value = current.model_dump()
-    if maintenance is not None:
-        value["maintenance"] = [item.model_dump() for item in maintenance]
+    observations = maintained_observations(current, model_diff) if maintenance is None else maintenance
+    value["maintenance"] = [item.model_dump() for item in observations]
     reserved = {item.id for collection in COLLECTIONS for item in getattr(current, collection)}
+    reserved.update(item.id for item in observations)
     reserved.update(step.id for scenario in current.scenarios for step in scenario.steps)
     reserved.update((current.id, current.project.id))
     for index, operation in enumerate(patch.operations):

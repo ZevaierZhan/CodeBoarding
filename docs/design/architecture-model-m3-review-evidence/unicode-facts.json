@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "id": "debcfa0f7e41ddc456b5427fb4d5fbce35b9508fbe766900962ea2cbb2c89f98",
+  "project_id": "positions",
+  "source": {
+    "digest": "9bc8276757b9e15d9e0349621667634e6276f4e12c7076e5659ca779ad6192a6",
+    "git_commit": "edf00712ffd3c605794c1ce76345aab7094f917c",
+    "files": {
+      "app.py": "345ee3cc2b80d96d451ed74db9b9038ef4df1657251fb8b40445cf6683151f00"
+    },
+    "scope": "All Python files discovered by PythonAdapter and repository ignore rules"
+  },
+  "symbols": {
+    "app.py|app.target": {
+      "path": "app.py",
+      "symbol": "app.target",
+      "kind": "FUNCTION",
+      "content_hash": "345ee3cc2b80d96d451ed74db9b9038ef4df1657251fb8b40445cf6683151f00",
+      "start": 3,
+      "end": 4
+    }
+  },
+  "file_locations": {
+    "app.py": {
+      "path": "app.py",
+      "symbol": "",
+      "kind": "FILE",
+      "content_hash": "345ee3cc2b80d96d451ed74db9b9038ef4df1657251fb8b40445cf6683151f00",
+      "start": 1,
+      "end": 4
+    }
+  },
+  "calls": [],
+  "tools": {
+    "engine": "StaticAnalyzer/PythonAdapter",
+    "node": "D:\\Progrm Files\\nvm\\v24.20.0\\node.exe",
+    "pyright_js": "F:\\CodeBoarding\\temp\\p0-tools\\node_modules\\pyright\\langserver.index.js",
+    "tokei": "F:\\CodeBoarding\\temp\\p0-tools\\tokei.exe",
+    "python_command": "[\"D:\\\\Progrm Files\\\\nvm\\\\v24.20.0\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\langserver.index.js\", \"--stdio\"]",
+    "tokei_command": "[\"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\", \"-o\", \"json\"]",
+    "maintenance_scope": "{\"complete\":true,\"configuration\":{},\"implementation\":\"01580c909ce2948d6401fbc9781e29a3a5dbafc3ee67fa3ea90a2c042326dd05\",\"patterns\":[\"# CodeBoarding Ignore File\\n\",\"# Add patterns here for files and directories that should be excluded from CodeBoarding analysis.\\n\",\"# Use the same format as .gitignore (gitignore syntax / gitwildmatch patterns).\\n\",\"#\\n\",\"# To stop ignoring a pattern, prefix it with ! (e.g., !important_file.txt)\\n\",\"#\\n\",\"# NOTE: The following are ALWAYS excluded (not configurable):\\n\",\"#   - Hidden directories (starting with .)\\n\",\"#   - .git/, .codeboarding/, node_modules/, __pycache__/\\n\",\"#   - Build output: build/, dist/, coverage/\\n\",\"#\\n\",\"# This file is automatically loaded by CodeBoarding analysis tools to exclude\\n\",\"# specified paths from code analysis, architecture generation, and other processing.\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Ignored directories (customizable \\u2014 remove lines to include them)\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Python virtual environments\\n\",\"venv/\\n\",\"env/\\n\",\"*.egg-info/\\n\",\"\\n\",\"# Java (Maven/Gradle) and Rust (Cargo) build output. Both ecosystems\\n\",\"# produce a top-level ``target/`` directory full of compiled artifacts \\u2014\\n\",\"# kept here as well as in ``_ALWAYS_IGNORED_DIRS`` so users who customize\\n\",\"# their ``.codeboardingignore`` continue to skip it even after edits.\\n\",\"target/\\n\",\"bin/\\n\",\"out/\\n\",\"\\n\",\"# .NET / C# build output\\n\",\"obj/\\n\",\"\\n\",\"# Go\\n\",\"vendor/\\n\",\"testdata/\\n\",\"\\n\",\"# PHP\\n\",\"cache/\\n\",\"\\n\",\"# Custom\\n\",\"temp/\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Test and infrastructure files\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Test directories\\n\",\"**/__tests__/**\\n\",\"**/tests/**\\n\",\"**/test/**\\n\",\"**/__test__/**\\n\",\"**/testing/**\\n\",\"**/testutil/**\\n\",\"\\n\",\"# Java/Kotlin test directories (Maven/Gradle structure)\\n\",\"**/src/test/**\\n\",\"**/src/testFixtures/**\\n\",\"**/src/integration-test/**\\n\",\"**/src/jmh/**\\n\",\"**/src/contractTest/**\\n\",\"**/osgi-tests/**\\n\",\"\\n\",\"# Test files by naming convention\\n\",\"*.test.*\\n\",\"*.spec.*\\n\",\"*_test.*\\n\",\"*test_*.py\\n\",\"test_*.py\\n\",\"*Test.java\\n\",\"*IT.java\\n\",\"*Test.kt\\n\",\"*IT.kt\\n\",\"*Tests.java\\n\",\"\\n\",\"# Mock, fixture, and stub directories\\n\",\"**/__mocks__/**\\n\",\"**/mocks/**\\n\",\"**/fixtures/**\\n\",\"**/fixture/**\\n\",\"**/stubs/**\\n\",\"**/stub/**\\n\",\"**/fakes/**\\n\",\"**/fake/**\\n\",\"\\n\",\"# E2E and integration test directories\\n\",\"**/e2e/**\\n\",\"**/integration-tests/**\\n\",\"**/integration_test*/**\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Non-production code\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Example and documentation code\\n\",\"**/examples/**\\n\",\"**/documentation/examples/**\\n\",\"\\n\",\"# Generated code\\n\",\"*.pb.go\\n\",\"**/generated_parser*\\n\",\"\\n\",\"# Java/Kotlin metadata files\\n\",\"module-info.java\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build artifacts and minified files\\n\",\"# ============================================================================\\n\",\"\\n\",\"*.bundle.js\\n\",\"*.bundle.js.map\\n\",\"*.min.js\\n\",\"*.min.css\\n\",\"*.chunk.js\\n\",\"*.chunk.js.map\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build tool configs and infrastructure\\n\",\"# ============================================================================\\n\",\"\\n\",\"esbuild*\\n\",\"webpack*\\n\",\"rollup*\\n\",\"vite.config.*\\n\",\"gulpfile*\\n\",\"gruntfile*\\n\",\"*.config.*\\n\"],\"protocol\":\"python-file-v1\",\"tools\":[\"5c976096e04e5c2c1f091938926234cc9fbebfe9787ddd149351b3b0ecc707b5\",\"f200762078eb9880faf421a5b30f9ef3055b1d85c6f10780d75db4da8d8499f1\",\"7db547cb6bfa1722e89ca52a43426fb212aa53603a60256af25fb6e59ca12099\"]}"
+  },
+  "limitations": [
+    "Static call records are not runtime execution or a complete dynamic call graph.",
+    "Names, clustering, responsibilities and design intent are not extracted code facts.",
+    "content_hash is SHA-256 of exact file bytes; source digest covers the declared Python scope.",
+    "Git commit is context only; the content manifest identifies dirty and untracked source."
+  ]
+}
