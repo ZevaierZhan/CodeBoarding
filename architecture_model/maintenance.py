@@ -82,9 +82,13 @@ def refresh(store: ModelStore, target: Facts, expected_revision: int, token: str
         if report["token"] != token:
             raise ModelError("PREVIEW_CONFLICT", "/token", "Preview does not match this model and target")
         proposed = current.model_copy(deep=True)
-        proposed.maintenance_target_snapshot_id = target.id
+        targets = root_targets(current)
+        proposed.maintenance_target_snapshot_id = targets.pop("", "")
+        proposed.maintenance_targets = targets
         if target.source_root_id:
             proposed.maintenance_targets[target.source_root_id] = target.id
+        else:
+            proposed.maintenance_target_snapshot_id = target.id
         if target.id not in {item.id for item in proposed.facts}:
             proposed.facts.append(target)
         existing = {item.id for item in proposed.maintenance}
@@ -233,6 +237,11 @@ def query(model: Model, binding_id: str = "", component_id: str = "", scenario_i
     current_ids = {capture_coverage(model, item, model_diff).id for item in comparisons.values()} & {
         item.id for item in items
     }
+    targets = root_targets(model)
+    explicit = {root: target for root, target in targets.items() if root}
+    mixed_protocol = any(snapshot.source_root_id for snapshot in model.facts)
+    facts = {snapshot.id: snapshot for snapshot in model.facts}
+    unknown_targets = [item.id for item in items if facts[item.target_snapshot_id].source_root_id not in targets]
     return {
         "model_id": model.id,
         "revision": model.revision,
@@ -243,10 +252,37 @@ def query(model: Model, binding_id: str = "", component_id: str = "", scenario_i
             for item in items
             if item.id in current_ids and item.disposition != "unchanged" and item.resolution is None
         ],
-        "latest_target_snapshot_id": model.maintenance_target_snapshot_id,
-        **({"source_root_targets": model.maintenance_targets} if model.maintenance_targets else {}),
+        "latest_target_snapshot_id": targets.get("", ""),
+        **({"unknown_target_observation_ids": unknown_targets} if unknown_targets else {}),
+        **({"source_root_targets": explicit} if explicit else {}),
+        **(
+            {"legacy_target_status": "unknown_after_old_v2_scalar; refresh legacy explicitly to establish its target"}
+            if model.maintenance_target_snapshot_id
+            and "" not in targets
+            and any(not snapshot.source_root_id for snapshot in model.facts)
+            else {}
+        ),
+        **(
+            {
+                "latest_observation_ids": [
+                    item.id
+                    for item in items
+                    if targets.get(facts[item.target_snapshot_id].source_root_id) == item.target_snapshot_id
+                ]
+            }
+            if mixed_protocol
+            else {}
+        ),
         "observations": [item.model_dump() for item in items],
     }
+
+
+def root_targets(model: Model) -> dict[str, str]:
+    targets = dict(model.maintenance_targets)
+    scalar = next((snapshot for snapshot in model.facts if snapshot.id == model.maintenance_target_snapshot_id), None)
+    if scalar is not None:
+        targets.setdefault(scalar.source_root_id, scalar.id)
+    return targets
 
 
 def _item(model: Model, identity: str) -> Maintenance:

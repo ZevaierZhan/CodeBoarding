@@ -5,6 +5,7 @@ from pydantic import ValidationError
 
 from architecture_model.errors import ModelError
 from architecture_model.schema import Facts, Model, Opinion, Strict, Verification
+from architecture_model.verification import validate_verification
 
 COLLECTIONS = ("facts", "bindings", "components", "relations", "scenarios", "opinions", "verifications", "maintenance")
 
@@ -148,6 +149,7 @@ def validate_model(value: object) -> Model:
     versions = {snapshot.source.digest for snapshot in model.facts}
     for verification in model.verifications:
         _references([verification.source_version], versions, f"/verifications/{verification.id}/source_version")
+        validate_verification(model, verification)
     for item in model.maintenance:
         location = f"/maintenance/{item.id}"
         _references([item.target_snapshot_id], set(facts), location)

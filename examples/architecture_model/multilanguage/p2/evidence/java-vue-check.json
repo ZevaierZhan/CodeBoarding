@@ -1,0 +1,12 @@
+{
+  "output": "F:\\CodeBoarding\\temp\\m5-p2\\java-vue-check\\java-vue.html",
+  "model_id": "6a8e7545-9cc1-45d6-8171-156243091f89",
+  "revision": 1,
+  "committed": false,
+  "method_edge_present": true,
+  "vue_symbol_support": false,
+  "vue_file_evidence": true,
+  "http_contract_status": "candidate",
+  "scenario": "vue-order",
+  "temporary_check_model": true
+}

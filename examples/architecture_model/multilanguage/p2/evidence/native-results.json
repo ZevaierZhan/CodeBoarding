@@ -1,0 +1,180 @@
+[
+  {
+    "case": "frontend",
+    "command": [
+      "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+      "-m",
+      "architecture_model",
+      "facts",
+      "export",
+      "--repo",
+      "F:\\CodeBoarding\\temp\\m5-p2\\native\\target\\frontend",
+      "--project-id",
+      "m5-system",
+      "--source-root-id",
+      "frontend",
+      "--tools",
+      "F:\\CodeBoarding\\temp\\m5\\tools.json",
+      "--output",
+      "F:\\CodeBoarding\\temp\\m5-p2\\native\\frontend.facts.json"
+    ],
+    "exit_code": 0,
+    "published": true,
+    "snapshot_id": "67bcba39d451a69bb312ec0b2124cbe785eb4d99987b831495689c0f51e7d49b",
+    "files": 1,
+    "symbols": 3,
+    "calls": 2,
+    "languages": [
+      "typescript"
+    ]
+  },
+  {
+    "case": "backend",
+    "command": [
+      "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+      "-m",
+      "architecture_model",
+      "facts",
+      "export",
+      "--repo",
+      "F:\\CodeBoarding\\temp\\m5-p2\\native\\target\\backend",
+      "--project-id",
+      "m5-system",
+      "--source-root-id",
+      "backend",
+      "--tools",
+      "F:\\CodeBoarding\\temp\\m5\\tools.json",
+      "--output",
+      "F:\\CodeBoarding\\temp\\m5-p2\\native\\backend.facts.json"
+    ],
+    "exit_code": 0,
+    "published": true,
+    "snapshot_id": "39ba63fa4873694ced0166491da3016e07480be397ac661a0e4dd8d116e81132",
+    "files": 2,
+    "symbols": 3,
+    "calls": 1,
+    "languages": [
+      "rust"
+    ]
+  },
+  {
+    "case": "mixed",
+    "command": [
+      "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+      "-m",
+      "architecture_model",
+      "facts",
+      "export",
+      "--repo",
+      "F:\\CodeBoarding\\temp\\m5-p2\\native\\target",
+      "--project-id",
+      "m5-system",
+      "--source-root-id",
+      "mixed",
+      "--tools",
+      "F:\\CodeBoarding\\temp\\m5\\tools.json",
+      "--output",
+      "F:\\CodeBoarding\\temp\\m5-p2\\native\\mixed.facts.json"
+    ],
+    "exit_code": 0,
+    "published": true,
+    "snapshot_id": "1c01c61d91e4bd2dd3a9eeca6867d6360bd5d37bbdd83ddcc440298b257ae78f",
+    "files": 3,
+    "symbols": 6,
+    "calls": 3,
+    "languages": [
+      "rust",
+      "typescript"
+    ]
+  },
+  {
+    "case": "vue-typescript",
+    "command": [
+      "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+      "-m",
+      "architecture_model",
+      "facts",
+      "export",
+      "--repo",
+      "F:\\CodeBoarding\\temp\\m5-p2\\native\\java-vue\\frontend",
+      "--project-id",
+      "m5-system",
+      "--source-root-id",
+      "vue-typescript",
+      "--tools",
+      "F:\\CodeBoarding\\temp\\m5\\tools.json",
+      "--output",
+      "F:\\CodeBoarding\\temp\\m5-p2\\native\\vue-typescript.facts.json"
+    ],
+    "exit_code": 0,
+    "published": true,
+    "snapshot_id": "fcc3ed601bf7503285a8f69b8a8ef794499ad1afeb8db9b20b6d8ae620f50e62",
+    "files": 2,
+    "symbols": 1,
+    "calls": 0,
+    "languages": [
+      "typescript",
+      "vue"
+    ]
+  },
+  {
+    "case": "java",
+    "command": [
+      "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+      "-m",
+      "architecture_model",
+      "facts",
+      "export",
+      "--repo",
+      "F:\\CodeBoarding\\temp\\m5-p2\\native\\java-vue\\backend",
+      "--project-id",
+      "m5-system",
+      "--source-root-id",
+      "java",
+      "--tools",
+      "F:\\CodeBoarding\\temp\\m5\\tools.json",
+      "--output",
+      "F:\\CodeBoarding\\temp\\m5-p2\\native\\java.facts.json"
+    ],
+    "exit_code": 0,
+    "published": true,
+    "snapshot_id": "861ee3d90f0aa24e75d595c65ed8066f51cd035bd74ae492882db6831a84e83a",
+    "files": 2,
+    "symbols": 4,
+    "calls": 3,
+    "languages": [
+      "java"
+    ]
+  },
+  {
+    "case": "java-vue",
+    "command": [
+      "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+      "-m",
+      "architecture_model",
+      "facts",
+      "export",
+      "--repo",
+      "F:\\CodeBoarding\\temp\\m5-p2\\native\\java-vue",
+      "--project-id",
+      "m5-system",
+      "--source-root-id",
+      "java-vue",
+      "--tools",
+      "F:\\CodeBoarding\\temp\\m5\\tools.json",
+      "--output",
+      "F:\\CodeBoarding\\temp\\m5-p2\\native\\java-vue.facts.json"
+    ],
+    "exit_code": 0,
+    "published": true,
+    "snapshot_id": "ada4199a0f42f79ae0b95e4dea88ea47170b8d2963e345eda1d27517dc784bcb",
+    "files": 4,
+    "symbols": 5,
+    "calls": 3,
+    "languages": [
+      "java",
+      "typescript",
+      "vue"
+    ]
+  }
+]

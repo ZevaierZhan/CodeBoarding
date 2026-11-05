@@ -2,9 +2,15 @@
 
 Open [the interactive document](model/index.html). Its canonical persistent artifact
 is [model/model.json](model/model.json), model `c3094cd2-b73e-4b0c-a3bb-6b9beb395a58`,
-revision **10**. Both `open-document` and `preview-document` reuse the same
+revision **11**. Both `open-document` and `preview-document` reuse the same
 `read-file-ipc`, `ipc-client`, `rust-command` and `document-service` identities.
 This is an authored static business explanation, not an executed desktop trace.
+
+The [P2 follow-up](../../../docs/design/architecture-model-m5-p2.md) adds an actually
+executed frontend-only source check with explicit binding/snapshot scope, plus a
+planned bilateral IPC check. It preserves the revision-10 facts, bindings,
+interpretations and reviews. HTML labels the first check partial and the second
+planned; neither promotes the IPC candidate to runtime fact.
 
 The fixture contains real TypeScript `invoke("read_file", {path})`, a Rust
 `cfg_attr(feature="desktop", tauri::command)` declaration, a feature-gated

@@ -1,5 +1,12 @@
 # M5 acceptance — 2026-11-05 (Asia/Shanghai)
 
+The [P2 follow-up](architecture-model-m5-p2.md) completes failure attribution and
+supersedes the verification-scope/maintenance-target protocol below. Its current
+canonical example is revision 11; the original acceptance observations here remain
+historical. P2: 209 tests passed, 95.12% model coverage; the 122 old failures split
+into 89 baseline and 33 environmental cases, with 29 parser-blocked assertions still
+unverified beyond setup. The whole-repository gate remains unpassed.
+
 Started from clean fork main `4f73e07c46b21a1fc96426b4be9bf9ff96e8a7dd` and fetched
 origin/main. Work is on `m5/multi-language-architecture`; no upstream PR or merge
 is authorized. The [implementation protocol](architecture-model-m5.md),

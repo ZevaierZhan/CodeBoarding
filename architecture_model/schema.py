@@ -13,7 +13,12 @@ class Strict(BaseModel):
     @model_serializer(mode="wrap")
     def preserve_legacy_shape(self, handler):
         value = handler(self)
-        for name, default in (("contract", None), ("relation_ids", []), ("maintenance_targets", {})):
+        for name, default in (
+            ("contract", None),
+            ("relation_ids", []),
+            ("maintenance_targets", {}),
+            ("binding_snapshots", {}),
+        ):
             field = type(self).model_fields.get(name)
             if field is not None and not field.is_required() and value.get(name, default) == default:
                 value.pop(name, None)
@@ -213,6 +218,7 @@ class Verification(Strict):
     executed_at: str = ""
     exit_code: int | None = None
     result: str = ""
+    binding_snapshots: dict[Text, Text] = Field(default_factory=dict)
 
     @model_validator(mode="after")
     def execution_record(self) -> "Verification":

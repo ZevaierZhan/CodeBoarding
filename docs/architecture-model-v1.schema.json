@@ -1137,6 +1137,17 @@
           "default": "",
           "title": "Result",
           "type": "string"
+        },
+        "binding_snapshots": {
+          "additionalProperties": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "propertyNames": {
+            "minLength": 1
+          },
+          "title": "Binding Snapshots",
+          "type": "object"
         }
       },
       "required": [

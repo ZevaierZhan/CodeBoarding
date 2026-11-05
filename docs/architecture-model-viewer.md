@@ -76,7 +76,7 @@ separators remain characters within the same numbered source line.
 |---|---|
 | Current / Historical explanation | Whether the observation's content fingerprints match today's model definitions |
 | Current pending / Historical pending / Review recorded | Membership in current_pending_ids / pending_ids and explicit resolution |
-| Latest / Older target | Whether target_snapshot_id equals latest_target_snapshot_id |
+| Latest / Older / Unknown target | Whether the target matches that root's effective target; query.latest_observation_ids and unknown_target_observation_ids distinguish known older versions from unavailable latestness |
 
 Current coverage may target older source. A historical confirmation never means the
 latest code was verified. Expand an observation for exact target version, reasons,

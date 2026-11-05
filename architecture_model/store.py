@@ -12,6 +12,7 @@ from architecture_model.errors import ModelError
 from architecture_model.maintenance_coverage import maintained_observations
 from architecture_model.schema import Maintenance, Model, Patch, Project, Revision
 from architecture_model.validation import COLLECTIONS, parse, validate_model
+from architecture_model.verification import validate_verification
 
 BINDING_EVIDENCE_FIELDS = ("snapshot_id", "source_version", "location")
 
@@ -154,6 +155,10 @@ def patched_model(
 
 
 def revision_candidate(current: Model, proposed: Model, author: str, summary: str) -> tuple[Model, dict]:
+    old_checks = {item.id: item for item in current.verifications}
+    for check in proposed.verifications:
+        if old_checks.get(check.id) != check:
+            validate_verification(proposed, check, require_scope=True)
     proposed.maintenance = maintained_observations(proposed, model_diff)
     previous_bindings = {binding.id: binding.model_dump() for binding in current.bindings}
     for binding in proposed.bindings:

@@ -51,6 +51,35 @@ whole-file granularity. Rebind explicitly, then resolve the exact review version
 history and previous confirmations stay saved. A failed or absent root supplies
 no deletion evidence.
 
+`maintenance_target_snapshot_id` is the legacy root's target only. Explicit roots
+use `maintenance_targets[root_id]`. Query and HTML use these effective targets by
+root; there is no global latest source version. Old M5 files may have a v2 scalar
+alias: the reader maps it to that named root without writing. An overwritten
+legacy target cannot be recovered reliably from snapshot order or review history;
+the reader reports it unknown until an explicit legacy preview/refresh establishes
+it. A normal successful refresh normalizes the old alias into the root map while
+preserving all immutable facts and historical observations.
+
+For a new Verification targeting a v2 component, step, scenario, model or relation,
+declare `binding_snapshots`, mapping each actually checked binding ID to its exact
+immutable snapshot ID. Those bindings must belong to the targets' referenced
+evidence, and each pair must match current evidence or retained binding history.
+Directly targeted bindings must be covered. Declare both sides only if both were
+actually checked; use separate records for different checks. The required old
+`source_version` is an anchor equal to one scoped snapshot's digest, never the
+whole-system version. HTML resolves the complete binding/root/version scope.
+
+A frontend-only executed source check may target the IPC relation but covers only
+its declared frontend bindings. It remains partial, not bilateral/runtime approval.
+Declare an unexecuted bilateral host check as planned. Reading an old unscoped
+compound record preserves its actual fields/results and reports unknown scope;
+editing that record into a new v2 check requires explicit scope. Legacy single-root
+records still read. A direct binding record cannot name another root's version.
+Neither source coverage nor a successful static check changes contract/claim kind.
+After component boundaries change, retain old check evidence. The viewer marks
+evidence outside today's membership historical and shows the new uncovered bindings;
+do not rewrite an old execution to make it appear to cover the revised component.
+
 Export ONE HTML with `--source-map MAP_JSON`, a JSON object mapping root IDs to
 current physical directories. `--source-root` remains for legacy bindings only.
 Mapping is local execution input, never persistent identity. Each historical and

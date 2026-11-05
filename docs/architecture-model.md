@@ -8,6 +8,10 @@ The [real mixed-language example](../examples/architecture_model/multilanguage/R
 includes one model, two independent repositories, a shared IPC contract, continuing
 Agent session and a single-root maintenance trial.
 
+The [M5 P2 protocol](design/architecture-model-m5-p2.md) specifies exact Verification
+binding/snapshot scope and independent legacy/named-root maintenance targets.
+It also records the controlled comparison of all 122 previous full-suite failures.
+
 For a repeatable external-Agent workflow, use the repository-owned
 [modeling Skill](../skills/codeboarding-modeling/SKILL.md) and
 [real M4 continuation example](../examples/architecture_model/codeboarding/README.md).

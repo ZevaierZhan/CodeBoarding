@@ -177,6 +177,10 @@ def load_context(cache: Path) -> tuple[dict, dict]:
 
 
 def overview(model: dict, index: dict, cache: Path) -> dict:
+    scalar: dict = next((item for item in model["facts"] if item["id"] == model["maintenance_target_snapshot_id"]), {})
+    explicit_targets = dict(model.get("maintenance_targets", {}))
+    if scalar.get("source_root_id"):
+        explicit_targets.setdefault(scalar["source_root_id"], scalar["id"])
     return {
         "artifact_type": index["artifact_type"],
         "cache": str(cache.resolve()),
@@ -196,7 +200,9 @@ def overview(model: dict, index: dict, cache: Path) -> dict:
             for item in model["facts"][:5]
         ],
         "facts_shown": min(5, len(model["facts"])),
-        "maintenance_target": model["maintenance_target_snapshot_id"],
+        "maintenance_target": scalar.get("id", "") if not scalar.get("source_root_id") else "",
+        "maintenance_target_scope": "legacy root only; an overwritten legacy target is unknown",
+        "named_maintenance_target_count": len(explicit_targets),
         "unresolved_observations": sum(
             item["disposition"] != "unchanged" and item["resolution"] is None for item in model["maintenance"]
         ),

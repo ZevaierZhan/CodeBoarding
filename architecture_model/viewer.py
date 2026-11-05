@@ -11,6 +11,7 @@ from architecture_model.errors import ModelError
 from architecture_model.maintenance import query
 from architecture_model.schema import Binding, HistoricalLocation, Location, Model
 from architecture_model.validation import validate_model
+from architecture_model.verification import verification_scope
 
 ASSETS = Path(__file__).with_name("viewer_assets")
 MAX_SOURCE_BYTES = 2_000_000
@@ -46,6 +47,7 @@ def projection(model: Model, source_root: Path | None = None, source_map: dict[s
         "maintenance": maintenance,
         "exported_at": datetime.now(timezone.utc).isoformat(),
         "snippets": snippets,
+        "verification_scopes": {record.id: verification_scope(frozen, record) for record in frozen.verifications},
     }
 
 

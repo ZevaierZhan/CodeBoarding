@@ -87,6 +87,8 @@ feedback as a rehearsal; it is not user acceptance. Opinions do not confirm sour
 maintenance or execute checks. Record unexecuted checks as `planned`; executed
 checks require actual object targets, command, environment, inputs, executor,
 timestamp, exit/result and source digest. A structural check is not business proof.
+For v2 compound checks, declare the actual `binding_snapshots` scope as described
+in the mixed-language protocol; a one-sided check of a shared contract is partial.
 
 ## Explain current source or maintain changed evidence
 
