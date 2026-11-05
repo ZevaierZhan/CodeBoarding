@@ -1,0 +1,49 @@
+{
+  "command": "uv run pytest --cov=. --cov-report=term --cov-fail-under=80",
+  "threshold": 80,
+  "config_changed": false,
+  "baseline": {
+    "covered_lines": 15230,
+    "num_statements": 39126,
+    "percent_covered": 38.925522670347085,
+    "percent_covered_display": "39",
+    "missing_lines": 23896,
+    "excluded_lines": 675,
+    "percent_statements_covered": 38.925522670347085,
+    "percent_statements_covered_display": "39"
+  },
+  "final": {
+    "covered_lines": 15345,
+    "num_statements": 39233,
+    "percent_covered": 39.112481839267964,
+    "percent_covered_display": "39",
+    "missing_lines": 23888,
+    "excluded_lines": 675,
+    "percent_statements_covered": 39.112481839267964,
+    "percent_statements_covered_display": "39"
+  },
+  "modules_in_final_whole_suite": {
+    "static_analyzer/": {
+      "covered_lines": 7409,
+      "statements": 8509,
+      "percent": 87.07
+    },
+    "architecture_model/": {
+      "covered_lines": 1115,
+      "statements": 1507,
+      "percent": 73.99
+    },
+    "infra/repo_utils/": {
+      "covered_lines": 385,
+      "statements": 546,
+      "percent": 70.51
+    },
+    "diagram_analysis/": {
+      "covered_lines": 1446,
+      "statements": 2561,
+      "percent": 56.46
+    }
+  },
+  "separate_native_run_combined": false,
+  "note": "Whole-suite figures are actual clean-worktree command results, not the higher preliminary workspace-wrapper figure. No omit or threshold edits."
+}

@@ -1,0 +1,80 @@
+{
+  "base_main": "cca03766",
+  "m5_merge": "7d38098c3ae975ced36ad67887355efd4fd34a05",
+  "baseline": {
+    "passed": 2769,
+    "failed": 126,
+    "skipped": 30
+  },
+  "final": {
+    "passed": 2882,
+    "skipped": 59,
+    "failed": 6
+  },
+  "analyzers": {
+    "passed": 1783,
+    "skipped": 44
+  },
+  "model_native": {
+    "passed": 220
+  },
+  "baseline_failed_to_passed": 92,
+  "kotlin_skipped": 29,
+  "baseline_uri_errors": 29,
+  "final_uri_errors": 0,
+  "new_test_cases": 22,
+  "m5_122_baseline": {
+    "failed": 120,
+    "passed": 2
+  },
+  "m5_122_final": {
+    "passed": 88,
+    "failed": 5,
+    "skipped": 29
+  },
+  "global_coverage_percent": 39.112481839267964,
+  "module_coverage": {
+    "static_analyzer/": {
+      "covered_lines": 7409,
+      "statements": 8509,
+      "percent": 87.07
+    },
+    "architecture_model/": {
+      "covered_lines": 1115,
+      "statements": 1507,
+      "percent": 73.99
+    },
+    "infra/repo_utils/": {
+      "covered_lines": 385,
+      "statements": 546,
+      "percent": 70.51
+    },
+    "diagram_analysis/": {
+      "covered_lines": 1446,
+      "statements": 2561,
+      "percent": 56.46
+    }
+  },
+  "coverage_gate": 80,
+  "coverage_gate_passed": false,
+  "executable_without_missing_kotlin": {
+    "passed": 2882,
+    "failed": 6,
+    "other_skipped": 30
+  },
+  "linux": {
+    "scope": "10 stdlib path/URI checks only",
+    "full_pytest": "not run; available Python 3.13.5 outside project >=3.12,<3.13 constraint"
+  },
+  "domain_model_diff": "",
+  "baseline_coverage_percent": 38.925522670347085,
+  "baseline_existing_remaining": 5,
+  "newly_observed_unattributed_remaining": 1,
+  "manifest_reruns": {
+    "runs": 20,
+    "passed": 20,
+    "failed": 0
+  },
+  "analyzers_executable_pass_rate": 100.0,
+  "whole_suite_executable_pass_rate": 99.7922
+}

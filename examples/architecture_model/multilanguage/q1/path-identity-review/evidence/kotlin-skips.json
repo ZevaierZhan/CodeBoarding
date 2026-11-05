@@ -1,0 +1,147 @@
+[
+  {
+    "nodeid": "tests/static_analyzer/test_edge_builder.py::TestConstructorCalledThroughItsClass::test_the_constructor_is_picked_by_argument_count",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_edge_builder.py::TestConstructorCalledThroughItsClass::test_a_single_constructor_needs_no_count_and_a_class_without_one_stays",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_edge_builder.py::TestConstructorCalledThroughItsClass::test_a_synthetic_member_answered_with_the_class_is_not_a_construction",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_edge_builder.py::TestConstructorCalledThroughItsClass::test_a_call_answered_with_the_companion_runs_its_invoke",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_edge_builder.py::TestConstructorCalledThroughItsClass::test_same_arity_overloads_keep_the_edge_on_the_class",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_edge_builder.py::TestConstructorCalledThroughItsClass::test_a_call_no_overload_matches_runs_the_primary_constructor",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_edge_builder.py::TestConstructorCalledThroughItsClass::test_an_unreadable_callee_keeps_the_edge_on_the_class",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_kotlin_adapter.py::TestRefineDocumentSymbols::test_overloads_constructors_and_kinds_are_told_apart",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_kotlin_adapter.py::TestRefineDocumentSymbols::test_a_classs_constants_and_constructor_values_are_properties",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_kotlin_adapter.py::TestRefineDocumentSymbols::test_objects_and_companions_are_classes",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::test_runtime_references_exclude_bindings_and_annotations[kt-fun f(x: Ignored) {\\n try {} catch (bound: N.ExpectedOne) {}\\n if (x !is ExpectedTwo) {}\\n}]",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::test_runtime_references_exclude_bindings_and_annotations[kt-fun f(x: Ignored) = when (x) { is N.ExpectedOne -> 1; !is ExpectedTwo -> 2; else -> 3 }]",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinCallSites::test_a_call_names_its_callee_and_a_member_call_its_member",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinCallSites::test_a_trailing_lambda_does_not_name_the_call_it_follows_twice",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinCallSites::test_callable_references_are_sites_but_a_class_literal_is_not",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinCallSites::test_a_supertype_constructor_and_a_delegation_call_are_sites",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinCallSites::test_a_call_with_one_type_argument_is_not_read_as_a_comparison",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinSplitConstructorHeader::test_the_rest_of_the_file_is_still_read_at_its_own_positions",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinSplitConstructorHeader::test_the_constructor_is_keyed_where_the_server_starts_it",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinDeclarations::test_signatures_drop_type_arguments_and_package_qualifiers",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinDeclarations::test_a_nested_type_keeps_its_outer_type",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinDeclarations::test_a_function_type_inside_type_arguments_is_dropped_with_them",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinDeclarations::test_a_documented_constructor_is_also_keyed_at_its_kdoc",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinDeclarations::test_kinds_the_server_does_not_tell_apart",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinTypeBases::test_bases_name_the_type_not_its_arguments_or_package",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinTypeBases::test_an_enum_entry_with_a_body_derives_from_its_enum",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestKotlinTypeBases::test_a_super_member_is_named_on_the_base",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestCallArgumentCount::test_arguments_and_a_trailing_lambda_are_counted",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  },
+  {
+    "nodeid": "tests/static_analyzer/test_source_inspector.py::TestCallArgumentCount::test_a_position_on_no_call_counts_nothing",
+    "outcome": "skipped",
+    "reason": "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+  }
+]

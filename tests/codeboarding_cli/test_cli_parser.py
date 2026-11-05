@@ -238,7 +238,7 @@ def test_main_renders_after_any_successful_analysis(
     command_module: str,
     command_args: list[str],
 ) -> None:
-    analysis_path = Path("/tmp/repo/.codeboarding/analysis.json")
+    analysis_path = Path("/tmp/repo/.codeboarding/analysis.json").resolve()
     events: list[str] = []
     mock_render_output.side_effect = lambda *args, **kwargs: events.append("render")
     with (
@@ -252,7 +252,7 @@ def test_main_renders_after_any_successful_analysis(
         "rst",
         analysis_path=analysis_path,
         repo_name="repo",
-        output_dir=Path("/tmp/repo/.codeboarding"),
+        output_dir=Path("/tmp/repo/.codeboarding").resolve(),
     )
 
 

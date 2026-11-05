@@ -299,7 +299,8 @@ class TestFindJava21OrLater(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmpdir:
             fake_java_home = Path(tmpdir) / "jdk-21"
             (fake_java_home / "bin").mkdir(parents=True)
-            (fake_java_home / "bin" / "java").touch()
+            for executable in ("java", "java.exe"):
+                (fake_java_home / "bin" / executable).touch()
 
             with patch.dict("os.environ", {"JAVA_HOME": str(fake_java_home)}):
                 with patch("infra.tool_registry.java.get_java_version", return_value=21) as mock_version:
@@ -314,7 +315,8 @@ class TestFindJava21OrLater(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmpdir:
             old_java_home = Path(tmpdir) / "jdk-17"
             (old_java_home / "bin").mkdir(parents=True)
-            (old_java_home / "bin" / "java").touch()
+            for executable in ("java", "java.exe"):
+                (old_java_home / "bin" / executable).touch()
 
             scanned_jdk = Path("/opt/jvm/jdk-21")
 

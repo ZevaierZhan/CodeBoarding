@@ -1,4 +1,5 @@
 import subprocess
+import os
 from pathlib import Path
 
 from static_analyzer import dotnet_sdk
@@ -54,7 +55,7 @@ def test_resolve_installs_global_json_sdk_when_system_is_unsatisfied(tmp_path, m
     def fake_install(args, install_dir):
         installed.append(args)
         install_dir.mkdir(parents=True, exist_ok=True)
-        dotnet = install_dir / "dotnet"
+        dotnet = install_dir / ("dotnet.exe" if os.name == "nt" else "dotnet")
         dotnet.write_text("")
         dotnet.chmod(0o755)
 
@@ -73,7 +74,7 @@ def test_resolve_installs_global_json_sdk_when_system_is_unsatisfied(tmp_path, m
     resolution = dotnet_sdk.resolve_dotnet_sdk(tmp_path)
 
     assert installed == [["--jsonfile", str(tmp_path / "global.json")]]
-    assert resolution.dotnet_path == str(home / "dotnet" / "dotnet")
+    assert resolution.dotnet_path == str(home / "dotnet" / ("dotnet.exe" if os.name == "nt" else "dotnet"))
     assert resolution.env["DOTNET_ROOT"] == str(home / "dotnet")
     assert resolution.installed is True
 
@@ -85,7 +86,7 @@ def test_resolve_installs_tool_sdk_when_no_dotnet_exists(tmp_path, monkeypatch):
     def fake_install(args, install_dir):
         installed.append(args)
         install_dir.mkdir(parents=True, exist_ok=True)
-        dotnet = install_dir / "dotnet"
+        dotnet = install_dir / ("dotnet.exe" if os.name == "nt" else "dotnet")
         dotnet.write_text("")
         dotnet.chmod(0o755)
 

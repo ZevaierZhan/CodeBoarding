@@ -1,0 +1,12 @@
+{
+  "platform": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.13 (main, Jun 23 2026, 15:23:43) [MSC v.1944 64 bit (AMD64)]",
+  "venv": "F:\\CodeBoarding-Q1\\.venv",
+  "workspace": "F:\\CodeBoarding-Q1",
+  "env_file_exists": false,
+  "optional_native_tools": "explicit local M1_*/M5_TOOLS config; no installation",
+  "baseline_command": "uv run python temp/q1/baseline.py (no-download loader guard)",
+  "final_command": "uv run --no-sync pytest --cov=. --cov-report=term --cov-fail-under=80",
+  "native_command": "uv run --no-sync pytest tests/architecture_model -q with explicit native tool env",
+  "worktree_note": "Isolated from concurrent business-permission-matrix edits; original baseline workspace contained ignored historical temp outputs."
+}

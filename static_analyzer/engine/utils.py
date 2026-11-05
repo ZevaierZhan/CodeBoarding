@@ -21,12 +21,18 @@ def uri_to_path(uri: str) -> Path | None:
         parsed = urlparse(uri)
         if parsed.scheme != "file":
             return None
+        if parsed.query or parsed.fragment or not parsed.path.startswith("/"):
+            return None
         path = unquote(parsed.path)
         if _IS_WINDOWS:
+            if parsed.netloc and parsed.netloc.lower() != "localhost":
+                return Path(f"//{parsed.netloc}{path}")
             # Strip the leading slash on ``/C:/foo`` -> ``C:/foo``.
             if len(path) >= 3 and path[0] == "/" and path[2] == ":":
                 path = path[1:]
             return Path(path).resolve()
+        if parsed.netloc and parsed.netloc.lower() != "localhost":
+            return None
         return Path(path)
     except Exception:
         return None

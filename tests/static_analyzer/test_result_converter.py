@@ -733,4 +733,4 @@ class TestIgnoredFilesExcluded:
 
         result = convert_to_codeboarding_format(st, _empty_result(), adapter)
 
-        assert any("tests/" in node.file_path for node in result["call_graph"].nodes.values())
+        assert any("tests" in Path(node.file_path).parts for node in result["call_graph"].nodes.values())

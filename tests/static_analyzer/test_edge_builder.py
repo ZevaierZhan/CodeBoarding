@@ -70,7 +70,7 @@ def _sym(
         name=name,
         qualified_name=qname,
         kind=kind,
-        file_path=Path(path),
+        file_path=Path(path).resolve(),
         start_line=start_line,
         start_char=start_char,
         end_line=end_line if end_line is not None else start_line + 10,
@@ -161,7 +161,7 @@ class TestIsValidEdge:
 
 
 def _definition(path: str, line: int, char: int) -> dict:
-    return {"uri": Path(path).as_uri(), "range": {"start": {"line": line, "character": char}}}
+    return {"uri": Path(path).resolve().as_uri(), "range": {"start": {"line": line, "character": char}}}
 
 
 def _index(symbols: list[SymbolInfo], inspector: SourceInspector | None = None) -> SymbolIndex:
@@ -198,7 +198,7 @@ class TestSymbolIndexResolve:
         sym = _sym("foo", "a.foo", NodeType.FUNCTION, "/p/a.py", 10, 4)
         result = _index([sym]).resolve(
             {
-                "targetUri": Path("/p/a.py").as_uri(),
+                "targetUri": Path("/p/a.py").resolve().as_uri(),
                 "targetSelectionRange": {"start": {"line": 10, "character": 4}},
             }
         )
@@ -300,7 +300,7 @@ class TestSymbolIndexResolve:
         assert _index([]).resolve({"uri": "invalid-uri", "range": {"start": {"line": 0, "character": 0}}}) is None
 
     def test_returns_none_for_missing_position(self):
-        assert _index([]).resolve({"uri": Path("/p/a.py").as_uri(), "range": {}}) is None
+        assert _index([]).resolve({"uri": Path("/p/a.py").resolve().as_uri(), "range": {}}) is None
 
 
 # ---------------------------------------------------------------------------

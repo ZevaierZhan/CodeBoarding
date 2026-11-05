@@ -1,6 +1,8 @@
 import os
+from pathlib import Path
 
 import pytest
+import tree_sitter_language_pack as language_pack
 
 
 # The unit suite must not report to the product's PostHog project. Its runs are
@@ -20,3 +22,21 @@ os.environ["CODEBOARDING_SOURCE"] = "tests"
 @pytest.fixture(autouse=True)
 def label_test_telemetry(monkeypatch):
     monkeypatch.setenv("CODEBOARDING_SOURCE", "tests")
+    monkeypatch.chdir(Path(__file__).resolve().parent.parent)
+
+
+@pytest.fixture(autouse=True)
+def local_kotlin_grammar_only(monkeypatch, request):
+    """Skip only tests that actually request an absent optional grammar, without downloading it."""
+    load = language_pack.get_language
+
+    def local_language(name):
+        if name == "kotlin":
+            request.node.add_marker("requires_kotlin_grammar")
+            if name not in language_pack.downloaded_languages():
+                pytest.skip(
+                    "Kotlin grammar is not installed in the configured local cache; test downloads are disabled"
+                )
+        return load(name)
+
+    monkeypatch.setattr(language_pack, "get_language", local_language)

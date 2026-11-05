@@ -24,13 +24,14 @@ import pickle
 import shutil
 import sys
 import tempfile
+from functools import partial
 from pathlib import Path
 from typing import Any
 
 from filelock import FileLock
 
 from infra.constants import STATIC_ANALYSIS_PKL, STATIC_ANALYSIS_SHA
-from infra.repo_utils.path_utils import to_absolute_path, to_relative_path
+from infra.repo_utils.path_utils import restore_cached_path, serialize_cached_path
 from static_analyzer.analysis_result import AnalysisData, InvalidatedAnalysis, InvalidatedEdge, StaticAnalysisResults
 from static_analyzer.cfg import CallGraph, EdgeKind, ReferenceEdge
 from static_analyzer.lsp_client.diagnostics import FileDiagnosticsMap
@@ -76,7 +77,9 @@ _LEGACY_CACHE_SUBDIR = "cache"
 # v13: a TypeScript call into a sibling workspace package resolves to its sources without an install or build.
 # v14: handlers, runtime type tests, and variant patterns contribute dependencies without invoking their targets.
 # Older pickles are treated as cache misses and re-run.
-_TAG_VERSION = "v14"
+# v15: cache paths use an explicit POSIX serialization dialect; old ambiguous separators cannot be trusted.
+_TAG_VERSION = "v15"
+_CACHE_PATH_FORMAT = "repo-paths-v1"
 
 
 class StaticAnalysisCache:
@@ -92,32 +95,28 @@ class StaticAnalysisCache:
         self.artifact_dir = artifact_dir
         self.repo_root = repo_root.resolve()
 
-    def _to_relative(self, path: str) -> str:
-        return to_relative_path(path, self.repo_root)
-
-    def _to_absolute(self, path: str) -> str:
-        return to_absolute_path(path, self.repo_root)
-
     def _relativize(self, result: StaticAnalysisResults) -> StaticAnalysisResults:
         """Return a copy of result with all file paths made repo-relative."""
         portable = copy.copy(result)
         # Drop runtime-only warm-start context before deep-copying/pickling the cache artifact.
         portable.incremental_base_results = None
         portable = copy.deepcopy(portable)
+        serialize = partial(serialize_cached_path, repo_root=self.repo_root)
         for lang_data in portable.results.values():
-            lang_data.visit_paths(self._to_relative)
+            lang_data.visit_paths(serialize)
         portable.diagnostics = {
-            lang: {self._to_relative(fp): diags for fp, diags in file_map.items()}
+            lang: {serialize(fp): diags for fp, diags in file_map.items()}
             for lang, file_map in portable.diagnostics.items()
         }
         return portable
 
-    def _absolutize(self, result: StaticAnalysisResults) -> StaticAnalysisResults:
+    def _absolutize(self, result: StaticAnalysisResults, *, legacy: bool = False) -> StaticAnalysisResults:
         """Expand all repo-relative file paths in result to absolute paths."""
+        restore = partial(restore_cached_path, repo_root=self.repo_root, legacy=legacy)
         for lang_data in result.results.values():
-            lang_data.visit_paths(self._to_absolute)
+            lang_data.visit_paths(restore)
         result.diagnostics = {
-            lang: {self._to_absolute(fp): diags for fp, diags in file_map.items()}
+            lang: {restore(fp): diags for fp, diags in file_map.items()}
             for lang, file_map in result.diagnostics.items()
         }
         return result
@@ -238,12 +237,19 @@ class StaticAnalysisCache:
 
         try:
             with open(target, "rb") as f:
-                result = pickle.load(f)
-            result = self._absolutize(result)
+                payload = pickle.load(f)
+            legacy_paths = not isinstance(payload, dict)
+            if legacy_paths:
+                result = payload
+            else:
+                if payload.get("path_format") != _CACHE_PATH_FORMAT:
+                    raise ValueError("Unknown cache path format; reanalysis required")
+                result = payload["analysis"]
+            result = self._absolutize(result, legacy=legacy_paths)
             logger.info(f"Loaded static analysis from cache: {target}")
             return result
-        except Exception as e:
-            logger.warning(f"Failed to load static analysis cache: {e}")
+        except Exception:
+            logger.exception("Failed to load static analysis cache: %s", target)
             return None
 
     def save(self, result: StaticAnalysisResults, source_sha: str) -> None:
@@ -260,7 +266,7 @@ class StaticAnalysisCache:
 
         with FileLock(self.lock_path, timeout=30):
             portable = self._relativize(result)
-            data = pickle.dumps(portable)
+            data = pickle.dumps({"path_format": _CACHE_PATH_FORMAT, "analysis": portable})
             size_mb = sys.getsizeof(data) / (1024 * 1024)
             logger.info(f"Static analysis cache size: {size_mb:.2f} MB")
 
@@ -336,13 +342,13 @@ def copy_cache_files(src_dir: Path, dest_dir: Path) -> bool:
         with FileLock(dest_dir / STATIC_ANALYSIS_LOCK, timeout=30):
             try:
                 _atomic_copy(src_pkl, dest_pkl)
-            except OSError as e:
-                logger.warning("Failed to copy %s into %s: %s", STATIC_ANALYSIS_PKL, dest_dir, e)
+            except OSError:
+                logger.exception("Failed to copy %s into %s", STATIC_ANALYSIS_PKL, dest_dir)
                 return False
             try:
                 _atomic_copy(src_sha, dest_sha)
-            except OSError as e:
-                logger.warning("Failed to copy %s into %s: %s", STATIC_ANALYSIS_SHA, dest_dir, e)
+            except OSError:
+                logger.exception("Failed to copy %s into %s", STATIC_ANALYSIS_SHA, dest_dir)
                 dest_pkl.unlink(missing_ok=True)
                 dest_sha.unlink(missing_ok=True)
                 return False
@@ -353,13 +359,10 @@ def _atomic_copy(src: Path, dest: Path) -> None:
     """Copy *src* into place at *dest* via tmp+rename so readers see all-or-nothing."""
     fd, tmp_name = tempfile.mkstemp(prefix=f".{dest.name}.", dir=dest.parent)
     tmp_path = Path(tmp_name)
-    os.close(fd)
     try:
-        shutil.copy2(src, tmp_path)
-        # fsync the freshly-copied bytes before the rename commits, so a crash
-        # between rename and writeback can't leave the directory entry pointing
-        # at a not-yet-durable inode.
-        with open(tmp_path, "rb") as f:
+        # Windows requires a writable descriptor for fsync; keep mkstemp's descriptor through copy2.
+        with os.fdopen(fd, "wb") as f:
+            shutil.copy2(src, tmp_path)
             os.fsync(f.fileno())
         tmp_path.replace(dest)
     except Exception:

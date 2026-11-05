@@ -160,4 +160,5 @@ testpaths = ["tests"]
 norecursedirs = ["repos", "build", "dist", "temp", "node_modules"]
 addopts = "--ignore=repos"
 pythonpath = "."
+markers = ["requires_kotlin_grammar: requests the optional locally cached Kotlin tree-sitter grammar"]
 # The integration markers moved with the suite to CodeBoarding-tests (private).
