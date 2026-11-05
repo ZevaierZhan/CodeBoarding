@@ -1,0 +1,71 @@
+{
+  "baseline_commit": "7d38098c3ae975ced36ad67887355efd4fd34a05",
+  "unit_red": {
+    "failed": 5,
+    "passed": 1,
+    "exit_code": 1
+  },
+  "native_red": {
+    "exit_code": 1,
+    "facts_published": false,
+    "engine": "Installed baseline CLI outside checkout"
+  },
+  "regression_green": {
+    "passed": 7,
+    "exit_code": 0,
+    "includes": "Actual tsserver extraction and both callback call paths"
+  },
+  "targeted_converter_group": {
+    "passed": 78,
+    "failed": 1,
+    "baseline_comparison": "Same Windows path assertion on merged main"
+  },
+  "typescript_group": {
+    "passed": 48,
+    "failed": 6,
+    "baseline_comparison": "Same six StopIteration failures on merged main after installing SDK; previously skipped without SDK"
+  },
+  "attribution_group": {
+    "passed": 49,
+    "failed": 6,
+    "baseline_comparison": "Same six Windows path-key assertions on merged main"
+  },
+  "combined_baseline_selection": {
+    "passed": 2,
+    "failed": 13,
+    "method": "Load exact merged-main SymbolTable source; all other production files unchanged"
+  },
+  "node_player": {
+    "passed": 7
+  },
+  "black": {
+    "passed": true,
+    "python_files": 379
+  },
+  "mypy": {
+    "passed": true,
+    "python_files": 379
+  },
+  "private_source_evidence": "Retained locally outside this repository; no private project source or catalogs included.",
+  "full_repository_gate": "Not rerun; original 80% requirement unchanged and prior full run remains unpassed.",
+  "private_integration": "Not run",
+  "specialized": {
+    "passed": 266,
+    "seconds": 631.93,
+    "architecture_model_statements_covered": 1433,
+    "architecture_model_statements": 1507,
+    "symbol_table_statements_covered": 207,
+    "symbol_table_statements": 212,
+    "combined_coverage_percent": 95.4,
+    "unchanged_coverage_threshold": 80
+  },
+  "installed_cli_retest": {
+    "passed": true,
+    "scope_files": 5,
+    "symbols": 79,
+    "calls": 51,
+    "same_snapshot_as_source_engine": true,
+    "private_receipts_location": "External local analysis workspace"
+  },
+  "counts_overlap": true
+}

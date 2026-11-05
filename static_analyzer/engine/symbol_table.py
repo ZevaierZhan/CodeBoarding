@@ -147,8 +147,11 @@ class SymbolTable:
 
             file_key = str(file_path)
 
+            identity_name = name
+            if any(marker in name for marker in ANONYMOUS_SYMBOL_MARKERS):
+                identity_name = f"{name}@{start_line + 1}:{start_char + 1}"
             qualified_name = self._naming.build_qualified_name(
-                file_path, name, kind, parent_chain, project_root, detail
+                file_path, identity_name, kind, parent_chain, project_root, detail
             )
 
             info = SymbolInfo(
@@ -190,11 +193,13 @@ class SymbolTable:
                     parent_chain[skip:] for skip in range(1, len(parent_chain))
                 ]
                 for chain in chains:
-                    alias = self._naming.build_qualified_name(file_path, name, kind, chain, project_root, detail)
+                    alias = self._naming.build_qualified_name(
+                        file_path, identity_name, kind, chain, project_root, detail
+                    )
                     self._register_alias(alias, info, chain)
 
             if children:
-                child_chain = parent_chain + [(name, kind)]
+                child_chain = parent_chain + [(identity_name, kind)]
                 self.register_symbols(file_path, children, child_chain, project_root, qualified_name, function_values)
 
     def build_indices(self) -> None:
@@ -305,7 +310,11 @@ class SymbolTable:
         idx_key = (file_key, sym.name)
         same_name_syms = self._file_name_index.get(idx_key, [])
 
-        return [s.qualified_name for s in same_name_syms if s.qualified_name != qualified_name]
+        return [
+            s.qualified_name
+            for s in same_name_syms
+            if s.qualified_name != qualified_name and s.definition_location == sym.definition_location
+        ]
 
     def get_canonical_name(self, qualified_name: str) -> str:
         """Return the canonical (shortest) qualified name for a symbol.
