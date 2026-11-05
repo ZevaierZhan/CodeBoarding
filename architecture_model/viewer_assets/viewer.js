@@ -3,11 +3,12 @@
   const documentData = JSON.parse(document.getElementById("model-data").textContent);
   const model = documentData.model;
   const report = documentData.maintenance;
-  const {visibleAncestor, hierarchy, projectedEdges, Player} = ArchitectureView;
+  const {componentProjection, hierarchy, projectedEdges, Player} = ArchitectureView;
   const rows = hierarchy(model.components);
   const byId = new Map([...model.components, ...model.relations, ...model.scenarios,
     ...model.scenarios.flatMap(s => s.steps), ...model.bindings, ...model.maintenance].map(o => [o.id, o]));
   const expanded = new Set(model.components.filter(c => !c.parent_id).map(c => c.id));
+  const bindingIds = new Set(model.bindings.map(b => b.id));
   const players = new Map(model.scenarios.map(s => [s.id, new Player(s)]));
   let scenario = model.scenarios[0] || null;
   let player = scenario ? players.get(scenario.id) : new Player(null);
@@ -67,13 +68,13 @@
     player.forward(index);
     moved();
   }
-  function renderTree() {
+  function renderTree(projection) {
     el("tree").replaceChildren();
     for (const {component, depth} of rows) {
-      if (visibleAncestor(component.id, model.components, expanded) !== component.id) continue;
+      if (projection.visibleById.get(component.id) !== component.id) continue;
       const row = element("div", "", "tree-row");
       row.style.paddingInlineStart = `${depth * 12}px`;
-      if (model.components.some(c => c.parent_id === component.id)) {
+      if (projection.parentIds.has(component.id)) {
         const toggle = button(expanded.has(component.id) ? "−" : "+", () => {
           expanded.has(component.id) ? expanded.delete(component.id) : expanded.add(component.id);
           render();
@@ -103,10 +104,10 @@
     Object.entries(attributes).forEach(([key, value]) => node.setAttribute(key, String(value)));
     return node;
   }
-  function renderGraph() {
+  function renderGraph(projection) {
     const active = new Set(scenario?.steps.find(s => s.id === player.current)?.component_ids || []);
     const involved = new Set(scenario?.steps.flatMap(s => s.component_ids) || []);
-    const project = id => visibleAncestor(id, model.components, expanded);
+    const project = id => projection.visibleById.get(id);
     const activeVisible = new Set([...active].map(project));
     const involvedVisible = new Set([...involved].map(project));
     const graph = el("graph");
@@ -121,7 +122,7 @@
     nodes.style.width = `${width}px`; nodes.style.height = `${height}px`;
     graph.style.width = `${width}px`; graph.style.height = `${height}px`;
     const positions = new Map(rows.map(r => [r.component.id, {x: r.depth * 230 + 20, y: r.index * 105 + 20}]));
-    const edges = projectedEdges(model, scenario, expanded);
+    const edges = projectedEdges(model, scenario, expanded, projection);
     const groups = new Map();
     for (const edge of edges) {
       const activeEdge = edge.kind !== "relation" && (edge.source_step_id === player.current || edge.transition_index === player.incoming);
@@ -167,8 +168,8 @@
       if (activeVisible.has(component.id)) {
         node.append(element("span", active.has(component.id) ? "Current step" : `Current step inside · ${player.current}`, "inside"));
       }
-      const hidden = rows.filter(r => r.component.id !== component.id && project(r.component.id) === component.id);
-      if (hidden.length) node.append(element("small", `${hidden.length} components inside · expand in structure`));
+      const hidden = projection.hiddenCounts.get(component.id) || 0;
+      if (hidden) node.append(element("small", `${hidden} components inside · expand in structure`));
       nodes.append(node);
     }
     el("relations").replaceChildren();
@@ -197,13 +198,15 @@
     el("play").disabled = !scenario || !choices.length;
     el("reset").disabled = !scenario;
   }
-  function renderBindings(container, ids) {
+  function renderBindings(container, ids, displayed) {
     container.append(element("h3", "Code evidence"));
     for (const id of ids) {
       const binding = byId.get(id);
       if (!binding) continue;
       const node = element("details");
+      node.dataset.bindingId = id;
       node.append(element("summary", `${id} · ${binding.location.path}:${binding.location.start} · ${binding.status}`));
+      node.append(button(`Inspect binding ${id}`, () => select(id)));
       field(node, "Binding status is relative to its saved evidence", binding.reason || binding.status);
       for (const [index, snippet] of documentData.snippets[id].entries()) {
         field(node, index === 0 ? "Referenced evidence" : "Historical binding evidence", snippet.location.symbol || snippet.location.path);
@@ -212,10 +215,13 @@
         else node.append(element("p", snippet.reason, "warning"));
       }
       details(node, "Binding history metadata", binding.history);
+      node.append(element("h3", "Binding opinions & verification"));
+      node.append(element("p", "Coverage is limited to the recorded object_ids, inputs and source_version. Binding checks do not verify a whole component or business.", "muted"));
+      renderRecords(node, new Set([id]), displayed, `binding ${id}`);
       container.append(node);
     }
   }
-  function renderMaintenance(container, ids) {
+  function renderMaintenance(container, ids, displayed) {
     container.append(element("h3", "Maintenance & review history"));
     container.append(element("p", "Current means current explanation contents for a saved source comparison. It does not mean latest source verified.", "muted"));
     field(container, "Latest target snapshot", report.latest_target_snapshot_id || "No source maintenance target saved");
@@ -235,15 +241,32 @@
       if (item.resolution) details(node, "Confirmation author, reason and actual version coverage", item.resolution).open = true;
       else field(node, "Review", pending ? "Unresolved" : "No review required by this comparison");
       details(node, "Source basis, candidates and static call changes", {basis:item.basis,candidates:item.candidates,call_changes:item.call_changes,compared_revision:item.compared_revision});
-      renderRecords(node, new Set([item.id]));
+      renderRecords(node, new Set([item.id]), displayed, `observation ${item.id}`);
       container.append(node);
     }
     container.append(element("p", "Historical source bodies and old explanation bodies cannot be reconstructed from revisions or fingerprints.", "muted"));
   }
-  function renderRecords(container, ids) {
+  function renderRecords(container, ids, displayed, context) {
     for (const [name, records] of [["Human opinion", model.opinions], ["Verification", model.verifications]]) {
       for (const record of records.filter(r => r.object_ids.some(id => ids.has(id)))) {
-        details(container, `${name} · ${record.status || record.stance} · ${record.id}`, record);
+        if (displayed.has(record.id)) {
+          const existing = displayed.get(record.id);
+          const reference = button(`View ${record.id} · also targets this selection; shown under ${existing.context}`, () => {
+            let ancestor = existing.node;
+            while (ancestor) {
+              if (ancestor.tagName === "DETAILS") ancestor.open = true;
+              ancestor = ancestor.parentElement;
+            }
+            existing.node.scrollIntoView({block:"nearest"});
+            existing.node.querySelector("summary").focus();
+          });
+          reference.dataset.recordReference = record.id;
+          container.append(reference);
+          continue;
+        }
+        const node = details(container, `${name} · ${record.status || record.stance} · ${record.id}`, record);
+        node.dataset.recordId = record.id;
+        displayed.set(record.id, {node, context});
       }
     }
   }
@@ -265,6 +288,7 @@
     }
     const ids = new Set([object.id]);
     const bindings = new Set([...(object.binding_ids || []), ...(claim?.binding_ids || [])]);
+    if (bindingIds.has(object.id)) bindings.add(object.id);
     if (object.component_ids) {
       for (const id of object.component_ids) {
         ids.add(id);
@@ -272,13 +296,17 @@
         for (const bid of [...byId.get(id).binding_ids, ...byId.get(id).claim.binding_ids]) bindings.add(bid);
       }
     }
-    renderBindings(container, bindings);
+    const displayed = new Map();
+    renderBindings(container, bindings, displayed);
     container.append(element("h3", "Opinions & verification"));
     container.append(element("p", "Planned checks are not executed results. An executed result applies only to its recorded inputs, objects and source version; it does not change claim kind.", "muted"));
-    renderRecords(container, ids);
-    renderMaintenance(container, new Set([...ids, ...bindings]));
+    renderRecords(container, ids, displayed, `selection ${object.id}`);
+    renderMaintenance(container, new Set([...ids, ...bindings]), displayed);
   }
-  function render() { renderTree(); renderGraph(); renderPlayer(); renderDetail(); }
+  function render() {
+    const projection = componentProjection(model.components, expanded);
+    renderTree(projection); renderGraph(projection); renderPlayer(); renderDetail();
+  }
   el("project").textContent = model.project.name;
   el("boundary").textContent = model.project.boundary;
   el("identity").textContent = `Model ${model.id} · revision ${model.revision}`;
@@ -293,7 +321,7 @@
     pause(); scenario = model.scenarios.find(s => s.id === el("scenario").value);
     player = players.get(scenario.id); message = ""; selection = player.current; render();
   });
-  el("focus").addEventListener("change", renderGraph);
+  el("focus").addEventListener("change", () => renderGraph(componentProjection(model.components, expanded)));
   el("reset").addEventListener("click", () => { pause(); player.reset(); moved(); });
   el("back").addEventListener("click", () => { pause(); player.back(); moved(); });
   el("next").addEventListener("click", () => {
@@ -310,6 +338,10 @@
     field(container, "Model / revision / export", `${model.id} / ${model.revision} / ${documentData.exported_at}`);
     field(container, "Selected business / step", `${scenario?.id || "none"} / ${player.current || "none"}`);
     json(container, model.project);
+    container.append(element("h3", "Source bindings"));
+    for (const binding of model.bindings) {
+      container.append(button(`Inspect binding ${binding.id}`, () => select(binding.id)));
+    }
     field(container, "Latest source target", report.latest_target_snapshot_id || "none");
     for (const facts of model.facts) details(container, `Snapshot ${facts.id}`, {id:facts.id, source:facts.source,tools:facts.tools,limitations:facts.limitations});
     details(container, "Maintenance coverage sets", report);

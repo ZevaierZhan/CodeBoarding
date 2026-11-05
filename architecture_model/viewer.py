@@ -84,7 +84,7 @@ def _snippet(location: Location, source_root: Path | None) -> dict:
             return {"status": "unavailable", "reason": "Source exceeds the 2 MB embedding limit."}
         if hashlib.sha256(content).hexdigest() != location.content_hash:
             return {"status": "mismatch", "reason": "Workspace bytes differ from this evidence version; body withheld."}
-        lines = content.decode("utf-8").splitlines()
+        lines = [line.decode("utf-8") for line in content.splitlines()]
         if location.end > len(lines):
             return {"status": "unavailable", "reason": "Evidence line range exceeds the verified file."}
         return {

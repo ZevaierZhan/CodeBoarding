@@ -53,6 +53,16 @@ whole-file hash matches. Missing/changed sources or unavailable old bodies show 
 reason and retain exact locations. History lists old bindings, not invented old
 source or explanation text. No model-supplied link becomes executable HTML.
 
+Each binding disclosure includes **Binding opinions & verification**. Open a
+record to read its original object_ids, planned/executed status, source_version,
+command, inputs and actual result. Scope is never promoted to the enclosing
+component or business. A record targeting several objects is shown in full once;
+other matching sections offer a labeled **View** button that opens and focuses
+the original record. **Inspect binding** opens a dedicated inspector. The metadata
+panel also lists every binding, including those without component membership.
+Source lines use the exporter's byte-level LF/CRLF/CR boundaries; Unicode string
+separators remain characters within the same numbered source line.
+
 **Maintenance & review history** labels three independent dimensions:
 
 | Label | Meaning |

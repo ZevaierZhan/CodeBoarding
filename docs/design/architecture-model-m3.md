@@ -61,6 +61,11 @@ lists underlying references in SVG titles and preserves individual relationships
 and choices below the graph. These groups never become domain facts.
 
 Focus dims objects outside the selected business without removing context.
+One per-render component index computes a memoized visibleById map, hiddenCounts
+and parentIds. Tree, nodes, active state and projected edges share that projection;
+hidden counts come from one pass rather than repeated full-row ancestry scans.
+The single-lookup visibleAncestor helper remains available, but rendering no
+longer calls it repeatedly. No layout or domain schema changed.
 Expanded IDs and each scenario's player position survive switching and focusing.
 The browser does not assume logical components match filesystem directories;
 evidence explicitly names repository paths and symbols.
@@ -95,6 +100,15 @@ encoding, invalid line range and files above 2 MB withhold bodies while preservi
 location/version. Current workspace contents never stand in for old evidence.
 Binding history metadata remains visible. Revisions and object fingerprints are
 not old explanation bodies; no historical text is reconstructed.
+
+Snippet line boundaries use bytes.splitlines, matching facts_worker's file-range
+count. Decoding each byte line preserves valid UTF-8 Unicode separators within
+strings without shifting numbered function or file evidence; raw hashes and saved
+locations are unchanged. Binding disclosures and the metadata binding index expose
+binding-targeted opinions/verifications. One per-inspection record registry renders
+each record once, with labeled cross-reference buttons for its other targets.
+Original object_ids, versions, planned/executed fields and scope remain unchanged;
+the enclosing component/business does not inherit a verification conclusion.
 
 current_coverage_ids means current explanation definitions for each known source
 comparison, even when its target is old. current_pending_ids is the unresolved

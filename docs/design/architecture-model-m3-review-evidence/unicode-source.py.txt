@@ -1,0 +1,4 @@
+label = "A B C</script><script>window.injected=true</script>"
+
+def target():
+    return 42

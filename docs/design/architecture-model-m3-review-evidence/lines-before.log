@@ -1,0 +1,792 @@
+warning: The `tool.uv.dev-dependencies` field (used in `pyproject.toml`) is deprecated and will be removed in a future release; use `dependency-groups.dev` instead
+FFFFFFFFFFFFFFFFFFFFF                                                    [100%]
+================================== FAILURES ===================================
+_________ test_snippets_follow_source_document_lines[False-\u2028-\n] _________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_snippets_follow_source_do0')
+newline = '\n', separator = '\u2028', final_newline = False
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    @pytest.mark.parametrize("separator", ["\u2028", "\u2029", "\u0085"])
+    @pytest.mark.parametrize("final_newline", [False, True])
+    def test_snippets_follow_source_document_lines(
+        tmp_path: Path, newline: str, separator: str, final_newline: bool
+    ) -> None:
+        lines = [f'label = "A{separator}B"', "", "def target():", "    return 42"]
+        content = (newline.join(lines) + (newline if final_newline else "")).encode("utf-8")
+        (tmp_path / "app.py").write_bytes(content)
+        checksum = hashlib.sha256(content).hexdigest()
+        for start, end, kind in [(3, 4, "FUNCTION"), (1, 4, "FILE")]:
+            location = Location(path="app.py", symbol="", kind=kind, content_hash=checksum, start=start, end=end)
+            snippet = _snippet(location, tmp_path)
+            assert snippet["status"] == "verified"
+>           assert snippet["text"] == "\n".join(f"{index + 1:>5}  {lines[index]}" for index in range(start - 1, end))
+E           AssertionError: assert '    3  \n   ...def target():' == '    3  def t...    return 42'
+E
+E             +     3
+E             -     3  def target():
+E             ?     ^               -
+E             +     4  def target():
+E             ?     ^
+E             -     4      return 42
+
+tests\architecture_model\test_viewer.py:34: AssertionError
+________ test_snippets_follow_source_document_lines[False-\u2028-\r\n] ________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_snippets_follow_source_do1')
+newline = '\r\n', separator = '\u2028', final_newline = False
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    @pytest.mark.parametrize("separator", ["\u2028", "\u2029", "\u0085"])
+    @pytest.mark.parametrize("final_newline", [False, True])
+    def test_snippets_follow_source_document_lines(
+        tmp_path: Path, newline: str, separator: str, final_newline: bool
+    ) -> None:
+        lines = [f'label = "A{separator}B"', "", "def target():", "    return 42"]
+        content = (newline.join(lines) + (newline if final_newline else "")).encode("utf-8")
+        (tmp_path / "app.py").write_bytes(content)
+        checksum = hashlib.sha256(content).hexdigest()
+        for start, end, kind in [(3, 4, "FUNCTION"), (1, 4, "FILE")]:
+            location = Location(path="app.py", symbol="", kind=kind, content_hash=checksum, start=start, end=end)
+            snippet = _snippet(location, tmp_path)
+            assert snippet["status"] == "verified"
+>           assert snippet["text"] == "\n".join(f"{index + 1:>5}  {lines[index]}" for index in range(start - 1, end))
+E           AssertionError: assert '    3  \n   ...def target():' == '    3  def t...    return 42'
+E
+E             +     3
+E             -     3  def target():
+E             ?     ^               -
+E             +     4  def target():
+E             ?     ^
+E             -     4      return 42
+
+tests\architecture_model\test_viewer.py:34: AssertionError
+_________ test_snippets_follow_source_document_lines[False-\u2028-\r] _________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_snippets_follow_source_do2')
+newline = '\r', separator = '\u2028', final_newline = False
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    @pytest.mark.parametrize("separator", ["\u2028", "\u2029", "\u0085"])
+    @pytest.mark.parametrize("final_newline", [False, True])
+    def test_snippets_follow_source_document_lines(
+        tmp_path: Path, newline: str, separator: str, final_newline: bool
+    ) -> None:
+        lines = [f'label = "A{separator}B"', "", "def target():", "    return 42"]
+        content = (newline.join(lines) + (newline if final_newline else "")).encode("utf-8")
+        (tmp_path / "app.py").write_bytes(content)
+        checksum = hashlib.sha256(content).hexdigest()
+        for start, end, kind in [(3, 4, "FUNCTION"), (1, 4, "FILE")]:
+            location = Location(path="app.py", symbol="", kind=kind, content_hash=checksum, start=start, end=end)
+            snippet = _snippet(location, tmp_path)
+            assert snippet["status"] == "verified"
+>           assert snippet["text"] == "\n".join(f"{index + 1:>5}  {lines[index]}" for index in range(start - 1, end))
+E           AssertionError: assert '    3  \n   ...def target():' == '    3  def t...    return 42'
+E
+E             +     3
+E             -     3  def target():
+E             ?     ^               -
+E             +     4  def target():
+E             ?     ^
+E             -     4      return 42
+
+tests\architecture_model\test_viewer.py:34: AssertionError
+_________ test_snippets_follow_source_document_lines[False-\u2029-\n] _________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_snippets_follow_source_do3')
+newline = '\n', separator = '\u2029', final_newline = False
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    @pytest.mark.parametrize("separator", ["\u2028", "\u2029", "\u0085"])
+    @pytest.mark.parametrize("final_newline", [False, True])
+    def test_snippets_follow_source_document_lines(
+        tmp_path: Path, newline: str, separator: str, final_newline: bool
+    ) -> None:
+        lines = [f'label = "A{separator}B"', "", "def target():", "    return 42"]
+        content = (newline.join(lines) + (newline if final_newline else "")).encode("utf-8")
+        (tmp_path / "app.py").write_bytes(content)
+        checksum = hashlib.sha256(content).hexdigest()
+        for start, end, kind in [(3, 4, "FUNCTION"), (1, 4, "FILE")]:
+            location = Location(path="app.py", symbol="", kind=kind, content_hash=checksum, start=start, end=end)
+            snippet = _snippet(location, tmp_path)
+            assert snippet["status"] == "verified"
+>           assert snippet["text"] == "\n".join(f"{index + 1:>5}  {lines[index]}" for index in range(start - 1, end))
+E           AssertionError: assert '    3  \n   ...def target():' == '    3  def t...    return 42'
+E
+E             +     3
+E             -     3  def target():
+E             ?     ^               -
+E             +     4  def target():
+E             ?     ^
+E             -     4      return 42
+
+tests\architecture_model\test_viewer.py:34: AssertionError
+________ test_snippets_follow_source_document_lines[False-\u2029-\r\n] ________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_snippets_follow_source_do4')
+newline = '\r\n', separator = '\u2029', final_newline = False
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    @pytest.mark.parametrize("separator", ["\u2028", "\u2029", "\u0085"])
+    @pytest.mark.parametrize("final_newline", [False, True])
+    def test_snippets_follow_source_document_lines(
+        tmp_path: Path, newline: str, separator: str, final_newline: bool
+    ) -> None:
+        lines = [f'label = "A{separator}B"', "", "def target():", "    return 42"]
+        content = (newline.join(lines) + (newline if final_newline else "")).encode("utf-8")
+        (tmp_path / "app.py").write_bytes(content)
+        checksum = hashlib.sha256(content).hexdigest()
+        for start, end, kind in [(3, 4, "FUNCTION"), (1, 4, "FILE")]:
+            location = Location(path="app.py", symbol="", kind=kind, content_hash=checksum, start=start, end=end)
+            snippet = _snippet(location, tmp_path)
+            assert snippet["status"] == "verified"
+>           assert snippet["text"] == "\n".join(f"{index + 1:>5}  {lines[index]}" for index in range(start - 1, end))
+E           AssertionError: assert '    3  \n   ...def target():' == '    3  def t...    return 42'
+E
+E             +     3
+E             -     3  def target():
+E             ?     ^               -
+E             +     4  def target():
+E             ?     ^
+E             -     4      return 42
+
+tests\architecture_model\test_viewer.py:34: AssertionError
+_________ test_snippets_follow_source_document_lines[False-\u2029-\r] _________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_snippets_follow_source_do5')
+newline = '\r', separator = '\u2029', final_newline = False
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    @pytest.mark.parametrize("separator", ["\u2028", "\u2029", "\u0085"])
+    @pytest.mark.parametrize("final_newline", [False, True])
+    def test_snippets_follow_source_document_lines(
+        tmp_path: Path, newline: str, separator: str, final_newline: bool
+    ) -> None:
+        lines = [f'label = "A{separator}B"', "", "def target():", "    return 42"]
+        content = (newline.join(lines) + (newline if final_newline else "")).encode("utf-8")
+        (tmp_path / "app.py").write_bytes(content)
+        checksum = hashlib.sha256(content).hexdigest()
+        for start, end, kind in [(3, 4, "FUNCTION"), (1, 4, "FILE")]:
+            location = Location(path="app.py", symbol="", kind=kind, content_hash=checksum, start=start, end=end)
+            snippet = _snippet(location, tmp_path)
+            assert snippet["status"] == "verified"
+>           assert snippet["text"] == "\n".join(f"{index + 1:>5}  {lines[index]}" for index in range(start - 1, end))
+E           AssertionError: assert '    3  \n   ...def target():' == '    3  def t...    return 42'
+E
+E             +     3
+E             -     3  def target():
+E             ?     ^               -
+E             +     4  def target():
+E             ?     ^
+E             -     4      return 42
+
+tests\architecture_model\test_viewer.py:34: AssertionError
+__________ test_snippets_follow_source_document_lines[False-\x85-\n] __________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_snippets_follow_source_do6')
+newline = '\n', separator = '\x85', final_newline = False
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    @pytest.mark.parametrize("separator", ["\u2028", "\u2029", "\u0085"])
+    @pytest.mark.parametrize("final_newline", [False, True])
+    def test_snippets_follow_source_document_lines(
+        tmp_path: Path, newline: str, separator: str, final_newline: bool
+    ) -> None:
+        lines = [f'label = "A{separator}B"', "", "def target():", "    return 42"]
+        content = (newline.join(lines) + (newline if final_newline else "")).encode("utf-8")
+        (tmp_path / "app.py").write_bytes(content)
+        checksum = hashlib.sha256(content).hexdigest()
+        for start, end, kind in [(3, 4, "FUNCTION"), (1, 4, "FILE")]:
+            location = Location(path="app.py", symbol="", kind=kind, content_hash=checksum, start=start, end=end)
+            snippet = _snippet(location, tmp_path)
+            assert snippet["status"] == "verified"
+>           assert snippet["text"] == "\n".join(f"{index + 1:>5}  {lines[index]}" for index in range(start - 1, end))
+E           AssertionError: assert '    3  \n   ...def target():' == '    3  def t...    return 42'
+E
+E             +     3
+E             -     3  def target():
+E             ?     ^               -
+E             +     4  def target():
+E             ?     ^
+E             -     4      return 42
+
+tests\architecture_model\test_viewer.py:34: AssertionError
+_________ test_snippets_follow_source_document_lines[False-\x85-\r\n] _________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_snippets_follow_source_do7')
+newline = '\r\n', separator = '\x85', final_newline = False
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    @pytest.mark.parametrize("separator", ["\u2028", "\u2029", "\u0085"])
+    @pytest.mark.parametrize("final_newline", [False, True])
+    def test_snippets_follow_source_document_lines(
+        tmp_path: Path, newline: str, separator: str, final_newline: bool
+    ) -> None:
+        lines = [f'label = "A{separator}B"', "", "def target():", "    return 42"]
+        content = (newline.join(lines) + (newline if final_newline else "")).encode("utf-8")
+        (tmp_path / "app.py").write_bytes(content)
+        checksum = hashlib.sha256(content).hexdigest()
+        for start, end, kind in [(3, 4, "FUNCTION"), (1, 4, "FILE")]:
+            location = Location(path="app.py", symbol="", kind=kind, content_hash=checksum, start=start, end=end)
+            snippet = _snippet(location, tmp_path)
+            assert snippet["status"] == "verified"
+>           assert snippet["text"] == "\n".join(f"{index + 1:>5}  {lines[index]}" for index in range(start - 1, end))
+E           AssertionError: assert '    3  \n   ...def target():' == '    3  def t...    return 42'
+E
+E             +     3
+E             -     3  def target():
+E             ?     ^               -
+E             +     4  def target():
+E             ?     ^
+E             -     4      return 42
+
+tests\architecture_model\test_viewer.py:34: AssertionError
+__________ test_snippets_follow_source_document_lines[False-\x85-\r] __________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_snippets_follow_source_do8')
+newline = '\r', separator = '\x85', final_newline = False
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    @pytest.mark.parametrize("separator", ["\u2028", "\u2029", "\u0085"])
+    @pytest.mark.parametrize("final_newline", [False, True])
+    def test_snippets_follow_source_document_lines(
+        tmp_path: Path, newline: str, separator: str, final_newline: bool
+    ) -> None:
+        lines = [f'label = "A{separator}B"', "", "def target():", "    return 42"]
+        content = (newline.join(lines) + (newline if final_newline else "")).encode("utf-8")
+        (tmp_path / "app.py").write_bytes(content)
+        checksum = hashlib.sha256(content).hexdigest()
+        for start, end, kind in [(3, 4, "FUNCTION"), (1, 4, "FILE")]:
+            location = Location(path="app.py", symbol="", kind=kind, content_hash=checksum, start=start, end=end)
+            snippet = _snippet(location, tmp_path)
+            assert snippet["status"] == "verified"
+>           assert snippet["text"] == "\n".join(f"{index + 1:>5}  {lines[index]}" for index in range(start - 1, end))
+E           AssertionError: assert '    3  \n   ...def target():' == '    3  def t...    return 42'
+E
+E             +     3
+E             -     3  def target():
+E             ?     ^               -
+E             +     4  def target():
+E             ?     ^
+E             -     4      return 42
+
+tests\architecture_model\test_viewer.py:34: AssertionError
+_________ test_snippets_follow_source_document_lines[True-\u2028-\n] __________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_snippets_follow_source_do9')
+newline = '\n', separator = '\u2028', final_newline = True
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    @pytest.mark.parametrize("separator", ["\u2028", "\u2029", "\u0085"])
+    @pytest.mark.parametrize("final_newline", [False, True])
+    def test_snippets_follow_source_document_lines(
+        tmp_path: Path, newline: str, separator: str, final_newline: bool
+    ) -> None:
+        lines = [f'label = "A{separator}B"', "", "def target():", "    return 42"]
+        content = (newline.join(lines) + (newline if final_newline else "")).encode("utf-8")
+        (tmp_path / "app.py").write_bytes(content)
+        checksum = hashlib.sha256(content).hexdigest()
+        for start, end, kind in [(3, 4, "FUNCTION"), (1, 4, "FILE")]:
+            location = Location(path="app.py", symbol="", kind=kind, content_hash=checksum, start=start, end=end)
+            snippet = _snippet(location, tmp_path)
+            assert snippet["status"] == "verified"
+>           assert snippet["text"] == "\n".join(f"{index + 1:>5}  {lines[index]}" for index in range(start - 1, end))
+E           AssertionError: assert '    3  \n   ...def target():' == '    3  def t...    return 42'
+E
+E             +     3
+E             -     3  def target():
+E             ?     ^               -
+E             +     4  def target():
+E             ?     ^
+E             -     4      return 42
+
+tests\architecture_model\test_viewer.py:34: AssertionError
+________ test_snippets_follow_source_document_lines[True-\u2028-\r\n] _________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_snippets_follow_source_do10')
+newline = '\r\n', separator = '\u2028', final_newline = True
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    @pytest.mark.parametrize("separator", ["\u2028", "\u2029", "\u0085"])
+    @pytest.mark.parametrize("final_newline", [False, True])
+    def test_snippets_follow_source_document_lines(
+        tmp_path: Path, newline: str, separator: str, final_newline: bool
+    ) -> None:
+        lines = [f'label = "A{separator}B"', "", "def target():", "    return 42"]
+        content = (newline.join(lines) + (newline if final_newline else "")).encode("utf-8")
+        (tmp_path / "app.py").write_bytes(content)
+        checksum = hashlib.sha256(content).hexdigest()
+        for start, end, kind in [(3, 4, "FUNCTION"), (1, 4, "FILE")]:
+            location = Location(path="app.py", symbol="", kind=kind, content_hash=checksum, start=start, end=end)
+            snippet = _snippet(location, tmp_path)
+            assert snippet["status"] == "verified"
+>           assert snippet["text"] == "\n".join(f"{index + 1:>5}  {lines[index]}" for index in range(start - 1, end))
+E           AssertionError: assert '    3  \n   ...def target():' == '    3  def t...    return 42'
+E
+E             +     3
+E             -     3  def target():
+E             ?     ^               -
+E             +     4  def target():
+E             ?     ^
+E             -     4      return 42
+
+tests\architecture_model\test_viewer.py:34: AssertionError
+_________ test_snippets_follow_source_document_lines[True-\u2028-\r] __________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_snippets_follow_source_do11')
+newline = '\r', separator = '\u2028', final_newline = True
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    @pytest.mark.parametrize("separator", ["\u2028", "\u2029", "\u0085"])
+    @pytest.mark.parametrize("final_newline", [False, True])
+    def test_snippets_follow_source_document_lines(
+        tmp_path: Path, newline: str, separator: str, final_newline: bool
+    ) -> None:
+        lines = [f'label = "A{separator}B"', "", "def target():", "    return 42"]
+        content = (newline.join(lines) + (newline if final_newline else "")).encode("utf-8")
+        (tmp_path / "app.py").write_bytes(content)
+        checksum = hashlib.sha256(content).hexdigest()
+        for start, end, kind in [(3, 4, "FUNCTION"), (1, 4, "FILE")]:
+            location = Location(path="app.py", symbol="", kind=kind, content_hash=checksum, start=start, end=end)
+            snippet = _snippet(location, tmp_path)
+            assert snippet["status"] == "verified"
+>           assert snippet["text"] == "\n".join(f"{index + 1:>5}  {lines[index]}" for index in range(start - 1, end))
+E           AssertionError: assert '    3  \n   ...def target():' == '    3  def t...    return 42'
+E
+E             +     3
+E             -     3  def target():
+E             ?     ^               -
+E             +     4  def target():
+E             ?     ^
+E             -     4      return 42
+
+tests\architecture_model\test_viewer.py:34: AssertionError
+_________ test_snippets_follow_source_document_lines[True-\u2029-\n] __________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_snippets_follow_source_do12')
+newline = '\n', separator = '\u2029', final_newline = True
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    @pytest.mark.parametrize("separator", ["\u2028", "\u2029", "\u0085"])
+    @pytest.mark.parametrize("final_newline", [False, True])
+    def test_snippets_follow_source_document_lines(
+        tmp_path: Path, newline: str, separator: str, final_newline: bool
+    ) -> None:
+        lines = [f'label = "A{separator}B"', "", "def target():", "    return 42"]
+        content = (newline.join(lines) + (newline if final_newline else "")).encode("utf-8")
+        (tmp_path / "app.py").write_bytes(content)
+        checksum = hashlib.sha256(content).hexdigest()
+        for start, end, kind in [(3, 4, "FUNCTION"), (1, 4, "FILE")]:
+            location = Location(path="app.py", symbol="", kind=kind, content_hash=checksum, start=start, end=end)
+            snippet = _snippet(location, tmp_path)
+            assert snippet["status"] == "verified"
+>           assert snippet["text"] == "\n".join(f"{index + 1:>5}  {lines[index]}" for index in range(start - 1, end))
+E           AssertionError: assert '    3  \n   ...def target():' == '    3  def t...    return 42'
+E
+E             +     3
+E             -     3  def target():
+E             ?     ^               -
+E             +     4  def target():
+E             ?     ^
+E             -     4      return 42
+
+tests\architecture_model\test_viewer.py:34: AssertionError
+________ test_snippets_follow_source_document_lines[True-\u2029-\r\n] _________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_snippets_follow_source_do13')
+newline = '\r\n', separator = '\u2029', final_newline = True
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    @pytest.mark.parametrize("separator", ["\u2028", "\u2029", "\u0085"])
+    @pytest.mark.parametrize("final_newline", [False, True])
+    def test_snippets_follow_source_document_lines(
+        tmp_path: Path, newline: str, separator: str, final_newline: bool
+    ) -> None:
+        lines = [f'label = "A{separator}B"', "", "def target():", "    return 42"]
+        content = (newline.join(lines) + (newline if final_newline else "")).encode("utf-8")
+        (tmp_path / "app.py").write_bytes(content)
+        checksum = hashlib.sha256(content).hexdigest()
+        for start, end, kind in [(3, 4, "FUNCTION"), (1, 4, "FILE")]:
+            location = Location(path="app.py", symbol="", kind=kind, content_hash=checksum, start=start, end=end)
+            snippet = _snippet(location, tmp_path)
+            assert snippet["status"] == "verified"
+>           assert snippet["text"] == "\n".join(f"{index + 1:>5}  {lines[index]}" for index in range(start - 1, end))
+E           AssertionError: assert '    3  \n   ...def target():' == '    3  def t...    return 42'
+E
+E             +     3
+E             -     3  def target():
+E             ?     ^               -
+E             +     4  def target():
+E             ?     ^
+E             -     4      return 42
+
+tests\architecture_model\test_viewer.py:34: AssertionError
+_________ test_snippets_follow_source_document_lines[True-\u2029-\r] __________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_snippets_follow_source_do14')
+newline = '\r', separator = '\u2029', final_newline = True
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    @pytest.mark.parametrize("separator", ["\u2028", "\u2029", "\u0085"])
+    @pytest.mark.parametrize("final_newline", [False, True])
+    def test_snippets_follow_source_document_lines(
+        tmp_path: Path, newline: str, separator: str, final_newline: bool
+    ) -> None:
+        lines = [f'label = "A{separator}B"', "", "def target():", "    return 42"]
+        content = (newline.join(lines) + (newline if final_newline else "")).encode("utf-8")
+        (tmp_path / "app.py").write_bytes(content)
+        checksum = hashlib.sha256(content).hexdigest()
+        for start, end, kind in [(3, 4, "FUNCTION"), (1, 4, "FILE")]:
+            location = Location(path="app.py", symbol="", kind=kind, content_hash=checksum, start=start, end=end)
+            snippet = _snippet(location, tmp_path)
+            assert snippet["status"] == "verified"
+>           assert snippet["text"] == "\n".join(f"{index + 1:>5}  {lines[index]}" for index in range(start - 1, end))
+E           AssertionError: assert '    3  \n   ...def target():' == '    3  def t...    return 42'
+E
+E             +     3
+E             -     3  def target():
+E             ?     ^               -
+E             +     4  def target():
+E             ?     ^
+E             -     4      return 42
+
+tests\architecture_model\test_viewer.py:34: AssertionError
+__________ test_snippets_follow_source_document_lines[True-\x85-\n] ___________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_snippets_follow_source_do15')
+newline = '\n', separator = '\x85', final_newline = True
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    @pytest.mark.parametrize("separator", ["\u2028", "\u2029", "\u0085"])
+    @pytest.mark.parametrize("final_newline", [False, True])
+    def test_snippets_follow_source_document_lines(
+        tmp_path: Path, newline: str, separator: str, final_newline: bool
+    ) -> None:
+        lines = [f'label = "A{separator}B"', "", "def target():", "    return 42"]
+        content = (newline.join(lines) + (newline if final_newline else "")).encode("utf-8")
+        (tmp_path / "app.py").write_bytes(content)
+        checksum = hashlib.sha256(content).hexdigest()
+        for start, end, kind in [(3, 4, "FUNCTION"), (1, 4, "FILE")]:
+            location = Location(path="app.py", symbol="", kind=kind, content_hash=checksum, start=start, end=end)
+            snippet = _snippet(location, tmp_path)
+            assert snippet["status"] == "verified"
+>           assert snippet["text"] == "\n".join(f"{index + 1:>5}  {lines[index]}" for index in range(start - 1, end))
+E           AssertionError: assert '    3  \n   ...def target():' == '    3  def t...    return 42'
+E
+E             +     3
+E             -     3  def target():
+E             ?     ^               -
+E             +     4  def target():
+E             ?     ^
+E             -     4      return 42
+
+tests\architecture_model\test_viewer.py:34: AssertionError
+_________ test_snippets_follow_source_document_lines[True-\x85-\r\n] __________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_snippets_follow_source_do16')
+newline = '\r\n', separator = '\x85', final_newline = True
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    @pytest.mark.parametrize("separator", ["\u2028", "\u2029", "\u0085"])
+    @pytest.mark.parametrize("final_newline", [False, True])
+    def test_snippets_follow_source_document_lines(
+        tmp_path: Path, newline: str, separator: str, final_newline: bool
+    ) -> None:
+        lines = [f'label = "A{separator}B"', "", "def target():", "    return 42"]
+        content = (newline.join(lines) + (newline if final_newline else "")).encode("utf-8")
+        (tmp_path / "app.py").write_bytes(content)
+        checksum = hashlib.sha256(content).hexdigest()
+        for start, end, kind in [(3, 4, "FUNCTION"), (1, 4, "FILE")]:
+            location = Location(path="app.py", symbol="", kind=kind, content_hash=checksum, start=start, end=end)
+            snippet = _snippet(location, tmp_path)
+            assert snippet["status"] == "verified"
+>           assert snippet["text"] == "\n".join(f"{index + 1:>5}  {lines[index]}" for index in range(start - 1, end))
+E           AssertionError: assert '    3  \n   ...def target():' == '    3  def t...    return 42'
+E
+E             +     3
+E             -     3  def target():
+E             ?     ^               -
+E             +     4  def target():
+E             ?     ^
+E             -     4      return 42
+
+tests\architecture_model\test_viewer.py:34: AssertionError
+__________ test_snippets_follow_source_document_lines[True-\x85-\r] ___________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_snippets_follow_source_do17')
+newline = '\r', separator = '\x85', final_newline = True
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    @pytest.mark.parametrize("separator", ["\u2028", "\u2029", "\u0085"])
+    @pytest.mark.parametrize("final_newline", [False, True])
+    def test_snippets_follow_source_document_lines(
+        tmp_path: Path, newline: str, separator: str, final_newline: bool
+    ) -> None:
+        lines = [f'label = "A{separator}B"', "", "def target():", "    return 42"]
+        content = (newline.join(lines) + (newline if final_newline else "")).encode("utf-8")
+        (tmp_path / "app.py").write_bytes(content)
+        checksum = hashlib.sha256(content).hexdigest()
+        for start, end, kind in [(3, 4, "FUNCTION"), (1, 4, "FILE")]:
+            location = Location(path="app.py", symbol="", kind=kind, content_hash=checksum, start=start, end=end)
+            snippet = _snippet(location, tmp_path)
+            assert snippet["status"] == "verified"
+>           assert snippet["text"] == "\n".join(f"{index + 1:>5}  {lines[index]}" for index in range(start - 1, end))
+E           AssertionError: assert '    3  \n   ...def target():' == '    3  def t...    return 42'
+E
+E             +     3
+E             -     3  def target():
+E             ?     ^               -
+E             +     4  def target():
+E             ?     ^
+E             -     4      return 42
+
+tests\architecture_model\test_viewer.py:34: AssertionError
+_________ test_native_unicode_facts_bindings_and_projection_agree[\n] _________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_native_unicode_facts_bind0')
+newline = '\n'
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    def test_native_unicode_facts_bindings_and_projection_agree(tmp_path: Path, newline: str) -> None:
+        names = ("M1_NODE", "M1_PYRIGHT", "M1_TOKEI")
+        if not all(os.environ.get(name) for name in names):
+            pytest.skip("Set M1_NODE, M1_PYRIGHT and M1_TOKEI to run the real native engine")
+        source = tmp_path / "source"
+        source.mkdir()
+        content = newline.join(['label = "A\u2028B\u2029C"', "", "def target():", "    return 42", ""]).encode("utf-8")
+        (source / "app.py").write_bytes(content)
+        facts = export_facts(source, "positions", tmp_path / "facts.json", *(Path(os.environ[name]) for name in names))
+        function = facts.symbols["app.py|app.target"]
+        file = facts.file_locations["app.py"]
+        assert (function.start, function.end, file.start, file.end) == (3, 4, 1, 4)
+        assert function.content_hash == file.content_hash == hashlib.sha256(content).hexdigest()
+        store = ModelStore(tmp_path / "model.json")
+        store.initialize({"id": "positions", "name": "Positions", "boundary": "Real Unicode source"}, "test")
+        store.apply(0, {"author": "test", "summary": "Bind real exported positions", "operations": [
+            {"action":"create", "collection":"facts", "id":facts.id, "value":facts.model_dump()},
+            *[{"action":"create", "collection":"bindings", "id":identity, "value":{
+                "snapshot_id":facts.id, "source_version":facts.source.digest, "location":location.model_dump(), "status":"current"
+            }} for identity, location in [("function",function), ("file",file)]]
+        ]})
+        before = store.path.read_bytes()
+        snippets = projection(store.read(), source)["snippets"]
+>       assert snippets["function"][0]["text"] == "    3  def target():\n    4      return 42"
+E       assert '    3  C"\n    4  ' == '    3  def t...    return 42'
+E
+E         -     3  def target():
+E         -     4      return 42
+E         +     3  C"
+E         +     4
+
+tests\architecture_model\test_viewer.py:62: AssertionError
+---------------------------- Captured stderr call -----------------------------
+2026-11-05 08:06:48 INFO     [static_analyzer.engine.language_adapter:329] Found 1 Python files in E:\Temp\pytest-of-BW011222\pytest-528\test_native_unicode_facts_bind0\source
+2026-11-05 08:06:48 INFO     [static_analyzer.engine.language_adapter:329] Found 1 Python files in E:\Temp\pytest-of-BW011222\pytest-528\test_native_unicode_facts_bind0\source
+2026-11-05 08:06:48 INFO     [static_analyzer:387] 1 engine LSP client(s) will start during analysis, at most 1 running at a time.
+2026-11-05 08:06:48 INFO     [static_analyzer:741] analyze() called with skip_cache=True, source_sha=None
+2026-11-05 08:06:48 INFO     [static_analyzer:746] static_analysis_cache: outcome=bypass (skip_cache=True)
+2026-11-05 08:06:48 INFO     [static_analyzer:460] Starting engine LSP client for Python at E:\Temp\pytest-of-BW011222\pytest-528\test_native_unicode_facts_bind0\source
+2026-11-05 08:06:49 INFO     [static_analyzer:514] Python LSP start: 0.3s
+2026-11-05 08:06:49 INFO     [static_analyzer:871] Starting engine analysis for Python in E:\Temp\pytest-of-BW011222\pytest-528\test_native_unicode_facts_bind0\source
+2026-11-05 08:06:49 INFO     [static_analyzer:1133] Analyzing 1 Python files
+2026-11-05 08:06:49 INFO     [static_analyzer.engine.progress:49] Phase 0 (open): 100% (1/1 files, 0.1s elapsed)
+2026-11-05 08:06:49 INFO     [static_analyzer.engine.call_graph_builder:241] did_open 1 files: 0.1s
+2026-11-05 08:06:49 INFO     [static_analyzer.engine.call_graph_builder:251] Waiting for LSP server didOpen drain (timeout=62s)...
+2026-11-05 08:06:51 INFO     [static_analyzer.engine.call_graph_builder:265] Sync probe: 2.0s (2 symbols)
+2026-11-05 08:06:51 INFO     [static_analyzer.engine.progress:49] Phase 1 (symbols): 100% (1/1 files, 0.0s elapsed | symbols=2)
+2026-11-05 08:06:51 INFO     [static_analyzer.engine.call_graph_builder:223] Discovered 2 symbols across 1 files
+2026-11-05 08:06:51 INFO     [static_analyzer.engine.call_graph_builder:70] Phase 1 total (discover symbols): 2.1s
+2026-11-05 08:06:51 INFO     [static_analyzer.engine.call_graph_builder:74] Build indices: 0.0s
+2026-11-05 08:06:51 INFO     [static_analyzer.engine.progress:49] Phase 2 (definitions): 100% (1/1 files, 0.0s elapsed)
+2026-11-05 08:06:51 INFO     [static_analyzer.engine.edge_builder:455] Phase 2b (implementations): 0 unique targets from 0 pending queries
+2026-11-05 08:06:51 INFO     [static_analyzer.engine.progress:49] Phase 2b (impl): 100% (1/1 targets, 0.0s elapsed)
+2026-11-05 08:06:51 INFO     [static_analyzer.engine.edge_builder:236] Phase 2 summary: 0 call sites, 0 def resolved, 0 impl resolved, 0 iterated, 0 raw edges
+2026-11-05 08:06:51 INFO     [static_analyzer.engine.call_graph_builder:80] Phase 2 total (build edges): 0.0s, 0 edges
+2026-11-05 08:06:51 INFO     [static_analyzer.engine.hierarchy_builder:59] Hierarchy: 0 class symbols to process
+2026-11-05 08:06:51 INFO     [static_analyzer.engine.hierarchy_builder:106] Type hierarchy not supported, inferring from source code
+2026-11-05 08:06:51 INFO     [static_analyzer.engine.hierarchy_builder:110] Hierarchy complete: 0 classes, 0 inheritance links in 0.0s
+2026-11-05 08:06:51 INFO     [static_analyzer.engine.call_graph_builder:89] Phase 3 (hierarchy): 0.0s
+2026-11-05 08:06:51 INFO     [static_analyzer.engine.call_graph_builder:94] Phase 4 (package deps): 0.0s
+2026-11-05 08:06:51 INFO     [static_analyzer.engine.call_graph_builder:117] Pipeline complete: 1 files, 2 symbols, 0 edges, 0 hierarchy entries in 2.1s
+2026-11-05 08:06:51 INFO     [static_analyzer:1143] CallGraphBuilder.build() for Python: 2.1s
+2026-11-05 08:06:51 INFO     [static_analyzer.engine.result_converter:104] Converted 1 nodes, 0 edges (0 skipped) for Python
+2026-11-05 08:06:51 INFO     [static_analyzer.engine.result_converter:114] Reference edges for Python: 0 ({})
+2026-11-05 08:06:51 INFO     [static_analyzer:1155] convert_to_codeboarding_format for Python: 0.0s
+2026-11-05 08:06:51 INFO     [static_analyzer:880] Engine analysis for Python completed in 2.4s
+2026-11-05 08:06:51 WARNING  [infra.monitoring.telemetry.events:134] LSP analysis result for python is degraded: zero edges despite LOC
+2026-11-05 08:06:51 INFO     [static_analyzer:847] Static analysis complete: python: 1 files, 2 references, 1 nodes, 0 edges
+2026-11-05 08:06:51 INFO     [static_analyzer.engine.language_adapter:329] Found 1 Python files in E:\Temp\pytest-of-BW011222\pytest-528\test_native_unicode_facts_bind0\source
+________ test_native_unicode_facts_bindings_and_projection_agree[\r\n] ________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_native_unicode_facts_bind1')
+newline = '\r\n'
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    def test_native_unicode_facts_bindings_and_projection_agree(tmp_path: Path, newline: str) -> None:
+        names = ("M1_NODE", "M1_PYRIGHT", "M1_TOKEI")
+        if not all(os.environ.get(name) for name in names):
+            pytest.skip("Set M1_NODE, M1_PYRIGHT and M1_TOKEI to run the real native engine")
+        source = tmp_path / "source"
+        source.mkdir()
+        content = newline.join(['label = "A\u2028B\u2029C"', "", "def target():", "    return 42", ""]).encode("utf-8")
+        (source / "app.py").write_bytes(content)
+        facts = export_facts(source, "positions", tmp_path / "facts.json", *(Path(os.environ[name]) for name in names))
+        function = facts.symbols["app.py|app.target"]
+        file = facts.file_locations["app.py"]
+        assert (function.start, function.end, file.start, file.end) == (3, 4, 1, 4)
+        assert function.content_hash == file.content_hash == hashlib.sha256(content).hexdigest()
+        store = ModelStore(tmp_path / "model.json")
+        store.initialize({"id": "positions", "name": "Positions", "boundary": "Real Unicode source"}, "test")
+        store.apply(0, {"author": "test", "summary": "Bind real exported positions", "operations": [
+            {"action":"create", "collection":"facts", "id":facts.id, "value":facts.model_dump()},
+            *[{"action":"create", "collection":"bindings", "id":identity, "value":{
+                "snapshot_id":facts.id, "source_version":facts.source.digest, "location":location.model_dump(), "status":"current"
+            }} for identity, location in [("function",function), ("file",file)]]
+        ]})
+        before = store.path.read_bytes()
+        snippets = projection(store.read(), source)["snippets"]
+>       assert snippets["function"][0]["text"] == "    3  def target():\n    4      return 42"
+E       assert '    3  C"\n    4  ' == '    3  def t...    return 42'
+E
+E         -     3  def target():
+E         -     4      return 42
+E         +     3  C"
+E         +     4
+
+tests\architecture_model\test_viewer.py:62: AssertionError
+---------------------------- Captured stderr call -----------------------------
+2026-11-05 08:06:54 INFO     [static_analyzer.engine.language_adapter:329] Found 1 Python files in E:\Temp\pytest-of-BW011222\pytest-528\test_native_unicode_facts_bind1\source
+2026-11-05 08:06:54 INFO     [static_analyzer.engine.language_adapter:329] Found 1 Python files in E:\Temp\pytest-of-BW011222\pytest-528\test_native_unicode_facts_bind1\source
+2026-11-05 08:06:54 INFO     [static_analyzer:387] 1 engine LSP client(s) will start during analysis, at most 1 running at a time.
+2026-11-05 08:06:54 INFO     [static_analyzer:741] analyze() called with skip_cache=True, source_sha=None
+2026-11-05 08:06:54 INFO     [static_analyzer:746] static_analysis_cache: outcome=bypass (skip_cache=True)
+2026-11-05 08:06:54 INFO     [static_analyzer:460] Starting engine LSP client for Python at E:\Temp\pytest-of-BW011222\pytest-528\test_native_unicode_facts_bind1\source
+2026-11-05 08:06:54 INFO     [static_analyzer:514] Python LSP start: 0.3s
+2026-11-05 08:06:54 INFO     [static_analyzer:871] Starting engine analysis for Python in E:\Temp\pytest-of-BW011222\pytest-528\test_native_unicode_facts_bind1\source
+2026-11-05 08:06:54 INFO     [static_analyzer:1133] Analyzing 1 Python files
+2026-11-05 08:06:55 INFO     [static_analyzer.engine.progress:49] Phase 0 (open): 100% (1/1 files, 0.1s elapsed)
+2026-11-05 08:06:55 INFO     [static_analyzer.engine.call_graph_builder:241] did_open 1 files: 0.1s
+2026-11-05 08:06:55 INFO     [static_analyzer.engine.call_graph_builder:251] Waiting for LSP server didOpen drain (timeout=62s)...
+2026-11-05 08:06:56 INFO     [static_analyzer.engine.call_graph_builder:265] Sync probe: 1.9s (2 symbols)
+2026-11-05 08:06:56 INFO     [static_analyzer.engine.progress:49] Phase 1 (symbols): 100% (1/1 files, 0.0s elapsed | symbols=2)
+2026-11-05 08:06:56 INFO     [static_analyzer.engine.call_graph_builder:223] Discovered 2 symbols across 1 files
+2026-11-05 08:06:56 INFO     [static_analyzer.engine.call_graph_builder:70] Phase 1 total (discover symbols): 2.0s
+2026-11-05 08:06:56 INFO     [static_analyzer.engine.call_graph_builder:74] Build indices: 0.0s
+2026-11-05 08:06:56 INFO     [static_analyzer.engine.progress:49] Phase 2 (definitions): 100% (1/1 files, 0.0s elapsed)
+2026-11-05 08:06:56 INFO     [static_analyzer.engine.edge_builder:455] Phase 2b (implementations): 0 unique targets from 0 pending queries
+2026-11-05 08:06:56 INFO     [static_analyzer.engine.progress:49] Phase 2b (impl): 100% (1/1 targets, 0.0s elapsed)
+2026-11-05 08:06:56 INFO     [static_analyzer.engine.edge_builder:236] Phase 2 summary: 0 call sites, 0 def resolved, 0 impl resolved, 0 iterated, 0 raw edges
+2026-11-05 08:06:56 INFO     [static_analyzer.engine.call_graph_builder:80] Phase 2 total (build edges): 0.0s, 0 edges
+2026-11-05 08:06:56 INFO     [static_analyzer.engine.hierarchy_builder:59] Hierarchy: 0 class symbols to process
+2026-11-05 08:06:56 INFO     [static_analyzer.engine.hierarchy_builder:106] Type hierarchy not supported, inferring from source code
+2026-11-05 08:06:56 INFO     [static_analyzer.engine.hierarchy_builder:110] Hierarchy complete: 0 classes, 0 inheritance links in 0.0s
+2026-11-05 08:06:56 INFO     [static_analyzer.engine.call_graph_builder:89] Phase 3 (hierarchy): 0.0s
+2026-11-05 08:06:56 INFO     [static_analyzer.engine.call_graph_builder:94] Phase 4 (package deps): 0.0s
+2026-11-05 08:06:56 INFO     [static_analyzer.engine.call_graph_builder:117] Pipeline complete: 1 files, 2 symbols, 0 edges, 0 hierarchy entries in 2.0s
+2026-11-05 08:06:56 INFO     [static_analyzer:1143] CallGraphBuilder.build() for Python: 2.0s
+2026-11-05 08:06:56 INFO     [static_analyzer.engine.result_converter:104] Converted 1 nodes, 0 edges (0 skipped) for Python
+2026-11-05 08:06:56 INFO     [static_analyzer.engine.result_converter:114] Reference edges for Python: 0 ({})
+2026-11-05 08:06:56 INFO     [static_analyzer:1155] convert_to_codeboarding_format for Python: 0.0s
+2026-11-05 08:06:56 INFO     [static_analyzer:880] Engine analysis for Python completed in 2.3s
+2026-11-05 08:06:56 WARNING  [infra.monitoring.telemetry.events:134] LSP analysis result for python is degraded: zero edges despite LOC
+2026-11-05 08:06:56 INFO     [static_analyzer:847] Static analysis complete: python: 1 files, 2 references, 1 nodes, 0 edges
+2026-11-05 08:06:57 INFO     [static_analyzer.engine.language_adapter:329] Found 1 Python files in E:\Temp\pytest-of-BW011222\pytest-528\test_native_unicode_facts_bind1\source
+_________ test_native_unicode_facts_bindings_and_projection_agree[\r] _________
+
+tmp_path = WindowsPath('E:/Temp/pytest-of-BW011222/pytest-528/test_native_unicode_facts_bind2')
+newline = '\r'
+
+    @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+    def test_native_unicode_facts_bindings_and_projection_agree(tmp_path: Path, newline: str) -> None:
+        names = ("M1_NODE", "M1_PYRIGHT", "M1_TOKEI")
+        if not all(os.environ.get(name) for name in names):
+            pytest.skip("Set M1_NODE, M1_PYRIGHT and M1_TOKEI to run the real native engine")
+        source = tmp_path / "source"
+        source.mkdir()
+        content = newline.join(['label = "A\u2028B\u2029C"', "", "def target():", "    return 42", ""]).encode("utf-8")
+        (source / "app.py").write_bytes(content)
+        facts = export_facts(source, "positions", tmp_path / "facts.json", *(Path(os.environ[name]) for name in names))
+        function = facts.symbols["app.py|app.target"]
+        file = facts.file_locations["app.py"]
+        assert (function.start, function.end, file.start, file.end) == (3, 4, 1, 4)
+        assert function.content_hash == file.content_hash == hashlib.sha256(content).hexdigest()
+        store = ModelStore(tmp_path / "model.json")
+        store.initialize({"id": "positions", "name": "Positions", "boundary": "Real Unicode source"}, "test")
+        store.apply(0, {"author": "test", "summary": "Bind real exported positions", "operations": [
+            {"action":"create", "collection":"facts", "id":facts.id, "value":facts.model_dump()},
+            *[{"action":"create", "collection":"bindings", "id":identity, "value":{
+                "snapshot_id":facts.id, "source_version":facts.source.digest, "location":location.model_dump(), "status":"current"
+            }} for identity, location in [("function",function), ("file",file)]]
+        ]})
+        before = store.path.read_bytes()
+        snippets = projection(store.read(), source)["snippets"]
+>       assert snippets["function"][0]["text"] == "    3  def target():\n    4      return 42"
+E       assert '    3  C"\n    4  ' == '    3  def t...    return 42'
+E
+E         -     3  def target():
+E         -     4      return 42
+E         +     3  C"
+E         +     4
+
+tests\architecture_model\test_viewer.py:62: AssertionError
+---------------------------- Captured stderr call -----------------------------
+2026-11-05 08:07:00 INFO     [static_analyzer.engine.language_adapter:329] Found 1 Python files in E:\Temp\pytest-of-BW011222\pytest-528\test_native_unicode_facts_bind2\source
+2026-11-05 08:07:01 INFO     [static_analyzer.engine.language_adapter:329] Found 1 Python files in E:\Temp\pytest-of-BW011222\pytest-528\test_native_unicode_facts_bind2\source
+2026-11-05 08:07:01 INFO     [static_analyzer:387] 1 engine LSP client(s) will start during analysis, at most 1 running at a time.
+2026-11-05 08:07:01 INFO     [static_analyzer:741] analyze() called with skip_cache=True, source_sha=None
+2026-11-05 08:07:01 INFO     [static_analyzer:746] static_analysis_cache: outcome=bypass (skip_cache=True)
+2026-11-05 08:07:01 INFO     [static_analyzer:460] Starting engine LSP client for Python at E:\Temp\pytest-of-BW011222\pytest-528\test_native_unicode_facts_bind2\source
+2026-11-05 08:07:01 INFO     [static_analyzer:514] Python LSP start: 0.3s
+2026-11-05 08:07:01 INFO     [static_analyzer:871] Starting engine analysis for Python in E:\Temp\pytest-of-BW011222\pytest-528\test_native_unicode_facts_bind2\source
+2026-11-05 08:07:01 INFO     [static_analyzer:1133] Analyzing 1 Python files
+2026-11-05 08:07:01 INFO     [static_analyzer.engine.progress:49] Phase 0 (open): 100% (1/1 files, 0.1s elapsed)
+2026-11-05 08:07:01 INFO     [static_analyzer.engine.call_graph_builder:241] did_open 1 files: 0.1s
+2026-11-05 08:07:01 INFO     [static_analyzer.engine.call_graph_builder:251] Waiting for LSP server didOpen drain (timeout=62s)...
+2026-11-05 08:07:03 INFO     [static_analyzer.engine.call_graph_builder:265] Sync probe: 2.1s (2 symbols)
+2026-11-05 08:07:03 WARNING  [static_analyzer.engine.source_inspector:964] Parsed E:\Temp\pytest-of-BW011222\pytest-528\test_native_unicode_facts_bind2\source\app.py with 0 error node(s); calls inside them are not seen
+2026-11-05 08:07:03 INFO     [static_analyzer.engine.progress:49] Phase 1 (symbols): 100% (1/1 files, 0.0s elapsed | symbols=2)
+2026-11-05 08:07:03 INFO     [static_analyzer.engine.call_graph_builder:223] Discovered 2 symbols across 1 files
+2026-11-05 08:07:03 INFO     [static_analyzer.engine.call_graph_builder:70] Phase 1 total (discover symbols): 2.2s
+2026-11-05 08:07:03 INFO     [static_analyzer.engine.call_graph_builder:74] Build indices: 0.0s
+2026-11-05 08:07:03 INFO     [static_analyzer.engine.progress:49] Phase 2 (definitions): 100% (1/1 files, 0.0s elapsed)
+2026-11-05 08:07:03 INFO     [static_analyzer.engine.edge_builder:455] Phase 2b (implementations): 0 unique targets from 0 pending queries
+2026-11-05 08:07:03 INFO     [static_analyzer.engine.progress:49] Phase 2b (impl): 100% (1/1 targets, 0.0s elapsed)
+2026-11-05 08:07:03 INFO     [static_analyzer.engine.edge_builder:236] Phase 2 summary: 0 call sites, 0 def resolved, 0 impl resolved, 0 iterated, 0 raw edges
+2026-11-05 08:07:03 INFO     [static_analyzer.engine.call_graph_builder:80] Phase 2 total (build edges): 0.0s, 0 edges
+2026-11-05 08:07:03 INFO     [static_analyzer.engine.hierarchy_builder:59] Hierarchy: 0 class symbols to process
+2026-11-05 08:07:03 INFO     [static_analyzer.engine.hierarchy_builder:106] Type hierarchy not supported, inferring from source code
+2026-11-05 08:07:03 INFO     [static_analyzer.engine.hierarchy_builder:110] Hierarchy complete: 0 classes, 0 inheritance links in 0.0s
+2026-11-05 08:07:03 INFO     [static_analyzer.engine.call_graph_builder:89] Phase 3 (hierarchy): 0.0s
+2026-11-05 08:07:03 INFO     [static_analyzer.engine.call_graph_builder:94] Phase 4 (package deps): 0.0s
+2026-11-05 08:07:03 INFO     [static_analyzer.engine.call_graph_builder:117] Pipeline complete: 1 files, 2 symbols, 0 edges, 0 hierarchy entries in 2.2s
+2026-11-05 08:07:03 INFO     [static_analyzer:1143] CallGraphBuilder.build() for Python: 2.2s
+2026-11-05 08:07:03 INFO     [static_analyzer.engine.result_converter:104] Converted 1 nodes, 0 edges (0 skipped) for Python
+2026-11-05 08:07:03 INFO     [static_analyzer.engine.result_converter:114] Reference edges for Python: 0 ({})
+2026-11-05 08:07:03 INFO     [static_analyzer:1155] convert_to_codeboarding_format for Python: 0.0s
+2026-11-05 08:07:03 INFO     [static_analyzer:880] Engine analysis for Python completed in 2.5s
+2026-11-05 08:07:03 WARNING  [infra.monitoring.telemetry.events:134] LSP analysis result for python is degraded: zero edges despite LOC
+2026-11-05 08:07:03 INFO     [static_analyzer:847] Static analysis complete: python: 1 files, 2 references, 1 nodes, 0 edges
+2026-11-05 08:07:03 INFO     [static_analyzer.engine.language_adapter:329] Found 1 Python files in E:\Temp\pytest-of-BW011222\pytest-528\test_native_unicode_facts_bind2\source
+=========================== short test summary info ===========================
+FAILED tests/architecture_model/test_viewer.py::test_snippets_follow_source_document_lines[False-\u2028-\n]
+FAILED tests/architecture_model/test_viewer.py::test_snippets_follow_source_document_lines[False-\u2028-\r\n]
+FAILED tests/architecture_model/test_viewer.py::test_snippets_follow_source_document_lines[False-\u2028-\r]
+FAILED tests/architecture_model/test_viewer.py::test_snippets_follow_source_document_lines[False-\u2029-\n]
+FAILED tests/architecture_model/test_viewer.py::test_snippets_follow_source_document_lines[False-\u2029-\r\n]
+FAILED tests/architecture_model/test_viewer.py::test_snippets_follow_source_document_lines[False-\u2029-\r]
+FAILED tests/architecture_model/test_viewer.py::test_snippets_follow_source_document_lines[False-\x85-\n]
+FAILED tests/architecture_model/test_viewer.py::test_snippets_follow_source_document_lines[False-\x85-\r\n]
+FAILED tests/architecture_model/test_viewer.py::test_snippets_follow_source_document_lines[False-\x85-\r]
+FAILED tests/architecture_model/test_viewer.py::test_snippets_follow_source_document_lines[True-\u2028-\n]
+FAILED tests/architecture_model/test_viewer.py::test_snippets_follow_source_document_lines[True-\u2028-\r\n]
+FAILED tests/architecture_model/test_viewer.py::test_snippets_follow_source_document_lines[True-\u2028-\r]
+FAILED tests/architecture_model/test_viewer.py::test_snippets_follow_source_document_lines[True-\u2029-\n]
+FAILED tests/architecture_model/test_viewer.py::test_snippets_follow_source_document_lines[True-\u2029-\r\n]
+FAILED tests/architecture_model/test_viewer.py::test_snippets_follow_source_document_lines[True-\u2029-\r]
+FAILED tests/architecture_model/test_viewer.py::test_snippets_follow_source_document_lines[True-\x85-\n]
+FAILED tests/architecture_model/test_viewer.py::test_snippets_follow_source_document_lines[True-\x85-\r\n]
+FAILED tests/architecture_model/test_viewer.py::test_snippets_follow_source_document_lines[True-\x85-\r]
+FAILED tests/architecture_model/test_viewer.py::test_native_unicode_facts_bindings_and_projection_agree[\n]
+FAILED tests/architecture_model/test_viewer.py::test_native_unicode_facts_bindings_and_projection_agree[\r\n]
+FAILED tests/architecture_model/test_viewer.py::test_native_unicode_facts_bindings_and_projection_agree[\r]
+21 failed, 11 deselected in 18.51s

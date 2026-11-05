@@ -1,5 +1,11 @@
 # M3 acceptance — 2026-11-05 (Asia/Shanghai)
 
+This is the original author acceptance record for edf00712. The subsequent PR #4
+review fixes and new evidence are recorded separately in
+[M3 review corrections](architecture-model-m3-review-results.md). The principal
+reviewer's independent Linux results and its denied file-protocol browser check
+are distinct from the author's local Chrome results below.
+
 Baseline: clean `origin/main` d4ace08b, with M2 PR #3 merged and reviewed
 713cca1f included. New branch: `codex/m3-interactive-browser`, base `main`.
 P3 compatibility repair is independent commit `8bc2754c`. No existing PR was

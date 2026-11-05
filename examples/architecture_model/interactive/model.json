@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "id": "7da6dde8-e345-41f7-b535-95fa7633ef7e",
+  "id": "a40d6d0c-766c-4feb-a1eb-3402cad58aac",
   "project": {
     "id": "orders",
     "name": "Orders · shared architecture",
@@ -10,11 +10,11 @@
   "facts": [
     {
       "schema_version": 1,
-      "id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+      "id": "8975db28ca9ec6a387019b5da173ff42f256df0ae9bea798e5de0455d3213105",
       "project_id": "orders",
       "source": {
         "digest": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
-        "git_commit": "8bc2754c3a1a5220de638e132d1e7ad66a8a52ef",
+        "git_commit": "edf00712ffd3c605794c1ce76345aab7094f917c",
         "files": {
           "app.py": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413",
           "delivery/orders.py": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
@@ -174,11 +174,11 @@
     },
     {
       "schema_version": 1,
-      "id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+      "id": "ad86a978807453722d88e70f91256dc4dcd220dad92bc4f149bd4d864ca679e4",
       "project_id": "orders",
       "source": {
         "digest": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
-        "git_commit": "8bc2754c3a1a5220de638e132d1e7ad66a8a52ef",
+        "git_commit": "edf00712ffd3c605794c1ce76345aab7094f917c",
         "files": {
           "app.py": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413",
           "delivery/orders.py": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
@@ -338,11 +338,11 @@
     },
     {
       "schema_version": 1,
-      "id": "acbf9dc379123f6f81226411dee455ad77eeadc22f785caba0bf90019c7aafaf",
+      "id": "e556652ab17da72c2d4365912bfc45674b1aab5d4c129906bd23bd03c04268cc",
       "project_id": "orders",
       "source": {
         "digest": "afa343cbe30ebbdf1f165744438f92c68556a58bbb2b91cb07e6612468c65a1c",
-        "git_commit": "8bc2754c3a1a5220de638e132d1e7ad66a8a52ef",
+        "git_commit": "edf00712ffd3c605794c1ce76345aab7094f917c",
         "files": {
           "app.py": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413",
           "delivery/orders.py": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
@@ -521,7 +521,7 @@
   "bindings": [
     {
       "id": "bind-start",
-      "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+      "snapshot_id": "8975db28ca9ec6a387019b5da173ff42f256df0ae9bea798e5de0455d3213105",
       "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
       "location": {
         "path": "app.py",
@@ -537,7 +537,7 @@
     },
     {
       "id": "bind-buy",
-      "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+      "snapshot_id": "8975db28ca9ec6a387019b5da173ff42f256df0ae9bea798e5de0455d3213105",
       "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
       "location": {
         "path": "delivery/orders.py",
@@ -553,7 +553,7 @@
     },
     {
       "id": "bind-quote",
-      "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+      "snapshot_id": "8975db28ca9ec6a387019b5da173ff42f256df0ae9bea798e5de0455d3213105",
       "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
       "location": {
         "path": "delivery/orders.py",
@@ -569,7 +569,7 @@
     },
     {
       "id": "bind-save",
-      "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+      "snapshot_id": "8975db28ca9ec6a387019b5da173ff42f256df0ae9bea798e5de0455d3213105",
       "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
       "location": {
         "path": "persistence/store.py",
@@ -585,7 +585,7 @@
     },
     {
       "id": "bind-total",
-      "snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+      "snapshot_id": "ad86a978807453722d88e70f91256dc4dcd220dad92bc4f149bd4d864ca679e4",
       "source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
       "location": {
         "path": "policies/pricing.py",
@@ -599,7 +599,7 @@
       "reason": "Inspected multiplier 12; same pricing responsibility",
       "history": [
         {
-          "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+          "snapshot_id": "8975db28ca9ec6a387019b5da173ff42f256df0ae9bea798e5de0455d3213105",
           "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
           "location": {
             "path": "policies/pricing.py",
@@ -969,17 +969,61 @@
   ],
   "opinions": [
     {
+      "id": "binding-feedback",
+      "author": "example-user",
+      "text": "Please inspect this pricing evidence version.",
+      "stance": "question",
+      "object_ids": [
+        "bind-total"
+      ]
+    },
+    {
+      "id": "component-feedback",
+      "author": "example-user",
+      "text": "Pricing is a useful shared boundary; this is an opinion, not verification.",
+      "stance": "accept",
+      "object_ids": [
+        "policy"
+      ]
+    },
+    {
+      "id": "shared-feedback",
+      "author": "example-user",
+      "text": "Compare purchase evidence with shared pricing; retain every target.",
+      "stance": "question",
+      "object_ids": [
+        "policy",
+        "bind-total",
+        "bind-buy"
+      ]
+    },
+    {
       "id": "feedback-pricing",
       "author": "example-user",
       "text": "Please explain why pricing is shared. Agent reply: both buy and quote import total; responsibility remains an interpretation.",
       "stance": "question",
       "object_ids": [
         "policy",
-        "maintenance-416fa769517d35edc96fb382dcbb536ef454dea157f7f8923d77ec3253cdb520"
+        "maintenance-e5a94921d854febb864e1dd5ec855df10d45e6b64ad9ba21a9cb5e5baa268bd9"
       ]
     }
   ],
   "verifications": [
+    {
+      "id": "planned-binding",
+      "status": "planned",
+      "object_ids": [
+        "bind-total"
+      ],
+      "command": "python -c \"from policies.pricing import total; assert total(2) == 20\"",
+      "environment": "Fixture Python; proposed, not executed",
+      "inputs": "quantity=2; planned pricing assertion only",
+      "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+      "executor": "",
+      "executed_at": "",
+      "exit_code": null,
+      "result": ""
+    },
     {
       "id": "planned-purchase",
       "status": "planned",
@@ -999,14 +1043,15 @@
       "id": "executed-export",
       "status": "executed",
       "object_ids": [
-        "application"
+        "application",
+        "bind-total"
       ],
-      "command": "[\"F:\\\\CodeBoarding\\\\.venv\\\\Scripts\\\\python.exe\", \"-m\", \"architecture_model\", \"facts\", \"export\", \"--repo\", \"F:\\\\CodeBoarding\\\\temp\\\\m3-complete\\\\source\", \"--project-id\", \"orders\", \"--output\", \"F:\\\\CodeBoarding\\\\temp\\\\m3-complete\\\\facts-s0.json\", \"--node\", \"D:\\\\Progrm Files\\\\nvm\\\\v24.20.0\\\\node.exe\", \"--pyright\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\langserver.index.js\", \"--tokei\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\"]",
+      "command": "[\"F:\\\\CodeBoarding\\\\.venv\\\\Scripts\\\\python.exe\", \"-m\", \"architecture_model\", \"facts\", \"export\", \"--repo\", \"F:\\\\CodeBoarding\\\\temp\\\\m3-review-final\\\\source\", \"--project-id\", \"orders\", \"--output\", \"F:\\\\CodeBoarding\\\\temp\\\\m3-review-final\\\\facts-s0.json\", \"--node\", \"D:\\\\Progrm Files\\\\nvm\\\\v24.20.0\\\\node.exe\", \"--pyright\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\langserver.index.js\", \"--tokei\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\"]",
       "environment": "Python 3.12.13 / Windows-11-10.0.26100-SP0",
       "inputs": "Complete fixture source tree, static export only; no business invocation",
       "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
       "executor": "viewer_demo",
-      "executed_at": "2026-11-04T16:08:49.754761+00:00",
+      "executed_at": "2026-11-05T00:14:43.113794+00:00",
       "exit_code": 0,
       "result": "Native fact export completed. Does not verify business explanations or hypothetical retry."
     }
@@ -1016,7 +1061,7 @@
       "revision": 0,
       "author": "business-agent",
       "summary": "Initialize architecture model",
-      "timestamp": "2026-11-04T16:08:43.539169+00:00",
+      "timestamp": "2026-11-05T00:14:35.658423+00:00",
       "object_ids": [],
       "scenario_ids": []
     },
@@ -1024,22 +1069,26 @@
       "revision": 1,
       "author": "business-agent",
       "summary": "establish-purchase",
-      "timestamp": "2026-11-04T16:08:51.690077+00:00",
+      "timestamp": "2026-11-05T00:14:45.457151+00:00",
       "object_ids": [
-        "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "8975db28ca9ec6a387019b5da173ff42f256df0ae9bea798e5de0455d3213105",
         "application",
         "bind-buy",
         "bind-quote",
         "bind-save",
         "bind-start",
         "bind-total",
+        "binding-feedback",
         "business-A",
+        "component-feedback",
         "entry",
         "entry-pricing",
         "entry-storage",
         "executed-export",
+        "planned-binding",
         "planned-purchase",
         "policy",
+        "shared-feedback",
         "storage"
       ],
       "scenario_ids": [
@@ -1050,7 +1099,7 @@
       "revision": 2,
       "author": "business-agent",
       "summary": "add-quotation-reusing-policy",
-      "timestamp": "2026-11-04T16:08:56.605467+00:00",
+      "timestamp": "2026-11-05T00:14:53.523292+00:00",
       "object_ids": [
         "business-B"
       ],
@@ -1062,14 +1111,14 @@
       "revision": 3,
       "author": "business-agent",
       "summary": "Record source maintenance",
-      "timestamp": "2026-11-04T16:09:11.050989+00:00",
+      "timestamp": "2026-11-05T00:15:10.102386+00:00",
       "object_ids": [
-        "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
-        "maintenance-0439454bd333e0308ce4d2c55901e4a694b176de67979838127482db9540ca55",
-        "maintenance-1f9a68dc1701103ba2d2b45d4ec92f82bf2cbd138aa0269609b713edf897d8d9",
-        "maintenance-22cc931938e9b80a00821eb566270643516c89f774ed62aca26767946c4ef7ee",
-        "maintenance-6652e436b87eb490e4d7f063e85d880168bbc57e888a09b2a42208304a1d3139",
-        "maintenance-e5d99186dd033d2dcf4a3cb3017ee83061f794c0bc04f134efc23aa0fff27a55"
+        "ad86a978807453722d88e70f91256dc4dcd220dad92bc4f149bd4d864ca679e4",
+        "maintenance-1f751501b6fcfd903c83a54df7bad9725fede158c25c5277beeae97c8d688e3b",
+        "maintenance-927b6f2ab330219217734e0e3d15bbc57889657b4623a6335e29eb887f3c89ed",
+        "maintenance-a0310a441b68367c0259662cd190f2e4d6022f8ea47abbce6db013d0a8de4614",
+        "maintenance-af1753d7fc857341a78d64b20ae4b9e17c4368b40cabe61bb3e8e225cfdcf717",
+        "maintenance-e5c91304c6e2c071928bd0179729236dc00e47fec025e2a9e1cf4b7400afde24"
       ],
       "scenario_ids": [
         "business-A",
@@ -1080,10 +1129,10 @@
       "revision": 4,
       "author": "business-agent",
       "summary": "clarify-shared-boundary",
-      "timestamp": "2026-11-04T16:09:16.625532+00:00",
+      "timestamp": "2026-11-05T00:15:17.035464+00:00",
       "object_ids": [
-        "maintenance-416fa769517d35edc96fb382dcbb536ef454dea157f7f8923d77ec3253cdb520",
-        "maintenance-76181ef9429e5c806846ceefe02726572ccd9a279146eaaf335bd473bd97a501",
+        "maintenance-c7020f908a070afcd3634661e6f0c75eb526da3057806c86e43818a9b4b3bc1b",
+        "maintenance-e5a94921d854febb864e1dd5ec855df10d45e6b64ad9ba21a9cb5e5baa268bd9",
         "policy"
       ],
       "scenario_ids": [
@@ -1095,7 +1144,7 @@
       "revision": 5,
       "author": "business-agent",
       "summary": "Inspected multiplier 12; same pricing responsibility",
-      "timestamp": "2026-11-04T16:09:20.142985+00:00",
+      "timestamp": "2026-11-05T00:15:20.756641+00:00",
       "object_ids": [
         "bind-total"
       ],
@@ -1108,9 +1157,9 @@
       "revision": 6,
       "author": "business-agent",
       "summary": "Inspected new multiplier and both consumers. Boundaries and explicit flow still hold; no runtime correctness claim.",
-      "timestamp": "2026-11-04T16:09:22.714405+00:00",
+      "timestamp": "2026-11-05T00:15:23.361286+00:00",
       "object_ids": [
-        "maintenance-416fa769517d35edc96fb382dcbb536ef454dea157f7f8923d77ec3253cdb520"
+        "maintenance-e5a94921d854febb864e1dd5ec855df10d45e6b64ad9ba21a9cb5e5baa268bd9"
       ],
       "scenario_ids": [
         "business-A",
@@ -1121,7 +1170,7 @@
       "revision": 7,
       "author": "business-agent",
       "summary": "record-session-feedback",
-      "timestamp": "2026-11-04T16:09:25.160115+00:00",
+      "timestamp": "2026-11-05T00:15:25.618602+00:00",
       "object_ids": [
         "feedback-pricing"
       ],
@@ -1131,24 +1180,24 @@
       "revision": 8,
       "author": "business-agent",
       "summary": "Record source maintenance",
-      "timestamp": "2026-11-04T16:09:36.554060+00:00",
+      "timestamp": "2026-11-05T00:15:36.216556+00:00",
       "object_ids": [
-        "acbf9dc379123f6f81226411dee455ad77eeadc22f785caba0bf90019c7aafaf",
-        "maintenance-3867e28b5c64bb26545fe9a1c826e58bc78c915d0fd828242fd18cc47049d3f6",
-        "maintenance-40040f0244bea239ab93ef7f29b3923a25546ea2c0f300e0b07176ecf21a1140",
-        "maintenance-80ecf0229657c15779be546f402f414d343018c731f26cca521dd086375bf640",
-        "maintenance-9b1340e67b8c7b937a1f9db2a92fd2c77fa68700ca7de1d5f4fea0db066ef872",
-        "maintenance-af68c7be4fdc91696aa63cafdd3f912f95252d05a51ba9f8aafdb7898bc8085c"
+        "e556652ab17da72c2d4365912bfc45674b1aab5d4c129906bd23bd03c04268cc",
+        "maintenance-2ff01bc85d3e1fc938e01105ffc4a1487284f548b823b29367727790d07f68d2",
+        "maintenance-4010d269b07487da2fbd131bd354e1f5420daf2d089853be3e287e870dd1d9f9",
+        "maintenance-6b45dae72a40fa2b25e3ed3e5b7d3020dbe77d853c988330aa137d358b1a1704",
+        "maintenance-a906e372e0937bb819fcb8c6c8bcf52da6f66d4b5909c65a58a4509f77a9b856",
+        "maintenance-f67e534f7f9902eac55cafcd098594bea33dca82da0bd4cae5df8ebc2e15ff61"
       ],
       "scenario_ids": []
     }
   ],
   "maintenance": [
     {
-      "id": "maintenance-6652e436b87eb490e4d7f063e85d880168bbc57e888a09b2a42208304a1d3139",
+      "id": "maintenance-1f751501b6fcfd903c83a54df7bad9725fede158c25c5277beeae97c8d688e3b",
       "binding_id": "bind-start",
       "basis": {
-        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "snapshot_id": "8975db28ca9ec6a387019b5da173ff42f256df0ae9bea798e5de0455d3213105",
         "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
         "location": {
           "path": "app.py",
@@ -1160,7 +1209,7 @@
         },
         "reason": "Evidence at comparison time"
       },
-      "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+      "target_snapshot_id": "ad86a978807453722d88e70f91256dc4dcd220dad92bc4f149bd4d864ca679e4",
       "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
       "compared_revision": 2,
       "disposition": "unchanged",
@@ -1246,10 +1295,10 @@
       }
     },
     {
-      "id": "maintenance-1f9a68dc1701103ba2d2b45d4ec92f82bf2cbd138aa0269609b713edf897d8d9",
+      "id": "maintenance-af1753d7fc857341a78d64b20ae4b9e17c4368b40cabe61bb3e8e225cfdcf717",
       "binding_id": "bind-buy",
       "basis": {
-        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "snapshot_id": "8975db28ca9ec6a387019b5da173ff42f256df0ae9bea798e5de0455d3213105",
         "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
         "location": {
           "path": "delivery/orders.py",
@@ -1261,7 +1310,7 @@
         },
         "reason": "Evidence at comparison time"
       },
-      "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+      "target_snapshot_id": "ad86a978807453722d88e70f91256dc4dcd220dad92bc4f149bd4d864ca679e4",
       "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
       "compared_revision": 2,
       "disposition": "unchanged",
@@ -1398,10 +1447,10 @@
       }
     },
     {
-      "id": "maintenance-0439454bd333e0308ce4d2c55901e4a694b176de67979838127482db9540ca55",
+      "id": "maintenance-927b6f2ab330219217734e0e3d15bbc57889657b4623a6335e29eb887f3c89ed",
       "binding_id": "bind-quote",
       "basis": {
-        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "snapshot_id": "8975db28ca9ec6a387019b5da173ff42f256df0ae9bea798e5de0455d3213105",
         "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
         "location": {
           "path": "delivery/orders.py",
@@ -1413,7 +1462,7 @@
         },
         "reason": "Evidence at comparison time"
       },
-      "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+      "target_snapshot_id": "ad86a978807453722d88e70f91256dc4dcd220dad92bc4f149bd4d864ca679e4",
       "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
       "compared_revision": 2,
       "disposition": "unchanged",
@@ -1502,10 +1551,10 @@
       }
     },
     {
-      "id": "maintenance-e5d99186dd033d2dcf4a3cb3017ee83061f794c0bc04f134efc23aa0fff27a55",
+      "id": "maintenance-a0310a441b68367c0259662cd190f2e4d6022f8ea47abbce6db013d0a8de4614",
       "binding_id": "bind-save",
       "basis": {
-        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "snapshot_id": "8975db28ca9ec6a387019b5da173ff42f256df0ae9bea798e5de0455d3213105",
         "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
         "location": {
           "path": "persistence/store.py",
@@ -1517,7 +1566,7 @@
         },
         "reason": "Evidence at comparison time"
       },
-      "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+      "target_snapshot_id": "ad86a978807453722d88e70f91256dc4dcd220dad92bc4f149bd4d864ca679e4",
       "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
       "compared_revision": 2,
       "disposition": "unchanged",
@@ -1590,10 +1639,10 @@
       }
     },
     {
-      "id": "maintenance-22cc931938e9b80a00821eb566270643516c89f774ed62aca26767946c4ef7ee",
+      "id": "maintenance-e5c91304c6e2c071928bd0179729236dc00e47fec025e2a9e1cf4b7400afde24",
       "binding_id": "bind-total",
       "basis": {
-        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "snapshot_id": "8975db28ca9ec6a387019b5da173ff42f256df0ae9bea798e5de0455d3213105",
         "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
         "location": {
           "path": "policies/pricing.py",
@@ -1605,7 +1654,7 @@
         },
         "reason": "Evidence at comparison time"
       },
-      "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+      "target_snapshot_id": "ad86a978807453722d88e70f91256dc4dcd220dad92bc4f149bd4d864ca679e4",
       "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
       "compared_revision": 2,
       "disposition": "changed",
@@ -1705,10 +1754,10 @@
       }
     },
     {
-      "id": "maintenance-76181ef9429e5c806846ceefe02726572ccd9a279146eaaf335bd473bd97a501",
+      "id": "maintenance-c7020f908a070afcd3634661e6f0c75eb526da3057806c86e43818a9b4b3bc1b",
       "binding_id": "bind-buy",
       "basis": {
-        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "snapshot_id": "8975db28ca9ec6a387019b5da173ff42f256df0ae9bea798e5de0455d3213105",
         "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
         "location": {
           "path": "delivery/orders.py",
@@ -1720,7 +1769,7 @@
         },
         "reason": "Evidence at comparison time"
       },
-      "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+      "target_snapshot_id": "ad86a978807453722d88e70f91256dc4dcd220dad92bc4f149bd4d864ca679e4",
       "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
       "compared_revision": 3,
       "disposition": "unchanged",
@@ -1857,10 +1906,10 @@
       }
     },
     {
-      "id": "maintenance-416fa769517d35edc96fb382dcbb536ef454dea157f7f8923d77ec3253cdb520",
+      "id": "maintenance-e5a94921d854febb864e1dd5ec855df10d45e6b64ad9ba21a9cb5e5baa268bd9",
       "binding_id": "bind-total",
       "basis": {
-        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "snapshot_id": "8975db28ca9ec6a387019b5da173ff42f256df0ae9bea798e5de0455d3213105",
         "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
         "location": {
           "path": "policies/pricing.py",
@@ -1872,7 +1921,7 @@
         },
         "reason": "Evidence at comparison time"
       },
-      "target_snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+      "target_snapshot_id": "ad86a978807453722d88e70f91256dc4dcd220dad92bc4f149bd4d864ca679e4",
       "target_source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
       "compared_revision": 3,
       "disposition": "changed",
@@ -1965,7 +2014,7 @@
         "author": "business-agent",
         "reason": "Inspected new multiplier and both consumers. Boundaries and explicit flow still hold; no runtime correctness claim.",
         "source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
-        "timestamp": "2026-11-04T16:09:22.706397+00:00",
+        "timestamp": "2026-11-05T00:15:23.350768+00:00",
         "object_ids": [
           "business-A",
           "business-A-price",
@@ -1994,10 +2043,10 @@
       }
     },
     {
-      "id": "maintenance-80ecf0229657c15779be546f402f414d343018c731f26cca521dd086375bf640",
+      "id": "maintenance-4010d269b07487da2fbd131bd354e1f5420daf2d089853be3e287e870dd1d9f9",
       "binding_id": "bind-start",
       "basis": {
-        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "snapshot_id": "8975db28ca9ec6a387019b5da173ff42f256df0ae9bea798e5de0455d3213105",
         "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
         "location": {
           "path": "app.py",
@@ -2009,7 +2058,7 @@
         },
         "reason": "Evidence at comparison time"
       },
-      "target_snapshot_id": "acbf9dc379123f6f81226411dee455ad77eeadc22f785caba0bf90019c7aafaf",
+      "target_snapshot_id": "e556652ab17da72c2d4365912bfc45674b1aab5d4c129906bd23bd03c04268cc",
       "target_source_version": "afa343cbe30ebbdf1f165744438f92c68556a58bbb2b91cb07e6612468c65a1c",
       "compared_revision": 7,
       "disposition": "unchanged",
@@ -2095,10 +2144,10 @@
       }
     },
     {
-      "id": "maintenance-3867e28b5c64bb26545fe9a1c826e58bc78c915d0fd828242fd18cc47049d3f6",
+      "id": "maintenance-f67e534f7f9902eac55cafcd098594bea33dca82da0bd4cae5df8ebc2e15ff61",
       "binding_id": "bind-buy",
       "basis": {
-        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "snapshot_id": "8975db28ca9ec6a387019b5da173ff42f256df0ae9bea798e5de0455d3213105",
         "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
         "location": {
           "path": "delivery/orders.py",
@@ -2110,7 +2159,7 @@
         },
         "reason": "Evidence at comparison time"
       },
-      "target_snapshot_id": "acbf9dc379123f6f81226411dee455ad77eeadc22f785caba0bf90019c7aafaf",
+      "target_snapshot_id": "e556652ab17da72c2d4365912bfc45674b1aab5d4c129906bd23bd03c04268cc",
       "target_source_version": "afa343cbe30ebbdf1f165744438f92c68556a58bbb2b91cb07e6612468c65a1c",
       "compared_revision": 7,
       "disposition": "unchanged",
@@ -2247,10 +2296,10 @@
       }
     },
     {
-      "id": "maintenance-40040f0244bea239ab93ef7f29b3923a25546ea2c0f300e0b07176ecf21a1140",
+      "id": "maintenance-6b45dae72a40fa2b25e3ed3e5b7d3020dbe77d853c988330aa137d358b1a1704",
       "binding_id": "bind-quote",
       "basis": {
-        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "snapshot_id": "8975db28ca9ec6a387019b5da173ff42f256df0ae9bea798e5de0455d3213105",
         "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
         "location": {
           "path": "delivery/orders.py",
@@ -2262,7 +2311,7 @@
         },
         "reason": "Evidence at comparison time"
       },
-      "target_snapshot_id": "acbf9dc379123f6f81226411dee455ad77eeadc22f785caba0bf90019c7aafaf",
+      "target_snapshot_id": "e556652ab17da72c2d4365912bfc45674b1aab5d4c129906bd23bd03c04268cc",
       "target_source_version": "afa343cbe30ebbdf1f165744438f92c68556a58bbb2b91cb07e6612468c65a1c",
       "compared_revision": 7,
       "disposition": "unchanged",
@@ -2351,10 +2400,10 @@
       }
     },
     {
-      "id": "maintenance-af68c7be4fdc91696aa63cafdd3f912f95252d05a51ba9f8aafdb7898bc8085c",
+      "id": "maintenance-2ff01bc85d3e1fc938e01105ffc4a1487284f548b823b29367727790d07f68d2",
       "binding_id": "bind-save",
       "basis": {
-        "snapshot_id": "20e20c47cdb2c62ada8a1c78a6c4e39500650547d6c0ec28c3b2af690fa8db14",
+        "snapshot_id": "8975db28ca9ec6a387019b5da173ff42f256df0ae9bea798e5de0455d3213105",
         "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
         "location": {
           "path": "persistence/store.py",
@@ -2366,7 +2415,7 @@
         },
         "reason": "Evidence at comparison time"
       },
-      "target_snapshot_id": "acbf9dc379123f6f81226411dee455ad77eeadc22f785caba0bf90019c7aafaf",
+      "target_snapshot_id": "e556652ab17da72c2d4365912bfc45674b1aab5d4c129906bd23bd03c04268cc",
       "target_source_version": "afa343cbe30ebbdf1f165744438f92c68556a58bbb2b91cb07e6612468c65a1c",
       "compared_revision": 7,
       "disposition": "unchanged",
@@ -2439,10 +2488,10 @@
       }
     },
     {
-      "id": "maintenance-9b1340e67b8c7b937a1f9db2a92fd2c77fa68700ca7de1d5f4fea0db066ef872",
+      "id": "maintenance-a906e372e0937bb819fcb8c6c8bcf52da6f66d4b5909c65a58a4509f77a9b856",
       "binding_id": "bind-total",
       "basis": {
-        "snapshot_id": "7774f88c3c662c8a5a8c1bd71e24c91501bfe57e2ecee2906d841127bbe9cb13",
+        "snapshot_id": "ad86a978807453722d88e70f91256dc4dcd220dad92bc4f149bd4d864ca679e4",
         "source_version": "a4e6cd2753822d332a6eb9782b12fcd81a62cbf0be7262bcc16da3239254ca21",
         "location": {
           "path": "policies/pricing.py",
@@ -2454,7 +2503,7 @@
         },
         "reason": "Evidence at comparison time"
       },
-      "target_snapshot_id": "acbf9dc379123f6f81226411dee455ad77eeadc22f785caba0bf90019c7aafaf",
+      "target_snapshot_id": "e556652ab17da72c2d4365912bfc45674b1aab5d4c129906bd23bd03c04268cc",
       "target_source_version": "afa343cbe30ebbdf1f165744438f92c68556a58bbb2b91cb07e6612468c65a1c",
       "compared_revision": 7,
       "disposition": "unchanged",
@@ -2553,5 +2602,5 @@
       }
     }
   ],
-  "maintenance_target_snapshot_id": "acbf9dc379123f6f81226411dee455ad77eeadc22f785caba0bf90019c7aafaf"
+  "maintenance_target_snapshot_id": "e556652ab17da72c2d4365912bfc45674b1aab5d4c129906bd23bd03c04268cc"
 }

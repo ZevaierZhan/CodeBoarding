@@ -23,6 +23,31 @@ const {chromium} = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
   const click=async id=>page.locator('#'+id).click();
   const snapshot=async name=>page.screenshot({path:path.join(evidence,name+'.png'),fullPage:true});
   const choice=async kind=>page.locator('#choices button').filter({hasText:kind}).click();
+  async function bindingRecords(route) {
+    assert.equal(await page.locator('#detail details > summary').filter({hasText:'binding-feedback'}).count(),1,'Binding opinion must have a readable disclosure');
+    const binding=page.locator('#detail details[data-binding-id="bind-total"]');
+    await binding.locator('summary').first().click();
+    for(const [id,status] of [['binding-feedback','question'],['planned-binding','planned'],['executed-export','executed']]) {
+      const record=binding.locator(`details[data-record-id="${id}"]`);
+      await record.locator('summary').click();
+      assert.equal(await record.locator('pre').isVisible(),true);
+      const stored=JSON.parse(await record.locator('pre').textContent());
+      assert.ok(stored.object_ids.includes('bind-total'));
+      assert.equal(stored.status || stored.stance,status);
+      if(stored.source_version) assert.equal(stored.source_version,JSON.parse(fs.readFileSync(path.join(directory,'facts-s0.json'),'utf8')).source.digest);
+      if(status==='executed') {
+        assert.deepEqual(stored.object_ids,['application','bind-total']);assert.match(stored.inputs,/static export only/);
+        await record.locator('pre').evaluate(pre=>{pre.scrollTop=pre.scrollHeight;});
+      }
+    }
+    const shared=binding.locator('details[data-record-id="shared-feedback"]');
+    await shared.locator('summary').click();
+    assert.deepEqual(JSON.parse(await shared.locator('pre').textContent()).object_ids,['policy','bind-total','bind-buy']);
+    assert.equal(await page.locator('#detail details[data-record-id="shared-feedback"]').count(),1);
+    const reference=page.locator('#detail button[data-record-reference="shared-feedback"]').first();
+    await reference.click();assert.equal(await shared.locator('pre').isVisible(),true);
+    await snapshot(`binding-records-${route}`);
+  }
   try {
     await open('01-purchase.html');
     assert.equal(await page.locator('#scenario option').count(),1);
@@ -49,6 +74,18 @@ const {chromium} = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     assert.equal(await page.locator('#graph').evaluate(svg=>[...svg.querySelectorAll('text')].every(label=>{
       const box=label.getBBox();return box.x+box.width <= svg.width.baseVal.value;
     })),true);
+    await page.locator('#tree button.object').filter({hasText:'policy'}).click();
+    await bindingRecords('component');
+    const control=page.locator('#detail details[data-record-id="component-feedback"]');
+    await control.locator('summary').click();
+    assert.equal(await control.locator('pre').isVisible(),true);
+    assert.match(await page.locator('#detail .badge').first().textContent(),/inference/);
+    await page.locator('#steps button').filter({hasText:'business-A-price'}).click();
+    await bindingRecords('step');
+    await click('metadata');
+    await page.getByRole('button',{name:'Inspect binding bind-total',exact:true}).click();
+    await bindingRecords('direct');
+    await click('reset');await choice('quantity > 0');
     await page.locator('#tree button.object').filter({hasText:'policy'}).click();
     await page.locator('#detail details').filter({has:page.locator('summary').filter({hasText:'bind-total ·'})}).first().locator('summary').first().click();
     assert.match(await page.locator('#detail').textContent(),/Exact file SHA-256 matched/);
@@ -91,6 +128,7 @@ const {chromium} = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.locator('#detail details').filter({has:page.locator('summary').filter({hasText:'Current explanation · changed'})}).first().locator('summary').first().click();
     await snapshot('source-pending');
     await open('04-reviewed.html');await choice('quantity > 0');
+    await bindingRecords('reviewed-older-verification');
     assert.match(await page.locator('#detail').textContent(),/review recorded/);
     assert.match(await page.locator('#detail').textContent(),/Historical explanation · changed · historical pending/);
     assert.match(await page.locator('#detail').textContent(),/Current explanation · changed · review recorded · older target/);
@@ -102,6 +140,7 @@ const {chromium} = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await snapshot('reviewed-with-history');
     await click('metadata');assert.match(await page.locator('#detail').textContent(),/business-A-price/);
     checks.push('Source mismatch withholds body; historical pending survives; current confirmation explicitly names older source target; author/reason, actual fingerprints, feedback and selected business/step metadata visible');
+    checks.push('Binding opinions, planned/executed checks are visibly readable from component, step and direct binding inspectors; original object_ids/source_version preserved; shared records rendered once with working cross-references; component control and claim kind retained');
     // A hostile fixture is created by the Python acceptance setup when supplied.
     if(fs.existsSync(path.join(directory,'untrusted.html'))){
       await open('untrusted.html');
@@ -109,6 +148,20 @@ const {chromium} = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
       assert.equal(await page.locator('#detail a[href^="javascript:"]').count(),0);
       assert.match(await page.locator('.node').first().textContent(),/script/);
       checks.push('Script-closing and javascript URL payloads rendered inert as text');
+    }
+    if(fs.existsSync(path.join(directory,'unicode.html'))){
+      await open('unicode.html');
+      for(const id of ['function','file']) {
+        const evidence=page.locator(`details[data-binding-id="${id}"]`);
+        await evidence.locator('summary').first().click();
+        const code=evidence.locator('pre').filter({hasText:'def target():'});
+        assert.equal(await code.isVisible(),true);
+        assert.match(await code.textContent(),/    3  def target\(\):\n    4      return 42$/);
+        if(id==='file') {assert.ok((await code.textContent()).includes('\u2028'));assert.ok((await code.textContent()).includes('</script>'));}
+      }
+      assert.equal(await page.evaluate(()=>window.injected),undefined);
+      await snapshot('unicode-source');
+      checks.push('Real Unicode facts: function lines 3–4 and whole-file final return visibly correct; source script-closing text stays inert');
     }
     await open('04-reviewed.html');await page.setViewportSize({width:390,height:844});
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);

@@ -1,6 +1,6 @@
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
-const {Player,visibleAncestor,projectedEdges,hierarchy} = require('../../architecture_model/viewer_assets/engine.js');
+const {Player,visibleAncestor,componentProjection,projectedEdges,hierarchy} = require('../../architecture_model/viewer_assets/engine.js');
 const components = [{id:'root',parent_id:''},{id:'shared',parent_id:'root'},{id:'leaf',parent_id:'shared'}];
 const scenario = {entry_step_id:'a',order:['b','c','a'],steps:[
   {id:'a',component_ids:['leaf']},{id:'b',component_ids:['shared']},{id:'c',component_ids:['root']}],
@@ -56,4 +56,31 @@ test('direct inspection is explicit and starts a fresh path; empty models are pl
   assert.equal(player.back(),false);
   assert.equal(player.incoming,null);
   const empty=new Player(null);assert.equal(empty.current,'');assert.deepEqual(empty.choices(),[]);
+});
+test('shared projection matches ancestor semantics and preserves original edge references for every collapse state',()=>{
+  const forest=[...components,{id:'other',parent_id:''},{id:'child',parent_id:'other'}];
+  const model={components:forest,relations:[{id:'r',source_id:'leaf',target_id:'child'}]};
+  const before=JSON.stringify(model);
+  for(const ordered of [forest,[...forest].reverse()]) {
+    for(const expanded of [new Set(),new Set(['root']),new Set(['shared']),new Set(['root','shared','other'])]) {
+      const projection=componentProjection(ordered,expanded);
+      for(const c of forest) assert.equal(projection.visibleById.get(c.id),visibleAncestor(c.id,forest,expanded));
+      for(const visible of forest.filter(c=>projection.visibleById.get(c.id)===c.id)) {
+        assert.equal(projection.hiddenCounts.get(visible.id)||0,forest.filter(c=>c.id!==visible.id&&visibleAncestor(c.id,forest,expanded)===visible.id).length);
+      }
+      const edges=projectedEdges(model,scenario,expanded,projection);
+      assert.deepEqual(edges[0].component_ids,['leaf','child']);
+      assert.equal(edges[0].relation_id,'r');assert.equal(edges[0].source,projection.visibleById.get('leaf'));
+      assert.equal(edges[1].source_step_id,'a');assert.equal(edges[1].target_step_id,'c');
+    }
+  }
+  assert.equal(JSON.stringify(model),before);
+});
+test('projection handles deep chains and out-of-order parents without changing identities',()=>{
+  const chain=Array.from({length:2000},(_,i)=>({id:`n${i}`,parent_id:i?`n${i-1}`:''})).reverse();
+  const folded=componentProjection(chain,new Set());
+  assert.equal(folded.visibleById.get('n1999'),'n0');assert.equal(folded.hiddenCounts.get('n0'),1999);
+  const open=componentProjection(chain,new Set(chain.map(c=>c.id)));
+  assert.equal(open.visibleById.get('n1999'),'n1999');assert.equal(open.hiddenCounts.size,0);
+  assert.equal(componentProjection([],new Set()).visibleById.size,0);
 });

@@ -181,6 +181,48 @@ def run(output: Path, node: Path, pyright: Path, tokei: Path) -> dict:
             ),
             create("scenarios", purchase),
             create(
+                "opinions",
+                {
+                    "id": "binding-feedback",
+                    "author": "example-user",
+                    "stance": "question",
+                    "text": "Please inspect this pricing evidence version.",
+                    "object_ids": ["bind-total"],
+                },
+            ),
+            create(
+                "opinions",
+                {
+                    "id": "component-feedback",
+                    "author": "example-user",
+                    "stance": "accept",
+                    "text": "Pricing is a useful shared boundary; this is an opinion, not verification.",
+                    "object_ids": ["policy"],
+                },
+            ),
+            create(
+                "opinions",
+                {
+                    "id": "shared-feedback",
+                    "author": "example-user",
+                    "stance": "question",
+                    "text": "Compare purchase evidence with shared pricing; retain every target.",
+                    "object_ids": ["policy", "bind-total", "bind-buy"],
+                },
+            ),
+            create(
+                "verifications",
+                {
+                    "id": "planned-binding",
+                    "status": "planned",
+                    "object_ids": ["bind-total"],
+                    "command": 'python -c "from policies.pricing import total; assert total(2) == 20"',
+                    "environment": "Fixture Python; proposed, not executed",
+                    "inputs": "quantity=2; planned pricing assertion only",
+                    "source_version": facts["source"]["digest"],
+                },
+            ),
+            create(
                 "verifications",
                 {
                     "id": "planned-purchase",
@@ -197,7 +239,7 @@ def run(output: Path, node: Path, pyright: Path, tokei: Path) -> dict:
                 {
                     "id": "executed-export",
                     "status": "executed",
-                    "object_ids": ["application"],
+                    "object_ids": ["application", "bind-total"],
                     "command": fact_runs["s0"]["command"],
                     "environment": fact_runs["s0"]["environment"],
                     "inputs": "Complete fixture source tree, static export only; no business invocation",

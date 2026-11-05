@@ -27,8 +27,32 @@ const ArchitectureView = (() => {
     visit("", 0);
     return rows;
   }
-  function projectedEdges(model, scenario, expanded) {
-    const project = id => visibleAncestor(id, model.components, expanded);
+  function componentProjection(components, expanded) {
+    const byId = new Map(components.map(c => [c.id, c]));
+    const visibleById = new Map(), hiddenCounts = new Map(), parentIds = new Set();
+    for (const component of components) {
+      if (component.parent_id) parentIds.add(component.parent_id);
+      const path = [];
+      let current = component;
+      while (current && !visibleById.has(current.id)) {
+        path.push(current);
+        current = byId.get(current.parent_id);
+      }
+      while (path.length) {
+        const entry = path.pop();
+        const parent = byId.get(entry.parent_id);
+        const visibleParent = parent && visibleById.get(parent.id);
+        visibleById.set(entry.id, !parent ? entry.id : visibleParent !== parent.id
+          ? visibleParent : expanded.has(parent.id) ? entry.id : parent.id);
+      }
+    }
+    for (const [id, visible] of visibleById) {
+      if (id !== visible) hiddenCounts.set(visible, (hiddenCounts.get(visible) || 0) + 1);
+    }
+    return {byId, visibleById, hiddenCounts, parentIds};
+  }
+  function projectedEdges(model, scenario, expanded, projection = componentProjection(model.components, expanded)) {
+    const project = id => projection.visibleById.get(id);
     const edges = model.relations.map(r => ({
       source: project(r.source_id), target: project(r.target_id),
       relation_id: r.id, component_ids: [r.source_id, r.target_id], kind: "relation"
@@ -91,6 +115,6 @@ const ArchitectureView = (() => {
       return choice.index;
     }
   }
-  return {visibleAncestor, hierarchy, projectedEdges, Player};
+  return {visibleAncestor, hierarchy, componentProjection, projectedEdges, Player};
 })();
 if (typeof module !== "undefined") module.exports = ArchitectureView;

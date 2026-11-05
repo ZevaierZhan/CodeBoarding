@@ -1,0 +1,58 @@
+{
+  "baseline": "edf00712ffd3c605794c1ce76345aab7094f917c",
+  "python": "3.12.13",
+  "platform": "Windows-11-10.0.26100-SP0",
+  "author_results": {
+    "architecture_tests": 159,
+    "module_coverage_percent": 97.08,
+    "node_tests": 6,
+    "real_replay_revision": 8,
+    "black_files": 359,
+    "linux_mypy_files": 359,
+    "windows_mypy": "Existing SIGKILL attr-defined only"
+  },
+  "pre_fix": {
+    "source_cases_failed": 21,
+    "binding_opinion_disclosures": 0,
+    "expected_binding_opinion_disclosures": 1
+  },
+  "source_proof": {
+    "function_start": 3,
+    "function_end": 4,
+    "file_end": 4,
+    "raw_sha256": "345ee3cc2b80d96d451ed74db9b9038ef4df1657251fb8b40445cf6683151f00"
+  },
+  "fresh_runtime_validated_models": {
+    "index.html": {
+      "sha256": "f1d0645f73ef40f52a90fe95adee2f7f221c3a0d42c5191a36ccd15110af5711",
+      "model_id": "a40d6d0c-766c-4feb-a1eb-3402cad58aac",
+      "revision": 8
+    },
+    "pending.html": {
+      "sha256": "95b2814f1e9cb5287b602bda04d9515eec3730ee973fb6097f2d6867a14d5b9a",
+      "model_id": "a40d6d0c-766c-4feb-a1eb-3402cad58aac",
+      "revision": 3
+    },
+    "unicode.html": {
+      "sha256": "27ed11c06d9ed52e41e9dfc86f7a08df5d491aaecef506aaedcb6ec3435b3db4",
+      "model_id": "aeeee4df-65a0-4038-8617-d6b9090d9739",
+      "revision": 1
+    }
+  },
+  "engine_sha256": "4d7feec61b4d5e18c510140ae147d71f0904e1d9d36f06b61fedcb4783664c99",
+  "viewer_sha256": "1b82248c7f3aecdcf8e48a6afa01988723aa9010bca593dff9548b739bc8e401",
+  "principal_review_boundary": "Earlier baseline Linux results independently reported; principal Browser denied file: and did not independently validate interactions. Author local Chrome checks are separate.",
+  "not_confirmed": [
+    "whole-repository tests",
+    "repository-wide 80% coverage",
+    "private integration",
+    "full browser performance",
+    "other browsers"
+  ],
+  "source_failure_log": {
+    "raw_sha256": "784bdd905339c1b5f398c14067a6f822874b9c486644a4a2090cbfb5475606be",
+    "raw_local_path": "temp/m3-review-lines-before.log",
+    "committed_copy": "lines-before.log",
+    "normalization": "Only diagnostic trailing whitespace and line endings; source evidence bytes are unchanged"
+  }
+}

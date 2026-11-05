@@ -205,3 +205,42 @@ regressions run with the architecture_model pytest suite. The runtime ships in
 the HTML; Node/Playwright are verification tools only. See
 [reader/Agent instructions](../../docs/architecture-model-viewer.md) and
 [M3 design](../../docs/design/architecture-model-m3.md).
+
+### M3 review regressions
+
+The example now includes a binding-only opinion, a planned pricing check, the
+real executed export targeting `application` and `bind-total`, a component opinion
+as control and an opinion targeting several bindings/components. In **Code
+evidence → Binding opinions & verification**, open the original records. Shared
+records appear once with cross-reference buttons. The metadata panel's binding
+index opens the same direct inspector. Executed static export never means that a
+component or business was verified; original source versions remain visible after
+rebinding to S1.
+
+Repeat the local projection measurement (requires the reviewed baseline Git object):
+
+```powershell
+node examples/architecture_model/benchmark_projection.cjs temp/projection-performance.json
+```
+
+This compares the baseline's isolated visible-node/hidden-count loop with the new
+shared projection for 100/200/400/800 fully expanded components on the same Node
+process and input. It asserts equivalent node counts and edge references, and
+records machine metadata. Milliseconds are observations, never a test threshold
+or full browser performance claim. Node unit tests also check collapsed forests,
+out-of-order parents and a deep chain without changing domain IDs.
+
+The native Unicode regression exports actual LF/CRLF/CR files containing U+2028
+and U+2029 inside a string, binds the returned function/file locations and checks
+exact numbered contents. With the M1 tool variables set as above:
+
+```powershell
+uv run pytest tests/architecture_model/test_viewer.py -k native_unicode `
+  --basetemp temp/m3-native-new -q
+```
+
+The fresh basetemp contains `test_native_unicode_facts_bind0/unicode.html`, its
+real `facts.json`, `model.json` and source. Copy that HTML into a replay directory
+as `unicode.html` before running check_viewer to check actual source visibility
+and inert script-closing text. The browser script also checks `untrusted.html`
+when supplied, as documented in the acceptance report. Preserve fresh output paths.

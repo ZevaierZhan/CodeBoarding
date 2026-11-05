@@ -1,0 +1,37 @@
+{
+  "baseline": "edf00712ffd3c605794c1ce76345aab7094f917c",
+  "node": "v24.20.0",
+  "platform": "win32 10.0.26100",
+  "cpu": "12th Gen Intel(R) Core(TM) i5-12400",
+  "scope": "Isolated visible-node/hidden-count computation, same fully expanded star input; one sample per size, not full browser performance or a timing gate",
+  "measurements": [
+    {
+      "components": 100,
+      "before_ms": 48.2303,
+      "after_ms": 0.3783000000000243,
+      "speedup": 127.4922019561113,
+      "equivalent": true
+    },
+    {
+      "components": 200,
+      "before_ms": 286.45310000000006,
+      "after_ms": 0.223700000000008,
+      "speedup": 1280.5234689315594,
+      "equivalent": true
+    },
+    {
+      "components": 400,
+      "before_ms": 2582.3178000000003,
+      "after_ms": 0.31450000000040745,
+      "speedup": 8210.867408574419,
+      "equivalent": true
+    },
+    {
+      "components": 800,
+      "before_ms": 21468.3743,
+      "after_ms": 0.49909999999727006,
+      "speedup": 43014.174113639405,
+      "equivalent": true
+    }
+  ]
+}
