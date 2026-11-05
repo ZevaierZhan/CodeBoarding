@@ -29,7 +29,7 @@ from architecture_model.validation import digest, parse, validate_facts, validat
 
 
 class ExtractionScope(Strict):
-    protocol: Literal["python-file-v1", "multilanguage-file-v2"]
+    protocol: Literal["python-file-v1", "multilanguage-file-v2", "file-inventory-v1"]
     complete: Literal[True]
     implementation: Text
     patterns: list[str]
@@ -285,6 +285,33 @@ def root_targets(model: Model) -> dict[str, str]:
     return targets
 
 
+def extraction_status(facts: Facts) -> dict:
+    raw = facts.tools.get("maintenance_scope", "")
+    if not raw:
+        return {"status": "missing", "reasons": ["maintenance_scope is absent; absence cannot establish deletion"]}
+    try:
+        descriptor = parse(ExtractionScope, json.loads(raw))
+    except (ValueError, ModelError):
+        return {"status": "unsupported", "reasons": ["Invalid, incomplete or unsupported extraction descriptor"]}
+    return {"status": "declared_complete", "descriptor": descriptor.model_dump()}
+
+
+def extraction_differences(before: Facts, after: Facts) -> list[str]:
+    left, right = extraction_status(before), extraction_status(after)
+    if left["status"] != "declared_complete" or right["status"] != "declared_complete":
+        return [f"basis: {left['status']}; target: {right['status']}; extraction scope cannot establish deletion"]
+    old, new = left["descriptor"], right["descriptor"]
+    changed = [name for name in old if old[name] != new[name]]
+    reasons = [f"Extraction descriptor changed: {name}" for name in changed if name != "configuration"]
+    if "configuration" in changed:
+        reasons.extend(
+            f"Extraction configuration changed: {name}"
+            for name in sorted(set(old["configuration"]) | set(new["configuration"]))
+            if old["configuration"].get(name) != new["configuration"].get(name)
+        )
+    return reasons
+
+
 def _item(model: Model, identity: str) -> Maintenance:
     item = next((entry for entry in maintained_observations(model, model_diff) if entry.id == identity), None)
     if item is None:
@@ -351,6 +378,12 @@ def _compare(model: Model, binding: Binding, target: Facts) -> Maintenance:
     elif old_scope is None or old_scope != target_scope:
         disposition = "indeterminate"
         reasons.append("Extraction scope/configuration evidence absent or different; absence cannot establish deletion")
+        reasons.extend(extraction_differences(old, target))
+        reasons.append(
+            "Establish a new baseline explicitly: export with the intended descriptor, preview/refresh this root, "
+            "inspect candidates, rebind selected evidence and resolve each interpretation review. "
+            "Keep historical snapshots and reviews; an extractor change alone does not invalidate an explanation."
+        )
     elif exact:
         before_edges = {(call.source, call.target) for call in old_calls}
         after_edges = {(call.source, call.target) for call in new_calls}

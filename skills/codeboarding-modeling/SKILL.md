@@ -94,6 +94,10 @@ rule before omitting the scope map; a matching root or digest alone is insuffici
 
 ## Explain current source or maintain changed evidence
 
+For multiple facts roots, file-only evidence, physical overlap, unknown maintenance
+scope or extractor upgrades, read [source coverage](references/coverage.md).
+Query the persisted report in bounded pages; keep root maintenance decisions explicit.
+
 Compare the saved manifest to the requested workspace before calling it current.
 When evidence differs, export fresh **real** facts with the same scope and tools,
 then use maintenance preview/refresh. Export failure is a failure, not empty facts.

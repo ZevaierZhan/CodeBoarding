@@ -1,0 +1,38 @@
+{
+  "real_native_typescript": true,
+  "native_symbols": 3,
+  "native_calls": 2,
+  "inventory_files": 4,
+  "reports": [
+    {
+      "roots": 2,
+      "file_records": 7,
+      "confirmed_overlaps": 3,
+      "same_version": 3,
+      "different_versions": 0,
+      "unknown_physical_identity": 0
+    },
+    {
+      "roots": 2,
+      "file_records": 7,
+      "confirmed_overlaps": 3,
+      "same_version": 2,
+      "different_versions": 1,
+      "unknown_physical_identity": 0
+    },
+    {
+      "roots": 2,
+      "file_records": 7,
+      "confirmed_overlaps": 3,
+      "same_version": 3,
+      "different_versions": 0,
+      "unknown_physical_identity": 0
+    }
+  ],
+  "read_only_bytes_preserved": true,
+  "root_isolation": true,
+  "descriptor_upgrade": "indeterminate",
+  "explicit_baseline_reestablished": true,
+  "historical_pending_retained": true,
+  "historical_snapshots_preserved": true
+}
