@@ -1,0 +1,228 @@
+{
+  "raw_gzip": "03-commands.json.gz",
+  "raw_sha256": "9451a50110871d562e317d970b481317bf648f85a61de5b1425ff953ae074f30",
+  "commands": [
+    {
+      "argv": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "examples/architecture_model/codeboarding/model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 2
+      }
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "examples/architecture_model/codeboarding/model.json",
+        "maintenance"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 2,
+        "pending_ids": [],
+        "current_coverage_ids": [],
+        "current_pending_ids": [],
+        "latest_target_snapshot_id": ""
+      }
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "examples/architecture_model/codeboarding/model.json",
+        "validate",
+        "--patch",
+        "examples/architecture_model/codeboarding/03-agent-business.patch.json"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "valid": true,
+        "candidate_revision": 3,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 2,
+          "object_ids": [
+            "agent-submits-patch"
+          ],
+          "component_ids": [],
+          "relation_ids": [],
+          "scenario_ids": [
+            "agent-submits-patch"
+          ]
+        },
+        "committed": false
+      }
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "examples/architecture_model/codeboarding/model.json",
+        "diff",
+        "--patch",
+        "examples/architecture_model/codeboarding/03-agent-business.patch.json"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "valid": true,
+        "candidate_revision": 3,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 2,
+          "object_ids": [
+            "agent-submits-patch"
+          ],
+          "component_ids": [],
+          "relation_ids": [],
+          "scenario_ids": [
+            "agent-submits-patch"
+          ]
+        },
+        "committed": false
+      }
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "examples/architecture_model/codeboarding/model.json",
+        "apply",
+        "--patch",
+        "examples/architecture_model/codeboarding/03-agent-business.patch.json",
+        "--expected-revision",
+        "2"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "committed": true,
+        "revision": 3,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 2,
+          "object_ids": [
+            "agent-submits-patch"
+          ],
+          "component_ids": [],
+          "relation_ids": [],
+          "scenario_ids": [
+            "agent-submits-patch"
+          ]
+        }
+      }
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "examples/architecture_model/codeboarding/model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 3
+      }
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "examples/architecture_model/codeboarding/model.json",
+        "maintenance"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 3,
+        "pending_ids": [],
+        "current_coverage_ids": [],
+        "current_pending_ids": [],
+        "latest_target_snapshot_id": ""
+      }
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "examples/architecture_model/codeboarding/model.json",
+        "export-html",
+        "--output",
+        "examples/architecture_model/codeboarding/03-agent-business.html",
+        "--source-root",
+        "F:\\CodeBoarding"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "output": "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\03-agent-business.html",
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 3,
+        "committed": false
+      }
+    }
+  ]
+}

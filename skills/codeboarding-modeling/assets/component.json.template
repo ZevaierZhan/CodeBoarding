@@ -1,0 +1,15 @@
+{
+  "id": $component_id,
+  "name": $name,
+  "responsibility": $responsibility,
+  "rationale": $rationale,
+  "parent_id": $parent_id,
+  "binding_ids": $binding_ids,
+  "claim": {
+    "kind": "inference",
+    "explanation": $explanation,
+    "binding_ids": $binding_ids,
+    "assumptions": $assumptions,
+    "issues": $issues
+  }
+}

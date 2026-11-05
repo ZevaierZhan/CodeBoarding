@@ -1,0 +1,2933 @@
+{
+  "schema_version": 1,
+  "id": "3fa8e8addd1da7c3c86f00ae54f72196dedc858f866fcbb6377214a9410e5e78",
+  "project_id": "codeboarding-architecture-model",
+  "source": {
+    "digest": "ae6414d6a204eb199be1dd20de745730478f2bd286d2e740085d6935214e4125",
+    "git_commit": "34b4e48f2388049eeaf180efcbf285029d7b384b",
+    "files": {
+      "architecture_model/__init__.py": "d1419d4aebc2e72a5d525a2759915501dd6a378904daca75567587432bb9c04a",
+      "architecture_model/__main__.py": "39bead821a699e667c3c4bbc24ba6a68f4e00c9527f556d9c065a2a081d4ee0b",
+      "architecture_model/cli.py": "e3afe53e73e7890fbf989f69a35b8d7cf40a9d880adad9f106b02e4f04b483f0",
+      "architecture_model/errors.py": "8e0b7e53af71a083a55e509f410c0447ff58e1207e187e9ddebb97129f2d6dcf",
+      "architecture_model/facts.py": "4b12da02f420441599fcf07160c6f025d28201adba7ab703eddba83b7fc97d8f",
+      "architecture_model/facts_worker.py": "87fb04bd66e00dfab6df343f9fc1c4158dafcacc75d4a4b05d22425258eba638",
+      "architecture_model/maintenance.py": "5a5b716ea70e411a3377ba89229eeb80f1917369c34faf6ecccd66efa37154a3",
+      "architecture_model/maintenance_coverage.py": "b77854b9ecd620a15350eb5cb877dd3e0c64f568c56d1b0ac4dac01ecf717683",
+      "architecture_model/schema.py": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "architecture_model/store.py": "583b260daa373f3520fcd4cecadd88462e950c718a32737c0dd4520372e848c5",
+      "architecture_model/validation.py": "9ba10877bc6a01dfd37bd70b7a8d39553cee90301d319600a940fc6077c041b9",
+      "architecture_model/viewer.py": "6e6285c1c903ca6dcbe25eceef1c33eba9cc6916e0abae4c3b000ad1b993c289"
+    },
+    "scope": "All Python files discovered by PythonAdapter and repository ignore rules"
+  },
+  "symbols": {
+    "architecture_model/cli.py|architecture_model.cli.Parser": {
+      "path": "architecture_model/cli.py",
+      "symbol": "architecture_model.cli.Parser",
+      "kind": "CLASS",
+      "content_hash": "e3afe53e73e7890fbf989f69a35b8d7cf40a9d880adad9f106b02e4f04b483f0",
+      "start": 18,
+      "end": 20
+    },
+    "architecture_model/cli.py|architecture_model.cli.Parser.error": {
+      "path": "architecture_model/cli.py",
+      "symbol": "architecture_model.cli.Parser.error",
+      "kind": "METHOD",
+      "content_hash": "e3afe53e73e7890fbf989f69a35b8d7cf40a9d880adad9f106b02e4f04b483f0",
+      "start": 19,
+      "end": 20
+    },
+    "architecture_model/cli.py|architecture_model.cli.main": {
+      "path": "architecture_model/cli.py",
+      "symbol": "architecture_model.cli.main",
+      "kind": "FUNCTION",
+      "content_hash": "e3afe53e73e7890fbf989f69a35b8d7cf40a9d880adad9f106b02e4f04b483f0",
+      "start": 109,
+      "end": 126
+    },
+    "architecture_model/cli.py|architecture_model.cli.run": {
+      "path": "architecture_model/cli.py",
+      "symbol": "architecture_model.cli.run",
+      "kind": "FUNCTION",
+      "content_hash": "e3afe53e73e7890fbf989f69a35b8d7cf40a9d880adad9f106b02e4f04b483f0",
+      "start": 23,
+      "end": 106
+    },
+    "architecture_model/errors.py|architecture_model.errors.ModelError": {
+      "path": "architecture_model/errors.py",
+      "symbol": "architecture_model.errors.ModelError",
+      "kind": "CLASS",
+      "content_hash": "8e0b7e53af71a083a55e509f410c0447ff58e1207e187e9ddebb97129f2d6dcf",
+      "start": 1,
+      "end": 8
+    },
+    "architecture_model/errors.py|architecture_model.errors.ModelError.__init__": {
+      "path": "architecture_model/errors.py",
+      "symbol": "architecture_model.errors.ModelError.__init__",
+      "kind": "METHOD",
+      "content_hash": "8e0b7e53af71a083a55e509f410c0447ff58e1207e187e9ddebb97129f2d6dcf",
+      "start": 2,
+      "end": 5
+    },
+    "architecture_model/errors.py|architecture_model.errors.ModelError.as_dict": {
+      "path": "architecture_model/errors.py",
+      "symbol": "architecture_model.errors.ModelError.as_dict",
+      "kind": "METHOD",
+      "content_hash": "8e0b7e53af71a083a55e509f410c0447ff58e1207e187e9ddebb97129f2d6dcf",
+      "start": 7,
+      "end": 8
+    },
+    "architecture_model/facts.py|architecture_model.facts.export_facts": {
+      "path": "architecture_model/facts.py",
+      "symbol": "architecture_model.facts.export_facts",
+      "kind": "FUNCTION",
+      "content_hash": "4b12da02f420441599fcf07160c6f025d28201adba7ab703eddba83b7fc97d8f",
+      "start": 16,
+      "end": 49
+    },
+    "architecture_model/facts.py|architecture_model.facts.run_worker": {
+      "path": "architecture_model/facts.py",
+      "symbol": "architecture_model.facts.run_worker",
+      "kind": "FUNCTION",
+      "content_hash": "4b12da02f420441599fcf07160c6f025d28201adba7ab703eddba83b7fc97d8f",
+      "start": 52,
+      "end": 80
+    },
+    "architecture_model/facts_worker.py|architecture_model.facts_worker.ExtractionErrors": {
+      "path": "architecture_model/facts_worker.py",
+      "symbol": "architecture_model.facts_worker.ExtractionErrors",
+      "kind": "CLASS",
+      "content_hash": "87fb04bd66e00dfab6df343f9fc1c4158dafcacc75d4a4b05d22425258eba638",
+      "start": 31,
+      "end": 38
+    },
+    "architecture_model/facts_worker.py|architecture_model.facts_worker.ExtractionErrors.__init__": {
+      "path": "architecture_model/facts_worker.py",
+      "symbol": "architecture_model.facts_worker.ExtractionErrors.__init__",
+      "kind": "METHOD",
+      "content_hash": "87fb04bd66e00dfab6df343f9fc1c4158dafcacc75d4a4b05d22425258eba638",
+      "start": 32,
+      "end": 34
+    },
+    "architecture_model/facts_worker.py|architecture_model.facts_worker.ExtractionErrors.emit": {
+      "path": "architecture_model/facts_worker.py",
+      "symbol": "architecture_model.facts_worker.ExtractionErrors.emit",
+      "kind": "METHOD",
+      "content_hash": "87fb04bd66e00dfab6df343f9fc1c4158dafcacc75d4a4b05d22425258eba638",
+      "start": 36,
+      "end": 38
+    },
+    "architecture_model/facts_worker.py|architecture_model.facts_worker._extraction_scope": {
+      "path": "architecture_model/facts_worker.py",
+      "symbol": "architecture_model.facts_worker._extraction_scope",
+      "kind": "FUNCTION",
+      "content_hash": "87fb04bd66e00dfab6df343f9fc1c4158dafcacc75d4a4b05d22425258eba638",
+      "start": 204,
+      "end": 231
+    },
+    "architecture_model/facts_worker.py|architecture_model.facts_worker._manifest": {
+      "path": "architecture_model/facts_worker.py",
+      "symbol": "architecture_model.facts_worker._manifest",
+      "kind": "FUNCTION",
+      "content_hash": "87fb04bd66e00dfab6df343f9fc1c4158dafcacc75d4a4b05d22425258eba638",
+      "start": 168,
+      "end": 182
+    },
+    "architecture_model/facts_worker.py|architecture_model.facts_worker._strict_files": {
+      "path": "architecture_model/facts_worker.py",
+      "symbol": "architecture_model.facts_worker._strict_files",
+      "kind": "FUNCTION",
+      "content_hash": "87fb04bd66e00dfab6df343f9fc1c4158dafcacc75d4a4b05d22425258eba638",
+      "start": 185,
+      "end": 201
+    },
+    "architecture_model/facts_worker.py|architecture_model.facts_worker.extract": {
+      "path": "architecture_model/facts_worker.py",
+      "symbol": "architecture_model.facts_worker.extract",
+      "kind": "FUNCTION",
+      "content_hash": "87fb04bd66e00dfab6df343f9fc1c4158dafcacc75d4a4b05d22425258eba638",
+      "start": 41,
+      "end": 152
+    },
+    "architecture_model/facts_worker.py|architecture_model.facts_worker.main": {
+      "path": "architecture_model/facts_worker.py",
+      "symbol": "architecture_model.facts_worker.main",
+      "kind": "FUNCTION",
+      "content_hash": "87fb04bd66e00dfab6df343f9fc1c4158dafcacc75d4a4b05d22425258eba638",
+      "start": 155,
+      "end": 165
+    },
+    "architecture_model/maintenance.py|architecture_model.maintenance.ExtractionScope": {
+      "path": "architecture_model/maintenance.py",
+      "symbol": "architecture_model.maintenance.ExtractionScope",
+      "kind": "CLASS",
+      "content_hash": "5a5b716ea70e411a3377ba89229eeb80f1917369c34faf6ecccd66efa37154a3",
+      "start": 31,
+      "end": 37
+    },
+    "architecture_model/maintenance.py|architecture_model.maintenance.Review": {
+      "path": "architecture_model/maintenance.py",
+      "symbol": "architecture_model.maintenance.Review",
+      "kind": "CLASS",
+      "content_hash": "5a5b716ea70e411a3377ba89229eeb80f1917369c34faf6ecccd66efa37154a3",
+      "start": 40,
+      "end": 45
+    },
+    "architecture_model/maintenance.py|architecture_model.maintenance._candidates": {
+      "path": "architecture_model/maintenance.py",
+      "symbol": "architecture_model.maintenance._candidates",
+      "kind": "FUNCTION",
+      "content_hash": "5a5b716ea70e411a3377ba89229eeb80f1917369c34faf6ecccd66efa37154a3",
+      "start": 343,
+      "end": 362
+    },
+    "architecture_model/maintenance.py|architecture_model.maintenance._compare": {
+      "path": "architecture_model/maintenance.py",
+      "symbol": "architecture_model.maintenance._compare",
+      "kind": "FUNCTION",
+      "content_hash": "5a5b716ea70e411a3377ba89229eeb80f1917369c34faf6ecccd66efa37154a3",
+      "start": 263,
+      "end": 340
+    },
+    "architecture_model/maintenance.py|architecture_model.maintenance._item": {
+      "path": "architecture_model/maintenance.py",
+      "symbol": "architecture_model.maintenance._item",
+      "kind": "FUNCTION",
+      "content_hash": "5a5b716ea70e411a3377ba89229eeb80f1917369c34faf6ecccd66efa37154a3",
+      "start": 246,
+      "end": 250
+    },
+    "architecture_model/maintenance.py|architecture_model.maintenance._scope": {
+      "path": "architecture_model/maintenance.py",
+      "symbol": "architecture_model.maintenance._scope",
+      "kind": "FUNCTION",
+      "content_hash": "5a5b716ea70e411a3377ba89229eeb80f1917369c34faf6ecccd66efa37154a3",
+      "start": 253,
+      "end": 260
+    },
+    "architecture_model/maintenance.py|architecture_model.maintenance.preview": {
+      "path": "architecture_model/maintenance.py",
+      "symbol": "architecture_model.maintenance.preview",
+      "kind": "FUNCTION",
+      "content_hash": "5a5b716ea70e411a3377ba89229eeb80f1917369c34faf6ecccd66efa37154a3",
+      "start": 48,
+      "end": 73
+    },
+    "architecture_model/maintenance.py|architecture_model.maintenance.query": {
+      "path": "architecture_model/maintenance.py",
+      "symbol": "architecture_model.maintenance.query",
+      "kind": "FUNCTION",
+      "content_hash": "5a5b716ea70e411a3377ba89229eeb80f1917369c34faf6ecccd66efa37154a3",
+      "start": 211,
+      "end": 243
+    },
+    "architecture_model/maintenance.py|architecture_model.maintenance.rebind": {
+      "path": "architecture_model/maintenance.py",
+      "symbol": "architecture_model.maintenance.rebind",
+      "kind": "FUNCTION",
+      "content_hash": "5a5b716ea70e411a3377ba89229eeb80f1917369c34faf6ecccd66efa37154a3",
+      "start": 94,
+      "end": 145
+    },
+    "architecture_model/maintenance.py|architecture_model.maintenance.rebind.build": {
+      "path": "architecture_model/maintenance.py",
+      "symbol": "architecture_model.maintenance.rebind.build",
+      "kind": "FUNCTION",
+      "content_hash": "5a5b716ea70e411a3377ba89229eeb80f1917369c34faf6ecccd66efa37154a3",
+      "start": 95,
+      "end": 143
+    },
+    "architecture_model/maintenance.py|architecture_model.maintenance.refresh": {
+      "path": "architecture_model/maintenance.py",
+      "symbol": "architecture_model.maintenance.refresh",
+      "kind": "FUNCTION",
+      "content_hash": "5a5b716ea70e411a3377ba89229eeb80f1917369c34faf6ecccd66efa37154a3",
+      "start": 76,
+      "end": 91
+    },
+    "architecture_model/maintenance.py|architecture_model.maintenance.refresh.build": {
+      "path": "architecture_model/maintenance.py",
+      "symbol": "architecture_model.maintenance.refresh.build",
+      "kind": "FUNCTION",
+      "content_hash": "5a5b716ea70e411a3377ba89229eeb80f1917369c34faf6ecccd66efa37154a3",
+      "start": 77,
+      "end": 89
+    },
+    "architecture_model/maintenance.py|architecture_model.maintenance.resolve": {
+      "path": "architecture_model/maintenance.py",
+      "symbol": "architecture_model.maintenance.resolve",
+      "kind": "FUNCTION",
+      "content_hash": "5a5b716ea70e411a3377ba89229eeb80f1917369c34faf6ecccd66efa37154a3",
+      "start": 148,
+      "end": 208
+    },
+    "architecture_model/maintenance.py|architecture_model.maintenance.resolve.build": {
+      "path": "architecture_model/maintenance.py",
+      "symbol": "architecture_model.maintenance.resolve.build",
+      "kind": "FUNCTION",
+      "content_hash": "5a5b716ea70e411a3377ba89229eeb80f1917369c34faf6ecccd66efa37154a3",
+      "start": 151,
+      "end": 206
+    },
+    "architecture_model/maintenance_coverage.py|architecture_model.maintenance_coverage.capture_coverage": {
+      "path": "architecture_model/maintenance_coverage.py",
+      "symbol": "architecture_model.maintenance_coverage.capture_coverage",
+      "kind": "FUNCTION",
+      "content_hash": "b77854b9ecd620a15350eb5cb877dd3e0c64f568c56d1b0ac4dac01ecf717683",
+      "start": 7,
+      "end": 37
+    },
+    "architecture_model/maintenance_coverage.py|architecture_model.maintenance_coverage.comparison_key": {
+      "path": "architecture_model/maintenance_coverage.py",
+      "symbol": "architecture_model.maintenance_coverage.comparison_key",
+      "kind": "FUNCTION",
+      "content_hash": "b77854b9ecd620a15350eb5cb877dd3e0c64f568c56d1b0ac4dac01ecf717683",
+      "start": 53,
+      "end": 54
+    },
+    "architecture_model/maintenance_coverage.py|architecture_model.maintenance_coverage.maintained_observations": {
+      "path": "architecture_model/maintenance_coverage.py",
+      "symbol": "architecture_model.maintenance_coverage.maintained_observations",
+      "kind": "FUNCTION",
+      "content_hash": "b77854b9ecd620a15350eb5cb877dd3e0c64f568c56d1b0ac4dac01ecf717683",
+      "start": 40,
+      "end": 50
+    },
+    "architecture_model/schema.py|architecture_model.schema.Binding": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Binding",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 77,
+      "end": 90
+    },
+    "architecture_model/schema.py|architecture_model.schema.Binding.review_reason": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Binding.review_reason",
+      "kind": "METHOD",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 87,
+      "end": 90
+    },
+    "architecture_model/schema.py|architecture_model.schema.Call": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Call",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 52,
+      "end": 55
+    },
+    "architecture_model/schema.py|architecture_model.schema.CallSite": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.CallSite",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 46,
+      "end": 49
+    },
+    "architecture_model/schema.py|architecture_model.schema.Claim": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Claim",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 93,
+      "end": 106
+    },
+    "architecture_model/schema.py|architecture_model.schema.Claim.evidence": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Claim.evidence",
+      "kind": "METHOD",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 101,
+      "end": 106
+    },
+    "architecture_model/schema.py|architecture_model.schema.Component": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Component",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 109,
+      "end": 116
+    },
+    "architecture_model/schema.py|architecture_model.schema.Facts": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Facts",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 58,
+      "end": 67
+    },
+    "architecture_model/schema.py|architecture_model.schema.HistoricalLocation": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.HistoricalLocation",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 70,
+      "end": 74
+    },
+    "architecture_model/schema.py|architecture_model.schema.Location": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Location",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 21,
+      "end": 36
+    },
+    "architecture_model/schema.py|architecture_model.schema.Location.valid_location": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Location.valid_location",
+      "kind": "METHOD",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 30,
+      "end": 36
+    },
+    "architecture_model/schema.py|architecture_model.schema.Maintenance": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Maintenance",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 213,
+      "end": 230
+    },
+    "architecture_model/schema.py|architecture_model.schema.MaintenanceCandidate": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.MaintenanceCandidate",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 197,
+      "end": 200
+    },
+    "architecture_model/schema.py|architecture_model.schema.MaintenanceResolution": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.MaintenanceResolution",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 203,
+      "end": 210
+    },
+    "architecture_model/schema.py|architecture_model.schema.Model": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Model",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 233,
+      "end": 247
+    },
+    "architecture_model/schema.py|architecture_model.schema.Operation": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Operation",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 250,
+      "end": 254
+    },
+    "architecture_model/schema.py|architecture_model.schema.Opinion": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Opinion",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 151,
+      "end": 156
+    },
+    "architecture_model/schema.py|architecture_model.schema.Patch": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Patch",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 257,
+      "end": 260
+    },
+    "architecture_model/schema.py|architecture_model.schema.Project": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Project",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 191,
+      "end": 194
+    },
+    "architecture_model/schema.py|architecture_model.schema.Relation": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Relation",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 119,
+      "end": 124
+    },
+    "architecture_model/schema.py|architecture_model.schema.Revision": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Revision",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 182,
+      "end": 188
+    },
+    "architecture_model/schema.py|architecture_model.schema.Scenario": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Scenario",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 141,
+      "end": 148
+    },
+    "architecture_model/schema.py|architecture_model.schema.SourceVersion": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.SourceVersion",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 39,
+      "end": 43
+    },
+    "architecture_model/schema.py|architecture_model.schema.Step": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Step",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 127,
+      "end": 131
+    },
+    "architecture_model/schema.py|architecture_model.schema.Strict": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Strict",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 10,
+      "end": 18
+    },
+    "architecture_model/schema.py|architecture_model.schema.Strict.integer_version": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Strict.integer_version",
+      "kind": "METHOD",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 15,
+      "end": 18
+    },
+    "architecture_model/schema.py|architecture_model.schema.Transition": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Transition",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 134,
+      "end": 138
+    },
+    "architecture_model/schema.py|architecture_model.schema.Verification": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Verification",
+      "kind": "CLASS",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 159,
+      "end": 179
+    },
+    "architecture_model/schema.py|architecture_model.schema.Verification.execution_record": {
+      "path": "architecture_model/schema.py",
+      "symbol": "architecture_model.schema.Verification.execution_record",
+      "kind": "METHOD",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 173,
+      "end": 179
+    },
+    "architecture_model/store.py|architecture_model.store.ModelStore": {
+      "path": "architecture_model/store.py",
+      "symbol": "architecture_model.store.ModelStore",
+      "kind": "CLASS",
+      "content_hash": "583b260daa373f3520fcd4cecadd88462e950c718a32737c0dd4520372e848c5",
+      "start": 179,
+      "end": 254
+    },
+    "architecture_model/store.py|architecture_model.store.ModelStore.__init__": {
+      "path": "architecture_model/store.py",
+      "symbol": "architecture_model.store.ModelStore.__init__",
+      "kind": "METHOD",
+      "content_hash": "583b260daa373f3520fcd4cecadd88462e950c718a32737c0dd4520372e848c5",
+      "start": 180,
+      "end": 182
+    },
+    "architecture_model/store.py|architecture_model.store.ModelStore.apply": {
+      "path": "architecture_model/store.py",
+      "symbol": "architecture_model.store.ModelStore.apply",
+      "kind": "METHOD",
+      "content_hash": "583b260daa373f3520fcd4cecadd88462e950c718a32737c0dd4520372e848c5",
+      "start": 216,
+      "end": 217
+    },
+    "architecture_model/store.py|architecture_model.store.ModelStore.commit": {
+      "path": "architecture_model/store.py",
+      "symbol": "architecture_model.store.ModelStore.commit",
+      "kind": "METHOD",
+      "content_hash": "583b260daa373f3520fcd4cecadd88462e950c718a32737c0dd4520372e848c5",
+      "start": 219,
+      "end": 232
+    },
+    "architecture_model/store.py|architecture_model.store.ModelStore.initialize": {
+      "path": "architecture_model/store.py",
+      "symbol": "architecture_model.store.ModelStore.initialize",
+      "kind": "METHOD",
+      "content_hash": "583b260daa373f3520fcd4cecadd88462e950c718a32737c0dd4520372e848c5",
+      "start": 184,
+      "end": 208
+    },
+    "architecture_model/store.py|architecture_model.store.ModelStore.preview": {
+      "path": "architecture_model/store.py",
+      "symbol": "architecture_model.store.ModelStore.preview",
+      "kind": "METHOD",
+      "content_hash": "583b260daa373f3520fcd4cecadd88462e950c718a32737c0dd4520372e848c5",
+      "start": 213,
+      "end": 214
+    },
+    "architecture_model/store.py|architecture_model.store.ModelStore.read": {
+      "path": "architecture_model/store.py",
+      "symbol": "architecture_model.store.ModelStore.read",
+      "kind": "METHOD",
+      "content_hash": "583b260daa373f3520fcd4cecadd88462e950c718a32737c0dd4520372e848c5",
+      "start": 210,
+      "end": 211
+    },
+    "architecture_model/store.py|architecture_model.store.ModelStore.read_scope": {
+      "path": "architecture_model/store.py",
+      "symbol": "architecture_model.store.ModelStore.read_scope",
+      "kind": "METHOD",
+      "content_hash": "583b260daa373f3520fcd4cecadd88462e950c718a32737c0dd4520372e848c5",
+      "start": 234,
+      "end": 254
+    },
+    "architecture_model/store.py|architecture_model.store._preserve_binding_history": {
+      "path": "architecture_model/store.py",
+      "symbol": "architecture_model.store._preserve_binding_history",
+      "kind": "FUNCTION",
+      "content_hash": "583b260daa373f3520fcd4cecadd88462e950c718a32737c0dd4520372e848c5",
+      "start": 266,
+      "end": 273
+    },
+    "architecture_model/store.py|architecture_model.store._unique_keys": {
+      "path": "architecture_model/store.py",
+      "symbol": "architecture_model.store._unique_keys",
+      "kind": "FUNCTION",
+      "content_hash": "583b260daa373f3520fcd4cecadd88462e950c718a32737c0dd4520372e848c5",
+      "start": 257,
+      "end": 263
+    },
+    "architecture_model/store.py|architecture_model.store.atomic_write": {
+      "path": "architecture_model/store.py",
+      "symbol": "architecture_model.store.atomic_write",
+      "kind": "FUNCTION",
+      "content_hash": "583b260daa373f3520fcd4cecadd88462e950c718a32737c0dd4520372e848c5",
+      "start": 28,
+      "end": 42
+    },
+    "architecture_model/store.py|architecture_model.store.candidate": {
+      "path": "architecture_model/store.py",
+      "symbol": "architecture_model.store.candidate",
+      "kind": "FUNCTION",
+      "content_hash": "583b260daa373f3520fcd4cecadd88462e950c718a32737c0dd4520372e848c5",
+      "start": 114,
+      "end": 116
+    },
+    "architecture_model/store.py|architecture_model.store.load_json": {
+      "path": "architecture_model/store.py",
+      "symbol": "architecture_model.store.load_json",
+      "kind": "FUNCTION",
+      "content_hash": "583b260daa373f3520fcd4cecadd88462e950c718a32737c0dd4520372e848c5",
+      "start": 19,
+      "end": 25
+    },
+    "architecture_model/store.py|architecture_model.store.model_diff": {
+      "path": "architecture_model/store.py",
+      "symbol": "architecture_model.store.model_diff",
+      "kind": "FUNCTION",
+      "content_hash": "583b260daa373f3520fcd4cecadd88462e950c718a32737c0dd4520372e848c5",
+      "start": 45,
+      "end": 111
+    },
+    "architecture_model/store.py|architecture_model.store.patched_model": {
+      "path": "architecture_model/store.py",
+      "symbol": "architecture_model.store.patched_model",
+      "kind": "FUNCTION",
+      "content_hash": "583b260daa373f3520fcd4cecadd88462e950c718a32737c0dd4520372e848c5",
+      "start": 119,
+      "end": 152
+    },
+    "architecture_model/store.py|architecture_model.store.revision_candidate": {
+      "path": "architecture_model/store.py",
+      "symbol": "architecture_model.store.revision_candidate",
+      "kind": "FUNCTION",
+      "content_hash": "583b260daa373f3520fcd4cecadd88462e950c718a32737c0dd4520372e848c5",
+      "start": 155,
+      "end": 176
+    },
+    "architecture_model/validation.py|architecture_model.validation._references": {
+      "path": "architecture_model/validation.py",
+      "symbol": "architecture_model.validation._references",
+      "kind": "FUNCTION",
+      "content_hash": "9ba10877bc6a01dfd37bd70b7a8d39553cee90301d319600a940fc6077c041b9",
+      "start": 159,
+      "end": 162
+    },
+    "architecture_model/validation.py|architecture_model.validation._register": {
+      "path": "architecture_model/validation.py",
+      "symbol": "architecture_model.validation._register",
+      "kind": "FUNCTION",
+      "content_hash": "9ba10877bc6a01dfd37bd70b7a8d39553cee90301d319600a940fc6077c041b9",
+      "start": 153,
+      "end": 156
+    },
+    "architecture_model/validation.py|architecture_model.validation.digest": {
+      "path": "architecture_model/validation.py",
+      "symbol": "architecture_model.validation.digest",
+      "kind": "FUNCTION",
+      "content_hash": "9ba10877bc6a01dfd37bd70b7a8d39553cee90301d319600a940fc6077c041b9",
+      "start": 12,
+      "end": 15
+    },
+    "architecture_model/validation.py|architecture_model.validation.parse": {
+      "path": "architecture_model/validation.py",
+      "symbol": "architecture_model.validation.parse",
+      "kind": "FUNCTION",
+      "content_hash": "9ba10877bc6a01dfd37bd70b7a8d39553cee90301d319600a940fc6077c041b9",
+      "start": 18,
+      "end": 24
+    },
+    "architecture_model/validation.py|architecture_model.validation.validate_facts": {
+      "path": "architecture_model/validation.py",
+      "symbol": "architecture_model.validation.validate_facts",
+      "kind": "FUNCTION",
+      "content_hash": "9ba10877bc6a01dfd37bd70b7a8d39553cee90301d319600a940fc6077c041b9",
+      "start": 27,
+      "end": 51
+    },
+    "architecture_model/validation.py|architecture_model.validation.validate_model": {
+      "path": "architecture_model/validation.py",
+      "symbol": "architecture_model.validation.validate_model",
+      "kind": "FUNCTION",
+      "content_hash": "9ba10877bc6a01dfd37bd70b7a8d39553cee90301d319600a940fc6077c041b9",
+      "start": 54,
+      "end": 150
+    },
+    "architecture_model/viewer.py|architecture_model.viewer._snippet": {
+      "path": "architecture_model/viewer.py",
+      "symbol": "architecture_model.viewer._snippet",
+      "kind": "FUNCTION",
+      "content_hash": "6e6285c1c903ca6dcbe25eceef1c33eba9cc6916e0abae4c3b000ad1b993c289",
+      "start": 73,
+      "end": 98
+    },
+    "architecture_model/viewer.py|architecture_model.viewer.export_html": {
+      "path": "architecture_model/viewer.py",
+      "symbol": "architecture_model.viewer.export_html",
+      "kind": "FUNCTION",
+      "content_hash": "6e6285c1c903ca6dcbe25eceef1c33eba9cc6916e0abae4c3b000ad1b993c289",
+      "start": 46,
+      "end": 70
+    },
+    "architecture_model/viewer.py|architecture_model.viewer.projection": {
+      "path": "architecture_model/viewer.py",
+      "symbol": "architecture_model.viewer.projection",
+      "kind": "FUNCTION",
+      "content_hash": "6e6285c1c903ca6dcbe25eceef1c33eba9cc6916e0abae4c3b000ad1b993c289",
+      "start": 19,
+      "end": 43
+    }
+  },
+  "file_locations": {
+    "architecture_model/__init__.py": {
+      "path": "architecture_model/__init__.py",
+      "symbol": "",
+      "kind": "FILE",
+      "content_hash": "d1419d4aebc2e72a5d525a2759915501dd6a378904daca75567587432bb9c04a",
+      "start": 1,
+      "end": 1
+    },
+    "architecture_model/__main__.py": {
+      "path": "architecture_model/__main__.py",
+      "symbol": "",
+      "kind": "FILE",
+      "content_hash": "39bead821a699e667c3c4bbc24ba6a68f4e00c9527f556d9c065a2a081d4ee0b",
+      "start": 1,
+      "end": 5
+    },
+    "architecture_model/cli.py": {
+      "path": "architecture_model/cli.py",
+      "symbol": "",
+      "kind": "FILE",
+      "content_hash": "e3afe53e73e7890fbf989f69a35b8d7cf40a9d880adad9f106b02e4f04b483f0",
+      "start": 1,
+      "end": 126
+    },
+    "architecture_model/errors.py": {
+      "path": "architecture_model/errors.py",
+      "symbol": "",
+      "kind": "FILE",
+      "content_hash": "8e0b7e53af71a083a55e509f410c0447ff58e1207e187e9ddebb97129f2d6dcf",
+      "start": 1,
+      "end": 8
+    },
+    "architecture_model/facts.py": {
+      "path": "architecture_model/facts.py",
+      "symbol": "",
+      "kind": "FILE",
+      "content_hash": "4b12da02f420441599fcf07160c6f025d28201adba7ab703eddba83b7fc97d8f",
+      "start": 1,
+      "end": 80
+    },
+    "architecture_model/facts_worker.py": {
+      "path": "architecture_model/facts_worker.py",
+      "symbol": "",
+      "kind": "FILE",
+      "content_hash": "87fb04bd66e00dfab6df343f9fc1c4158dafcacc75d4a4b05d22425258eba638",
+      "start": 1,
+      "end": 235
+    },
+    "architecture_model/maintenance.py": {
+      "path": "architecture_model/maintenance.py",
+      "symbol": "",
+      "kind": "FILE",
+      "content_hash": "5a5b716ea70e411a3377ba89229eeb80f1917369c34faf6ecccd66efa37154a3",
+      "start": 1,
+      "end": 362
+    },
+    "architecture_model/maintenance_coverage.py": {
+      "path": "architecture_model/maintenance_coverage.py",
+      "symbol": "",
+      "kind": "FILE",
+      "content_hash": "b77854b9ecd620a15350eb5cb877dd3e0c64f568c56d1b0ac4dac01ecf717683",
+      "start": 1,
+      "end": 54
+    },
+    "architecture_model/schema.py": {
+      "path": "architecture_model/schema.py",
+      "symbol": "",
+      "kind": "FILE",
+      "content_hash": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+      "start": 1,
+      "end": 260
+    },
+    "architecture_model/store.py": {
+      "path": "architecture_model/store.py",
+      "symbol": "",
+      "kind": "FILE",
+      "content_hash": "583b260daa373f3520fcd4cecadd88462e950c718a32737c0dd4520372e848c5",
+      "start": 1,
+      "end": 273
+    },
+    "architecture_model/validation.py": {
+      "path": "architecture_model/validation.py",
+      "symbol": "",
+      "kind": "FILE",
+      "content_hash": "9ba10877bc6a01dfd37bd70b7a8d39553cee90301d319600a940fc6077c041b9",
+      "start": 1,
+      "end": 162
+    },
+    "architecture_model/viewer.py": {
+      "path": "architecture_model/viewer.py",
+      "symbol": "",
+      "kind": "FILE",
+      "content_hash": "6e6285c1c903ca6dcbe25eceef1c33eba9cc6916e0abae4c3b000ad1b993c289",
+      "start": 1,
+      "end": 98
+    }
+  },
+  "calls": [
+    {
+      "source": "architecture_model.cli.Parser.error",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 20,
+          "column": 15
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.main",
+      "target": "architecture_model.cli.run",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 111,
+          "column": 41
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.main",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 114,
+          "column": 47
+        },
+        {
+          "path": "architecture_model/cli.py",
+          "line": 113,
+          "column": 12
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.main",
+      "target": "architecture_model.errors.ModelError.as_dict",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 114,
+          "column": 47
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.run",
+      "target": "architecture_model.cli.Parser",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 24,
+          "column": 14
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.run",
+      "target": "architecture_model.facts.export_facts",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 72,
+          "column": 20
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.run",
+      "target": "architecture_model.maintenance.preview",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 93,
+          "column": 16
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.run",
+      "target": "architecture_model.maintenance.query",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 91,
+          "column": 16
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.run",
+      "target": "architecture_model.maintenance.rebind",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 97,
+          "column": 16
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.run",
+      "target": "architecture_model.maintenance.refresh",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 95,
+          "column": 16
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.run",
+      "target": "architecture_model.maintenance.resolve",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 99,
+          "column": 16
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.run",
+      "target": "architecture_model.schema.Facts",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 93,
+          "column": 44
+        },
+        {
+          "path": "architecture_model/cli.py",
+          "line": 95,
+          "column": 37
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.run",
+      "target": "architecture_model.store.ModelStore",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 80,
+          "column": 13
+        },
+        {
+          "path": "architecture_model/cli.py",
+          "line": 84,
+          "column": 29
+        },
+        {
+          "path": "architecture_model/cli.py",
+          "line": 87,
+          "column": 22
+        },
+        {
+          "path": "architecture_model/cli.py",
+          "line": 89,
+          "column": 34
+        },
+        {
+          "path": "architecture_model/cli.py",
+          "line": 91,
+          "column": 28
+        },
+        {
+          "path": "architecture_model/cli.py",
+          "line": 93,
+          "column": 30
+        },
+        {
+          "path": "architecture_model/cli.py",
+          "line": 101,
+          "column": 22
+        },
+        {
+          "path": "architecture_model/cli.py",
+          "line": 103,
+          "column": 38
+        },
+        {
+          "path": "architecture_model/cli.py",
+          "line": 105,
+          "column": 21
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.run",
+      "target": "architecture_model.store.ModelStore.apply",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 101,
+          "column": 22
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.run",
+      "target": "architecture_model.store.ModelStore.initialize",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 84,
+          "column": 29
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.run",
+      "target": "architecture_model.store.ModelStore.preview",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 103,
+          "column": 38
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.run",
+      "target": "architecture_model.store.ModelStore.read",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 89,
+          "column": 34
+        },
+        {
+          "path": "architecture_model/cli.py",
+          "line": 91,
+          "column": 28
+        },
+        {
+          "path": "architecture_model/cli.py",
+          "line": 93,
+          "column": 30
+        },
+        {
+          "path": "architecture_model/cli.py",
+          "line": 105,
+          "column": 21
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.run",
+      "target": "architecture_model.store.ModelStore.read_scope",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 87,
+          "column": 22
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.run",
+      "target": "architecture_model.store.load_json",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 84,
+          "column": 40
+        },
+        {
+          "path": "architecture_model/cli.py",
+          "line": 93,
+          "column": 51
+        },
+        {
+          "path": "architecture_model/cli.py",
+          "line": 95,
+          "column": 44
+        },
+        {
+          "path": "architecture_model/cli.py",
+          "line": 99,
+          "column": 42
+        },
+        {
+          "path": "architecture_model/cli.py",
+          "line": 101,
+          "column": 52
+        },
+        {
+          "path": "architecture_model/cli.py",
+          "line": 103,
+          "column": 46
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.run",
+      "target": "architecture_model.validation.parse",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 93,
+          "column": 38
+        },
+        {
+          "path": "architecture_model/cli.py",
+          "line": 95,
+          "column": 31
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.cli.run",
+      "target": "architecture_model.viewer.export_html",
+      "sites": [
+        {
+          "path": "architecture_model/cli.py",
+          "line": 89,
+          "column": 16
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts.export_facts",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/facts.py",
+          "line": 19,
+          "column": 15
+        },
+        {
+          "path": "architecture_model/facts.py",
+          "line": 36,
+          "column": 19
+        },
+        {
+          "path": "architecture_model/facts.py",
+          "line": 40,
+          "column": 19
+        },
+        {
+          "path": "architecture_model/facts.py",
+          "line": 47,
+          "column": 19
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts.export_facts",
+      "target": "architecture_model.facts.run_worker",
+      "sites": [
+        {
+          "path": "architecture_model/facts.py",
+          "line": 34,
+          "column": 23
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts.export_facts",
+      "target": "architecture_model.schema.Facts",
+      "sites": [
+        {
+          "path": "architecture_model/facts.py",
+          "line": 41,
+          "column": 23
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts.export_facts",
+      "target": "architecture_model.store.atomic_write",
+      "sites": [
+        {
+          "path": "architecture_model/facts.py",
+          "line": 48,
+          "column": 9
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts.export_facts",
+      "target": "architecture_model.store.load_json",
+      "sites": [
+        {
+          "path": "architecture_model/facts.py",
+          "line": 41,
+          "column": 30
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts.export_facts",
+      "target": "architecture_model.validation.parse",
+      "sites": [
+        {
+          "path": "architecture_model/facts.py",
+          "line": 41,
+          "column": 17
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts.export_facts",
+      "target": "architecture_model.validation.validate_facts",
+      "sites": [
+        {
+          "path": "architecture_model/facts.py",
+          "line": 42,
+          "column": 9
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts_worker._extraction_scope",
+      "target": "architecture_model.validation.digest",
+      "sites": [
+        {
+          "path": "architecture_model/facts_worker.py",
+          "line": 220,
+          "column": 27
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts_worker._manifest",
+      "target": "architecture_model.facts_worker._strict_files",
+      "sites": [
+        {
+          "path": "architecture_model/facts_worker.py",
+          "line": 171,
+          "column": 31
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts_worker.extract",
+      "target": "architecture_model.facts_worker.ExtractionErrors",
+      "sites": [
+        {
+          "path": "architecture_model/facts_worker.py",
+          "line": 52,
+          "column": 16
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts_worker.extract",
+      "target": "architecture_model.facts_worker._extraction_scope",
+      "sites": [
+        {
+          "path": "architecture_model/facts_worker.py",
+          "line": 48,
+          "column": 24
+        },
+        {
+          "path": "architecture_model/facts_worker.py",
+          "line": 149,
+          "column": 8
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts_worker.extract",
+      "target": "architecture_model.facts_worker._manifest",
+      "sites": [
+        {
+          "path": "architecture_model/facts_worker.py",
+          "line": 49,
+          "column": 21
+        },
+        {
+          "path": "architecture_model/facts_worker.py",
+          "line": 147,
+          "column": 8
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts_worker.extract",
+      "target": "architecture_model.schema.Call",
+      "sites": [
+        {
+          "path": "architecture_model/facts_worker.py",
+          "line": 93,
+          "column": 9
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts_worker.extract",
+      "target": "architecture_model.schema.CallSite",
+      "sites": [
+        {
+          "path": "architecture_model/facts_worker.py",
+          "line": 97,
+          "column": 17
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts_worker.extract",
+      "target": "architecture_model.schema.Facts",
+      "sites": [
+        {
+          "path": "architecture_model/facts_worker.py",
+          "line": 108,
+          "column": 13
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts_worker.extract",
+      "target": "architecture_model.schema.Location",
+      "sites": [
+        {
+          "path": "architecture_model/facts_worker.py",
+          "line": 75,
+          "column": 37
+        },
+        {
+          "path": "architecture_model/facts_worker.py",
+          "line": 119,
+          "column": 19
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts_worker.extract",
+      "target": "architecture_model.schema.SourceVersion",
+      "sites": [
+        {
+          "path": "architecture_model/facts_worker.py",
+          "line": 111,
+          "column": 16
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts_worker.extract",
+      "target": "architecture_model.validation.digest",
+      "sites": [
+        {
+          "path": "architecture_model/facts_worker.py",
+          "line": 112,
+          "column": 20
+        },
+        {
+          "path": "architecture_model/facts_worker.py",
+          "line": 146,
+          "column": 16
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts_worker.extract",
+      "target": "architecture_model.validation.validate_facts",
+      "sites": [
+        {
+          "path": "architecture_model/facts_worker.py",
+          "line": 151,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts_worker.main",
+      "target": "architecture_model.facts_worker.extract",
+      "sites": [
+        {
+          "path": "architecture_model/facts_worker.py",
+          "line": 160,
+          "column": 21
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.facts_worker.main",
+      "target": "architecture_model.store.atomic_write",
+      "sites": [
+        {
+          "path": "architecture_model/facts_worker.py",
+          "line": 161,
+          "column": 9
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance._candidates",
+      "target": "architecture_model.schema.MaintenanceCandidate",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 348,
+          "column": 17
+        },
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 361,
+          "column": 28
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance._compare",
+      "target": "architecture_model.maintenance._candidates",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 271,
+          "column": 15
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance._compare",
+      "target": "architecture_model.maintenance._scope",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 289,
+          "column": 17
+        },
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 290,
+          "column": 20
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance._compare",
+      "target": "architecture_model.maintenance_coverage.capture_coverage",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 340,
+          "column": 12
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance._compare",
+      "target": "architecture_model.schema.HistoricalLocation",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 265,
+          "column": 13
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance._compare",
+      "target": "architecture_model.schema.Maintenance",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 324,
+          "column": 19
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance._compare",
+      "target": "architecture_model.store.model_diff",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 340,
+          "column": 49
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance._compare",
+      "target": "architecture_model.validation.digest",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 323,
+          "column": 16
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance._item",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 249,
+          "column": 15
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance._item",
+      "target": "architecture_model.maintenance_coverage.maintained_observations",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 247,
+          "column": 37
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance._item",
+      "target": "architecture_model.store.model_diff",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 247,
+          "column": 68
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance._scope",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 260,
+          "column": 15
+        },
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 259,
+          "column": 25
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance._scope",
+      "target": "architecture_model.maintenance.ExtractionScope",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 258,
+          "column": 22
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance._scope",
+      "target": "architecture_model.validation.parse",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 258,
+          "column": 16
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.preview",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 51,
+          "column": 15
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.preview",
+      "target": "architecture_model.maintenance._compare",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 56,
+          "column": 23
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.preview",
+      "target": "architecture_model.maintenance_coverage.maintained_observations",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 52,
+          "column": 18
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.preview",
+      "target": "architecture_model.store.model_diff",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 52,
+          "column": 49
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.preview",
+      "target": "architecture_model.validation.digest",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 73,
+          "column": 29
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.preview",
+      "target": "architecture_model.validation.validate_facts",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 49,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.query",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 218,
+          "column": 19
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.query",
+      "target": "architecture_model.maintenance_coverage.capture_coverage",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 228,
+          "column": 20
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.query",
+      "target": "architecture_model.maintenance_coverage.comparison_key",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 227,
+          "column": 20
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.query",
+      "target": "architecture_model.maintenance_coverage.maintained_observations",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 221,
+          "column": 21
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.query",
+      "target": "architecture_model.store.model_diff",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 221,
+          "column": 52
+        },
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 228,
+          "column": 50
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.rebind",
+      "target": "architecture_model.store.ModelStore",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 145,
+          "column": 18
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.rebind",
+      "target": "architecture_model.store.ModelStore.commit",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 145,
+          "column": 18
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.rebind.build",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 99,
+          "column": 19
+        },
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 102,
+          "column": 19
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.rebind.build",
+      "target": "architecture_model.maintenance._item",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 96,
+          "column": 16
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.rebind.build",
+      "target": "architecture_model.schema.HistoricalLocation",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 113,
+          "column": 21
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.rebind.build",
+      "target": "architecture_model.store.candidate",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 122,
+          "column": 16
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.rebind.build",
+      "target": "architecture_model.validation.parse",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 112,
+          "column": 17
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.refresh",
+      "target": "architecture_model.store.ModelStore",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 91,
+          "column": 18
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.refresh",
+      "target": "architecture_model.store.ModelStore.commit",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 91,
+          "column": 18
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.refresh.build",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 80,
+          "column": 19
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.refresh.build",
+      "target": "architecture_model.maintenance.preview",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 78,
+          "column": 18
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.refresh.build",
+      "target": "architecture_model.schema.Maintenance",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 87,
+          "column": 19
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.refresh.build",
+      "target": "architecture_model.store.revision_candidate",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 89,
+          "column": 16
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.refresh.build",
+      "target": "architecture_model.validation.parse",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 87,
+          "column": 13
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.refresh.build",
+      "target": "architecture_model.validation.validate_model",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 89,
+          "column": 44
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.resolve",
+      "target": "architecture_model.maintenance.Review",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 149,
+          "column": 20
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.resolve",
+      "target": "architecture_model.store.ModelStore",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 208,
+          "column": 18
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.resolve",
+      "target": "architecture_model.store.ModelStore.commit",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 208,
+          "column": 18
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.resolve",
+      "target": "architecture_model.validation.parse",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 149,
+          "column": 14
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.resolve.build",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 154,
+          "column": 19
+        },
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 156,
+          "column": 19
+        },
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 161,
+          "column": 19
+        },
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 169,
+          "column": 23
+        },
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 187,
+          "column": 19
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.resolve.build",
+      "target": "architecture_model.maintenance._item",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 152,
+          "column": 16
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.resolve.build",
+      "target": "architecture_model.maintenance_coverage.capture_coverage",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 167,
+          "column": 31
+        },
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 191,
+          "column": 30
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.resolve.build",
+      "target": "architecture_model.maintenance_coverage.maintained_observations",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 162,
+          "column": 65
+        },
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 188,
+          "column": 32
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.resolve.build",
+      "target": "architecture_model.schema.MaintenanceResolution",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 195,
+          "column": 38
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.resolve.build",
+      "target": "architecture_model.store.model_diff",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 180,
+          "column": 22
+        },
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 162,
+          "column": 98
+        },
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 167,
+          "column": 63
+        },
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 188,
+          "column": 66
+        },
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 191,
+          "column": 63
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.resolve.build",
+      "target": "architecture_model.store.patched_model",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 172,
+          "column": 27
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance.resolve.build",
+      "target": "architecture_model.store.revision_candidate",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance.py",
+          "line": 206,
+          "column": 16
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance_coverage.capture_coverage",
+      "target": "architecture_model.maintenance_coverage.comparison_key",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance_coverage.py",
+          "line": 36,
+          "column": 57
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance_coverage.capture_coverage",
+      "target": "architecture_model.validation.digest",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance_coverage.py",
+          "line": 26,
+          "column": 30
+        },
+        {
+          "path": "architecture_model/maintenance_coverage.py",
+          "line": 36,
+          "column": 35
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance_coverage.comparison_key",
+      "target": "architecture_model.validation.digest",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance_coverage.py",
+          "line": 54,
+          "column": 12
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance_coverage.maintained_observations",
+      "target": "architecture_model.maintenance_coverage.capture_coverage",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance_coverage.py",
+          "line": 46,
+          "column": 19
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.maintenance_coverage.maintained_observations",
+      "target": "architecture_model.maintenance_coverage.comparison_key",
+      "sites": [
+        {
+          "path": "architecture_model/maintenance_coverage.py",
+          "line": 44,
+          "column": 20
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.apply",
+      "target": "architecture_model.store.ModelStore.commit",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 217,
+          "column": 21
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.apply",
+      "target": "architecture_model.store.candidate",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 217,
+          "column": 63
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.commit",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 224,
+          "column": 27
+        },
+        {
+          "path": "architecture_model/store.py",
+          "line": 232,
+          "column": 19
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.commit",
+      "target": "architecture_model.store.ModelStore.read",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 222,
+          "column": 32
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.commit",
+      "target": "architecture_model.store.atomic_write",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 229,
+          "column": 17
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.initialize",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 188,
+          "column": 23
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.initialize",
+      "target": "architecture_model.schema.Model",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 189,
+          "column": 21
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.initialize",
+      "target": "architecture_model.schema.Project",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 191,
+          "column": 31
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.initialize",
+      "target": "architecture_model.schema.Revision",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 194,
+          "column": 25
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.initialize",
+      "target": "architecture_model.store.atomic_write",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 207,
+          "column": 13
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.initialize",
+      "target": "architecture_model.validation.parse",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 191,
+          "column": 25
+        },
+        {
+          "path": "architecture_model/store.py",
+          "line": 193,
+          "column": 21
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.initialize",
+      "target": "architecture_model.validation.validate_model",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 206,
+          "column": 13
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.preview",
+      "target": "architecture_model.store.ModelStore.read",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 214,
+          "column": 31
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.preview",
+      "target": "architecture_model.store.candidate",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 214,
+          "column": 16
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.read",
+      "target": "architecture_model.store.load_json",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 211,
+          "column": 31
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.read",
+      "target": "architecture_model.validation.validate_model",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 211,
+          "column": 16
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.read_scope",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 244,
+          "column": 19
+        },
+        {
+          "path": "architecture_model/store.py",
+          "line": 248,
+          "column": 19
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.read_scope",
+      "target": "architecture_model.maintenance_coverage.maintained_observations",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 236,
+          "column": 29
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.read_scope",
+      "target": "architecture_model.store.ModelStore.read",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 235,
+          "column": 22
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.ModelStore.read_scope",
+      "target": "architecture_model.store.model_diff",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 236,
+          "column": 60
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store._preserve_binding_history",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 268,
+          "column": 15
+        },
+        {
+          "path": "architecture_model/store.py",
+          "line": 273,
+          "column": 19
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.atomic_write",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 39,
+          "column": 15
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.candidate",
+      "target": "architecture_model.store.patched_model",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 115,
+          "column": 23
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.candidate",
+      "target": "architecture_model.store.revision_candidate",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 116,
+          "column": 12
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.load_json",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 23,
+          "column": 15
+        },
+        {
+          "path": "architecture_model/store.py",
+          "line": 25,
+          "column": 15
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.load_json",
+      "target": "architecture_model.store._unique_keys",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 21,
+          "column": 79
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.patched_model",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 135,
+          "column": 19
+        },
+        {
+          "path": "architecture_model/store.py",
+          "line": 137,
+          "column": 19
+        },
+        {
+          "path": "architecture_model/store.py",
+          "line": 140,
+          "column": 23
+        },
+        {
+          "path": "architecture_model/store.py",
+          "line": 145,
+          "column": 23
+        },
+        {
+          "path": "architecture_model/store.py",
+          "line": 150,
+          "column": 27
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.patched_model",
+      "target": "architecture_model.maintenance_coverage.maintained_observations",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 124,
+          "column": 20
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.patched_model",
+      "target": "architecture_model.schema.Patch",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 122,
+          "column": 19
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.patched_model",
+      "target": "architecture_model.store.model_diff",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 124,
+          "column": 53
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.patched_model",
+      "target": "architecture_model.validation.parse",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 122,
+          "column": 13
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.patched_model",
+      "target": "architecture_model.validation.validate_model",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 152,
+          "column": 12
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.revision_candidate",
+      "target": "architecture_model.maintenance_coverage.maintained_observations",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 156,
+          "column": 28
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.revision_candidate",
+      "target": "architecture_model.schema.Revision",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 165,
+          "column": 13
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.revision_candidate",
+      "target": "architecture_model.store._preserve_binding_history",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 160,
+          "column": 13
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.revision_candidate",
+      "target": "architecture_model.store.model_diff",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 161,
+          "column": 18
+        },
+        {
+          "path": "architecture_model/store.py",
+          "line": 156,
+          "column": 62
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.revision_candidate",
+      "target": "architecture_model.validation.parse",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 164,
+          "column": 9
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.store.revision_candidate",
+      "target": "architecture_model.validation.validate_model",
+      "sites": [
+        {
+          "path": "architecture_model/store.py",
+          "line": 176,
+          "column": 12
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.validation._references",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/validation.py",
+          "line": 162,
+          "column": 19
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.validation._register",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/validation.py",
+          "line": 155,
+          "column": 15
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.validation.parse",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/validation.py",
+          "line": 24,
+          "column": 15
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.validation.validate_facts",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/validation.py",
+          "line": 30,
+          "column": 15
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 36,
+          "column": 19
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 45,
+          "column": 19
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 49,
+          "column": 19
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 51,
+          "column": 19
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.validation.validate_facts",
+      "target": "architecture_model.validation.digest",
+      "sites": [
+        {
+          "path": "architecture_model/validation.py",
+          "line": 29,
+          "column": 20
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 29,
+          "column": 59
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.validation.validate_model",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/validation.py",
+          "line": 70,
+          "column": 19
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 87,
+          "column": 23
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 97,
+          "column": 23
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 108,
+          "column": 19
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 127,
+          "column": 19
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 131,
+          "column": 23
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 135,
+          "column": 19
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 139,
+          "column": 23
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 145,
+          "column": 23
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 149,
+          "column": 15
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.validation.validate_model",
+      "target": "architecture_model.schema.Model",
+      "sites": [
+        {
+          "path": "architecture_model/validation.py",
+          "line": 55,
+          "column": 19
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.validation.validate_model",
+      "target": "architecture_model.validation._references",
+      "sites": [
+        {
+          "path": "architecture_model/validation.py",
+          "line": 66,
+          "column": 9
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 90,
+          "column": 9
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 91,
+          "column": 9
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 95,
+          "column": 13
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 102,
+          "column": 9
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 103,
+          "column": 9
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 109,
+          "column": 9
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 110,
+          "column": 9
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 112,
+          "column": 13
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 113,
+          "column": 13
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 115,
+          "column": 13
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 118,
+          "column": 9
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 121,
+          "column": 9
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 124,
+          "column": 9
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.validation.validate_model",
+      "target": "architecture_model.validation._register",
+      "sites": [
+        {
+          "path": "architecture_model/validation.py",
+          "line": 57,
+          "column": 5
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 60,
+          "column": 13
+        },
+        {
+          "path": "architecture_model/validation.py",
+          "line": 63,
+          "column": 13
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.validation.validate_model",
+      "target": "architecture_model.validation.parse",
+      "sites": [
+        {
+          "path": "architecture_model/validation.py",
+          "line": 55,
+          "column": 13
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.validation.validate_model",
+      "target": "architecture_model.validation.validate_facts",
+      "sites": [
+        {
+          "path": "architecture_model/validation.py",
+          "line": 68,
+          "column": 9
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.viewer.export_html",
+      "target": "architecture_model.errors.ModelError",
+      "sites": [
+        {
+          "path": "architecture_model/viewer.py",
+          "line": 66,
+          "column": 15
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.viewer.export_html",
+      "target": "architecture_model.viewer.projection",
+      "sites": [
+        {
+          "path": "architecture_model/viewer.py",
+          "line": 48,
+          "column": 15
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.viewer.projection",
+      "target": "architecture_model.maintenance.query",
+      "sites": [
+        {
+          "path": "architecture_model/viewer.py",
+          "line": 22,
+          "column": 19
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.viewer.projection",
+      "target": "architecture_model.validation.validate_model",
+      "sites": [
+        {
+          "path": "architecture_model/viewer.py",
+          "line": 21,
+          "column": 14
+        }
+      ]
+    },
+    {
+      "source": "architecture_model.viewer.projection",
+      "target": "architecture_model.viewer._snippet",
+      "sites": [
+        {
+          "path": "architecture_model/viewer.py",
+          "line": 34,
+          "column": 19
+        }
+      ]
+    }
+  ],
+  "tools": {
+    "engine": "StaticAnalyzer/PythonAdapter",
+    "node": "D:\\Progrm Files\\nvm\\v24.20.0\\node.exe",
+    "pyright_js": "F:\\CodeBoarding\\temp\\p0-tools\\node_modules\\pyright\\langserver.index.js",
+    "tokei": "F:\\CodeBoarding\\temp\\p0-tools\\tokei.exe",
+    "python_command": "[\"D:\\\\Progrm Files\\\\nvm\\\\v24.20.0\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\langserver.index.js\", \"--stdio\"]",
+    "tokei_command": "[\"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\", \"-o\", \"json\"]",
+    "maintenance_scope": "{\"complete\":true,\"configuration\":{},\"implementation\":\"01580c909ce2948d6401fbc9781e29a3a5dbafc3ee67fa3ea90a2c042326dd05\",\"patterns\":[\"# CodeBoarding Ignore File\\n\",\"# Add patterns here for files and directories that should be excluded from CodeBoarding analysis.\\n\",\"# Use the same format as .gitignore (gitignore syntax / gitwildmatch patterns).\\n\",\"#\\n\",\"# To stop ignoring a pattern, prefix it with ! (e.g., !important_file.txt)\\n\",\"#\\n\",\"# NOTE: The following are ALWAYS excluded (not configurable):\\n\",\"#   - Hidden directories (starting with .)\\n\",\"#   - .git/, .codeboarding/, node_modules/, __pycache__/\\n\",\"#   - Build output: build/, dist/, coverage/\\n\",\"#\\n\",\"# This file is automatically loaded by CodeBoarding analysis tools to exclude\\n\",\"# specified paths from code analysis, architecture generation, and other processing.\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Ignored directories (customizable \\u2014 remove lines to include them)\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Python virtual environments\\n\",\"venv/\\n\",\"env/\\n\",\"*.egg-info/\\n\",\"\\n\",\"# Java (Maven/Gradle) and Rust (Cargo) build output. Both ecosystems\\n\",\"# produce a top-level ``target/`` directory full of compiled artifacts \\u2014\\n\",\"# kept here as well as in ``_ALWAYS_IGNORED_DIRS`` so users who customize\\n\",\"# their ``.codeboardingignore`` continue to skip it even after edits.\\n\",\"target/\\n\",\"bin/\\n\",\"out/\\n\",\"\\n\",\"# .NET / C# build output\\n\",\"obj/\\n\",\"\\n\",\"# Go\\n\",\"vendor/\\n\",\"testdata/\\n\",\"\\n\",\"# PHP\\n\",\"cache/\\n\",\"\\n\",\"# Custom\\n\",\"temp/\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Test and infrastructure files\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Test directories\\n\",\"**/__tests__/**\\n\",\"**/tests/**\\n\",\"**/test/**\\n\",\"**/__test__/**\\n\",\"**/testing/**\\n\",\"**/testutil/**\\n\",\"\\n\",\"# Java/Kotlin test directories (Maven/Gradle structure)\\n\",\"**/src/test/**\\n\",\"**/src/testFixtures/**\\n\",\"**/src/integration-test/**\\n\",\"**/src/jmh/**\\n\",\"**/src/contractTest/**\\n\",\"**/osgi-tests/**\\n\",\"\\n\",\"# Test files by naming convention\\n\",\"*.test.*\\n\",\"*.spec.*\\n\",\"*_test.*\\n\",\"*test_*.py\\n\",\"test_*.py\\n\",\"*Test.java\\n\",\"*IT.java\\n\",\"*Test.kt\\n\",\"*IT.kt\\n\",\"*Tests.java\\n\",\"\\n\",\"# Mock, fixture, and stub directories\\n\",\"**/__mocks__/**\\n\",\"**/mocks/**\\n\",\"**/fixtures/**\\n\",\"**/fixture/**\\n\",\"**/stubs/**\\n\",\"**/stub/**\\n\",\"**/fakes/**\\n\",\"**/fake/**\\n\",\"\\n\",\"# E2E and integration test directories\\n\",\"**/e2e/**\\n\",\"**/integration-tests/**\\n\",\"**/integration_test*/**\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Non-production code\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Example and documentation code\\n\",\"**/examples/**\\n\",\"**/documentation/examples/**\\n\",\"\\n\",\"# Generated code\\n\",\"*.pb.go\\n\",\"**/generated_parser*\\n\",\"\\n\",\"# Java/Kotlin metadata files\\n\",\"module-info.java\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build artifacts and minified files\\n\",\"# ============================================================================\\n\",\"\\n\",\"*.bundle.js\\n\",\"*.bundle.js.map\\n\",\"*.min.js\\n\",\"*.min.css\\n\",\"*.chunk.js\\n\",\"*.chunk.js.map\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build tool configs and infrastructure\\n\",\"# ============================================================================\\n\",\"\\n\",\"esbuild*\\n\",\"webpack*\\n\",\"rollup*\\n\",\"vite.config.*\\n\",\"gulpfile*\\n\",\"gruntfile*\\n\",\"*.config.*\\n\"],\"protocol\":\"python-file-v1\",\"tools\":[\"5c976096e04e5c2c1f091938926234cc9fbebfe9787ddd149351b3b0ecc707b5\",\"f200762078eb9880faf421a5b30f9ef3055b1d85c6f10780d75db4da8d8499f1\",\"7db547cb6bfa1722e89ca52a43426fb212aa53603a60256af25fb6e59ca12099\"]}"
+  },
+  "limitations": [
+    "Static call records are not runtime execution or a complete dynamic call graph.",
+    "Names, clustering, responsibilities and design intent are not extracted code facts.",
+    "content_hash is SHA-256 of exact file bytes; source digest covers the declared Python scope.",
+    "Git commit is context only; the content manifest identifies dirty and untracked source."
+  ]
+}

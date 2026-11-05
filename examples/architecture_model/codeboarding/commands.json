@@ -1,0 +1,2087 @@
+{
+  "raw_gzip": "commands.json.gz",
+  "raw_sha256": "fb6c355eba199f13a9d36999b23ffa365821db700ed05c8085f06d1ae1b490e7",
+  "commands": [
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "init",
+        "--project",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\project.json",
+        "--author",
+        "m4-modeling-agent"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 0,
+        "committed": true
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 0
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 0
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 0
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "validate",
+        "--patch",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\01-foundation.patch.json"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "valid": true,
+        "candidate_revision": 1,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 0,
+          "object_ids": [
+            "62487d77d2876770b740a4bd1e1d6971a55940b9819c99ce571cfd80402c0036",
+            "cli",
+            "cli-facts",
+            "cli-store",
+            "cli-viewer",
+            "e-cli-main",
+            "e-cli-run",
+            "e-coverage",
+            "e-export-html",
+            "e-facts-export",
+            "e-facts-extract",
+            "e-maintenance-preview",
+            "e-maintenance-query",
+            "e-maintenance-rebind",
+            "e-maintenance-refresh",
+            "e-maintenance-resolve",
+            "e-parse",
+            "e-projection",
+            "e-snippet",
+            "e-store-apply",
+            "e-store-atomic",
+            "e-store-candidate",
+            "e-store-commit",
+            "e-store-diff",
+            "e-store-json",
+            "e-store-patched",
+            "e-store-preview",
+            "e-store-read",
+            "e-store-revision",
+            "e-store-scope",
+            "e-validate",
+            "facts",
+            "maintenance",
+            "modeling",
+            "store",
+            "store-validation",
+            "validation",
+            "viewer",
+            "viewer-maintenance"
+          ],
+          "component_ids": [
+            "cli",
+            "facts",
+            "maintenance",
+            "modeling",
+            "store",
+            "validation",
+            "viewer"
+          ],
+          "relation_ids": [
+            "cli-facts",
+            "cli-store",
+            "cli-viewer",
+            "store-validation",
+            "viewer-maintenance"
+          ],
+          "scenario_ids": []
+        },
+        "committed": false
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "diff",
+        "--patch",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\01-foundation.patch.json"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "valid": true,
+        "candidate_revision": 1,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 0,
+          "object_ids": [
+            "62487d77d2876770b740a4bd1e1d6971a55940b9819c99ce571cfd80402c0036",
+            "cli",
+            "cli-facts",
+            "cli-store",
+            "cli-viewer",
+            "e-cli-main",
+            "e-cli-run",
+            "e-coverage",
+            "e-export-html",
+            "e-facts-export",
+            "e-facts-extract",
+            "e-maintenance-preview",
+            "e-maintenance-query",
+            "e-maintenance-rebind",
+            "e-maintenance-refresh",
+            "e-maintenance-resolve",
+            "e-parse",
+            "e-projection",
+            "e-snippet",
+            "e-store-apply",
+            "e-store-atomic",
+            "e-store-candidate",
+            "e-store-commit",
+            "e-store-diff",
+            "e-store-json",
+            "e-store-patched",
+            "e-store-preview",
+            "e-store-read",
+            "e-store-revision",
+            "e-store-scope",
+            "e-validate",
+            "facts",
+            "maintenance",
+            "modeling",
+            "store",
+            "store-validation",
+            "validation",
+            "viewer",
+            "viewer-maintenance"
+          ],
+          "component_ids": [
+            "cli",
+            "facts",
+            "maintenance",
+            "modeling",
+            "store",
+            "validation",
+            "viewer"
+          ],
+          "relation_ids": [
+            "cli-facts",
+            "cli-store",
+            "cli-viewer",
+            "store-validation",
+            "viewer-maintenance"
+          ],
+          "scenario_ids": []
+        },
+        "committed": false
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "apply",
+        "--patch",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\01-foundation.patch.json",
+        "--expected-revision",
+        "0"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "committed": true,
+        "revision": 1,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 0,
+          "object_ids": [
+            "62487d77d2876770b740a4bd1e1d6971a55940b9819c99ce571cfd80402c0036",
+            "cli",
+            "cli-facts",
+            "cli-store",
+            "cli-viewer",
+            "e-cli-main",
+            "e-cli-run",
+            "e-coverage",
+            "e-export-html",
+            "e-facts-export",
+            "e-facts-extract",
+            "e-maintenance-preview",
+            "e-maintenance-query",
+            "e-maintenance-rebind",
+            "e-maintenance-refresh",
+            "e-maintenance-resolve",
+            "e-parse",
+            "e-projection",
+            "e-snippet",
+            "e-store-apply",
+            "e-store-atomic",
+            "e-store-candidate",
+            "e-store-commit",
+            "e-store-diff",
+            "e-store-json",
+            "e-store-patched",
+            "e-store-preview",
+            "e-store-read",
+            "e-store-revision",
+            "e-store-scope",
+            "e-validate",
+            "facts",
+            "maintenance",
+            "modeling",
+            "store",
+            "store-validation",
+            "validation",
+            "viewer",
+            "viewer-maintenance"
+          ],
+          "component_ids": [
+            "cli",
+            "facts",
+            "maintenance",
+            "modeling",
+            "store",
+            "validation",
+            "viewer"
+          ],
+          "relation_ids": [
+            "cli-facts",
+            "cli-store",
+            "cli-viewer",
+            "store-validation",
+            "viewer-maintenance"
+          ],
+          "scenario_ids": []
+        }
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 1
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 1
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "validate",
+        "--patch",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\02-html-business.patch.json"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "valid": true,
+        "candidate_revision": 2,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 1,
+          "object_ids": [
+            "planned-business-runtime",
+            "read-to-html"
+          ],
+          "component_ids": [],
+          "relation_ids": [],
+          "scenario_ids": [
+            "read-to-html"
+          ]
+        },
+        "committed": false
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "diff",
+        "--patch",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\02-html-business.patch.json"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "valid": true,
+        "candidate_revision": 2,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 1,
+          "object_ids": [
+            "planned-business-runtime",
+            "read-to-html"
+          ],
+          "component_ids": [],
+          "relation_ids": [],
+          "scenario_ids": [
+            "read-to-html"
+          ]
+        },
+        "committed": false
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "apply",
+        "--patch",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\02-html-business.patch.json",
+        "--expected-revision",
+        "1"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "committed": true,
+        "revision": 2,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 1,
+          "object_ids": [
+            "planned-business-runtime",
+            "read-to-html"
+          ],
+          "component_ids": [],
+          "relation_ids": [],
+          "scenario_ids": [
+            "read-to-html"
+          ]
+        }
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 2
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "export-html",
+        "--output",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\02-html-business.html",
+        "--source-root",
+        "F:\\CodeBoarding"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "output": "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\02-html-business.html",
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 2,
+        "committed": false
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 3
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "validate"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "valid": true,
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 3,
+        "committed": false
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 3
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "validate",
+        "--patch",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\04-feedback.patch.json"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "valid": true,
+        "candidate_revision": 4,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 3,
+          "object_ids": [
+            "executed-revision3-validation",
+            "rehearsal-read-write-boundary",
+            "store",
+            "viewer"
+          ],
+          "component_ids": [
+            "store",
+            "viewer"
+          ],
+          "relation_ids": [
+            "cli-store",
+            "cli-viewer",
+            "store-validation",
+            "viewer-maintenance"
+          ],
+          "scenario_ids": [
+            "agent-submits-patch",
+            "read-to-html"
+          ]
+        },
+        "committed": false
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "diff",
+        "--patch",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\04-feedback.patch.json"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "valid": true,
+        "candidate_revision": 4,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 3,
+          "object_ids": [
+            "executed-revision3-validation",
+            "rehearsal-read-write-boundary",
+            "store",
+            "viewer"
+          ],
+          "component_ids": [
+            "store",
+            "viewer"
+          ],
+          "relation_ids": [
+            "cli-store",
+            "cli-viewer",
+            "store-validation",
+            "viewer-maintenance"
+          ],
+          "scenario_ids": [
+            "agent-submits-patch",
+            "read-to-html"
+          ]
+        },
+        "committed": false
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "apply",
+        "--patch",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\04-feedback.patch.json",
+        "--expected-revision",
+        "3"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "committed": true,
+        "revision": 4,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 3,
+          "object_ids": [
+            "executed-revision3-validation",
+            "rehearsal-read-write-boundary",
+            "store",
+            "viewer"
+          ],
+          "component_ids": [
+            "store",
+            "viewer"
+          ],
+          "relation_ids": [
+            "cli-store",
+            "cli-viewer",
+            "store-validation",
+            "viewer-maintenance"
+          ],
+          "scenario_ids": [
+            "agent-submits-patch",
+            "read-to-html"
+          ]
+        }
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 4
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "export-html",
+        "--output",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\04-feedback.html",
+        "--source-root",
+        "F:\\CodeBoarding"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "output": "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\04-feedback.html",
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 4,
+        "committed": false
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "facts",
+        "export",
+        "--repo",
+        "F:\\CodeBoarding\\temp\\m4-source",
+        "--project-id",
+        "codeboarding-architecture-model",
+        "--node",
+        "D:/Progrm Files/nvm/v24.20.0/node.exe",
+        "--pyright",
+        "F:\\CodeBoarding\\temp\\p0-tools\\node_modules\\pyright\\langserver.index.js",
+        "--tokei",
+        "F:\\CodeBoarding\\temp\\p0-tools\\tokei.exe",
+        "--output",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\facts-after.json"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "facts_id": "3fa8e8addd1da7c3c86f00ae54f72196dedc858f866fcbb6377214a9410e5e78",
+        "source_version": "ae6414d6a204eb199be1dd20de745730478f2bd286d2e740085d6935214e4125",
+        "output": "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\facts-after.json",
+        "symbols": 88,
+        "calls": 153
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance-preview",
+        "--facts",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\facts-after.json"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 4,
+        "project_id": "codeboarding-architecture-model",
+        "target_snapshot_id": "3fa8e8addd1da7c3c86f00ae54f72196dedc858f866fcbb6377214a9410e5e78",
+        "target_source_version": "ae6414d6a204eb199be1dd20de745730478f2bd286d2e740085d6935214e4125",
+        "target_git_commit": "34b4e48f2388049eeaf180efcbf285029d7b384b",
+        "granularity": "Exact containing-file bytes and incident static call endpoints; no function-body hash",
+        "pending_ids": [
+          "maintenance-9889463ada4bfb1ffca28804de8ea362944d7e726d7db92f64c8df3dbf634cca",
+          "maintenance-86fee84fbd5418787c1efdb82b5fe50ca527f2688d88ad240303f8a128cf47a4",
+          "maintenance-d0c63d04bc00e62f6dbc9a91899d6480ccdff9c5e681baa8dbb1d696165495a2"
+        ],
+        "token": "fcb7d92e3a9e6b48b1b812d9dc50219159f973a0051f29f180ff67434d6c5358",
+        "committed": false
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance-refresh",
+        "--facts",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\facts-after.json",
+        "--token",
+        "fcb7d92e3a9e6b48b1b812d9dc50219159f973a0051f29f180ff67434d6c5358",
+        "--author",
+        "m4-modeling-agent",
+        "--expected-revision",
+        "4"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "committed": true,
+        "revision": 5,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 4,
+          "object_ids": [
+            "3fa8e8addd1da7c3c86f00ae54f72196dedc858f866fcbb6377214a9410e5e78",
+            "maintenance-0b4cf948a052072ee2d0c7649161166fbaa99da3fe890d4e2e7a9007172e6f12",
+            "maintenance-0b52becc21bf2bfc6cf70a4c21f1eb4372d894087200c22e56c41f1c03141f39",
+            "maintenance-0c63f17316d97517e8211dba9c24c29129f6b8c15e3e6c178703823946b860cc",
+            "maintenance-0d70635b9e2e2e718d498486d1db3b65059e0c4dff914e5cc7e3dc4a0d766e71",
+            "maintenance-14671a3d43f463af40d4417a7661253e563911dba845f12498a71aa1c25c34dc",
+            "maintenance-15e2a9c295c606ed14902bf9d7cb21cb14c3156aba535af643d45a0bf9f78cd0",
+            "maintenance-1d3d745ec399d399ae0687cbedd6426b9a900ab78a5cc912cc5e478d45441806",
+            "maintenance-33cb5e3b5a9fb9e8407ac8cd568ab021f31b72a8e9c1bf2b9b6f68c95a75c12f",
+            "maintenance-3451db89cc213a1ccb7912f082e1b5abd697a0f4d03c900445d5edd55e1f3b3f",
+            "maintenance-5da3b2846a85ec884e0b84ec44d3284acadc20266aba4adffd37d07e4926b759",
+            "maintenance-6a2449a75935e10d417a4d6db9aeedd8edddaa45e78a94641eb759b2e8d116af",
+            "maintenance-6b5127d7d0e9db9d062baea3405b2480716bc301b1b5b07ea5f3baf4298795b7",
+            "maintenance-8135c61445211981f330bd6a19a937b4d6b81f030b3d7bbcc63684c324f17bc2",
+            "maintenance-848cd4216e820dd9f97cc0a5fad4ada482d245cb7c05067775168c3a05460b41",
+            "maintenance-86fee84fbd5418787c1efdb82b5fe50ca527f2688d88ad240303f8a128cf47a4",
+            "maintenance-8b49e6ae9035714bec3b49691b96a1e798ba0789813467584e06d46c233ba03d",
+            "maintenance-9889463ada4bfb1ffca28804de8ea362944d7e726d7db92f64c8df3dbf634cca",
+            "maintenance-afa88a075714a159d919f51ed60ce65a93c38b7bc3ca519a3359b7821d18c9fc",
+            "maintenance-cab2b57de0f914c6174103c661b594f2e70fdf107a44b80a69faa0fe81da33e7",
+            "maintenance-d0c63d04bc00e62f6dbc9a91899d6480ccdff9c5e681baa8dbb1d696165495a2",
+            "maintenance-d728285b8ee11b54b574b3c8011758c7c555cb779e68f583be00f8b659552cfa",
+            "maintenance-e1bac63aae8b2d1dd60dfada08847643b3e8bf2c3d644831e735c3cdb27d62e4",
+            "maintenance-e5c21b2a6e4134c6ce0591013a7cd4a4d8c40c5748effdc3f015a103058ed340",
+            "maintenance-e90972111a6dfbc731b08f00f3970ff73fbbfb85dd647fa313590a1d5547a2dc",
+            "maintenance-f92421e3454d7f70c97add67da1ab4c21d95ea59e651154bc1988c76a044a90d",
+            "maintenance-f9bfe5ef49ab2bd290993d5131b35427f5f673f4b936a09c87f8fbaa97c7ec8f"
+          ],
+          "component_ids": [
+            "cli",
+            "facts",
+            "maintenance",
+            "modeling",
+            "store",
+            "viewer"
+          ],
+          "relation_ids": [
+            "cli-facts",
+            "cli-store",
+            "cli-viewer",
+            "store-validation",
+            "viewer-maintenance"
+          ],
+          "scenario_ids": [
+            "agent-submits-patch",
+            "read-to-html"
+          ]
+        }
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 5
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "export-html",
+        "--output",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\05-source-pending.html",
+        "--source-root",
+        "F:\\CodeBoarding\\temp\\m4-source"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "output": "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\05-source-pending.html",
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 5,
+        "committed": false
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance",
+        "--binding",
+        "e-export-html"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 5,
+        "pending_ids": [
+          "maintenance-86fee84fbd5418787c1efdb82b5fe50ca527f2688d88ad240303f8a128cf47a4"
+        ],
+        "current_coverage_ids": [
+          "maintenance-86fee84fbd5418787c1efdb82b5fe50ca527f2688d88ad240303f8a128cf47a4"
+        ],
+        "current_pending_ids": [
+          "maintenance-86fee84fbd5418787c1efdb82b5fe50ca527f2688d88ad240303f8a128cf47a4"
+        ],
+        "latest_target_snapshot_id": "3fa8e8addd1da7c3c86f00ae54f72196dedc858f866fcbb6377214a9410e5e78"
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 5
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance-rebind",
+        "--item",
+        "maintenance-86fee84fbd5418787c1efdb82b5fe50ca527f2688d88ad240303f8a128cf47a4",
+        "--candidate",
+        "architecture_model/viewer.py|architecture_model.viewer.export_html",
+        "--author",
+        "m4-modeling-agent",
+        "--reason",
+        "Inspected controlled viewer.py diagnostic-only change; select the exact same path/symbol at the new containing-file hash. Success-path behavior is unchanged.",
+        "--expected-revision",
+        "5"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "committed": true,
+        "revision": 6,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 5,
+          "object_ids": [
+            "e-export-html"
+          ],
+          "component_ids": [
+            "cli",
+            "modeling",
+            "viewer"
+          ],
+          "relation_ids": [
+            "cli-facts",
+            "cli-store",
+            "cli-viewer",
+            "viewer-maintenance"
+          ],
+          "scenario_ids": [
+            "agent-submits-patch",
+            "read-to-html"
+          ]
+        }
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance",
+        "--binding",
+        "e-export-html"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 6,
+        "pending_ids": [
+          "maintenance-86fee84fbd5418787c1efdb82b5fe50ca527f2688d88ad240303f8a128cf47a4"
+        ],
+        "current_coverage_ids": [
+          "maintenance-86fee84fbd5418787c1efdb82b5fe50ca527f2688d88ad240303f8a128cf47a4"
+        ],
+        "current_pending_ids": [
+          "maintenance-86fee84fbd5418787c1efdb82b5fe50ca527f2688d88ad240303f8a128cf47a4"
+        ],
+        "latest_target_snapshot_id": "3fa8e8addd1da7c3c86f00ae54f72196dedc858f866fcbb6377214a9410e5e78"
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance",
+        "--binding",
+        "e-projection"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 6,
+        "pending_ids": [
+          "maintenance-9889463ada4bfb1ffca28804de8ea362944d7e726d7db92f64c8df3dbf634cca"
+        ],
+        "current_coverage_ids": [
+          "maintenance-9889463ada4bfb1ffca28804de8ea362944d7e726d7db92f64c8df3dbf634cca"
+        ],
+        "current_pending_ids": [
+          "maintenance-9889463ada4bfb1ffca28804de8ea362944d7e726d7db92f64c8df3dbf634cca"
+        ],
+        "latest_target_snapshot_id": "3fa8e8addd1da7c3c86f00ae54f72196dedc858f866fcbb6377214a9410e5e78"
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 6
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance-rebind",
+        "--item",
+        "maintenance-9889463ada4bfb1ffca28804de8ea362944d7e726d7db92f64c8df3dbf634cca",
+        "--candidate",
+        "architecture_model/viewer.py|architecture_model.viewer.projection",
+        "--author",
+        "m4-modeling-agent",
+        "--reason",
+        "Inspected controlled viewer.py diagnostic-only change; select the exact same path/symbol at the new containing-file hash. Success-path behavior is unchanged.",
+        "--expected-revision",
+        "6"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "committed": true,
+        "revision": 7,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 6,
+          "object_ids": [
+            "e-projection"
+          ],
+          "component_ids": [
+            "maintenance",
+            "viewer"
+          ],
+          "relation_ids": [
+            "cli-viewer",
+            "viewer-maintenance"
+          ],
+          "scenario_ids": [
+            "read-to-html"
+          ]
+        }
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance",
+        "--binding",
+        "e-projection"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 7,
+        "pending_ids": [
+          "maintenance-9889463ada4bfb1ffca28804de8ea362944d7e726d7db92f64c8df3dbf634cca"
+        ],
+        "current_coverage_ids": [
+          "maintenance-9889463ada4bfb1ffca28804de8ea362944d7e726d7db92f64c8df3dbf634cca"
+        ],
+        "current_pending_ids": [
+          "maintenance-9889463ada4bfb1ffca28804de8ea362944d7e726d7db92f64c8df3dbf634cca"
+        ],
+        "latest_target_snapshot_id": "3fa8e8addd1da7c3c86f00ae54f72196dedc858f866fcbb6377214a9410e5e78"
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance",
+        "--binding",
+        "e-snippet"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 7,
+        "pending_ids": [
+          "maintenance-d0c63d04bc00e62f6dbc9a91899d6480ccdff9c5e681baa8dbb1d696165495a2"
+        ],
+        "current_coverage_ids": [
+          "maintenance-d0c63d04bc00e62f6dbc9a91899d6480ccdff9c5e681baa8dbb1d696165495a2"
+        ],
+        "current_pending_ids": [
+          "maintenance-d0c63d04bc00e62f6dbc9a91899d6480ccdff9c5e681baa8dbb1d696165495a2"
+        ],
+        "latest_target_snapshot_id": "3fa8e8addd1da7c3c86f00ae54f72196dedc858f866fcbb6377214a9410e5e78"
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 7
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance-rebind",
+        "--item",
+        "maintenance-d0c63d04bc00e62f6dbc9a91899d6480ccdff9c5e681baa8dbb1d696165495a2",
+        "--candidate",
+        "architecture_model/viewer.py|architecture_model.viewer._snippet",
+        "--author",
+        "m4-modeling-agent",
+        "--reason",
+        "Inspected controlled viewer.py diagnostic-only change; select the exact same path/symbol at the new containing-file hash. Success-path behavior is unchanged.",
+        "--expected-revision",
+        "7"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "committed": true,
+        "revision": 8,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 7,
+          "object_ids": [
+            "e-snippet"
+          ],
+          "component_ids": [
+            "viewer"
+          ],
+          "relation_ids": [
+            "cli-viewer",
+            "viewer-maintenance"
+          ],
+          "scenario_ids": [
+            "read-to-html"
+          ]
+        }
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance",
+        "--binding",
+        "e-snippet"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 8,
+        "pending_ids": [
+          "maintenance-d0c63d04bc00e62f6dbc9a91899d6480ccdff9c5e681baa8dbb1d696165495a2"
+        ],
+        "current_coverage_ids": [
+          "maintenance-d0c63d04bc00e62f6dbc9a91899d6480ccdff9c5e681baa8dbb1d696165495a2"
+        ],
+        "current_pending_ids": [
+          "maintenance-d0c63d04bc00e62f6dbc9a91899d6480ccdff9c5e681baa8dbb1d696165495a2"
+        ],
+        "latest_target_snapshot_id": "3fa8e8addd1da7c3c86f00ae54f72196dedc858f866fcbb6377214a9410e5e78"
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance",
+        "--binding",
+        "e-export-html"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 8,
+        "pending_ids": [
+          "maintenance-86fee84fbd5418787c1efdb82b5fe50ca527f2688d88ad240303f8a128cf47a4"
+        ],
+        "current_coverage_ids": [
+          "maintenance-86fee84fbd5418787c1efdb82b5fe50ca527f2688d88ad240303f8a128cf47a4"
+        ],
+        "current_pending_ids": [
+          "maintenance-86fee84fbd5418787c1efdb82b5fe50ca527f2688d88ad240303f8a128cf47a4"
+        ],
+        "latest_target_snapshot_id": "3fa8e8addd1da7c3c86f00ae54f72196dedc858f866fcbb6377214a9410e5e78"
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 8
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance-resolve",
+        "--item",
+        "maintenance-86fee84fbd5418787c1efdb82b5fe50ca527f2688d88ad240303f8a128cf47a4",
+        "--review",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\e-export-html-confirmed.review.json",
+        "--expected-revision",
+        "8"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "committed": true,
+        "revision": 9,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 8,
+          "object_ids": [
+            "maintenance-86fee84fbd5418787c1efdb82b5fe50ca527f2688d88ad240303f8a128cf47a4"
+          ],
+          "component_ids": [
+            "cli",
+            "facts",
+            "maintenance",
+            "modeling",
+            "store",
+            "viewer"
+          ],
+          "relation_ids": [
+            "cli-facts",
+            "cli-store",
+            "cli-viewer",
+            "store-validation",
+            "viewer-maintenance"
+          ],
+          "scenario_ids": [
+            "agent-submits-patch",
+            "read-to-html"
+          ]
+        }
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance",
+        "--binding",
+        "e-projection"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 9,
+        "pending_ids": [
+          "maintenance-9889463ada4bfb1ffca28804de8ea362944d7e726d7db92f64c8df3dbf634cca"
+        ],
+        "current_coverage_ids": [
+          "maintenance-9889463ada4bfb1ffca28804de8ea362944d7e726d7db92f64c8df3dbf634cca"
+        ],
+        "current_pending_ids": [
+          "maintenance-9889463ada4bfb1ffca28804de8ea362944d7e726d7db92f64c8df3dbf634cca"
+        ],
+        "latest_target_snapshot_id": "3fa8e8addd1da7c3c86f00ae54f72196dedc858f866fcbb6377214a9410e5e78"
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 9
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance-resolve",
+        "--item",
+        "maintenance-9889463ada4bfb1ffca28804de8ea362944d7e726d7db92f64c8df3dbf634cca",
+        "--review",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\e-projection-confirmed.review.json",
+        "--expected-revision",
+        "9"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "committed": true,
+        "revision": 10,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 9,
+          "object_ids": [
+            "maintenance-9889463ada4bfb1ffca28804de8ea362944d7e726d7db92f64c8df3dbf634cca"
+          ],
+          "component_ids": [
+            "cli",
+            "maintenance",
+            "viewer"
+          ],
+          "relation_ids": [
+            "cli-facts",
+            "cli-store",
+            "cli-viewer",
+            "viewer-maintenance"
+          ],
+          "scenario_ids": [
+            "agent-submits-patch",
+            "read-to-html"
+          ]
+        }
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance",
+        "--binding",
+        "e-snippet"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 10,
+        "pending_ids": [
+          "maintenance-d0c63d04bc00e62f6dbc9a91899d6480ccdff9c5e681baa8dbb1d696165495a2"
+        ],
+        "current_coverage_ids": [
+          "maintenance-d0c63d04bc00e62f6dbc9a91899d6480ccdff9c5e681baa8dbb1d696165495a2"
+        ],
+        "current_pending_ids": [
+          "maintenance-d0c63d04bc00e62f6dbc9a91899d6480ccdff9c5e681baa8dbb1d696165495a2"
+        ],
+        "latest_target_snapshot_id": "3fa8e8addd1da7c3c86f00ae54f72196dedc858f866fcbb6377214a9410e5e78"
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 10
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance-resolve",
+        "--item",
+        "maintenance-d0c63d04bc00e62f6dbc9a91899d6480ccdff9c5e681baa8dbb1d696165495a2",
+        "--review",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\e-snippet-confirmed.review.json",
+        "--expected-revision",
+        "10"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "committed": true,
+        "revision": 11,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 10,
+          "object_ids": [
+            "maintenance-d0c63d04bc00e62f6dbc9a91899d6480ccdff9c5e681baa8dbb1d696165495a2"
+          ],
+          "component_ids": [
+            "cli",
+            "maintenance",
+            "viewer"
+          ],
+          "relation_ids": [
+            "cli-facts",
+            "cli-store",
+            "cli-viewer",
+            "viewer-maintenance"
+          ],
+          "scenario_ids": [
+            "agent-submits-patch",
+            "read-to-html"
+          ]
+        }
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 11
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance",
+        "--binding",
+        "e-export-html"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 11,
+        "pending_ids": [],
+        "current_coverage_ids": [
+          "maintenance-86fee84fbd5418787c1efdb82b5fe50ca527f2688d88ad240303f8a128cf47a4"
+        ],
+        "current_pending_ids": [],
+        "latest_target_snapshot_id": "3fa8e8addd1da7c3c86f00ae54f72196dedc858f866fcbb6377214a9410e5e78"
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 11
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "validate",
+        "--patch",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\07-publication-precondition.patch.json"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "valid": true,
+        "candidate_revision": 12,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 11,
+          "object_ids": [
+            "maintenance-0bd730aa164ec250227c1101b9f01c3ae27289323f740966f16fddd7c813dee2",
+            "maintenance-2e7c6b1e80ca4a899c76867aeadf11535f1d66c8f069e89887c520561ff8200a",
+            "maintenance-4ad99c66ad0b05bc908b711e38a92baeb96ddcf5b9f5aacea1f0fe9d0fdec5a3",
+            "maintenance-86f7e08562fe2a338e4cbebf183e692238d1582b5f0cbb9f803c8927d3e4634e",
+            "maintenance-ea697126d526d8fe3c8cf72db8c3ddcae54aaf1bcf264a0a16edc7b66870a0b8",
+            "viewer"
+          ],
+          "component_ids": [
+            "cli",
+            "facts",
+            "maintenance",
+            "modeling",
+            "store",
+            "viewer"
+          ],
+          "relation_ids": [
+            "cli-facts",
+            "cli-store",
+            "cli-viewer",
+            "store-validation",
+            "viewer-maintenance"
+          ],
+          "scenario_ids": [
+            "agent-submits-patch",
+            "read-to-html"
+          ]
+        },
+        "committed": false
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "diff",
+        "--patch",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\07-publication-precondition.patch.json"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "valid": true,
+        "candidate_revision": 12,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 11,
+          "object_ids": [
+            "maintenance-0bd730aa164ec250227c1101b9f01c3ae27289323f740966f16fddd7c813dee2",
+            "maintenance-2e7c6b1e80ca4a899c76867aeadf11535f1d66c8f069e89887c520561ff8200a",
+            "maintenance-4ad99c66ad0b05bc908b711e38a92baeb96ddcf5b9f5aacea1f0fe9d0fdec5a3",
+            "maintenance-86f7e08562fe2a338e4cbebf183e692238d1582b5f0cbb9f803c8927d3e4634e",
+            "maintenance-ea697126d526d8fe3c8cf72db8c3ddcae54aaf1bcf264a0a16edc7b66870a0b8",
+            "viewer"
+          ],
+          "component_ids": [
+            "cli",
+            "facts",
+            "maintenance",
+            "modeling",
+            "store",
+            "viewer"
+          ],
+          "relation_ids": [
+            "cli-facts",
+            "cli-store",
+            "cli-viewer",
+            "store-validation",
+            "viewer-maintenance"
+          ],
+          "scenario_ids": [
+            "agent-submits-patch",
+            "read-to-html"
+          ]
+        },
+        "committed": false
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "apply",
+        "--patch",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\07-publication-precondition.patch.json",
+        "--expected-revision",
+        "11"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "committed": true,
+        "revision": 12,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 11,
+          "object_ids": [
+            "maintenance-0bd730aa164ec250227c1101b9f01c3ae27289323f740966f16fddd7c813dee2",
+            "maintenance-2e7c6b1e80ca4a899c76867aeadf11535f1d66c8f069e89887c520561ff8200a",
+            "maintenance-4ad99c66ad0b05bc908b711e38a92baeb96ddcf5b9f5aacea1f0fe9d0fdec5a3",
+            "maintenance-86f7e08562fe2a338e4cbebf183e692238d1582b5f0cbb9f803c8927d3e4634e",
+            "maintenance-ea697126d526d8fe3c8cf72db8c3ddcae54aaf1bcf264a0a16edc7b66870a0b8",
+            "viewer"
+          ],
+          "component_ids": [
+            "cli",
+            "facts",
+            "maintenance",
+            "modeling",
+            "store",
+            "viewer"
+          ],
+          "relation_ids": [
+            "cli-facts",
+            "cli-store",
+            "cli-viewer",
+            "store-validation",
+            "viewer-maintenance"
+          ],
+          "scenario_ids": [
+            "agent-submits-patch",
+            "read-to-html"
+          ]
+        }
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 12
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance",
+        "--binding",
+        "e-export-html"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 12,
+        "pending_ids": [
+          "maintenance-2e7c6b1e80ca4a899c76867aeadf11535f1d66c8f069e89887c520561ff8200a"
+        ],
+        "current_coverage_ids": [
+          "maintenance-2e7c6b1e80ca4a899c76867aeadf11535f1d66c8f069e89887c520561ff8200a"
+        ],
+        "current_pending_ids": [
+          "maintenance-2e7c6b1e80ca4a899c76867aeadf11535f1d66c8f069e89887c520561ff8200a"
+        ],
+        "latest_target_snapshot_id": "3fa8e8addd1da7c3c86f00ae54f72196dedc858f866fcbb6377214a9410e5e78"
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 12
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance-resolve",
+        "--item",
+        "maintenance-2e7c6b1e80ca4a899c76867aeadf11535f1d66c8f069e89887c520561ff8200a",
+        "--review",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\07-current-confirmation.review.json",
+        "--expected-revision",
+        "12"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "committed": true,
+        "revision": 13,
+        "diff": {
+          "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+          "revision": 12,
+          "object_ids": [
+            "maintenance-2e7c6b1e80ca4a899c76867aeadf11535f1d66c8f069e89887c520561ff8200a"
+          ],
+          "component_ids": [
+            "cli",
+            "facts",
+            "maintenance",
+            "modeling",
+            "store",
+            "viewer"
+          ],
+          "relation_ids": [
+            "cli-facts",
+            "cli-store",
+            "cli-viewer",
+            "store-validation",
+            "viewer-maintenance"
+          ],
+          "scenario_ids": [
+            "agent-submits-patch",
+            "read-to-html"
+          ]
+        }
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "read"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "complete": true,
+        "scope": {
+          "component_id": "",
+          "scenario_id": ""
+        },
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 13
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "maintenance"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 13,
+        "pending_ids": [
+          "maintenance-86f7e08562fe2a338e4cbebf183e692238d1582b5f0cbb9f803c8927d3e4634e",
+          "maintenance-ea697126d526d8fe3c8cf72db8c3ddcae54aaf1bcf264a0a16edc7b66870a0b8"
+        ],
+        "current_coverage_ids": [
+          "maintenance-0b4cf948a052072ee2d0c7649161166fbaa99da3fe890d4e2e7a9007172e6f12",
+          "maintenance-0b52becc21bf2bfc6cf70a4c21f1eb4372d894087200c22e56c41f1c03141f39",
+          "maintenance-0bd730aa164ec250227c1101b9f01c3ae27289323f740966f16fddd7c813dee2",
+          "maintenance-0c63f17316d97517e8211dba9c24c29129f6b8c15e3e6c178703823946b860cc",
+          "maintenance-0d70635b9e2e2e718d498486d1db3b65059e0c4dff914e5cc7e3dc4a0d766e71",
+          "maintenance-14671a3d43f463af40d4417a7661253e563911dba845f12498a71aa1c25c34dc",
+          "maintenance-1d3d745ec399d399ae0687cbedd6426b9a900ab78a5cc912cc5e478d45441806",
+          "maintenance-2e7c6b1e80ca4a899c76867aeadf11535f1d66c8f069e89887c520561ff8200a",
+          "maintenance-33cb5e3b5a9fb9e8407ac8cd568ab021f31b72a8e9c1bf2b9b6f68c95a75c12f",
+          "maintenance-3451db89cc213a1ccb7912f082e1b5abd697a0f4d03c900445d5edd55e1f3b3f",
+          "maintenance-4ad99c66ad0b05bc908b711e38a92baeb96ddcf5b9f5aacea1f0fe9d0fdec5a3",
+          "maintenance-5da3b2846a85ec884e0b84ec44d3284acadc20266aba4adffd37d07e4926b759",
+          "maintenance-6a2449a75935e10d417a4d6db9aeedd8edddaa45e78a94641eb759b2e8d116af",
+          "maintenance-6b5127d7d0e9db9d062baea3405b2480716bc301b1b5b07ea5f3baf4298795b7",
+          "maintenance-848cd4216e820dd9f97cc0a5fad4ada482d245cb7c05067775168c3a05460b41",
+          "maintenance-86f7e08562fe2a338e4cbebf183e692238d1582b5f0cbb9f803c8927d3e4634e",
+          "maintenance-8b49e6ae9035714bec3b49691b96a1e798ba0789813467584e06d46c233ba03d",
+          "maintenance-afa88a075714a159d919f51ed60ce65a93c38b7bc3ca519a3359b7821d18c9fc",
+          "maintenance-cab2b57de0f914c6174103c661b594f2e70fdf107a44b80a69faa0fe81da33e7",
+          "maintenance-d728285b8ee11b54b574b3c8011758c7c555cb779e68f583be00f8b659552cfa",
+          "maintenance-e1bac63aae8b2d1dd60dfada08847643b3e8bf2c3d644831e735c3cdb27d62e4",
+          "maintenance-e5c21b2a6e4134c6ce0591013a7cd4a4d8c40c5748effdc3f015a103058ed340",
+          "maintenance-e90972111a6dfbc731b08f00f3970ff73fbbfb85dd647fa313590a1d5547a2dc",
+          "maintenance-ea697126d526d8fe3c8cf72db8c3ddcae54aaf1bcf264a0a16edc7b66870a0b8",
+          "maintenance-f92421e3454d7f70c97add67da1ab4c21d95ea59e651154bc1988c76a044a90d",
+          "maintenance-f9bfe5ef49ab2bd290993d5131b35427f5f673f4b936a09c87f8fbaa97c7ec8f"
+        ],
+        "current_pending_ids": [
+          "maintenance-86f7e08562fe2a338e4cbebf183e692238d1582b5f0cbb9f803c8927d3e4634e",
+          "maintenance-ea697126d526d8fe3c8cf72db8c3ddcae54aaf1bcf264a0a16edc7b66870a0b8"
+        ],
+        "latest_target_snapshot_id": "3fa8e8addd1da7c3c86f00ae54f72196dedc858f866fcbb6377214a9410e5e78"
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "validate"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "valid": true,
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 13,
+        "committed": false
+      }
+    },
+    {
+      "argv": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "architecture_model",
+        "model",
+        "--file",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\model.json",
+        "export-html",
+        "--output",
+        "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\index.html",
+        "--source-root",
+        "F:\\CodeBoarding\\temp\\m4-source"
+      ],
+      "exit_code": 0,
+      "ok": true,
+      "result_summary": {
+        "output": "F:\\CodeBoarding\\examples\\architecture_model\\codeboarding\\index.html",
+        "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+        "revision": 13,
+        "committed": false
+      }
+    }
+  ]
+}

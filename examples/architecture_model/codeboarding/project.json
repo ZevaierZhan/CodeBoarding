@@ -1,0 +1,5 @@
+{
+  "id": "codeboarding-architecture-model",
+  "name": "CodeBoarding persistent architecture explanations",
+  "boundary": "architecture_model/*.py from ZevaierZhan/CodeBoarding at 34b4e48f2388049eeaf180efcbf285029d7b384b; focused byte-identical copy preserving architecture_model/ paths. CLI, storage, validation, maintenance and HTML export only. Viewer JS/CSS assets, native analyzer internals, whole-repository analysis, LLMs and runtime business correctness are outside scope. Stage E targets an isolated modified copy; source digests distinguish that experiment from production."
+}

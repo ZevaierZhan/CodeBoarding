@@ -1,0 +1,14 @@
+{
+  "author": "m4-modeling-agent",
+  "summary": "07-publication-precondition",
+  "operations": [
+    {
+      "action": "update",
+      "collection": "components",
+      "id": "viewer",
+      "value": {
+        "rationale": "Read-only consumer of one validated revision: projection derives maintenance and snippets without saving. export_html publishes with non-overwriting os.link, distinct from ModelStore atomic replacement. Browser interaction remains outside the Python extraction. Publication requires a filesystem supporting hard links; the controlled diagnostic now names this prerequisite."
+      }
+    }
+  ]
+}

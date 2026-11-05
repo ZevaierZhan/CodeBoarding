@@ -1,0 +1,29 @@
+{
+  "origin_repository": "https://github.com/ZevaierZhan/CodeBoarding",
+  "origin_commit": "34b4e48f2388049eeaf180efcbf285029d7b384b",
+  "origin_root_at_execution": "F:\\CodeBoarding",
+  "extraction_root_at_execution": "F:\\CodeBoarding\\temp\\m4-source",
+  "included": {
+    "architecture_model/__init__.py": "d1419d4aebc2e72a5d525a2759915501dd6a378904daca75567587432bb9c04a",
+    "architecture_model/__main__.py": "39bead821a699e667c3c4bbc24ba6a68f4e00c9527f556d9c065a2a081d4ee0b",
+    "architecture_model/cli.py": "e3afe53e73e7890fbf989f69a35b8d7cf40a9d880adad9f106b02e4f04b483f0",
+    "architecture_model/errors.py": "8e0b7e53af71a083a55e509f410c0447ff58e1207e187e9ddebb97129f2d6dcf",
+    "architecture_model/facts.py": "4b12da02f420441599fcf07160c6f025d28201adba7ab703eddba83b7fc97d8f",
+    "architecture_model/facts_worker.py": "87fb04bd66e00dfab6df343f9fc1c4158dafcacc75d4a4b05d22425258eba638",
+    "architecture_model/maintenance.py": "5a5b716ea70e411a3377ba89229eeb80f1917369c34faf6ecccd66efa37154a3",
+    "architecture_model/maintenance_coverage.py": "b77854b9ecd620a15350eb5cb877dd3e0c64f568c56d1b0ac4dac01ecf717683",
+    "architecture_model/schema.py": "7d9333277f6ab09f4c142d34b0679a24cf14b2667d73c46c068969a8356ae9b9",
+    "architecture_model/store.py": "583b260daa373f3520fcd4cecadd88462e950c718a32737c0dd4520372e848c5",
+    "architecture_model/validation.py": "9ba10877bc6a01dfd37bd70b7a8d39553cee90301d319600a940fc6077c041b9",
+    "architecture_model/viewer.py": "db1573879f511dae17c73be97dbb2455aa5402224f20bc6756d265ee2390a472"
+  },
+  "excluded": [
+    "Other Python packages, tests, JS/CSS/HTML viewer assets, external libraries and runtime environments"
+  ],
+  "copy_git_context": "No .git copied. git -C on this nested copy discovers the enclosing CodeBoarding checkout and records its HEAD. That commit is context only; source.files identifies the actual copied bytes and Stage E modification.",
+  "configuration": "Only architecture_model/*.py copied, retaining repo-relative paths. Default export ignore rules; no pyproject copied.",
+  "limitations": [
+    "Subsystem export is not whole-repository coverage.",
+    "Cross-boundary imports are unresolved or external to this graph."
+  ]
+}

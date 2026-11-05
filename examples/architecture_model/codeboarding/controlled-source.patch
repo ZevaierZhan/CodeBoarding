@@ -1,0 +1,11 @@
+--- a/architecture_model/viewer.py
++++ b/architecture_model/viewer.py
+@@ -63,7 +63,7 @@
+         # Linking publishes complete bytes without replacing a competing export or model.
+         os.link(temporary, output)
+     except OSError as error:
+-        raise ModelError("EXPORT_FAILED", str(output), "Cannot publish document; choose a new output path") from error
++        raise ModelError("EXPORT_FAILED", str(output), "Cannot publish document; choose a new output path on a filesystem supporting hard links") from error
+     finally:
+         if temporary:
+             Path(temporary).unlink(missing_ok=True)

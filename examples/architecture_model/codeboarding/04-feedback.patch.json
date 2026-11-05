@@ -1,0 +1,62 @@
+{
+  "author": "m4-modeling-agent",
+  "summary": "04-feedback",
+  "operations": [
+    {
+      "action": "create",
+      "collection": "opinions",
+      "id": "rehearsal-read-write-boundary",
+      "value": {
+        "id": "rehearsal-read-write-boundary",
+        "author": "preset-feedback-rehearsal",
+        "stance": "question",
+        "text": "Rehearsal feedback: clarify which parts of the shared store only read and which parts lock and publish changes; also distinguish HTML publication from model commit. This is a preset exercise, not user acceptance of the architecture.",
+        "object_ids": [
+          "store",
+          "viewer",
+          "read-to-html",
+          "agent-submits-patch"
+        ]
+      }
+    },
+    {
+      "action": "update",
+      "collection": "components",
+      "id": "store",
+      "value": {
+        "responsibility": "Read and validate complete models without writing; separately build candidates and commit one revision under a file lock using atomic replacement.",
+        "rationale": "Shared model lifecycle warrants one logical store ID across both businesses. read/load_json validate without locking or writing; commit acquires FileLock and atomic_write uses os.replace. This responsibility boundary does not imply every read is a transaction."
+      }
+    },
+    {
+      "action": "update",
+      "collection": "components",
+      "id": "viewer",
+      "value": {
+        "rationale": "Read-only consumer of one validated revision: projection derives maintenance and snippets without saving. export_html publishes with non-overwriting os.link, distinct from ModelStore atomic replacement. Browser interaction remains outside the Python extraction."
+      }
+    },
+    {
+      "action": "create",
+      "collection": "verifications",
+      "id": "executed-revision3-validation",
+      "value": {
+        "id": "executed-revision3-validation",
+        "status": "executed",
+        "object_ids": [
+          "store",
+          "read-to-html",
+          "agent-submits-patch"
+        ],
+        "command": "uv run python -m architecture_model model --file examples/architecture_model/codeboarding/model.json validate",
+        "environment": "Windows 11; Python 3.12.13; repository venv; no provider or .env",
+        "inputs": "Model ba06c25c-e8de-4781-8a09-e7643b9e4721, revision 3 before feedback; entire persisted JSON; structure/reference validation only, not business execution.",
+        "source_version": "ea441b5103ee08ec854f05c62873bb798cabb6b57ff9f32b1d02608b57e01001",
+        "executor": "m4-modeling-agent",
+        "executed_at": "2026-11-05T01:26:57.819857+00:00",
+        "exit_code": 0,
+        "result": "{\"valid\": true, \"model_id\": \"ba06c25c-e8de-4781-8a09-e7643b9e4721\", \"revision\": 3, \"committed\": false}"
+      }
+    }
+  ]
+}

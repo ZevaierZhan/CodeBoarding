@@ -1,0 +1,246 @@
+{
+  "author": "m4-modeling-agent",
+  "summary": "02-html-business",
+  "operations": [
+    {
+      "action": "create",
+      "collection": "scenarios",
+      "id": "read-to-html",
+      "value": {
+        "id": "read-to-html",
+        "name": "Read a persistent model and export interactive HTML",
+        "entry_step_id": "html-dispatch",
+        "steps": [
+          {
+            "id": "html-dispatch",
+            "component_ids": [
+              "cli"
+            ],
+            "binding_ids": [
+              "e-cli-run"
+            ],
+            "claim": {
+              "kind": "code_fact",
+              "explanation": "run selects export-html; model file and source root are explicit inputs.",
+              "binding_ids": [
+                "e-cli-run"
+              ],
+              "assumptions": [],
+              "issues": []
+            }
+          },
+          {
+            "id": "html-read",
+            "component_ids": [
+              "store",
+              "validation"
+            ],
+            "binding_ids": [
+              "e-store-read",
+              "e-store-json",
+              "e-validate"
+            ],
+            "claim": {
+              "kind": "code_fact",
+              "explanation": "ModelStore.read loads JSON and validates the complete model before export; read_scope is not this path.",
+              "binding_ids": [
+                "e-store-read",
+                "e-store-json",
+                "e-validate"
+              ],
+              "assumptions": [],
+              "issues": []
+            }
+          },
+          {
+            "id": "html-freeze",
+            "component_ids": [
+              "viewer",
+              "validation"
+            ],
+            "binding_ids": [
+              "e-export-html",
+              "e-projection",
+              "e-validate"
+            ],
+            "claim": {
+              "kind": "code_fact",
+              "explanation": "export_html calls projection, which validates a copy of the same model rather than reading another revision.",
+              "binding_ids": [
+                "e-export-html",
+                "e-projection",
+                "e-validate"
+              ],
+              "assumptions": [],
+              "issues": []
+            }
+          },
+          {
+            "id": "html-maintenance",
+            "component_ids": [
+              "maintenance",
+              "store"
+            ],
+            "binding_ids": [
+              "e-maintenance-query",
+              "e-coverage",
+              "e-store-diff"
+            ],
+            "claim": {
+              "kind": "code_fact",
+              "explanation": "query derives maintenance contexts and pending coverage; it does not refresh facts or save the model.",
+              "binding_ids": [
+                "e-maintenance-query",
+                "e-coverage",
+                "e-store-diff"
+              ],
+              "assumptions": [],
+              "issues": []
+            }
+          },
+          {
+            "id": "html-evidence",
+            "component_ids": [
+              "viewer"
+            ],
+            "binding_ids": [
+              "e-projection",
+              "e-snippet"
+            ],
+            "claim": {
+              "kind": "code_fact",
+              "explanation": "_snippet resolves evidence paths within source root and embeds text only for matching containing-file bytes; unavailable bodies retain locations.",
+              "binding_ids": [
+                "e-projection",
+                "e-snippet"
+              ],
+              "assumptions": [],
+              "issues": []
+            }
+          },
+          {
+            "id": "html-publish",
+            "component_ids": [
+              "viewer"
+            ],
+            "binding_ids": [
+              "e-export-html"
+            ],
+            "claim": {
+              "kind": "code_fact",
+              "explanation": "export_html embeds assets and escaped JSON, fsyncs a temporary file and publishes via non-overwriting os.link; failures raise EXPORT_FAILED.",
+              "binding_ids": [
+                "e-export-html"
+              ],
+              "assumptions": [],
+              "issues": []
+            }
+          },
+          {
+            "id": "html-response",
+            "component_ids": [
+              "cli"
+            ],
+            "binding_ids": [
+              "e-cli-main",
+              "e-cli-run"
+            ],
+            "claim": {
+              "kind": "code_fact",
+              "explanation": "main returns JSON containing output, model ID and revision; output delivery can fail independently of operation completion.",
+              "binding_ids": [
+                "e-cli-main",
+                "e-cli-run"
+              ],
+              "assumptions": [],
+              "issues": []
+            }
+          }
+        ],
+        "order": [
+          "html-dispatch",
+          "html-read",
+          "html-freeze",
+          "html-maintenance",
+          "html-evidence",
+          "html-publish",
+          "html-response"
+        ],
+        "transitions": [
+          {
+            "source_id": "html-dispatch",
+            "target_id": "html-read",
+            "kind": "next",
+            "condition": "Preceding call completes successfully; errors terminate this modeled success path."
+          },
+          {
+            "source_id": "html-read",
+            "target_id": "html-freeze",
+            "kind": "next",
+            "condition": "Preceding call completes successfully; errors terminate this modeled success path."
+          },
+          {
+            "source_id": "html-freeze",
+            "target_id": "html-maintenance",
+            "kind": "next",
+            "condition": "Preceding call completes successfully; errors terminate this modeled success path."
+          },
+          {
+            "source_id": "html-maintenance",
+            "target_id": "html-evidence",
+            "kind": "next",
+            "condition": "Preceding call completes successfully; errors terminate this modeled success path."
+          },
+          {
+            "source_id": "html-evidence",
+            "target_id": "html-publish",
+            "kind": "next",
+            "condition": "Preceding call completes successfully; errors terminate this modeled success path."
+          },
+          {
+            "source_id": "html-publish",
+            "target_id": "html-response",
+            "kind": "next",
+            "condition": "Preceding call completes successfully; errors terminate this modeled success path."
+          }
+        ],
+        "claim": {
+          "kind": "inference",
+          "explanation": "A source-backed summary of nested calls and their returns on the export success path; not a flat runtime trace.",
+          "binding_ids": [
+            "e-cli-run",
+            "e-store-read",
+            "e-export-html",
+            "e-projection",
+            "e-maintenance-query",
+            "e-snippet"
+          ],
+          "assumptions": [
+            "Readable valid model, supplied source root, supported local filesystem and new output path."
+          ],
+          "issues": [
+            "Browser playback and JS runtime are outside the Python facts scope.",
+            "The final step is after nested calls return; transitions summarize data/control flow, not direct calls between every adjacent function."
+          ]
+        }
+      }
+    },
+    {
+      "action": "create",
+      "collection": "verifications",
+      "id": "planned-business-runtime",
+      "value": {
+        "id": "planned-business-runtime",
+        "status": "planned",
+        "object_ids": [
+          "read-to-html",
+          "viewer"
+        ],
+        "command": "Validate exported document and business interpretation with a human reviewer",
+        "environment": "Not executed; external review environment unspecified",
+        "inputs": "Focused architecture_model source and read-to-html explanation; not all CodeBoarding businesses",
+        "source_version": "ea441b5103ee08ec854f05c62873bb798cabb6b57ff9f32b1d02608b57e01001"
+      }
+    }
+  ]
+}

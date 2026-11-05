@@ -1,0 +1,16 @@
+{
+  "browser": "138.0.7204.184",
+  "protocol": "localhost HTTP (no file: navigation)",
+  "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+  "revision": 13,
+  "checks": [
+    "HTML model identity/revision equals saved model; two businesses render",
+    "Hierarchy collapses and expands without replacing component IDs",
+    "Business switching preserves position; explicit next and automatic success-path playback reach the modeled endpoint",
+    "Hash-verified source, boundary rationale, maintenance history and planned/executed records are inspectable",
+    "Mobile has no page overflow; no page errors or external requests; model bytes unchanged"
+  ],
+  "errors": [],
+  "external_requests": [],
+  "model_sha256": "22a27c14d7ee1bf3295584e798305b6353c5823f6200205f2a27900cc8485a6b"
+}

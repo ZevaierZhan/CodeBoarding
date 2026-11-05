@@ -1,0 +1,44 @@
+{
+  "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+  "before_revision": 2,
+  "after_revision": 3,
+  "all_preexisting_collections_and_scenarios_unchanged": true,
+  "revision_history_prefix_unchanged": true,
+  "html_model_id_revision_and_both_scenarios_present": true,
+  "new_scenario": "agent-submits-patch",
+  "new_step_ids": [
+    "patch-submit",
+    "patch-preview",
+    "patch-agent-review",
+    "patch-lock-read",
+    "patch-conflict",
+    "patch-candidate",
+    "patch-atomic-save",
+    "patch-rejected",
+    "patch-response",
+    "patch-output-uncertain",
+    "patch-read-recovery"
+  ],
+  "reused_components": [
+    "cli",
+    "store",
+    "validation"
+  ],
+  "reused_bindings": [
+    "e-cli-main",
+    "e-cli-run",
+    "e-store-apply",
+    "e-store-atomic",
+    "e-store-candidate",
+    "e-store-commit",
+    "e-store-diff",
+    "e-store-json",
+    "e-store-patched",
+    "e-store-preview",
+    "e-store-read",
+    "e-store-revision",
+    "e-store-scope",
+    "e-validate"
+  ],
+  "new_components_bindings_relations": []
+}
