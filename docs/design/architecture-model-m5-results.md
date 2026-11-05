@@ -102,6 +102,12 @@ deployment were not included or run. SFC method precision remains follow-up work
 The actual command outputs are committed as evidence. Thresholds/assertions were
 not lowered. Private CodeBoarding-tests integration is unavailable in this checkout.
 
+- Final complete model suite: **190 passed in 302.77s**, including real Python,
+  Rust/TS/mixed exports and the committed artifact/native-identity regressions.
+  Architecture-model coverage **94.99% (1326/1396 statements)** exceeds the
+  unchanged **80%** gate. Actual invocation used `--cov=architecture_model`
+  and an absolute `--cov-config=F:/CodeBoarding/temp/m5/model.coveragerc` so
+  nested CLI processes in independent target directories use the same source scope.
 - An earlier complete model suite: **188 passed**, including real Python and
   Rust/TS/mixed export subprocesses. Its raw coverage report widened to imported
   native packages in subprocesses; a separate explicit architecture_model report
@@ -140,4 +146,9 @@ all assertions and the 80% threshold remain. Use its absolute path when invoking
 from tests that launch CLI helpers in other directories. A relative-path trial
 had two 60-second context-helper timeouts; all ten context tests pass with the
 absolute config, and that incomplete trial's 94.99% coverage is retained as
-diagnostic evidence, not a successful full-suite result.
+  diagnostic evidence, not a successful full-suite result. The final all-190 run
+  uses the corrected absolute config and passes both assertions and coverage.
+
+Delivery is fork [Draft PR #6](https://github.com/ZevaierZhan/CodeBoarding/pull/6),
+base `main`, head branch `m5/multi-language-architecture`. No upstream PR or merge
+was performed. Both implementation and evidence commits ran the enabled Black hook.
