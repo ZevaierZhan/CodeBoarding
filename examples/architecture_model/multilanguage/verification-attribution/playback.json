@@ -1,0 +1,18 @@
+{
+  "browser": "local Chrome headless / Playwright",
+  "model_id": "c3094cd2-b73e-4b0c-a3bb-6b9beb395a58",
+  "revision": 11,
+  "model_sha256_before": "e66e8834d9506000b1569f71748f21bb05ce36ff37a9dfce3f885b9f9761694c",
+  "model_sha256_after": "e66e8834d9506000b1569f71748f21bb05ce36ff37a9dfce3f885b9f9761694c",
+  "checks": [
+    "cross-language playback",
+    "collapse/expand preserve position",
+    "back history",
+    "scenario switching shares components and preserves position",
+    "candidate contract",
+    "both roots and languages in evidence",
+    "historical mismatch withheld",
+    "no JavaScript errors",
+    "model bytes unchanged"
+  ]
+}

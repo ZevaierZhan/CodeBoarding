@@ -1,0 +1,28 @@
+warning: The `tool.uv.dev-dependencies` field (used in `pyproject.toml`) is deprecated and will be removed in a future release; use `dependency-groups.dev` instead
+........................................................................ [ 32%]
+........................................................................ [ 65%]
+........................................................................ [ 98%]
+...                                                                      [100%]
+=============================== tests coverage ================================
+______________ coverage: platform win32, python 3.12.13-final-0 _______________
+
+Name                                         Stmts   Miss  Cover
+----------------------------------------------------------------
+architecture_model\__init__.py                   0      0   100%
+architecture_model\__main__.py                   3      0   100%
+architecture_model\cli.py                      119      4    97%
+architecture_model\errors.py                     7      0   100%
+architecture_model\facts.py                     65      6    91%
+architecture_model\facts_worker.py             133     10    92%
+architecture_model\maintenance.py              205      5    98%
+architecture_model\maintenance_coverage.py      37      0   100%
+architecture_model\multilanguage_worker.py     211     34    84%
+architecture_model\schema.py                   243      2    99%
+architecture_model\store.py                    189      2    99%
+architecture_model\validation.py               140      7    95%
+architecture_model\verification.py              88      4    95%
+architecture_model\viewer.py                    67      0   100%
+----------------------------------------------------------------
+TOTAL                                         1507     74    95%
+Required test coverage of 80% reached. Total coverage: 95.09%
+219 passed in 420.84s (0:07:00)

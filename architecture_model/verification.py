@@ -1,7 +1,7 @@
 """Resolve verification evidence without promoting source coverage to execution proof."""
 
 from architecture_model.errors import ModelError
-from architecture_model.schema import Binding, HistoricalLocation, Model, Verification
+from architecture_model.schema import Binding, Facts, HistoricalLocation, Model, Verification
 
 
 def referenced_bindings(model: Model, object_ids: list[str]) -> set[str]:
@@ -50,17 +50,7 @@ def validate_verification(model: Model, record: Verification, require_scope: boo
             snapshot = facts.get(snapshot_id)
             if snapshot is None:
                 raise ModelError("VERIFICATION_SCOPE", location, "Verification snapshot is unavailable")
-            catalog = snapshot.symbols | snapshot.file_locations
-            entries: list[Binding | HistoricalLocation] = [binding, *binding.history]
-            if not any(
-                entry.snapshot_id == snapshot_id
-                and entry.source_version == snapshot.source.digest
-                and catalog.get(
-                    f"{entry.location.path}|{entry.location.symbol}" if entry.location.symbol else entry.location.path
-                )
-                == entry.location
-                for entry in entries
-            ):
+            if snapshot_id not in _binding_snapshots(binding, facts):
                 raise ModelError(
                     "VERIFICATION_SCOPE", location, "Verification scope contradicts binding evidence/history"
                 )
@@ -74,15 +64,25 @@ def validate_verification(model: Model, record: Verification, require_scope: boo
             binding = bindings[identity]
             history: list[Binding | HistoricalLocation] = [binding, *binding.history]
             roots = {facts[entry.snapshot_id].source_root_id for entry in history if entry.snapshot_id in facts}
+            if require_scope and any(roots) and not _implicit_snapshot(binding, facts, record.source_version):
+                raise ModelError(
+                    "VERIFICATION_SCOPE",
+                    location,
+                    "Verification version must identify exactly one actual binding evidence snapshot; declare binding_snapshots",
+                )
             if require_scope and not roots and any(snapshot.source_root_id for snapshot in model.facts):
                 raise ModelError(
                     "VERIFICATION_SCOPE",
                     location,
                     "Verification root cannot be established from binding evidence/history",
                 )
-            if roots and not any(
-                snapshot.source_root_id in roots and snapshot.source.digest == record.source_version
-                for snapshot in model.facts
+            if (
+                require_scope
+                and roots
+                and not any(
+                    snapshot.source_root_id in roots and snapshot.source.digest == record.source_version
+                    for snapshot in model.facts
+                )
             ):
                 raise ModelError("VERIFICATION_SCOPE", location, "Verification version belongs to another source root")
         if require_scope and any(
@@ -107,17 +107,9 @@ def verification_scope(model: Model, record: Verification) -> dict:
     implicit = {}
     if not declared:
         for identity in set(record.object_ids).intersection(bindings):
-            binding = bindings[identity]
-            root = facts.get(binding.snapshot_id)
-            candidates = [
-                snapshot
-                for snapshot in model.facts
-                if root
-                and snapshot.source_root_id == root.source_root_id
-                and snapshot.source.digest == record.source_version
-            ]
-            if len(candidates) == 1:
-                implicit[identity] = candidates[0].id
+            snapshot_id = _implicit_snapshot(bindings[identity], facts, record.source_version)
+            if snapshot_id:
+                implicit[identity] = snapshot_id
     evidence = declared or implicit
     return {
         "scope_kind": (
@@ -143,3 +135,25 @@ def verification_scope(model: Model, record: Verification) -> dict:
         ],
         "notice": "Source evidence scope only. Planned is not executed; partial or unscoped checks do not verify a whole contract/business. Source coverage is not runtime proof.",
     }
+
+
+def _binding_snapshots(binding: Binding, facts: dict[str, Facts]) -> set[str]:
+    entries: list[Binding | HistoricalLocation] = [binding, *binding.history]
+    matches = set()
+    for entry in entries:
+        snapshot = facts.get(entry.snapshot_id)
+        if snapshot is None or entry.source_version != snapshot.source.digest:
+            continue
+        expected = (
+            snapshot.symbols.get(f"{entry.location.path}|{entry.location.symbol}")
+            if entry.location.symbol
+            else snapshot.file_locations.get(entry.location.path)
+        )
+        if expected == entry.location:
+            matches.add(snapshot.id)
+    return matches
+
+
+def _implicit_snapshot(binding: Binding, facts: dict[str, Facts], version: str) -> str:
+    matches = {identity for identity in _binding_snapshots(binding, facts) if facts[identity].source.digest == version}
+    return next(iter(matches)) if len(matches) == 1 else ""

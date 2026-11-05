@@ -1,0 +1,42 @@
+warning: The `tool.uv.dev-dependencies` field (used in `pyproject.toml`) is deprecated and will be removed in a future release; use `dependency-groups.dev` instead
+============================= test session starts =============================
+platform win32 -- Python 3.12.13, pytest-8.3.5, pluggy-1.6.0 -- F:\CodeBoarding\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: F:\CodeBoarding
+configfile: pyproject.toml
+plugins: anyio-4.12.1, langsmith-0.6.3, cov-7.0.0
+collecting ... collected 29 items
+
+tests/architecture_model/test_m5_p2.py::test_implicit_verification_rejects_unowned_same_root_snapshot {"rejected": {"code": "VERIFICATION_SCOPE", "location": "/verifications/check", "message": "Verification version must identify exactly one actual binding evidence snapshot; declare binding_snapshots"}, "unchanged": true}
+PASSED
+tests/architecture_model/test_m5_p2.py::test_old_unowned_implicit_verification_is_unscoped_in_html {"scope_kind": "legacy_unscoped", "object_ids": ["frontend"], "uncovered_binding_ids": ["frontend"], "historical_binding_ids": [], "evidence": [], "notice": "Source evidence scope only. Planned is not executed; partial or unscoped checks do not verify a whole contract/business. Source coverage is not runtime proof."}
+PASSED
+tests/architecture_model/test_m5_p2.py::test_implicit_check_uses_actual_current_or_rebound_history[False] PASSED
+tests/architecture_model/test_m5_p2.py::test_implicit_check_uses_actual_current_or_rebound_history[True] PASSED
+tests/architecture_model/test_m5_p2.py::test_same_digest_unowned_catalog_does_not_make_actual_evidence_ambiguous PASSED
+tests/architecture_model/test_m5_p2.py::test_same_digest_multiple_owned_snapshots_require_explicit_scope PASSED
+tests/architecture_model/test_m5_p2.py::test_unproven_history_never_supplies_implicit_evidence[source_version] PASSED
+tests/architecture_model/test_m5_p2.py::test_unproven_history_never_supplies_implicit_evidence[location] PASSED
+tests/architecture_model/test_m5_p2.py::test_unproven_history_never_supplies_implicit_evidence[snapshot_id] PASSED
+tests/architecture_model/test_m5_p2.py::test_edit_of_legacy_unowned_record_is_strict_and_atomic PASSED
+tests/architecture_model/test_m5_p2.py::test_wrong_root_verification_rejected_without_writing PASSED
+tests/architecture_model/test_m5_p2.py::test_new_cross_root_verification_requires_explicit_scope PASSED
+tests/architecture_model/test_m5_p2.py::test_explicit_root_refresh_does_not_replace_legacy_target PASSED
+tests/architecture_model/test_m5_p2.py::test_single_root_v1_verification_roundtrip_keeps_legacy_shape PASSED
+tests/architecture_model/test_m5_p2.py::test_v2_direct_binding_infers_only_its_root PASSED
+tests/architecture_model/test_m5_p2.py::test_v2_single_root_component_has_explicit_valid_scope PASSED
+tests/architecture_model/test_m5_p2.py::test_new_binding_check_cannot_guess_an_unavailable_root PASSED
+tests/architecture_model/test_m5_p2.py::test_explicit_cross_root_scope_distinguishes_partial_and_full_evidence[roots0] PASSED
+tests/architecture_model/test_m5_p2.py::test_explicit_cross_root_scope_distinguishes_partial_and_full_evidence[roots1] PASSED
+tests/architecture_model/test_m5_p2.py::test_old_unscoped_cross_root_record_reads_without_inventing_coverage PASSED
+tests/architecture_model/test_m5_p2.py::test_old_v2_scalar_is_an_explicit_root_alias_not_a_legacy_target PASSED
+tests/architecture_model/test_m5_p2.py::test_bad_explicit_scope_rolls_back[foreign_snapshot] PASSED
+tests/architecture_model/test_m5_p2.py::test_bad_explicit_scope_rolls_back[unknown_binding] PASSED
+tests/architecture_model/test_m5_p2.py::test_bad_explicit_scope_rolls_back[wrong_anchor] PASSED
+tests/architecture_model/test_m5_p2.py::test_bad_explicit_scope_rolls_back[omit_direct] PASSED
+tests/architecture_model/test_m5_p2.py::test_verification_retains_exact_historical_binding_scope_after_rebind PASSED
+tests/architecture_model/test_m5_p2.py::test_component_membership_edit_does_not_rewrite_historical_verification PASSED
+tests/architecture_model/test_m5_p2.py::test_latest_query_agrees_with_projection_and_preserves_legacy_review PASSED
+tests/architecture_model/test_m5_p2.py::test_bounded_agent_summary_uses_legacy_target_semantics PASSED
+
+============================= 29 passed in 12.81s =============================

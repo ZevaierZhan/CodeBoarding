@@ -11,6 +11,8 @@ Agent session and a single-root maintenance trial.
 The [M5 P2 protocol](design/architecture-model-m5-p2.md) specifies exact Verification
 binding/snapshot scope and independent legacy/named-root maintenance targets.
 It also records the controlled comparison of all 122 previous full-suite failures.
+The [final implicit-evidence correction](design/architecture-model-m5-verification-attribution.md)
+requires unique actual binding history when omitting a v2 Verification scope map.
 
 For a repeatable external-Agent workflow, use the repository-owned
 [modeling Skill](../skills/codeboarding-modeling/SKILL.md) and

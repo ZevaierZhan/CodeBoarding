@@ -1,4 +1,5 @@
 from copy import deepcopy
+import json
 from pathlib import Path
 import runpy
 
@@ -8,7 +9,8 @@ from architecture_model.errors import ModelError
 from architecture_model.maintenance import preview, query, rebind, refresh, resolve
 from architecture_model.schema import Facts
 from architecture_model.validation import digest, parse, validate_model
-from architecture_model.viewer import projection
+from architecture_model.verification import validate_verification
+from architecture_model.viewer import export_html, projection
 
 
 def add_roots(store, facts):
@@ -94,6 +96,196 @@ def save_record(store, value):
             "operations": [{"action": "create", "collection": "verifications", "id": value["id"], "value": value}],
         },
     )
+
+
+def add_frontend_version(store, snapshot, same_digest=False):
+    target = deepcopy(snapshot)
+    target["tools"]["engine"] = "Independent catalog"
+    if not same_digest:
+        target["source"]["files"]["app.py"] = "d" * 64
+        target["source"]["digest"] = digest(target["source"]["files"])
+        target["symbols"]["app.py|app.run"]["content_hash"] = "d" * 64
+    target["id"] = digest({key: value for key, value in target.items() if key != "id"})
+    store.apply(
+        store.read().revision,
+        {
+            "author": "test",
+            "summary": "Retain another frontend catalog",
+            "operations": [{"action": "create", "collection": "facts", "id": target["id"], "value": target}],
+        },
+    )
+    return target
+
+
+def test_implicit_verification_rejects_unowned_same_root_snapshot(store, facts):
+    snapshots = add_roots(store, facts)
+    target = add_frontend_version(store, snapshots["frontend"])
+    before = store.path.read_bytes()
+    revision = store.read().revision
+    try:
+        result = save_record(store, record(target["source"]["digest"], ["frontend"]))
+    except ModelError as error:
+        print(json.dumps({"rejected": error.as_dict(), "unchanged": store.path.read_bytes() == before}))
+        assert error.code == "VERIFICATION_SCOPE"
+    else:
+        print(json.dumps({"apply": result, "scope": projection(store.read())["verification_scopes"]["check"]}))
+        pytest.fail("Unowned same-root snapshot was committed as binding evidence")
+    assert store.path.read_bytes() == before
+    assert store.read().revision == revision
+
+
+def test_old_unowned_implicit_verification_is_unscoped_in_html(store, facts, tmp_path):
+    snapshots = add_roots(store, facts)
+    target = add_frontend_version(store, snapshots["frontend"])
+    raw = store.read().model_dump()
+    value = record(target["source"]["digest"], ["frontend"])
+    raw["verifications"] = [value]
+    model = validate_model(raw)
+    scope = projection(model)["verification_scopes"]["check"]
+    print(json.dumps(scope))
+    assert scope["evidence"] == []
+    assert scope["scope_kind"] == "legacy_unscoped"
+    assert model.verifications[0].model_dump() == parse(type(model.verifications[0]), value).model_dump()
+    output = tmp_path / "unscoped.html"
+    export_html(model, output)
+    html = output.read_text(encoding="utf-8")
+    payload = json.loads(html.split('<script type="application/json" id="model-data">')[1].split("</script>")[0])
+    assert payload["verification_scopes"]["check"]["evidence"] == []
+
+
+def rebind_frontend(store, target):
+    binding = next(item for item in store.read().bindings if item.id == "frontend")
+    historical = {key: binding.model_dump()[key] for key in ("snapshot_id", "source_version", "location")}
+    store.apply(
+        store.read().revision,
+        {
+            "author": "test",
+            "summary": "Explicitly rebind frontend evidence",
+            "operations": [
+                {
+                    "action": "update",
+                    "collection": "bindings",
+                    "id": "frontend",
+                    "value": {
+                        "snapshot_id": target["id"],
+                        "source_version": target["source"]["digest"],
+                        "location": target["symbols"]["app.py|app.run"],
+                        "history": [*binding.model_dump()["history"], historical | {"reason": "Inspected replacement"}],
+                    },
+                }
+            ],
+        },
+    )
+
+
+@pytest.mark.parametrize("historical", [False, True])
+def test_implicit_check_uses_actual_current_or_rebound_history(store, facts, historical):
+    snapshots = add_roots(store, facts)
+    original = snapshots["frontend"]
+    target = add_frontend_version(store, original)
+    if historical:
+        rebind_frontend(store, target)
+    save_record(store, record(original["source"]["digest"], ["frontend"]))
+    scope = projection(store.read())["verification_scopes"]["check"]
+    assert scope["evidence"][0]["snapshot_id"] == original["id"]
+    assert scope["scope_kind"] == "implicit_direct_bindings"
+    assert store.read().verifications[0].status == "planned"
+
+
+def test_same_digest_unowned_catalog_does_not_make_actual_evidence_ambiguous(store, facts):
+    snapshots = add_roots(store, facts)
+    add_frontend_version(store, snapshots["frontend"], same_digest=True)
+    save_record(store, record(snapshots["frontend"]["source"]["digest"], ["frontend"]))
+    assert (
+        projection(store.read())["verification_scopes"]["check"]["evidence"][0]["snapshot_id"]
+        == snapshots["frontend"]["id"]
+    )
+
+
+def test_same_digest_multiple_owned_snapshots_require_explicit_scope(store, facts):
+    snapshots = add_roots(store, facts)
+    original = snapshots["frontend"]
+    target = add_frontend_version(store, original, same_digest=True)
+    rebind_frontend(store, target)
+    value = record(original["source"]["digest"], ["frontend"])
+    before = store.path.read_bytes()
+    with pytest.raises(ModelError, match="exactly one"):
+        save_record(store, value)
+    assert store.path.read_bytes() == before
+    raw = store.read().model_dump()
+    raw["verifications"] = [value]
+    assert projection(validate_model(raw))["verification_scopes"]["check"]["evidence"] == []
+    value["binding_snapshots"] = {"frontend": original["id"]}
+    save_record(store, value)
+    assert projection(store.read())["verification_scopes"]["check"]["evidence"][0]["snapshot_id"] == original["id"]
+
+
+@pytest.mark.parametrize("mismatch", ["source_version", "location", "snapshot_id"])
+def test_unproven_history_never_supplies_implicit_evidence(store, facts, mismatch):
+    snapshots = add_roots(store, facts)
+    original = snapshots["frontend"]
+    target = add_frontend_version(store, original)
+    rebind_frontend(store, target)
+    raw = store.read().model_dump()
+    binding = next(item for item in raw["bindings"] if item["id"] == "frontend")
+    entry = binding["history"][0]
+    if mismatch == "location":
+        entry["location"]["start"] = 2
+        entry["location"]["end"] = 2
+    elif mismatch == "snapshot_id":
+        entry["snapshot_id"] = target["id"]
+    else:
+        entry["source_version"] = target["source"]["digest"]
+    raw["verifications"] = [record(original["source"]["digest"], ["frontend"])]
+    model = validate_model(raw)
+    assert projection(model)["verification_scopes"]["check"]["evidence"] == []
+    from_check = model.verifications[0]
+    with pytest.raises(ModelError, match="exactly one"):
+        validate_verification(model, from_check, require_scope=True)
+
+
+def test_edit_of_legacy_unowned_record_is_strict_and_atomic(store, facts):
+    snapshots = add_roots(store, facts)
+    target = add_frontend_version(store, snapshots["frontend"])
+    value = record(target["source"]["digest"], ["frontend"])
+    model = store.read().model_dump()
+    model["verifications"] = [value]
+    store.path.write_text(json.dumps(validate_model(model).model_dump()), encoding="utf-8")
+    original = store.read().verifications[0].model_dump()
+    store.apply(
+        store.read().revision,
+        {
+            "author": "test",
+            "summary": "Unrelated edit",
+            "operations": [
+                {
+                    "action": "update",
+                    "collection": "components",
+                    "id": "frontend-component",
+                    "value": {"name": "Retained check"},
+                }
+            ],
+        },
+    )
+    assert store.read().verifications[0].model_dump() == original
+    before = store.path.read_bytes()
+    with pytest.raises(ModelError, match="exactly one"):
+        store.apply(
+            store.read().revision,
+            {
+                "author": "test",
+                "summary": "Edit check",
+                "operations": [
+                    {
+                        "action": "update",
+                        "collection": "verifications",
+                        "id": "check",
+                        "value": {"command": "changed command"},
+                    }
+                ],
+            },
+        )
+    assert store.path.read_bytes() == before
 
 
 def test_wrong_root_verification_rejected_without_writing(store, facts):

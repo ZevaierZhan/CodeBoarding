@@ -89,6 +89,8 @@ checks require actual object targets, command, environment, inputs, executor,
 timestamp, exit/result and source digest. A structural check is not business proof.
 For v2 compound checks, declare the actual `binding_snapshots` scope as described
 in the mixed-language protocol; a one-sided check of a shared contract is partial.
+For direct v2 binding checks, use that protocol's unique current/history snapshot
+rule before omitting the scope map; a matching root or digest alone is insufficient.
 
 ## Explain current source or maintain changed evidence
 

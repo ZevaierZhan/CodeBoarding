@@ -57,8 +57,15 @@ targets. Referenced evidence bindings themselves cannot be silently deleted.
 
 The required old `source_version` remains a compatibility anchor: for declared
 scope it must equal at least one mapped snapshot's digest. It does not summarize
-all roots. A direct binding's implicit version must belong to that binding's root,
-including retained historical roots. New checks cannot guess an unavailable root.
+all roots. For a new/edited direct v2 binding check, an omitted map is resolved only
+against that binding's actual current/history entries. Snapshot ID, source digest,
+location and the snapshot's corresponding symbol/file fact must all match. Exactly
+one distinct owned snapshot must match the requested digest; otherwise declare
+`binding_snapshots` explicitly. An unowned catalog in the same root supplies no
+evidence, even if its digest matches. Rebinding retains valid historical evidence.
+Submission and HTML use the same resolver. Old unscoped records remain readable;
+unproven or ambiguous associations display unknown (`legacy_unscoped`) without
+inventing a snapshot. New checks cannot guess an unavailable root.
 
 New/edited compound checks whose referenced evidence includes v2 bindings must
 declare scope. Reference traversal covers component descendants, relation endpoints,

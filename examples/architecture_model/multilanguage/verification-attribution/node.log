@@ -1,0 +1,15 @@
+✔ real M5 businesses share a contract and play through both language roots (5.2679ms)
+✔ collapse projects references without changing stable objects or order (0.7312ms)
+✔ play follows explicit transitions, branches and actual history, never display order (0.2961ms)
+✔ autoplay stops on a single loop and on cycles even when mislabeled next (0.242ms)
+✔ direct inspection is explicit and starts a fresh path; empty models are playable safely (0.2134ms)
+✔ shared projection matches ancestor semantics and preserves original edge references for every collapse state (2.7709ms)
+✔ projection handles deep chains and out-of-order parents without changing identities (5.2382ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 286.0484

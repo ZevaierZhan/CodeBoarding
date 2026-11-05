@@ -74,7 +74,12 @@ its declared frontend bindings. It remains partial, not bilateral/runtime approv
 Declare an unexecuted bilateral host check as planned. Reading an old unscoped
 compound record preserves its actual fields/results and reports unknown scope;
 editing that record into a new v2 check requires explicit scope. Legacy single-root
-records still read. A direct binding record cannot name another root's version.
+records still read. For a direct v2 binding check without `binding_snapshots`, the
+requested version must identify exactly one actual current/history snapshot:
+snapshot ID, source digest, location and the symbol/file fact must match. Other
+catalogs in the same root are not binding history. If multiple owned snapshots
+share the digest, explicitly select one with `binding_snapshots`. Old unproven
+implicit records stay unscoped in HTML; preserve their saved execution fields.
 Neither source coverage nor a successful static check changes contract/claim kind.
 After component boundaries change, retain old check evidence. The viewer marks
 evidence outside today's membership historical and shows the new uncovered bindings;
