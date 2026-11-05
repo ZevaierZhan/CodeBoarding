@@ -1,7 +1,7 @@
 from pathlib import PurePosixPath
 from typing import Annotated, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator, model_serializer
 
 Text = Annotated[str, Field(min_length=1)]
 Digest = Annotated[str, Field(pattern=r"^[a-f0-9]{64}$")]
@@ -9,6 +9,20 @@ Digest = Annotated[str, Field(pattern=r"^[a-f0-9]{64}$")]
 
 class Strict(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
+
+    @model_serializer(mode="wrap")
+    def preserve_legacy_shape(self, handler):
+        value = handler(self)
+        for name, default in (
+            ("contract", None),
+            ("relation_ids", []),
+            ("maintenance_targets", {}),
+            ("binding_snapshots", {}),
+        ):
+            field = type(self).model_fields.get(name)
+            if field is not None and not field.is_required() and value.get(name, default) == default:
+                value.pop(name, None)
+        return value
 
     @field_validator("schema_version", mode="before", check_fields=False)
     @classmethod
@@ -56,7 +70,7 @@ class Call(Strict):
 
 
 class Facts(Strict):
-    schema_version: Literal[1] = 1
+    schema_version: Literal[1, 2] = 1
     id: Text
     project_id: Text
     source: SourceVersion
@@ -65,6 +79,29 @@ class Facts(Strict):
     calls: list[Call]
     tools: dict[Text, Text]
     limitations: list[Text]
+    source_root_id: str = ""
+    file_languages: dict[Text, Text] = Field(default_factory=dict)
+    file_projects: dict[Text, Text] = Field(default_factory=dict)
+
+    @model_validator(mode="after")
+    def source_identity(self) -> "Facts":
+        if self.schema_version == 1 and (self.source_root_id or self.file_languages or self.file_projects):
+            raise ValueError("v1 facts cannot carry v2 source identity")
+        if self.schema_version == 2 and (
+            not self.source_root_id
+            or set(self.file_languages) != set(self.source.files)
+            or set(self.file_projects) != set(self.source.files)
+        ):
+            raise ValueError("v2 facts require root identity and language/project for every file")
+        return self
+
+    @model_serializer(mode="wrap")
+    def preserve_v1(self, handler):
+        value = handler(self)
+        if self.schema_version == 1:
+            for name in ("source_root_id", "file_languages", "file_projects"):
+                value.pop(name, None)
+        return value
 
 
 class HistoricalLocation(Strict):
@@ -116,12 +153,24 @@ class Component(Strict):
     claim: Claim
 
 
+class InterfaceContract(Strict):
+    mechanism: Text
+    operation: Text
+    caller_binding_ids: Annotated[list[Text], Field(min_length=1)]
+    receiver_binding_ids: Annotated[list[Text], Field(min_length=1)]
+    matching_binding_ids: list[Text] = Field(default_factory=list)
+    status: Literal["candidate", "evidenced", "ambiguous", "missing"] = "candidate"
+    rationale: Text
+    uncertainties: list[Text] = Field(default_factory=list)
+
+
 class Relation(Strict):
     id: Text
     source_id: Text
     target_id: Text
     meaning: Text
     claim: Claim
+    contract: InterfaceContract | None = None
 
 
 class Step(Strict):
@@ -146,6 +195,7 @@ class Scenario(Strict):
     order: list[Text]
     transitions: list[Transition]
     claim: Claim
+    relation_ids: list[Text] = Field(default_factory=list)
 
 
 class Opinion(Strict):
@@ -168,6 +218,7 @@ class Verification(Strict):
     executed_at: str = ""
     exit_code: int | None = None
     result: str = ""
+    binding_snapshots: dict[Text, Text] = Field(default_factory=dict)
 
     @model_validator(mode="after")
     def execution_record(self) -> "Verification":
@@ -245,6 +296,7 @@ class Model(Strict):
     revisions: list[Revision] = Field(default_factory=list)
     maintenance: list[Maintenance] = Field(default_factory=list)
     maintenance_target_snapshot_id: str = ""
+    maintenance_targets: dict[Text, Text] = Field(default_factory=dict)
 
 
 class Operation(Strict):

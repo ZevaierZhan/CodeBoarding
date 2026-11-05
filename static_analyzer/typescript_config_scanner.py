@@ -21,6 +21,7 @@ from pathlib import Path
 from infra.repo_utils.ignore import RepoIgnoreManager
 from static_analyzer.config import LANGUAGE_EXTENSIONS, Language
 from infra.tool_registry.paths import get_servers_dir, preferred_node_path
+from infra.utils import get_config
 
 logger = logging.getLogger(__name__)
 
@@ -304,6 +305,12 @@ def _resolve_tsc_command() -> list[str] | None:
     typescript-language-server, no PATH assumptions); falls back to ``tsc`` on
     PATH; returns ``None`` if neither is available. The caller appends ``-p <dir>``.
     """
+    entry = get_config("lsp_servers").get("typescript", {})
+    if sdk := entry.get("tsserver_path"):
+        compiler = Path(sdk).with_name("tsc.js")
+        if not compiler.is_file():
+            raise RuntimeError("Explicit TypeScript SDK has no tsc.js")
+        return [entry["command"][0], str(compiler), "--showConfig"]
     node_path = preferred_node_path(get_servers_dir())
     bundled_tsc = get_servers_dir() / "node_modules" / "typescript" / "lib" / "tsc.js"
     if node_path and bundled_tsc.exists():

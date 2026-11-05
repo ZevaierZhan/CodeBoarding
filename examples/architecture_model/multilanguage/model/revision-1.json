@@ -1,0 +1,642 @@
+{
+  "schema_version": 1,
+  "id": "c3094cd2-b73e-4b0c-a3bb-6b9beb395a58",
+  "project": {
+    "id": "m5-system",
+    "name": "Cross-language document system",
+    "boundary": "TypeScript actions, explicit candidate Tauri IPC contract and Rust filesystem service. Desktop host activation and runtime execution are outside this fixture."
+  },
+  "revision": 1,
+  "facts": [
+    {
+      "schema_version": 2,
+      "id": "777d089327dbd628da5a96dc9cf2383353cd4943be67f8bcfe420e153c8bf837",
+      "project_id": "m5-system",
+      "source": {
+        "digest": "68e41c24084c9c32720bfa36dcd6dd569d0cd8dc23872d3746ac82879165c9bf",
+        "git_commit": "afb2aa70c0462fb4b96f741e2822cc6703013b80",
+        "files": {
+          "src/utils.ts": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e"
+        },
+        "scope": "Strict supported-source inventory; Vue file evidence only; native project symbol/call scope"
+      },
+      "symbols": {
+        "src/utils.ts|src.utils.openDocument": {
+          "path": "src/utils.ts",
+          "symbol": "src.utils.openDocument",
+          "kind": "FUNCTION",
+          "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e",
+          "start": 7,
+          "end": 9
+        },
+        "src/utils.ts|src.utils.previewDocument": {
+          "path": "src/utils.ts",
+          "symbol": "src.utils.previewDocument",
+          "kind": "FUNCTION",
+          "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e",
+          "start": 11,
+          "end": 13
+        },
+        "src/utils.ts|src.utils.readDocument": {
+          "path": "src/utils.ts",
+          "symbol": "src.utils.readDocument",
+          "kind": "FUNCTION",
+          "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e",
+          "start": 3,
+          "end": 5
+        }
+      },
+      "file_locations": {
+        "src/utils.ts": {
+          "path": "src/utils.ts",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e",
+          "start": 1,
+          "end": 13
+        }
+      },
+      "calls": [
+        {
+          "source": "src/utils.ts|src.utils.openDocument",
+          "target": "src/utils.ts|src.utils.readDocument",
+          "sites": [
+            {
+              "path": "src/utils.ts",
+              "line": 8,
+              "column": 10
+            }
+          ]
+        },
+        {
+          "source": "src/utils.ts|src.utils.previewDocument",
+          "target": "src/utils.ts|src.utils.readDocument",
+          "sites": [
+            {
+              "path": "src/utils.ts",
+              "line": 12,
+              "column": 10
+            }
+          ]
+        }
+      ],
+      "tools": {
+        "engine": "StaticAnalyzer/native adapters",
+        "maintenance_scope": "{\"complete\":true,\"configuration\":{\"package.json\":\"8849d00fbb1272bf09c61986dc9260b8b2c31109801954957a3263635450cf15\",\"tsconfig.json\":\"efe768ae88fe443e13485c543fb49e7f46d600161d67f97c060221e9f0d71987\"},\"implementation\":\"49d4e71f575a1e3b0cff3da4b3679f0a8b3be779f5a76ad592a084d06ad8c7e6\",\"patterns\":[\"# CodeBoarding Ignore File\\n\",\"# Add patterns here for files and directories that should be excluded from CodeBoarding analysis.\\n\",\"# Use the same format as .gitignore (gitignore syntax / gitwildmatch patterns).\\n\",\"#\\n\",\"# To stop ignoring a pattern, prefix it with ! (e.g., !important_file.txt)\\n\",\"#\\n\",\"# NOTE: The following are ALWAYS excluded (not configurable):\\n\",\"#   - Hidden directories (starting with .)\\n\",\"#   - .git/, .codeboarding/, node_modules/, __pycache__/\\n\",\"#   - Build output: build/, dist/, coverage/\\n\",\"#\\n\",\"# This file is automatically loaded by CodeBoarding analysis tools to exclude\\n\",\"# specified paths from code analysis, architecture generation, and other processing.\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Ignored directories (customizable \\u2014 remove lines to include them)\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Python virtual environments\\n\",\"venv/\\n\",\"env/\\n\",\"*.egg-info/\\n\",\"\\n\",\"# Java (Maven/Gradle) and Rust (Cargo) build output. Both ecosystems\\n\",\"# produce a top-level ``target/`` directory full of compiled artifacts \\u2014\\n\",\"# kept here as well as in ``_ALWAYS_IGNORED_DIRS`` so users who customize\\n\",\"# their ``.codeboardingignore`` continue to skip it even after edits.\\n\",\"target/\\n\",\"bin/\\n\",\"out/\\n\",\"\\n\",\"# .NET / C# build output\\n\",\"obj/\\n\",\"\\n\",\"# Go\\n\",\"vendor/\\n\",\"testdata/\\n\",\"\\n\",\"# PHP\\n\",\"cache/\\n\",\"\\n\",\"# Custom\\n\",\"temp/\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Test and infrastructure files\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Test directories\\n\",\"**/__tests__/**\\n\",\"**/tests/**\\n\",\"**/test/**\\n\",\"**/__test__/**\\n\",\"**/testing/**\\n\",\"**/testutil/**\\n\",\"\\n\",\"# Java/Kotlin test directories (Maven/Gradle structure)\\n\",\"**/src/test/**\\n\",\"**/src/testFixtures/**\\n\",\"**/src/integration-test/**\\n\",\"**/src/jmh/**\\n\",\"**/src/contractTest/**\\n\",\"**/osgi-tests/**\\n\",\"\\n\",\"# Test files by naming convention\\n\",\"*.test.*\\n\",\"*.spec.*\\n\",\"*_test.*\\n\",\"*test_*.py\\n\",\"test_*.py\\n\",\"*Test.java\\n\",\"*IT.java\\n\",\"*Test.kt\\n\",\"*IT.kt\\n\",\"*Tests.java\\n\",\"\\n\",\"# Mock, fixture, and stub directories\\n\",\"**/__mocks__/**\\n\",\"**/mocks/**\\n\",\"**/fixtures/**\\n\",\"**/fixture/**\\n\",\"**/stubs/**\\n\",\"**/stub/**\\n\",\"**/fakes/**\\n\",\"**/fake/**\\n\",\"\\n\",\"# E2E and integration test directories\\n\",\"**/e2e/**\\n\",\"**/integration-tests/**\\n\",\"**/integration_test*/**\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Non-production code\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Example and documentation code\\n\",\"**/examples/**\\n\",\"**/documentation/examples/**\\n\",\"\\n\",\"# Generated code\\n\",\"*.pb.go\\n\",\"**/generated_parser*\\n\",\"\\n\",\"# Java/Kotlin metadata files\\n\",\"module-info.java\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build artifacts and minified files\\n\",\"# ============================================================================\\n\",\"\\n\",\"*.bundle.js\\n\",\"*.bundle.js.map\\n\",\"*.min.js\\n\",\"*.min.css\\n\",\"*.chunk.js\\n\",\"*.chunk.js.map\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build tool configs and infrastructure\\n\",\"# ============================================================================\\n\",\"\\n\",\"esbuild*\\n\",\"webpack*\\n\",\"rollup*\\n\",\"vite.config.*\\n\",\"gulpfile*\\n\",\"gruntfile*\\n\",\"*.config.*\\n\"],\"protocol\":\"multilanguage-file-v2\",\"tools\":[\"a97741d2f93bada49450735580c9d37cc607f9820d4dedbc023eae296b33eac3\",\"4736cfc0ba3c57734359f82883bcfed49a0ea748fdfcad3c137c0da112027f11\",\"f8ef6156b7da4cdf018c4708a43f2bfb498e81b9584540b6b91fe19492031695\",\"3dceeac4bea5af4e244b9a8a765671d5ccd48786f0149e03bc8bbe5cd4661ae8\",\"3332eed47402eb7341ae9e4495d44ad0c7cdf2aa211d52173417db8be28d610c\",\"e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb\"]}",
+        "commands": "{\"lsp_servers\": {\"java\": [\"D:\\\\Java\\\\jdk-21.0.8\\\\bin\\\\java.exe\"], \"python\": [\"D:\\\\Progrm Files\\\\nvm4w\\\\nodejs\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\langserver.index.js\", \"--stdio\"], \"rust\": [\"C:\\\\Users\\\\BW011222\\\\.cargo\\\\bin\\\\rust-analyzer.exe\"], \"typescript\": [\"D:\\\\Progrm Files\\\\nvm4w\\\\nodejs\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\m5-tools\\\\node_modules\\\\typescript-language-server\\\\lib\\\\cli.mjs\", \"--stdio\"]}, \"tokei\": [\"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\", \"-o\", \"json\"], \"typescript_sdk\": \"F:\\\\CodeBoarding\\\\temp\\\\m5-tools\\\\node_modules\\\\typescript\\\\lib\\\\tsserver.js\"}",
+        "versions": "{\"java\": \"java 21.0.8 2025-07-15 LTS\\nJava(TM) SE Runtime Environment (build 21.0.8+12-LTS-250)\\nJava HotSpot(TM) 64-Bit Server VM (build 21.0.8+12-LTS-250, mixed mode, sharing)\", \"python\": \"Error: Connection input stream is not set. Use arguments of createConnection or set command line parameters: '--node-ipc', '--stdio' or '--socket={number}'\\n    at _createConnection (F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\dist\\\\pyright-internal\\\\node_modules\\\\vscode-languageserver\\\\lib\\\\node\\\\main.js:204:15)\\n    at createConnection (F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\dist\\\\pyright-internal\\\\node_modules\\\\vscode-languageserver\\\\lib\\\\node\\\\main.js:149:12)\\n    at maxWorkers (F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\dist\\\\pyright-internal\\\\src\\\\nodeServer.ts:20:19)\\n    at t.main (F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\dist\\\\pyright-internal\\\\src\\\\nodeMain.ts:14:28)\", \"rust\": \"rust-analyzer 1.99.1 (58cf8f9c 2026-10-13)\", \"tokei\": \"tokei 14.0.0 compiled with serialization support: json\", \"typescript\": \"6.0.3\"}"
+      },
+      "limitations": [
+        "Static calls are not executions. External/unresolved calls, registrations and dynamic dispatch are incomplete.",
+        "Non-Python symbol completeness is bounded by native LSP document symbols; no independent callable census.",
+        "Vue SFC has file-level evidence only; native adapters do not discover .vue functions.",
+        "Unknown source suffixes are outside scope. Root inventory completeness does not prove semantic completeness.",
+        "Symbol identity is (source_root_id, language, file project, path|native name), scoped to an immutable snapshot."
+      ],
+      "source_root_id": "frontend",
+      "file_languages": {
+        "src/utils.ts": "typescript"
+      },
+      "file_projects": {
+        "src/utils.ts": "."
+      }
+    },
+    {
+      "schema_version": 2,
+      "id": "4910f61974e5b420b12ed9593b0d056849b2c8dd5ae9dc0a5e790955695fca60",
+      "project_id": "m5-system",
+      "source": {
+        "digest": "5c0c4ee7f45d71895357626bc9f626271e057119ac8d41480db644083ee6c042",
+        "git_commit": "fa9567b46d60be8d94ed30f35dc6a3c4836d0c1e",
+        "files": {
+          "src/lib.rs": "412913b8a7f6da06da550c03113a5ac5ecc11c34c543c9d1c96b11fe5dec394e",
+          "src/utils.rs": "da62b5bbaa80f6d705ad7c8448cc07eae25756f636f8184a1cfe4835a66a3e8a"
+        },
+        "scope": "Strict supported-source inventory; Vue file evidence only; native project symbol/call scope"
+      },
+      "symbols": {
+        "src/lib.rs|src.read_file": {
+          "path": "src/lib.rs",
+          "symbol": "src.read_file",
+          "kind": "FUNCTION",
+          "content_hash": "412913b8a7f6da06da550c03113a5ac5ecc11c34c543c9d1c96b11fe5dec394e",
+          "start": 4,
+          "end": 6
+        },
+        "src/lib.rs|src.register": {
+          "path": "src/lib.rs",
+          "symbol": "src.register",
+          "kind": "FUNCTION",
+          "content_hash": "412913b8a7f6da06da550c03113a5ac5ecc11c34c543c9d1c96b11fe5dec394e",
+          "start": 9,
+          "end": 11
+        },
+        "src/utils.rs|src.utils.read_document": {
+          "path": "src/utils.rs",
+          "symbol": "src.utils.read_document",
+          "kind": "FUNCTION",
+          "content_hash": "da62b5bbaa80f6d705ad7c8448cc07eae25756f636f8184a1cfe4835a66a3e8a",
+          "start": 1,
+          "end": 3
+        }
+      },
+      "file_locations": {
+        "src/lib.rs": {
+          "path": "src/lib.rs",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "412913b8a7f6da06da550c03113a5ac5ecc11c34c543c9d1c96b11fe5dec394e",
+          "start": 1,
+          "end": 11
+        },
+        "src/utils.rs": {
+          "path": "src/utils.rs",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "da62b5bbaa80f6d705ad7c8448cc07eae25756f636f8184a1cfe4835a66a3e8a",
+          "start": 1,
+          "end": 3
+        }
+      },
+      "calls": [
+        {
+          "source": "src/lib.rs|src.read_file",
+          "target": "src/utils.rs|src.utils.read_document",
+          "sites": [
+            {
+              "path": "src/lib.rs",
+              "line": 5,
+              "column": 12
+            }
+          ]
+        }
+      ],
+      "tools": {
+        "engine": "StaticAnalyzer/native adapters",
+        "maintenance_scope": "{\"complete\":true,\"configuration\":{\"Cargo.lock\":\"270556540b06847aa1c0539a6e69b265f3f4ab10d2298fecb6d4fb47eebc2b0a\",\"Cargo.toml\":\"d6ecf720424e3ef0211f51fd74d689e0e630cfc3486e5fe4eb53644288dc8404\"},\"implementation\":\"49d4e71f575a1e3b0cff3da4b3679f0a8b3be779f5a76ad592a084d06ad8c7e6\",\"patterns\":[\"# CodeBoarding Ignore File\\n\",\"# Add patterns here for files and directories that should be excluded from CodeBoarding analysis.\\n\",\"# Use the same format as .gitignore (gitignore syntax / gitwildmatch patterns).\\n\",\"#\\n\",\"# To stop ignoring a pattern, prefix it with ! (e.g., !important_file.txt)\\n\",\"#\\n\",\"# NOTE: The following are ALWAYS excluded (not configurable):\\n\",\"#   - Hidden directories (starting with .)\\n\",\"#   - .git/, .codeboarding/, node_modules/, __pycache__/\\n\",\"#   - Build output: build/, dist/, coverage/\\n\",\"#\\n\",\"# This file is automatically loaded by CodeBoarding analysis tools to exclude\\n\",\"# specified paths from code analysis, architecture generation, and other processing.\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Ignored directories (customizable \\u2014 remove lines to include them)\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Python virtual environments\\n\",\"venv/\\n\",\"env/\\n\",\"*.egg-info/\\n\",\"\\n\",\"# Java (Maven/Gradle) and Rust (Cargo) build output. Both ecosystems\\n\",\"# produce a top-level ``target/`` directory full of compiled artifacts \\u2014\\n\",\"# kept here as well as in ``_ALWAYS_IGNORED_DIRS`` so users who customize\\n\",\"# their ``.codeboardingignore`` continue to skip it even after edits.\\n\",\"target/\\n\",\"bin/\\n\",\"out/\\n\",\"\\n\",\"# .NET / C# build output\\n\",\"obj/\\n\",\"\\n\",\"# Go\\n\",\"vendor/\\n\",\"testdata/\\n\",\"\\n\",\"# PHP\\n\",\"cache/\\n\",\"\\n\",\"# Custom\\n\",\"temp/\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Test and infrastructure files\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Test directories\\n\",\"**/__tests__/**\\n\",\"**/tests/**\\n\",\"**/test/**\\n\",\"**/__test__/**\\n\",\"**/testing/**\\n\",\"**/testutil/**\\n\",\"\\n\",\"# Java/Kotlin test directories (Maven/Gradle structure)\\n\",\"**/src/test/**\\n\",\"**/src/testFixtures/**\\n\",\"**/src/integration-test/**\\n\",\"**/src/jmh/**\\n\",\"**/src/contractTest/**\\n\",\"**/osgi-tests/**\\n\",\"\\n\",\"# Test files by naming convention\\n\",\"*.test.*\\n\",\"*.spec.*\\n\",\"*_test.*\\n\",\"*test_*.py\\n\",\"test_*.py\\n\",\"*Test.java\\n\",\"*IT.java\\n\",\"*Test.kt\\n\",\"*IT.kt\\n\",\"*Tests.java\\n\",\"\\n\",\"# Mock, fixture, and stub directories\\n\",\"**/__mocks__/**\\n\",\"**/mocks/**\\n\",\"**/fixtures/**\\n\",\"**/fixture/**\\n\",\"**/stubs/**\\n\",\"**/stub/**\\n\",\"**/fakes/**\\n\",\"**/fake/**\\n\",\"\\n\",\"# E2E and integration test directories\\n\",\"**/e2e/**\\n\",\"**/integration-tests/**\\n\",\"**/integration_test*/**\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Non-production code\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Example and documentation code\\n\",\"**/examples/**\\n\",\"**/documentation/examples/**\\n\",\"\\n\",\"# Generated code\\n\",\"*.pb.go\\n\",\"**/generated_parser*\\n\",\"\\n\",\"# Java/Kotlin metadata files\\n\",\"module-info.java\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build artifacts and minified files\\n\",\"# ============================================================================\\n\",\"\\n\",\"*.bundle.js\\n\",\"*.bundle.js.map\\n\",\"*.min.js\\n\",\"*.min.css\\n\",\"*.chunk.js\\n\",\"*.chunk.js.map\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build tool configs and infrastructure\\n\",\"# ============================================================================\\n\",\"\\n\",\"esbuild*\\n\",\"webpack*\\n\",\"rollup*\\n\",\"vite.config.*\\n\",\"gulpfile*\\n\",\"gruntfile*\\n\",\"*.config.*\\n\"],\"protocol\":\"multilanguage-file-v2\",\"tools\":[\"a97741d2f93bada49450735580c9d37cc607f9820d4dedbc023eae296b33eac3\",\"4736cfc0ba3c57734359f82883bcfed49a0ea748fdfcad3c137c0da112027f11\",\"f8ef6156b7da4cdf018c4708a43f2bfb498e81b9584540b6b91fe19492031695\",\"3dceeac4bea5af4e244b9a8a765671d5ccd48786f0149e03bc8bbe5cd4661ae8\",\"3332eed47402eb7341ae9e4495d44ad0c7cdf2aa211d52173417db8be28d610c\",\"e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb\"]}",
+        "commands": "{\"lsp_servers\": {\"java\": [\"D:\\\\Java\\\\jdk-21.0.8\\\\bin\\\\java.exe\"], \"python\": [\"D:\\\\Progrm Files\\\\nvm4w\\\\nodejs\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\langserver.index.js\", \"--stdio\"], \"rust\": [\"C:\\\\Users\\\\BW011222\\\\.cargo\\\\bin\\\\rust-analyzer.exe\"], \"typescript\": [\"D:\\\\Progrm Files\\\\nvm4w\\\\nodejs\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\m5-tools\\\\node_modules\\\\typescript-language-server\\\\lib\\\\cli.mjs\", \"--stdio\"]}, \"tokei\": [\"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\", \"-o\", \"json\"], \"typescript_sdk\": \"F:\\\\CodeBoarding\\\\temp\\\\m5-tools\\\\node_modules\\\\typescript\\\\lib\\\\tsserver.js\"}",
+        "versions": "{\"java\": \"java 21.0.8 2025-07-15 LTS\\nJava(TM) SE Runtime Environment (build 21.0.8+12-LTS-250)\\nJava HotSpot(TM) 64-Bit Server VM (build 21.0.8+12-LTS-250, mixed mode, sharing)\", \"python\": \"Error: Connection input stream is not set. Use arguments of createConnection or set command line parameters: '--node-ipc', '--stdio' or '--socket={number}'\\n    at _createConnection (F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\dist\\\\pyright-internal\\\\node_modules\\\\vscode-languageserver\\\\lib\\\\node\\\\main.js:204:15)\\n    at createConnection (F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\dist\\\\pyright-internal\\\\node_modules\\\\vscode-languageserver\\\\lib\\\\node\\\\main.js:149:12)\\n    at maxWorkers (F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\dist\\\\pyright-internal\\\\src\\\\nodeServer.ts:20:19)\\n    at t.main (F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\dist\\\\pyright-internal\\\\src\\\\nodeMain.ts:14:28)\", \"rust\": \"rust-analyzer 1.99.1 (58cf8f9c 2026-10-13)\", \"tokei\": \"tokei 14.0.0 compiled with serialization support: json\", \"typescript\": \"6.0.3\"}"
+      },
+      "limitations": [
+        "Static calls are not executions. External/unresolved calls, registrations and dynamic dispatch are incomplete.",
+        "Non-Python symbol completeness is bounded by native LSP document symbols; no independent callable census.",
+        "Vue SFC has file-level evidence only; native adapters do not discover .vue functions.",
+        "Unknown source suffixes are outside scope. Root inventory completeness does not prove semantic completeness.",
+        "Symbol identity is (source_root_id, language, file project, path|native name), scoped to an immutable snapshot."
+      ],
+      "source_root_id": "backend",
+      "file_languages": {
+        "src/lib.rs": "rust",
+        "src/utils.rs": "rust"
+      },
+      "file_projects": {
+        "src/lib.rs": ".",
+        "src/utils.rs": "."
+      }
+    }
+  ],
+  "bindings": [
+    {
+      "id": "open",
+      "snapshot_id": "777d089327dbd628da5a96dc9cf2383353cd4943be67f8bcfe420e153c8bf837",
+      "source_version": "68e41c24084c9c32720bfa36dcd6dd569d0cd8dc23872d3746ac82879165c9bf",
+      "location": {
+        "path": "src/utils.ts",
+        "symbol": "src.utils.openDocument",
+        "kind": "FUNCTION",
+        "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e",
+        "start": 7,
+        "end": 9
+      },
+      "status": "current",
+      "reason": "",
+      "history": []
+    },
+    {
+      "id": "preview",
+      "snapshot_id": "777d089327dbd628da5a96dc9cf2383353cd4943be67f8bcfe420e153c8bf837",
+      "source_version": "68e41c24084c9c32720bfa36dcd6dd569d0cd8dc23872d3746ac82879165c9bf",
+      "location": {
+        "path": "src/utils.ts",
+        "symbol": "src.utils.previewDocument",
+        "kind": "FUNCTION",
+        "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e",
+        "start": 11,
+        "end": 13
+      },
+      "status": "current",
+      "reason": "",
+      "history": []
+    },
+    {
+      "id": "invoke",
+      "snapshot_id": "777d089327dbd628da5a96dc9cf2383353cd4943be67f8bcfe420e153c8bf837",
+      "source_version": "68e41c24084c9c32720bfa36dcd6dd569d0cd8dc23872d3746ac82879165c9bf",
+      "location": {
+        "path": "src/utils.ts",
+        "symbol": "src.utils.readDocument",
+        "kind": "FUNCTION",
+        "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e",
+        "start": 3,
+        "end": 5
+      },
+      "status": "current",
+      "reason": "",
+      "history": []
+    },
+    {
+      "id": "command",
+      "snapshot_id": "4910f61974e5b420b12ed9593b0d056849b2c8dd5ae9dc0a5e790955695fca60",
+      "source_version": "5c0c4ee7f45d71895357626bc9f626271e057119ac8d41480db644083ee6c042",
+      "location": {
+        "path": "src/lib.rs",
+        "symbol": "src.read_file",
+        "kind": "FUNCTION",
+        "content_hash": "412913b8a7f6da06da550c03113a5ac5ecc11c34c543c9d1c96b11fe5dec394e",
+        "start": 4,
+        "end": 6
+      },
+      "status": "current",
+      "reason": "",
+      "history": []
+    },
+    {
+      "id": "service",
+      "snapshot_id": "4910f61974e5b420b12ed9593b0d056849b2c8dd5ae9dc0a5e790955695fca60",
+      "source_version": "5c0c4ee7f45d71895357626bc9f626271e057119ac8d41480db644083ee6c042",
+      "location": {
+        "path": "src/utils.rs",
+        "symbol": "src.utils.read_document",
+        "kind": "FUNCTION",
+        "content_hash": "da62b5bbaa80f6d705ad7c8448cc07eae25756f636f8184a1cfe4835a66a3e8a",
+        "start": 1,
+        "end": 3
+      },
+      "status": "current",
+      "reason": "",
+      "history": []
+    },
+    {
+      "id": "registration",
+      "snapshot_id": "4910f61974e5b420b12ed9593b0d056849b2c8dd5ae9dc0a5e790955695fca60",
+      "source_version": "5c0c4ee7f45d71895357626bc9f626271e057119ac8d41480db644083ee6c042",
+      "location": {
+        "path": "src/lib.rs",
+        "symbol": "",
+        "kind": "FILE",
+        "content_hash": "412913b8a7f6da06da550c03113a5ac5ecc11c34c543c9d1c96b11fe5dec394e",
+        "start": 1,
+        "end": 11
+      },
+      "status": "current",
+      "reason": "",
+      "history": []
+    }
+  ],
+  "components": [
+    {
+      "id": "frontend-ui",
+      "name": "Document actions",
+      "responsibility": "Choose a document path for open or preview",
+      "rationale": "Two UI-facing actions share one client",
+      "parent_id": "",
+      "binding_ids": [
+        "open",
+        "preview"
+      ],
+      "claim": {
+        "kind": "code_fact",
+        "explanation": "Choose a document path for open or preview",
+        "binding_ids": [
+          "open",
+          "preview"
+        ],
+        "assumptions": [],
+        "issues": []
+      }
+    },
+    {
+      "id": "ipc-client",
+      "name": "Tauri IPC client",
+      "responsibility": "Invoke read_file with a path payload",
+      "rationale": "One operation is shared by both actions",
+      "parent_id": "frontend-ui",
+      "binding_ids": [
+        "invoke"
+      ],
+      "claim": {
+        "kind": "code_fact",
+        "explanation": "Invoke read_file with a path payload",
+        "binding_ids": [
+          "invoke"
+        ],
+        "assumptions": [],
+        "issues": []
+      }
+    },
+    {
+      "id": "backend",
+      "name": "Rust document backend",
+      "responsibility": "Register and handle document requests",
+      "rationale": "Rust boundary includes command registration and file service",
+      "parent_id": "",
+      "binding_ids": [
+        "command",
+        "registration",
+        "service"
+      ],
+      "claim": {
+        "kind": "code_fact",
+        "explanation": "Register and handle document requests",
+        "binding_ids": [
+          "command",
+          "registration",
+          "service"
+        ],
+        "assumptions": [],
+        "issues": []
+      }
+    },
+    {
+      "id": "rust-command",
+      "name": "Rust read_file command",
+      "responsibility": "Delegate a path to the document service",
+      "rationale": "IPC endpoint is separate from filesystem work",
+      "parent_id": "backend",
+      "binding_ids": [
+        "command",
+        "registration"
+      ],
+      "claim": {
+        "kind": "code_fact",
+        "explanation": "Delegate a path to the document service",
+        "binding_ids": [
+          "command",
+          "registration"
+        ],
+        "assumptions": [],
+        "issues": []
+      }
+    },
+    {
+      "id": "document-service",
+      "name": "Document file service",
+      "responsibility": "Read UTF-8 file bytes and return errors",
+      "rationale": "Filesystem responsibility can be reused outside IPC",
+      "parent_id": "backend",
+      "binding_ids": [
+        "service"
+      ],
+      "claim": {
+        "kind": "code_fact",
+        "explanation": "Read UTF-8 file bytes and return errors",
+        "binding_ids": [
+          "service"
+        ],
+        "assumptions": [],
+        "issues": []
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "ui-client",
+      "source_id": "frontend-ui",
+      "target_id": "ipc-client",
+      "meaning": "Both actions call the shared client",
+      "claim": {
+        "kind": "code_fact",
+        "explanation": "Native TypeScript call sites link openDocument/previewDocument to readDocument",
+        "binding_ids": [
+          "open",
+          "preview",
+          "invoke"
+        ],
+        "assumptions": [],
+        "issues": []
+      }
+    },
+    {
+      "id": "read-file-ipc",
+      "source_id": "ipc-client",
+      "target_id": "rust-command",
+      "meaning": "Candidate Tauri read_file request across the process boundary",
+      "claim": {
+        "kind": "inference",
+        "explanation": "invoke read_file and the Rust command/handler macro provide both sides; the desktop host is outside this fixture",
+        "binding_ids": [
+          "invoke",
+          "command",
+          "registration"
+        ],
+        "assumptions": [
+          "Desktop host enables the desktop feature and installs this registered handler; runtime invocation has not been executed."
+        ],
+        "issues": []
+      },
+      "contract": {
+        "mechanism": "tauri-ipc",
+        "operation": "read_file",
+        "caller_binding_ids": [
+          "invoke"
+        ],
+        "receiver_binding_ids": [
+          "command"
+        ],
+        "matching_binding_ids": [
+          "registration"
+        ],
+        "status": "candidate",
+        "rationale": "utils.ts passes path to invoke(read_file); lib.rs declares command under desktop and registers generate_handler![read_file]",
+        "uncertainties": [
+          "Desktop feature is disabled in the native extraction. No Tauri host runtime or IPC execution was tested."
+        ]
+      }
+    },
+    {
+      "id": "command-service",
+      "source_id": "rust-command",
+      "target_id": "document-service",
+      "meaning": "Read document through the filesystem service",
+      "claim": {
+        "kind": "code_fact",
+        "explanation": "Native Rust call site links read_file to utils.read_document",
+        "binding_ids": [
+          "command",
+          "service"
+        ],
+        "assumptions": [],
+        "issues": []
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "open-document",
+      "name": "Open document across TypeScript and Rust",
+      "entry_step_id": "open-action",
+      "steps": [
+        {
+          "id": "open-action",
+          "component_ids": [
+            "frontend-ui"
+          ],
+          "binding_ids": [
+            "open"
+          ],
+          "claim": {
+            "kind": "code_fact",
+            "explanation": "Declared open-document step",
+            "binding_ids": [
+              "open"
+            ],
+            "assumptions": [],
+            "issues": []
+          }
+        },
+        {
+          "id": "open-ipc",
+          "component_ids": [
+            "ipc-client"
+          ],
+          "binding_ids": [
+            "invoke"
+          ],
+          "claim": {
+            "kind": "code_fact",
+            "explanation": "Declared open-document step",
+            "binding_ids": [
+              "invoke"
+            ],
+            "assumptions": [],
+            "issues": []
+          }
+        },
+        {
+          "id": "open-command",
+          "component_ids": [
+            "rust-command"
+          ],
+          "binding_ids": [
+            "command"
+          ],
+          "claim": {
+            "kind": "code_fact",
+            "explanation": "Declared open-document step",
+            "binding_ids": [
+              "command"
+            ],
+            "assumptions": [],
+            "issues": []
+          }
+        },
+        {
+          "id": "open-service",
+          "component_ids": [
+            "document-service"
+          ],
+          "binding_ids": [
+            "service"
+          ],
+          "claim": {
+            "kind": "code_fact",
+            "explanation": "Declared open-document step",
+            "binding_ids": [
+              "service"
+            ],
+            "assumptions": [],
+            "issues": []
+          }
+        }
+      ],
+      "order": [
+        "open-action",
+        "open-ipc",
+        "open-command",
+        "open-service"
+      ],
+      "transitions": [
+        {
+          "source_id": "open-action",
+          "target_id": "open-ipc",
+          "kind": "next",
+          "condition": "Continue via the source call"
+        },
+        {
+          "source_id": "open-ipc",
+          "target_id": "open-command",
+          "kind": "next",
+          "condition": "Host routes the declared request"
+        },
+        {
+          "source_id": "open-command",
+          "target_id": "open-service",
+          "kind": "next",
+          "condition": "Continue via the source call"
+        }
+      ],
+      "claim": {
+        "kind": "inference",
+        "explanation": "Open notes.txt via the shared IPC contract and Rust file service",
+        "binding_ids": [
+          "open",
+          "invoke",
+          "command",
+          "registration",
+          "service"
+        ],
+        "assumptions": [
+          "Desktop host enables the desktop feature and installs this registered handler; runtime invocation has not been executed."
+        ],
+        "issues": []
+      },
+      "relation_ids": [
+        "ui-client",
+        "read-file-ipc",
+        "command-service"
+      ]
+    }
+  ],
+  "opinions": [],
+  "verifications": [],
+  "revisions": [
+    {
+      "revision": 0,
+      "author": "M5 external modeling Agent",
+      "summary": "Initialize architecture model",
+      "timestamp": "2026-11-05T03:38:24.150646+00:00",
+      "object_ids": [],
+      "scenario_ids": []
+    },
+    {
+      "revision": 1,
+      "author": "M5 external modeling Agent",
+      "summary": "Explain one cross-language document request using two independent source roots",
+      "timestamp": "2026-11-05T03:38:27.347625+00:00",
+      "object_ids": [
+        "4910f61974e5b420b12ed9593b0d056849b2c8dd5ae9dc0a5e790955695fca60",
+        "777d089327dbd628da5a96dc9cf2383353cd4943be67f8bcfe420e153c8bf837",
+        "backend",
+        "command",
+        "command-service",
+        "document-service",
+        "frontend-ui",
+        "invoke",
+        "ipc-client",
+        "open",
+        "open-document",
+        "preview",
+        "read-file-ipc",
+        "registration",
+        "rust-command",
+        "service",
+        "ui-client"
+      ],
+      "scenario_ids": [
+        "open-document"
+      ]
+    }
+  ],
+  "maintenance": [],
+  "maintenance_target_snapshot_id": ""
+}

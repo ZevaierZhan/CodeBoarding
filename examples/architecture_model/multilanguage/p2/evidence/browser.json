@@ -1,0 +1,40 @@
+{
+  "partial_executed_is_not_bilateral": true,
+  "bilateral_remains_planned": true,
+  "lost_legacy_target_is_unknown_not_older": true,
+  "legacy_observations": [
+    {
+      "stage": "before",
+      "legacy_target": "5049f2b755ac2a60f1dac57624cbd633ea362e9586d60a6280b3399615c420a0",
+      "latest_and_older_present": true
+    },
+    {
+      "stage": "after-frontend",
+      "legacy_target": "5049f2b755ac2a60f1dac57624cbd633ea362e9586d60a6280b3399615c420a0",
+      "latest_and_older_present": true
+    },
+    {
+      "stage": "after-frontend",
+      "root": "frontend",
+      "independent_latest_target": true
+    },
+    {
+      "stage": "after-backend",
+      "legacy_target": "5049f2b755ac2a60f1dac57624cbd633ea362e9586d60a6280b3399615c420a0",
+      "latest_and_older_present": true
+    },
+    {
+      "stage": "after-backend",
+      "root": "frontend",
+      "independent_latest_target": true
+    },
+    {
+      "stage": "after-backend",
+      "root": "backend",
+      "independent_latest_target": true
+    }
+  ],
+  "model_sha256_before": "e66e8834d9506000b1569f71748f21bb05ce36ff37a9dfce3f885b9f9761694c",
+  "model_sha256_after": "e66e8834d9506000b1569f71748f21bb05ce36ff37a9dfce3f885b9f9761694c",
+  "javascript_errors": []
+}

@@ -29,7 +29,7 @@ from architecture_model.validation import digest, parse, validate_facts, validat
 
 
 class ExtractionScope(Strict):
-    protocol: Literal["python-file-v1"]
+    protocol: Literal["python-file-v1", "multilanguage-file-v2"]
     complete: Literal[True]
     implementation: Text
     patterns: list[str]
@@ -53,6 +53,9 @@ def preview(model: Model, target: Facts) -> dict:
     saved = {item.id: item for item in maintained}
     observations = []
     for binding in model.bindings:
+        original = next((item for item in model.facts if item.id == binding.snapshot_id), None)
+        if (original.source_root_id if original else "") != target.source_root_id:
+            continue
         observation = _compare(model, binding, target)
         observations.append(saved.get(observation.id, observation))
     body = {
@@ -79,7 +82,13 @@ def refresh(store: ModelStore, target: Facts, expected_revision: int, token: str
         if report["token"] != token:
             raise ModelError("PREVIEW_CONFLICT", "/token", "Preview does not match this model and target")
         proposed = current.model_copy(deep=True)
-        proposed.maintenance_target_snapshot_id = target.id
+        targets = root_targets(current)
+        proposed.maintenance_target_snapshot_id = targets.pop("", "")
+        proposed.maintenance_targets = targets
+        if target.source_root_id:
+            proposed.maintenance_targets[target.source_root_id] = target.id
+        else:
+            proposed.maintenance_target_snapshot_id = target.id
         if target.id not in {item.id for item in proposed.facts}:
             proposed.facts.append(target)
         existing = {item.id for item in proposed.maintenance}
@@ -228,6 +237,11 @@ def query(model: Model, binding_id: str = "", component_id: str = "", scenario_i
     current_ids = {capture_coverage(model, item, model_diff).id for item in comparisons.values()} & {
         item.id for item in items
     }
+    targets = root_targets(model)
+    explicit = {root: target for root, target in targets.items() if root}
+    mixed_protocol = any(snapshot.source_root_id for snapshot in model.facts)
+    facts = {snapshot.id: snapshot for snapshot in model.facts}
+    unknown_targets = [item.id for item in items if facts[item.target_snapshot_id].source_root_id not in targets]
     return {
         "model_id": model.id,
         "revision": model.revision,
@@ -238,9 +252,37 @@ def query(model: Model, binding_id: str = "", component_id: str = "", scenario_i
             for item in items
             if item.id in current_ids and item.disposition != "unchanged" and item.resolution is None
         ],
-        "latest_target_snapshot_id": model.maintenance_target_snapshot_id,
+        "latest_target_snapshot_id": targets.get("", ""),
+        **({"unknown_target_observation_ids": unknown_targets} if unknown_targets else {}),
+        **({"source_root_targets": explicit} if explicit else {}),
+        **(
+            {"legacy_target_status": "unknown_after_old_v2_scalar; refresh legacy explicitly to establish its target"}
+            if model.maintenance_target_snapshot_id
+            and "" not in targets
+            and any(not snapshot.source_root_id for snapshot in model.facts)
+            else {}
+        ),
+        **(
+            {
+                "latest_observation_ids": [
+                    item.id
+                    for item in items
+                    if targets.get(facts[item.target_snapshot_id].source_root_id) == item.target_snapshot_id
+                ]
+            }
+            if mixed_protocol
+            else {}
+        ),
         "observations": [item.model_dump() for item in items],
     }
+
+
+def root_targets(model: Model) -> dict[str, str]:
+    targets = dict(model.maintenance_targets)
+    scalar = next((snapshot for snapshot in model.facts if snapshot.id == model.maintenance_target_snapshot_id), None)
+    if scalar is not None:
+        targets.setdefault(scalar.source_root_id, scalar.id)
+    return targets
 
 
 def _item(model: Model, identity: str) -> Maintenance:
@@ -268,7 +310,7 @@ def _compare(model: Model, binding: Binding, target: Facts) -> Maintenance:
         location=binding.location,
         reason="Evidence at comparison time",
     )
-    choices = _candidates(binding, target)
+    choices = _candidates(binding, target, old)
     old_names = (
         (
             {binding.location.symbol}
@@ -278,11 +320,20 @@ def _compare(model: Model, binding: Binding, target: Facts) -> Maintenance:
         if old
         else set()
     )
+    if old and old.schema_version == 2:
+        old_names = {
+            key
+            for key, entry in old.symbols.items()
+            if entry.symbol in old_names and entry.path == binding.location.path
+        }
     old_calls = [call for call in old.calls if old_names.intersection((call.source, call.target))] if old else []
     new_names = {choice.location.symbol for choice in choices if choice.location.symbol}
     if not binding.location.symbol:
         paths = {choice.location.path for choice in choices}
         new_names = {entry.symbol for entry in target.symbols.values() if entry.path in paths}
+    if target.schema_version == 2:
+        paths = {choice.location.path for choice in choices}
+        new_names = {key for key, entry in target.symbols.items() if entry.symbol in new_names and entry.path in paths}
     new_calls = [call for call in target.calls if new_names.intersection((call.source, call.target))]
     disposition: Literal["unchanged", "changed", "missing", "ambiguous", "indeterminate"]
     reasons = []
@@ -340,7 +391,7 @@ def _compare(model: Model, binding: Binding, target: Facts) -> Maintenance:
     return capture_coverage(model, observation, model_diff)
 
 
-def _candidates(binding: Binding, target: Facts) -> list[MaintenanceCandidate]:
+def _candidates(binding: Binding, target: Facts, old: Facts | None = None) -> list[MaintenanceCandidate]:
     location = binding.location
     catalog = target.symbols if location.symbol else target.file_locations
     key = f"{location.path}|{location.symbol}" if location.symbol else location.path
@@ -348,6 +399,12 @@ def _candidates(binding: Binding, target: Facts) -> list[MaintenanceCandidate]:
         return [MaintenanceCandidate(key=key, location=catalog[key], reasons=["Exact path and symbol identity"])]
     choices = []
     for candidate_key, candidate_location in sorted(catalog.items()):
+        if (
+            old
+            and old.schema_version == 2
+            and old.file_languages.get(location.path) != target.file_languages.get(candidate_location.path)
+        ):
+            continue
         if candidate_location.kind != location.kind:
             continue
         reasons = []

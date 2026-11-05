@@ -1,0 +1,515 @@
+{
+  "author": "M5 external Agent",
+  "summary": "Java/Vue capability check, distinct from the primary continuing Tauri model",
+  "operations": [
+    {
+      "action": "create",
+      "collection": "facts",
+      "id": "02ecd3eb417cc4baa40660227f8bae4aa16b220e84ad04101d6d5681ff574303",
+      "value": {
+        "schema_version": 2,
+        "id": "02ecd3eb417cc4baa40660227f8bae4aa16b220e84ad04101d6d5681ff574303",
+        "project_id": "m5-system",
+        "source": {
+          "digest": "b81e819d37c59da7ba0412355891ac4e8aed8361a52818e819737aa300874dc5",
+          "git_commit": "4f73e07c46b21a1fc96426b4be9bf9ff96e8a7dd",
+          "files": {
+            "backend/src/main/java/example/OrderController.java": "55d121e001a0f033a240fc942301b24b9903c03978567e800aa47565d36465d3",
+            "backend/src/main/java/example/OrderService.java": "948b9d441390bca787a7aa7e3ed609485ecd2a042333b156260872f845b2a97c",
+            "frontend/src/api.ts": "2e71eb064a86412d0890dd5445dd2a362199de3a322a59e3d7b2b36fd5aaf13f",
+            "frontend/src/Orders.vue": "1931e0e3e22cd13f275d7f1e78a1fac7c90f82f95e57865d57b0d910c6a178a5"
+          },
+          "scope": "Strict supported-source inventory; Vue file evidence only; native project symbol/call scope"
+        },
+        "symbols": {
+          "backend/src/main/java/example/OrderController.java|backend.src.main.java.example.OrderController": {
+            "path": "backend/src/main/java/example/OrderController.java",
+            "symbol": "backend.src.main.java.example.OrderController",
+            "kind": "CLASS",
+            "content_hash": "55d121e001a0f033a240fc942301b24b9903c03978567e800aa47565d36465d3",
+            "start": 9,
+            "end": 14
+          },
+          "backend/src/main/java/example/OrderController.java|backend.src.main.java.example.OrderController.createOrder()": {
+            "path": "backend/src/main/java/example/OrderController.java",
+            "symbol": "backend.src.main.java.example.OrderController.createOrder()",
+            "kind": "METHOD",
+            "content_hash": "55d121e001a0f033a240fc942301b24b9903c03978567e800aa47565d36465d3",
+            "start": 13,
+            "end": 13
+          },
+          "backend/src/main/java/example/OrderService.java|backend.src.main.java.example.OrderService": {
+            "path": "backend/src/main/java/example/OrderService.java",
+            "symbol": "backend.src.main.java.example.OrderService",
+            "kind": "CLASS",
+            "content_hash": "948b9d441390bca787a7aa7e3ed609485ecd2a042333b156260872f845b2a97c",
+            "start": 3,
+            "end": 5
+          },
+          "backend/src/main/java/example/OrderService.java|backend.src.main.java.example.OrderService.create()": {
+            "path": "backend/src/main/java/example/OrderService.java",
+            "symbol": "backend.src.main.java.example.OrderService.create()",
+            "kind": "METHOD",
+            "content_hash": "948b9d441390bca787a7aa7e3ed609485ecd2a042333b156260872f845b2a97c",
+            "start": 4,
+            "end": 4
+          },
+          "frontend/src/api.ts|frontend.src.api.createOrder": {
+            "path": "frontend/src/api.ts",
+            "symbol": "frontend.src.api.createOrder",
+            "kind": "FUNCTION",
+            "content_hash": "2e71eb064a86412d0890dd5445dd2a362199de3a322a59e3d7b2b36fd5aaf13f",
+            "start": 1,
+            "end": 4
+          }
+        },
+        "file_locations": {
+          "backend/src/main/java/example/OrderController.java": {
+            "path": "backend/src/main/java/example/OrderController.java",
+            "symbol": "",
+            "kind": "FILE",
+            "content_hash": "55d121e001a0f033a240fc942301b24b9903c03978567e800aa47565d36465d3",
+            "start": 1,
+            "end": 14
+          },
+          "backend/src/main/java/example/OrderService.java": {
+            "path": "backend/src/main/java/example/OrderService.java",
+            "symbol": "",
+            "kind": "FILE",
+            "content_hash": "948b9d441390bca787a7aa7e3ed609485ecd2a042333b156260872f845b2a97c",
+            "start": 1,
+            "end": 5
+          },
+          "frontend/src/api.ts": {
+            "path": "frontend/src/api.ts",
+            "symbol": "",
+            "kind": "FILE",
+            "content_hash": "2e71eb064a86412d0890dd5445dd2a362199de3a322a59e3d7b2b36fd5aaf13f",
+            "start": 1,
+            "end": 4
+          },
+          "frontend/src/Orders.vue": {
+            "path": "frontend/src/Orders.vue",
+            "symbol": "",
+            "kind": "FILE",
+            "content_hash": "1931e0e3e22cd13f275d7f1e78a1fac7c90f82f95e57865d57b0d910c6a178a5",
+            "start": 1,
+            "end": 5
+          }
+        },
+        "calls": [
+          {
+            "source": "backend/src/main/java/example/OrderController.java|backend.src.main.java.example.OrderController",
+            "target": "backend/src/main/java/example/OrderService.java|backend.src.main.java.example.OrderService",
+            "sites": [
+              {
+                "path": "backend/src/main/java/example/OrderController.java",
+                "line": 10,
+                "column": 46
+              }
+            ]
+          },
+          {
+            "source": "backend/src/main/java/example/OrderController.java|backend.src.main.java.example.OrderController.createOrder()",
+            "target": "backend/src/main/java/example/OrderService.java|backend.src.main.java.example.OrderService",
+            "sites": [
+              {
+                "path": "backend/src/main/java/example/OrderController.java",
+                "line": 13,
+                "column": 50
+              }
+            ]
+          },
+          {
+            "source": "backend/src/main/java/example/OrderController.java|backend.src.main.java.example.OrderController.createOrder()",
+            "target": "backend/src/main/java/example/OrderService.java|backend.src.main.java.example.OrderService.create()",
+            "sites": [
+              {
+                "path": "backend/src/main/java/example/OrderController.java",
+                "line": 13,
+                "column": 50
+              }
+            ]
+          }
+        ],
+        "tools": {
+          "engine": "StaticAnalyzer/native adapters",
+          "maintenance_scope": "{\"complete\":true,\"configuration\":{\"backend/pom.xml\":\"4b4da46845bfd22ca963d561faa449ee6bc50697eef78e873f3ec78f0bb17d7f\",\"frontend/tsconfig.json\":\"5429049c4a9f645aae56d39709457bc9275d1b53afc8a74891a3ddaff3a33f13\"},\"implementation\":\"be4739203edad2b7dd5a9c1462f8ea7401b18c1a24fb35dfa4bb847ed60a5b97\",\"patterns\":[\"# CodeBoarding Ignore File\\n\",\"# Add patterns here for files and directories that should be excluded from CodeBoarding analysis.\\n\",\"# Use the same format as .gitignore (gitignore syntax / gitwildmatch patterns).\\n\",\"#\\n\",\"# To stop ignoring a pattern, prefix it with ! (e.g., !important_file.txt)\\n\",\"#\\n\",\"# NOTE: The following are ALWAYS excluded (not configurable):\\n\",\"#   - Hidden directories (starting with .)\\n\",\"#   - .git/, .codeboarding/, node_modules/, __pycache__/\\n\",\"#   - Build output: build/, dist/, coverage/\\n\",\"#\\n\",\"# This file is automatically loaded by CodeBoarding analysis tools to exclude\\n\",\"# specified paths from code analysis, architecture generation, and other processing.\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Ignored directories (customizable \\u2014 remove lines to include them)\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Python virtual environments\\n\",\"venv/\\n\",\"env/\\n\",\"*.egg-info/\\n\",\"\\n\",\"# Java (Maven/Gradle) and Rust (Cargo) build output. Both ecosystems\\n\",\"# produce a top-level ``target/`` directory full of compiled artifacts \\u2014\\n\",\"# kept here as well as in ``_ALWAYS_IGNORED_DIRS`` so users who customize\\n\",\"# their ``.codeboardingignore`` continue to skip it even after edits.\\n\",\"target/\\n\",\"bin/\\n\",\"out/\\n\",\"\\n\",\"# .NET / C# build output\\n\",\"obj/\\n\",\"\\n\",\"# Go\\n\",\"vendor/\\n\",\"testdata/\\n\",\"\\n\",\"# PHP\\n\",\"cache/\\n\",\"\\n\",\"# Custom\\n\",\"temp/\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Test and infrastructure files\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Test directories\\n\",\"**/__tests__/**\\n\",\"**/tests/**\\n\",\"**/test/**\\n\",\"**/__test__/**\\n\",\"**/testing/**\\n\",\"**/testutil/**\\n\",\"\\n\",\"# Java/Kotlin test directories (Maven/Gradle structure)\\n\",\"**/src/test/**\\n\",\"**/src/testFixtures/**\\n\",\"**/src/integration-test/**\\n\",\"**/src/jmh/**\\n\",\"**/src/contractTest/**\\n\",\"**/osgi-tests/**\\n\",\"\\n\",\"# Test files by naming convention\\n\",\"*.test.*\\n\",\"*.spec.*\\n\",\"*_test.*\\n\",\"*test_*.py\\n\",\"test_*.py\\n\",\"*Test.java\\n\",\"*IT.java\\n\",\"*Test.kt\\n\",\"*IT.kt\\n\",\"*Tests.java\\n\",\"\\n\",\"# Mock, fixture, and stub directories\\n\",\"**/__mocks__/**\\n\",\"**/mocks/**\\n\",\"**/fixtures/**\\n\",\"**/fixture/**\\n\",\"**/stubs/**\\n\",\"**/stub/**\\n\",\"**/fakes/**\\n\",\"**/fake/**\\n\",\"\\n\",\"# E2E and integration test directories\\n\",\"**/e2e/**\\n\",\"**/integration-tests/**\\n\",\"**/integration_test*/**\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Non-production code\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Example and documentation code\\n\",\"**/examples/**\\n\",\"**/documentation/examples/**\\n\",\"\\n\",\"# Generated code\\n\",\"*.pb.go\\n\",\"**/generated_parser*\\n\",\"\\n\",\"# Java/Kotlin metadata files\\n\",\"module-info.java\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build artifacts and minified files\\n\",\"# ============================================================================\\n\",\"\\n\",\"*.bundle.js\\n\",\"*.bundle.js.map\\n\",\"*.min.js\\n\",\"*.min.css\\n\",\"*.chunk.js\\n\",\"*.chunk.js.map\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build tool configs and infrastructure\\n\",\"# ============================================================================\\n\",\"\\n\",\"esbuild*\\n\",\"webpack*\\n\",\"rollup*\\n\",\"vite.config.*\\n\",\"gulpfile*\\n\",\"gruntfile*\\n\",\"*.config.*\\n\"],\"protocol\":\"multilanguage-file-v2\",\"tools\":[\"a97741d2f93bada49450735580c9d37cc607f9820d4dedbc023eae296b33eac3\",\"3332eed47402eb7341ae9e4495d44ad0c7cdf2aa211d52173417db8be28d610c\",\"4736cfc0ba3c57734359f82883bcfed49a0ea748fdfcad3c137c0da112027f11\",\"e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb\",\"400064ce8fed655fe0bbc1c85cd0299faa76b2b98c8c30fc6a160df2cd7ef3e9\"]}",
+          "commands": "{\"jdtls_root\": \"C:\\\\Users\\\\BW011222\\\\.codeboarding\\\\servers\\\\bin\\\\jdtls\", \"lsp_servers\": {\"java\": [\"D:\\\\Java\\\\jdk-21.0.8\\\\bin\\\\java.exe\"], \"typescript\": [\"D:\\\\Progrm Files\\\\nvm4w\\\\nodejs\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\m5-tools\\\\node_modules\\\\typescript-language-server\\\\lib\\\\cli.mjs\", \"--stdio\"]}, \"tokei\": [\"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\", \"-o\", \"json\"], \"typescript_sdk\": \"F:\\\\CodeBoarding\\\\temp\\\\m5-tools\\\\node_modules\\\\typescript\\\\lib\\\\tsserver.js\"}",
+          "versions": "{\"java\": \"java 21.0.8 2025-07-15 LTS\\nJava(TM) SE Runtime Environment (build 21.0.8+12-LTS-250)\\nJava HotSpot(TM) 64-Bit Server VM (build 21.0.8+12-LTS-250, mixed mode, sharing)\", \"jdtls\": \"org.eclipse.jdt.ls.core_1.59.0.202605111959.jar\", \"tokei\": \"tokei 14.0.0 compiled with serialization support: json\", \"typescript\": \"typescript-language-server 6.0.3\", \"typescript_sdk\": \"5.9.3\"}"
+        },
+        "limitations": [
+          "Static calls are not executions. External/unresolved calls, registrations and dynamic dispatch are incomplete.",
+          "Non-Python symbol completeness is bounded by native LSP document symbols; no independent callable census.",
+          "Vue SFC has file-level evidence only; native adapters do not discover .vue functions.",
+          "Unknown source suffixes are outside scope. Root inventory completeness does not prove semantic completeness.",
+          "Symbol identity is (source_root_id, language, file project, path|native name), scoped to an immutable snapshot."
+        ],
+        "source_root_id": "java-vue",
+        "file_languages": {
+          "backend/src/main/java/example/OrderController.java": "java",
+          "backend/src/main/java/example/OrderService.java": "java",
+          "frontend/src/api.ts": "typescript",
+          "frontend/src/Orders.vue": "vue"
+        },
+        "file_projects": {
+          "backend/src/main/java/example/OrderController.java": "backend",
+          "backend/src/main/java/example/OrderService.java": "backend",
+          "frontend/src/api.ts": "frontend",
+          "frontend/src/Orders.vue": "."
+        }
+      }
+    },
+    {
+      "action": "create",
+      "collection": "bindings",
+      "id": "vue-page",
+      "value": {
+        "id": "vue-page",
+        "snapshot_id": "02ecd3eb417cc4baa40660227f8bae4aa16b220e84ad04101d6d5681ff574303",
+        "source_version": "b81e819d37c59da7ba0412355891ac4e8aed8361a52818e819737aa300874dc5",
+        "location": {
+          "path": "frontend/src/Orders.vue",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "1931e0e3e22cd13f275d7f1e78a1fac7c90f82f95e57865d57b0d910c6a178a5",
+          "start": 1,
+          "end": 5
+        },
+        "status": "current"
+      }
+    },
+    {
+      "action": "create",
+      "collection": "bindings",
+      "id": "api-client",
+      "value": {
+        "id": "api-client",
+        "snapshot_id": "02ecd3eb417cc4baa40660227f8bae4aa16b220e84ad04101d6d5681ff574303",
+        "source_version": "b81e819d37c59da7ba0412355891ac4e8aed8361a52818e819737aa300874dc5",
+        "location": {
+          "path": "frontend/src/api.ts",
+          "symbol": "frontend.src.api.createOrder",
+          "kind": "FUNCTION",
+          "content_hash": "2e71eb064a86412d0890dd5445dd2a362199de3a322a59e3d7b2b36fd5aaf13f",
+          "start": 1,
+          "end": 4
+        },
+        "status": "current"
+      }
+    },
+    {
+      "action": "create",
+      "collection": "bindings",
+      "id": "controller",
+      "value": {
+        "id": "controller",
+        "snapshot_id": "02ecd3eb417cc4baa40660227f8bae4aa16b220e84ad04101d6d5681ff574303",
+        "source_version": "b81e819d37c59da7ba0412355891ac4e8aed8361a52818e819737aa300874dc5",
+        "location": {
+          "path": "backend/src/main/java/example/OrderController.java",
+          "symbol": "backend.src.main.java.example.OrderController.createOrder()",
+          "kind": "METHOD",
+          "content_hash": "55d121e001a0f033a240fc942301b24b9903c03978567e800aa47565d36465d3",
+          "start": 13,
+          "end": 13
+        },
+        "status": "current"
+      }
+    },
+    {
+      "action": "create",
+      "collection": "bindings",
+      "id": "routes",
+      "value": {
+        "id": "routes",
+        "snapshot_id": "02ecd3eb417cc4baa40660227f8bae4aa16b220e84ad04101d6d5681ff574303",
+        "source_version": "b81e819d37c59da7ba0412355891ac4e8aed8361a52818e819737aa300874dc5",
+        "location": {
+          "path": "backend/src/main/java/example/OrderController.java",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "55d121e001a0f033a240fc942301b24b9903c03978567e800aa47565d36465d3",
+          "start": 1,
+          "end": 14
+        },
+        "status": "current"
+      }
+    },
+    {
+      "action": "create",
+      "collection": "bindings",
+      "id": "service",
+      "value": {
+        "id": "service",
+        "snapshot_id": "02ecd3eb417cc4baa40660227f8bae4aa16b220e84ad04101d6d5681ff574303",
+        "source_version": "b81e819d37c59da7ba0412355891ac4e8aed8361a52818e819737aa300874dc5",
+        "location": {
+          "path": "backend/src/main/java/example/OrderService.java",
+          "symbol": "backend.src.main.java.example.OrderService.create()",
+          "kind": "METHOD",
+          "content_hash": "948b9d441390bca787a7aa7e3ed609485ecd2a042333b156260872f845b2a97c",
+          "start": 4,
+          "end": 4
+        },
+        "status": "current"
+      }
+    },
+    {
+      "action": "create",
+      "collection": "components",
+      "id": "page",
+      "value": {
+        "id": "page",
+        "name": "Vue orders page",
+        "responsibility": "Vue orders page",
+        "rationale": "Separate UI, transport, HTTP handling and business service",
+        "binding_ids": [
+          "vue-page"
+        ],
+        "claim": {
+          "kind": "code_fact",
+          "explanation": "Vue orders page as declared in source",
+          "binding_ids": [
+            "vue-page"
+          ],
+          "issues": []
+        }
+      }
+    },
+    {
+      "action": "create",
+      "collection": "components",
+      "id": "client",
+      "value": {
+        "id": "client",
+        "name": "TypeScript API client",
+        "responsibility": "TypeScript API client",
+        "rationale": "Separate UI, transport, HTTP handling and business service",
+        "binding_ids": [
+          "api-client"
+        ],
+        "claim": {
+          "kind": "code_fact",
+          "explanation": "TypeScript API client as declared in source",
+          "binding_ids": [
+            "api-client"
+          ],
+          "issues": []
+        }
+      }
+    },
+    {
+      "action": "create",
+      "collection": "components",
+      "id": "java-controller",
+      "value": {
+        "id": "java-controller",
+        "name": "Spring orders controller",
+        "responsibility": "Spring orders controller",
+        "rationale": "Separate UI, transport, HTTP handling and business service",
+        "binding_ids": [
+          "controller",
+          "routes"
+        ],
+        "claim": {
+          "kind": "code_fact",
+          "explanation": "Spring orders controller as declared in source",
+          "binding_ids": [
+            "controller",
+            "routes"
+          ],
+          "issues": []
+        }
+      }
+    },
+    {
+      "action": "create",
+      "collection": "components",
+      "id": "java-service",
+      "value": {
+        "id": "java-service",
+        "name": "Order service",
+        "responsibility": "Order service",
+        "rationale": "Separate UI, transport, HTTP handling and business service",
+        "binding_ids": [
+          "service"
+        ],
+        "claim": {
+          "kind": "code_fact",
+          "explanation": "Order service as declared in source",
+          "binding_ids": [
+            "service"
+          ],
+          "issues": []
+        }
+      }
+    },
+    {
+      "action": "create",
+      "collection": "relations",
+      "id": "orders-http",
+      "value": {
+        "id": "orders-http",
+        "source_id": "client",
+        "target_id": "java-controller",
+        "meaning": "Candidate POST /api/orders mapping",
+        "claim": {
+          "kind": "inference",
+          "explanation": "fetch POST /api/orders matches RequestMapping /api plus PostMapping /orders; application registration and deployment are outside the fixture",
+          "binding_ids": [
+            "api-client",
+            "controller",
+            "routes"
+          ],
+          "issues": [
+            "Vue has file evidence only. Host startup, component mounting and HTTP deployment/proxy mapping are unverified."
+          ]
+        },
+        "contract": {
+          "mechanism": "http",
+          "operation": "POST /api/orders",
+          "caller_binding_ids": [
+            "api-client"
+          ],
+          "receiver_binding_ids": [
+            "controller"
+          ],
+          "matching_binding_ids": [
+            "routes"
+          ],
+          "rationale": "Inspected HTTP method, class route prefix and method route suffix on both sides",
+          "status": "candidate",
+          "uncertainties": [
+            "No Spring application boot/scan or frontend proxy/base URL configuration is included. Static route equality is not runtime proof."
+          ]
+        }
+      }
+    },
+    {
+      "action": "create",
+      "collection": "scenarios",
+      "id": "vue-order",
+      "value": {
+        "id": "vue-order",
+        "name": "Vue \u2192 API Client \u2192 Spring Controller \u2192 Service",
+        "entry_step_id": "submit-page",
+        "relation_ids": [
+          "orders-http"
+        ],
+        "steps": [
+          {
+            "id": "submit-page",
+            "component_ids": [
+              "page"
+            ],
+            "binding_ids": [
+              "vue-page"
+            ],
+            "claim": {
+              "kind": "inference",
+              "explanation": "Declared capability step",
+              "binding_ids": [
+                "vue-page"
+              ],
+              "issues": [
+                "Vue has file evidence only. Host startup, component mounting and HTTP deployment/proxy mapping are unverified."
+              ]
+            }
+          },
+          {
+            "id": "request-order",
+            "component_ids": [
+              "client"
+            ],
+            "binding_ids": [
+              "api-client"
+            ],
+            "claim": {
+              "kind": "code_fact",
+              "explanation": "Declared capability step",
+              "binding_ids": [
+                "api-client"
+              ],
+              "issues": []
+            }
+          },
+          {
+            "id": "handle-order",
+            "component_ids": [
+              "java-controller"
+            ],
+            "binding_ids": [
+              "controller"
+            ],
+            "claim": {
+              "kind": "code_fact",
+              "explanation": "Declared capability step",
+              "binding_ids": [
+                "controller"
+              ],
+              "issues": []
+            }
+          },
+          {
+            "id": "create-order",
+            "component_ids": [
+              "java-service"
+            ],
+            "binding_ids": [
+              "service"
+            ],
+            "claim": {
+              "kind": "code_fact",
+              "explanation": "Declared capability step",
+              "binding_ids": [
+                "service"
+              ],
+              "issues": []
+            }
+          }
+        ],
+        "order": [
+          "submit-page",
+          "request-order",
+          "handle-order",
+          "create-order"
+        ],
+        "transitions": [
+          {
+            "source_id": "submit-page",
+            "target_id": "request-order",
+            "kind": "next",
+            "condition": "Assuming UI mounting and host routing"
+          },
+          {
+            "source_id": "request-order",
+            "target_id": "handle-order",
+            "kind": "next",
+            "condition": "Assuming UI mounting and host routing"
+          },
+          {
+            "source_id": "handle-order",
+            "target_id": "create-order",
+            "kind": "next",
+            "condition": "Native service method call"
+          }
+        ],
+        "claim": {
+          "kind": "inference",
+          "explanation": "A source-evidenced HTTP candidate path, including explicit Vue file-only and host activation gaps",
+          "binding_ids": [
+            "vue-page",
+            "api-client",
+            "controller",
+            "routes",
+            "service"
+          ],
+          "issues": [
+            "Vue has file evidence only. Host startup, component mounting and HTTP deployment/proxy mapping are unverified."
+          ]
+        }
+      }
+    }
+  ]
+}

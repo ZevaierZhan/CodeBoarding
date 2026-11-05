@@ -1,5 +1,12 @@
 # Read-only architecture and business flow explorer
 
+For named M5 roots, add `--source-map roots.json`, where the JSON object maps
+stable source root IDs to physical directories. Each evidence version uses its own
+snapshot's root and file hash. `--source-root` continues to serve only legacy
+single-root snapshots. The inspector shows language, source root, project and typed
+Relation contract metadata; pending maintenance remains distinct from an authored
+contract's static status. See the [M5 example](../examples/architecture_model/multilanguage/README.md).
+
 Open [the included example](../examples/architecture_model/interactive/index.html)
 in a browser, or generate a new offline document from your own complete model:
 
@@ -69,7 +76,7 @@ separators remain characters within the same numbered source line.
 |---|---|
 | Current / Historical explanation | Whether the observation's content fingerprints match today's model definitions |
 | Current pending / Historical pending / Review recorded | Membership in current_pending_ids / pending_ids and explicit resolution |
-| Latest / Older target | Whether target_snapshot_id equals latest_target_snapshot_id |
+| Latest / Older / Unknown target | Whether the target matches that root's effective target; query.latest_observation_ids and unknown_target_observation_ids distinguish known older versions from unavailable latestness |
 
 Current coverage may target older source. A historical confirmation never means the
 latest code was verified. Expand an observation for exact target version, reasons,

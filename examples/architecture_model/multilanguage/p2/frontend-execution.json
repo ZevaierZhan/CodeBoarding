@@ -1,0 +1,1 @@
+{"source_sha256": "cf3397a21359dcdeed429e7265e2310c2f490b60fa5c8e6f70da1a302ea32728", "checks": ["exact frontend file bytes", "literal IPC command and path payload"], "rust_or_ipc_runtime_executed": false}

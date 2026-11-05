@@ -5,6 +5,7 @@ from pydantic import ValidationError
 
 from architecture_model.errors import ModelError
 from architecture_model.schema import Facts, Model, Opinion, Strict, Verification
+from architecture_model.verification import validate_verification
 
 COLLECTIONS = ("facts", "bindings", "components", "relations", "scenarios", "opinions", "verifications", "maintenance")
 
@@ -43,7 +44,9 @@ def validate_facts(facts: Facts) -> None:
             or facts.source.files.get(path) != location.content_hash
         ):
             raise ModelError("FACTS_MISMATCH", f"/facts/{facts.id}/file_locations/{path}", "File contradicts manifest")
-    names = {location.symbol for location in facts.symbols.values()}
+    names = (
+        set(facts.symbols) if facts.schema_version == 2 else {location.symbol for location in facts.symbols.values()}
+    )
     for call in facts.calls:
         if call.source not in names or call.target not in names:
             raise ModelError("DANGLING_REFERENCE", "/facts/calls", "Call endpoint absent from snapshot")
@@ -64,6 +67,9 @@ def validate_model(value: object) -> Model:
     facts = {item.id: item for item in model.facts}
     if model.maintenance_target_snapshot_id:
         _references([model.maintenance_target_snapshot_id], set(facts), "/maintenance_target_snapshot_id")
+    for root_id, snapshot_id in model.maintenance_targets.items():
+        if snapshot_id not in facts or facts[snapshot_id].source_root_id != root_id:
+            raise ModelError("FACTS_MISMATCH", "/maintenance_targets", "Target belongs to another source root")
     for snapshot in model.facts:
         validate_facts(snapshot)
         if snapshot.project_id != model.project.id:
@@ -101,6 +107,29 @@ def validate_model(value: object) -> Model:
         location = f"/relations/{relation.id}"
         _references([relation.source_id, relation.target_id], set(components), location)
         _references(relation.claim.binding_ids, bindings, location + "/claim")
+        if relation.contract:
+            contract = relation.contract
+            evidence = contract.caller_binding_ids + contract.receiver_binding_ids + contract.matching_binding_ids
+            _references(evidence, bindings, location + "/contract")
+            if not set(evidence).issubset(relation.claim.binding_ids):
+                raise ModelError("CONTRACT_INVALID", location, "Contract evidence must be included in its claim")
+            for component_id, side in (
+                (relation.source_id, contract.caller_binding_ids),
+                (relation.target_id, contract.receiver_binding_ids),
+            ):
+                component = components[component_id]
+                if not set(side).issubset(component.binding_ids + component.claim.binding_ids):
+                    raise ModelError("CONTRACT_INVALID", location, "Each endpoint must own its side of the evidence")
+            if contract.status == "evidenced" and (
+                not contract.matching_binding_ids or relation.claim.kind != "code_fact" or contract.uncertainties
+            ):
+                raise ModelError(
+                    "CONTRACT_INVALID",
+                    location,
+                    "Evidenced contract requires explicit matching code evidence without unresolved uncertainty",
+                )
+            if contract.status != "evidenced" and not contract.uncertainties:
+                raise ModelError("CONTRACT_INVALID", location, "Unconfirmed contract requires explicit uncertainty")
     for scenario in model.scenarios:
         location = f"/scenarios/{scenario.id}"
         steps = {step.id for step in scenario.steps}
@@ -108,6 +137,7 @@ def validate_model(value: object) -> Model:
             raise ModelError("STEP_ORDER", location + "/order", "Order must contain every step exactly once")
         _references([scenario.entry_step_id], steps, location + "/entry_step_id")
         _references(scenario.claim.binding_ids, bindings, location + "/claim")
+        _references(scenario.relation_ids, {item.id for item in model.relations}, location + "/relation_ids")
         for step in scenario.steps:
             _references(step.component_ids, set(components), location + f"/steps/{step.id}/component_ids")
             _references(step.binding_ids + step.claim.binding_ids, bindings, location + f"/steps/{step.id}/bindings")
@@ -119,6 +149,7 @@ def validate_model(value: object) -> Model:
     versions = {snapshot.source.digest for snapshot in model.facts}
     for verification in model.verifications:
         _references([verification.source_version], versions, f"/verifications/{verification.id}/source_version")
+        validate_verification(model, verification)
     for item in model.maintenance:
         location = f"/maintenance/{item.id}"
         _references([item.target_snapshot_id], set(facts), location)

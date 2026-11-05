@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "browser": "Chrome via Playwright",
+  "errors": [],
+  "visibleRecord": "Verification · planned · check\n{\n  \"id\": \"check\",\n  \"status\": \"planned\",\n  \"object_ids\": [\n    \"frontend\"\n  ],\n  \"command\": \"check target\",\n  \"environment\": \"fixture\",\n  \"inputs\": \"Declared evidence\",\n  \"source_version\": \"fe44f5781e1d372f4cbde808df89bb91e2082abcac68d29ff1b8a6c6aff23be3\",\n  \"executor\": \"\",\n  \"executed_at\": \"\",\n  \"exit_code\": null,\n  \"result\": \"\"\n}\nVerification evidence scope (not whole-business approval)\n{\n  \"scope_kind\": \"legacy_unscoped\",\n  \"object_ids\": [\n    \"frontend\"\n  ],\n  \"uncovered_binding_ids\": [\n    \"frontend\"\n  ],\n  \"historical_binding_ids\": [],\n  \"evidence\": [],\n  \"notice\": \"Source evidence scope only. Planned is not executed; partial or unscoped checks do not verify a whole contract/business. Source coverage is not runtime proof.\"\n}",
+  "checks": [
+    "unknown implicit evidence",
+    "uncovered frontend",
+    "planned retained",
+    "no runtime promotion"
+  ]
+}

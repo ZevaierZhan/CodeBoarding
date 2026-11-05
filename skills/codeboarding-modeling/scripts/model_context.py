@@ -23,6 +23,8 @@ PATH_OPTIONS = {
     "--node",
     "--pyright",
     "--tokei",
+    "--tools",
+    "--source-map",
 }
 COLLECTIONS = ("facts", "bindings", "components", "relations", "scenarios", "opinions", "verifications", "maintenance")
 
@@ -108,6 +110,14 @@ def inventory(model: dict) -> list[dict]:
                     row[field] = item[field]
             if collection == "bindings":
                 row.update(path=item["location"]["path"], symbol=item["location"]["symbol"])
+                snapshot: dict = next((entry for entry in model["facts"] if entry["id"] == item["snapshot_id"]), {})
+                row["source_root_id"] = snapshot.get("source_root_id", "")
+                row["language"] = snapshot.get("file_languages", {}).get(item["location"]["path"], "legacy")
+            if collection == "facts":
+                row["source_root_id"] = item.get("source_root_id", "")
+            if collection == "relations" and item.get("contract"):
+                row["mechanism"] = item["contract"]["mechanism"]
+                row["operation"] = item["contract"]["operation"]
             rows.append(row)
             if collection == "scenarios":
                 rows.extend(
@@ -167,6 +177,10 @@ def load_context(cache: Path) -> tuple[dict, dict]:
 
 
 def overview(model: dict, index: dict, cache: Path) -> dict:
+    scalar: dict = next((item for item in model["facts"] if item["id"] == model["maintenance_target_snapshot_id"]), {})
+    explicit_targets = dict(model.get("maintenance_targets", {}))
+    if scalar.get("source_root_id"):
+        explicit_targets.setdefault(scalar["source_root_id"], scalar["id"])
     return {
         "artifact_type": index["artifact_type"],
         "cache": str(cache.resolve()),
@@ -178,6 +192,7 @@ def overview(model: dict, index: dict, cache: Path) -> dict:
         "facts": [
             {
                 "id": item["id"],
+                "source_root_id": item.get("source_root_id", ""),
                 "source_version": item["source"]["digest"],
                 "git_commit": item["source"]["git_commit"],
                 "files": len(item["source"]["files"]),
@@ -185,7 +200,9 @@ def overview(model: dict, index: dict, cache: Path) -> dict:
             for item in model["facts"][:5]
         ],
         "facts_shown": min(5, len(model["facts"])),
-        "maintenance_target": model["maintenance_target_snapshot_id"],
+        "maintenance_target": scalar.get("id", "") if not scalar.get("source_root_id") else "",
+        "maintenance_target_scope": "legacy root only; an overwritten legacy target is unknown",
+        "named_maintenance_target_count": len(explicit_targets),
         "unresolved_observations": sum(
             item["disposition"] != "unchanged" and item["resolution"] is None for item in model["maintenance"]
         ),

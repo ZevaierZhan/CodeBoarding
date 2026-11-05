@@ -8,6 +8,7 @@ from collections.abc import Collection
 from pathlib import Path
 
 from infra.repo_utils.ignore import RepoIgnoreManager
+from infra.utils import get_config
 from static_analyzer.config import Language
 from static_analyzer.engine.language_adapter import LanguageAdapter
 from static_analyzer.exceptions import WorkspaceSetupError
@@ -43,8 +44,11 @@ class TypeScriptAdapter(LanguageAdapter):
         # that needs an inferred type -- ``.then(t => t.serialize())`` -- comes back empty on a cold start.
         # Why the plugin: a call into a sibling workspace package of an uninstalled, unbuilt checkout resolves nowhere;
         # the plugin resolves it to the member's sources (see ``typescript_workspace``).
+        server = {"useSyntaxServer": "never"}
+        if sdk := get_config("lsp_servers").get(self.config_key, {}).get("tsserver_path"):
+            server["path"] = sdk
         return {
-            "tsserver": {"useSyntaxServer": "never"},
+            "tsserver": server,
             "plugins": [{"name": PLUGIN_NAME, "location": str(PLUGIN_LOCATION)}],
         }
 

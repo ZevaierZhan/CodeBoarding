@@ -1,0 +1,5 @@
+{
+  "id": "m5-system",
+  "name": "Cross-language document system",
+  "boundary": "TypeScript actions, explicit candidate Tauri IPC contract and Rust filesystem service. Desktop host activation and runtime execution are outside this fixture."
+}

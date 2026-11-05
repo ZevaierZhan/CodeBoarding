@@ -1,0 +1,456 @@
+{
+  "old_revision": 2,
+  "final_revision": 10,
+  "backend_bindings_unchanged": true,
+  "old_catalogs_unchanged": true,
+  "definitions_unchanged": true,
+  "granularity": "whole containing file, so preview and invoke also reviewed",
+  "pending": {
+    "model_id": "c3094cd2-b73e-4b0c-a3bb-6b9beb395a58",
+    "revision": 10,
+    "pending_ids": [],
+    "current_coverage_ids": [
+      "maintenance-1738183af40e89e24d5a39bd071cb4f758b34329220b10a70f5acd2eebc83897",
+      "maintenance-b20912ef007ac5c46092993e76d0f0715106f3c83cace8fe19a598a588ae798e",
+      "maintenance-f0536d84a481691a5a8f896dc2c1a7086ee9d0e66a303262092a15bc25333ace"
+    ],
+    "current_pending_ids": [],
+    "latest_target_snapshot_id": "afa1d87bc051b962795c1821379e5f55bb28ccd4dd0d73b4cc426c65f447b41e",
+    "source_root_targets": {
+      "frontend": "afa1d87bc051b962795c1821379e5f55bb28ccd4dd0d73b4cc426c65f447b41e"
+    },
+    "observations": [
+      {
+        "id": "maintenance-1738183af40e89e24d5a39bd071cb4f758b34329220b10a70f5acd2eebc83897",
+        "binding_id": "open",
+        "basis": {
+          "snapshot_id": "be92c9fdcd25216b43e3ecea056c28feb4954f66f36f33d808acca1237183ddb",
+          "source_version": "68e41c24084c9c32720bfa36dcd6dd569d0cd8dc23872d3746ac82879165c9bf",
+          "location": {
+            "path": "src/utils.ts",
+            "symbol": "src.utils.openDocument",
+            "kind": "FUNCTION",
+            "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e",
+            "start": 7,
+            "end": 9
+          },
+          "reason": "Evidence at comparison time"
+        },
+        "target_snapshot_id": "afa1d87bc051b962795c1821379e5f55bb28ccd4dd0d73b4cc426c65f447b41e",
+        "target_source_version": "d8081841a4efa4cde033ba620c2e415a4f90bc1aca9a9a10832eb1ba8724f800",
+        "compared_revision": 3,
+        "disposition": "changed",
+        "reasons": [
+          "Containing-file bytes or incident call endpoints changed",
+          "Location metadata changed; content judgement uses whole-file bytes"
+        ],
+        "candidates": [
+          {
+            "key": "src/utils.ts|src.utils.openDocument",
+            "location": {
+              "path": "src/utils.ts",
+              "symbol": "src.utils.openDocument",
+              "kind": "FUNCTION",
+              "content_hash": "cf3397a21359dcdeed429e7265e2310c2f490b60fa5c8e6f70da1a302ea32728",
+              "start": 7,
+              "end": 9
+            },
+            "reasons": [
+              "Exact path and symbol identity"
+            ]
+          }
+        ],
+        "component_ids": [
+          "frontend-ui",
+          "ipc-client"
+        ],
+        "relation_ids": [
+          "read-file-ipc",
+          "ui-client"
+        ],
+        "scenario_ids": [
+          "open-document",
+          "preview-document"
+        ],
+        "step_ids": [
+          "open-action",
+          "open-ipc",
+          "preview-action",
+          "preview-ipc"
+        ],
+        "call_changes": {
+          "before": [
+            {
+              "source": "src/utils.ts|src.utils.openDocument",
+              "target": "src/utils.ts|src.utils.readDocument",
+              "sites": [
+                {
+                  "path": "src/utils.ts",
+                  "line": 8,
+                  "column": 10
+                }
+              ]
+            }
+          ],
+          "after": [
+            {
+              "source": "src/utils.ts|src.utils.openDocument",
+              "target": "src/utils.ts|src.utils.readDocument",
+              "sites": [
+                {
+                  "path": "src/utils.ts",
+                  "line": 8,
+                  "column": 10
+                }
+              ]
+            }
+          ]
+        },
+        "resolution": {
+          "outcome": "confirmed",
+          "author": "M5 external Agent",
+          "reason": "Inspected path normalization: trimming the configured notes.txt literal preserves the same input and IPC operation/payload. Candidate contract remains conditional; this review proves no runtime execution.",
+          "source_version": "d8081841a4efa4cde033ba620c2e415a4f90bc1aca9a9a10832eb1ba8724f800",
+          "timestamp": "2026-11-05T03:45:13.431569+00:00",
+          "object_ids": [
+            "frontend-ui",
+            "ipc-client",
+            "open-action",
+            "open-document",
+            "open-ipc",
+            "preview-action",
+            "preview-document",
+            "preview-ipc",
+            "read-file-ipc",
+            "ui-client"
+          ],
+          "object_versions": {
+            "frontend-ui": "14c7480608304eb084eb9576108cbfb8fb72102d029185b6570aca5bed334f2c",
+            "ipc-client": "cb227ceb603bd239a216ca7f6f313cd8bc17f563f11260df344238a707b989ca",
+            "ui-client": "3f73f293c09c07fda8e5d22da8ef381fc5594ce5d7736b4b123a1dc335ee0757",
+            "read-file-ipc": "6e51d2619ec37ca162f74263f5c46383c6c2c93182c4c3e68bfb48df088e0f4f",
+            "open-document": "f58d0000e874027a32467979dc5dda706dc52beeb3824677c633b760bada9c75",
+            "preview-document": "02ccdbfd2f70d0c72b6c383adb8eded13d5927ce2ce15927d7d3f3b1b38a4fdd",
+            "open-action": "842abf2507c6896908df7f5f2c4c5a337183e419f06e0917a1df0f5762cce08a",
+            "open-ipc": "0f1f74dba594cfef02e9e0401c680adb7f9bd8a2b4d7d7a27ba8bed60bf754c3",
+            "preview-action": "8034215219b4a0dc0e9b88296009290ac43a1ac3f05e2c2dc2215460ddf0d7d1",
+            "preview-ipc": "d376cbffa3e1a470f4fad807b5461583a3592f6434802a8f5b33a758ec66c9eb"
+          }
+        },
+        "coverage_version": "objects-v1",
+        "object_versions": {
+          "frontend-ui": "14c7480608304eb084eb9576108cbfb8fb72102d029185b6570aca5bed334f2c",
+          "ipc-client": "cb227ceb603bd239a216ca7f6f313cd8bc17f563f11260df344238a707b989ca",
+          "ui-client": "3f73f293c09c07fda8e5d22da8ef381fc5594ce5d7736b4b123a1dc335ee0757",
+          "read-file-ipc": "6e51d2619ec37ca162f74263f5c46383c6c2c93182c4c3e68bfb48df088e0f4f",
+          "open-document": "f58d0000e874027a32467979dc5dda706dc52beeb3824677c633b760bada9c75",
+          "preview-document": "02ccdbfd2f70d0c72b6c383adb8eded13d5927ce2ce15927d7d3f3b1b38a4fdd",
+          "open-action": "842abf2507c6896908df7f5f2c4c5a337183e419f06e0917a1df0f5762cce08a",
+          "open-ipc": "0f1f74dba594cfef02e9e0401c680adb7f9bd8a2b4d7d7a27ba8bed60bf754c3",
+          "preview-action": "8034215219b4a0dc0e9b88296009290ac43a1ac3f05e2c2dc2215460ddf0d7d1",
+          "preview-ipc": "d376cbffa3e1a470f4fad807b5461583a3592f6434802a8f5b33a758ec66c9eb"
+        }
+      },
+      {
+        "id": "maintenance-b20912ef007ac5c46092993e76d0f0715106f3c83cace8fe19a598a588ae798e",
+        "binding_id": "preview",
+        "basis": {
+          "snapshot_id": "be92c9fdcd25216b43e3ecea056c28feb4954f66f36f33d808acca1237183ddb",
+          "source_version": "68e41c24084c9c32720bfa36dcd6dd569d0cd8dc23872d3746ac82879165c9bf",
+          "location": {
+            "path": "src/utils.ts",
+            "symbol": "src.utils.previewDocument",
+            "kind": "FUNCTION",
+            "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e",
+            "start": 11,
+            "end": 13
+          },
+          "reason": "Evidence at comparison time"
+        },
+        "target_snapshot_id": "afa1d87bc051b962795c1821379e5f55bb28ccd4dd0d73b4cc426c65f447b41e",
+        "target_source_version": "d8081841a4efa4cde033ba620c2e415a4f90bc1aca9a9a10832eb1ba8724f800",
+        "compared_revision": 3,
+        "disposition": "changed",
+        "reasons": [
+          "Containing-file bytes or incident call endpoints changed",
+          "Location metadata changed; content judgement uses whole-file bytes"
+        ],
+        "candidates": [
+          {
+            "key": "src/utils.ts|src.utils.previewDocument",
+            "location": {
+              "path": "src/utils.ts",
+              "symbol": "src.utils.previewDocument",
+              "kind": "FUNCTION",
+              "content_hash": "cf3397a21359dcdeed429e7265e2310c2f490b60fa5c8e6f70da1a302ea32728",
+              "start": 11,
+              "end": 13
+            },
+            "reasons": [
+              "Exact path and symbol identity"
+            ]
+          }
+        ],
+        "component_ids": [
+          "frontend-ui",
+          "ipc-client"
+        ],
+        "relation_ids": [
+          "read-file-ipc",
+          "ui-client"
+        ],
+        "scenario_ids": [
+          "open-document",
+          "preview-document"
+        ],
+        "step_ids": [
+          "open-action",
+          "open-ipc",
+          "preview-action",
+          "preview-ipc"
+        ],
+        "call_changes": {
+          "before": [
+            {
+              "source": "src/utils.ts|src.utils.previewDocument",
+              "target": "src/utils.ts|src.utils.readDocument",
+              "sites": [
+                {
+                  "path": "src/utils.ts",
+                  "line": 12,
+                  "column": 10
+                }
+              ]
+            }
+          ],
+          "after": [
+            {
+              "source": "src/utils.ts|src.utils.previewDocument",
+              "target": "src/utils.ts|src.utils.readDocument",
+              "sites": [
+                {
+                  "path": "src/utils.ts",
+                  "line": 12,
+                  "column": 10
+                }
+              ]
+            }
+          ]
+        },
+        "resolution": {
+          "outcome": "confirmed",
+          "author": "M5 external Agent",
+          "reason": "Inspected path normalization: trimming the configured notes.txt literal preserves the same input and IPC operation/payload. Candidate contract remains conditional; this review proves no runtime execution.",
+          "source_version": "d8081841a4efa4cde033ba620c2e415a4f90bc1aca9a9a10832eb1ba8724f800",
+          "timestamp": "2026-11-05T03:45:16.647545+00:00",
+          "object_ids": [
+            "frontend-ui",
+            "ipc-client",
+            "open-action",
+            "open-document",
+            "open-ipc",
+            "preview-action",
+            "preview-document",
+            "preview-ipc",
+            "read-file-ipc",
+            "ui-client"
+          ],
+          "object_versions": {
+            "frontend-ui": "14c7480608304eb084eb9576108cbfb8fb72102d029185b6570aca5bed334f2c",
+            "ipc-client": "cb227ceb603bd239a216ca7f6f313cd8bc17f563f11260df344238a707b989ca",
+            "ui-client": "3f73f293c09c07fda8e5d22da8ef381fc5594ce5d7736b4b123a1dc335ee0757",
+            "read-file-ipc": "6e51d2619ec37ca162f74263f5c46383c6c2c93182c4c3e68bfb48df088e0f4f",
+            "open-document": "f58d0000e874027a32467979dc5dda706dc52beeb3824677c633b760bada9c75",
+            "preview-document": "02ccdbfd2f70d0c72b6c383adb8eded13d5927ce2ce15927d7d3f3b1b38a4fdd",
+            "open-action": "842abf2507c6896908df7f5f2c4c5a337183e419f06e0917a1df0f5762cce08a",
+            "open-ipc": "0f1f74dba594cfef02e9e0401c680adb7f9bd8a2b4d7d7a27ba8bed60bf754c3",
+            "preview-action": "8034215219b4a0dc0e9b88296009290ac43a1ac3f05e2c2dc2215460ddf0d7d1",
+            "preview-ipc": "d376cbffa3e1a470f4fad807b5461583a3592f6434802a8f5b33a758ec66c9eb"
+          }
+        },
+        "coverage_version": "objects-v1",
+        "object_versions": {
+          "frontend-ui": "14c7480608304eb084eb9576108cbfb8fb72102d029185b6570aca5bed334f2c",
+          "ipc-client": "cb227ceb603bd239a216ca7f6f313cd8bc17f563f11260df344238a707b989ca",
+          "ui-client": "3f73f293c09c07fda8e5d22da8ef381fc5594ce5d7736b4b123a1dc335ee0757",
+          "read-file-ipc": "6e51d2619ec37ca162f74263f5c46383c6c2c93182c4c3e68bfb48df088e0f4f",
+          "open-document": "f58d0000e874027a32467979dc5dda706dc52beeb3824677c633b760bada9c75",
+          "preview-document": "02ccdbfd2f70d0c72b6c383adb8eded13d5927ce2ce15927d7d3f3b1b38a4fdd",
+          "open-action": "842abf2507c6896908df7f5f2c4c5a337183e419f06e0917a1df0f5762cce08a",
+          "open-ipc": "0f1f74dba594cfef02e9e0401c680adb7f9bd8a2b4d7d7a27ba8bed60bf754c3",
+          "preview-action": "8034215219b4a0dc0e9b88296009290ac43a1ac3f05e2c2dc2215460ddf0d7d1",
+          "preview-ipc": "d376cbffa3e1a470f4fad807b5461583a3592f6434802a8f5b33a758ec66c9eb"
+        }
+      },
+      {
+        "id": "maintenance-f0536d84a481691a5a8f896dc2c1a7086ee9d0e66a303262092a15bc25333ace",
+        "binding_id": "invoke",
+        "basis": {
+          "snapshot_id": "be92c9fdcd25216b43e3ecea056c28feb4954f66f36f33d808acca1237183ddb",
+          "source_version": "68e41c24084c9c32720bfa36dcd6dd569d0cd8dc23872d3746ac82879165c9bf",
+          "location": {
+            "path": "src/utils.ts",
+            "symbol": "src.utils.readDocument",
+            "kind": "FUNCTION",
+            "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e",
+            "start": 3,
+            "end": 5
+          },
+          "reason": "Evidence at comparison time"
+        },
+        "target_snapshot_id": "afa1d87bc051b962795c1821379e5f55bb28ccd4dd0d73b4cc426c65f447b41e",
+        "target_source_version": "d8081841a4efa4cde033ba620c2e415a4f90bc1aca9a9a10832eb1ba8724f800",
+        "compared_revision": 3,
+        "disposition": "changed",
+        "reasons": [
+          "Containing-file bytes or incident call endpoints changed",
+          "Location metadata changed; content judgement uses whole-file bytes"
+        ],
+        "candidates": [
+          {
+            "key": "src/utils.ts|src.utils.readDocument",
+            "location": {
+              "path": "src/utils.ts",
+              "symbol": "src.utils.readDocument",
+              "kind": "FUNCTION",
+              "content_hash": "cf3397a21359dcdeed429e7265e2310c2f490b60fa5c8e6f70da1a302ea32728",
+              "start": 3,
+              "end": 5
+            },
+            "reasons": [
+              "Exact path and symbol identity"
+            ]
+          }
+        ],
+        "component_ids": [
+          "frontend-ui",
+          "ipc-client",
+          "rust-command"
+        ],
+        "relation_ids": [
+          "command-service",
+          "read-file-ipc",
+          "ui-client"
+        ],
+        "scenario_ids": [
+          "open-document",
+          "preview-document"
+        ],
+        "step_ids": [
+          "open-action",
+          "open-command",
+          "open-ipc",
+          "preview-action",
+          "preview-command",
+          "preview-ipc"
+        ],
+        "call_changes": {
+          "before": [
+            {
+              "source": "src/utils.ts|src.utils.openDocument",
+              "target": "src/utils.ts|src.utils.readDocument",
+              "sites": [
+                {
+                  "path": "src/utils.ts",
+                  "line": 8,
+                  "column": 10
+                }
+              ]
+            },
+            {
+              "source": "src/utils.ts|src.utils.previewDocument",
+              "target": "src/utils.ts|src.utils.readDocument",
+              "sites": [
+                {
+                  "path": "src/utils.ts",
+                  "line": 12,
+                  "column": 10
+                }
+              ]
+            }
+          ],
+          "after": [
+            {
+              "source": "src/utils.ts|src.utils.openDocument",
+              "target": "src/utils.ts|src.utils.readDocument",
+              "sites": [
+                {
+                  "path": "src/utils.ts",
+                  "line": 8,
+                  "column": 10
+                }
+              ]
+            },
+            {
+              "source": "src/utils.ts|src.utils.previewDocument",
+              "target": "src/utils.ts|src.utils.readDocument",
+              "sites": [
+                {
+                  "path": "src/utils.ts",
+                  "line": 12,
+                  "column": 10
+                }
+              ]
+            }
+          ]
+        },
+        "resolution": {
+          "outcome": "confirmed",
+          "author": "M5 external Agent",
+          "reason": "Inspected path normalization: trimming the configured notes.txt literal preserves the same input and IPC operation/payload. Candidate contract remains conditional; this review proves no runtime execution.",
+          "source_version": "d8081841a4efa4cde033ba620c2e415a4f90bc1aca9a9a10832eb1ba8724f800",
+          "timestamp": "2026-11-05T03:45:20.421709+00:00",
+          "object_ids": [
+            "command-service",
+            "frontend-ui",
+            "ipc-client",
+            "open-action",
+            "open-command",
+            "open-document",
+            "open-ipc",
+            "preview-action",
+            "preview-command",
+            "preview-document",
+            "preview-ipc",
+            "read-file-ipc",
+            "rust-command",
+            "ui-client"
+          ],
+          "object_versions": {
+            "frontend-ui": "14c7480608304eb084eb9576108cbfb8fb72102d029185b6570aca5bed334f2c",
+            "ipc-client": "cb227ceb603bd239a216ca7f6f313cd8bc17f563f11260df344238a707b989ca",
+            "rust-command": "1ad25510505196fe7250c335e06d328c44ec87318065c464637959ef454569c2",
+            "ui-client": "3f73f293c09c07fda8e5d22da8ef381fc5594ce5d7736b4b123a1dc335ee0757",
+            "read-file-ipc": "6e51d2619ec37ca162f74263f5c46383c6c2c93182c4c3e68bfb48df088e0f4f",
+            "command-service": "3b6017c679f4ebf6c4e39ec7cd6d5a896b3ecc915acac89a1355d5514644f71d",
+            "open-document": "f58d0000e874027a32467979dc5dda706dc52beeb3824677c633b760bada9c75",
+            "preview-document": "02ccdbfd2f70d0c72b6c383adb8eded13d5927ce2ce15927d7d3f3b1b38a4fdd",
+            "open-action": "842abf2507c6896908df7f5f2c4c5a337183e419f06e0917a1df0f5762cce08a",
+            "open-ipc": "0f1f74dba594cfef02e9e0401c680adb7f9bd8a2b4d7d7a27ba8bed60bf754c3",
+            "open-command": "c425a1ec242a2f8acef3f8a75612fc32d704a4296cb51bf010c5195fa10600ee",
+            "preview-action": "8034215219b4a0dc0e9b88296009290ac43a1ac3f05e2c2dc2215460ddf0d7d1",
+            "preview-ipc": "d376cbffa3e1a470f4fad807b5461583a3592f6434802a8f5b33a758ec66c9eb",
+            "preview-command": "5449627593053c84f398286a41e305aeeb15c2c5aff4ea98be8693d4ee8ff27f"
+          }
+        },
+        "coverage_version": "objects-v1",
+        "object_versions": {
+          "frontend-ui": "14c7480608304eb084eb9576108cbfb8fb72102d029185b6570aca5bed334f2c",
+          "ipc-client": "cb227ceb603bd239a216ca7f6f313cd8bc17f563f11260df344238a707b989ca",
+          "rust-command": "1ad25510505196fe7250c335e06d328c44ec87318065c464637959ef454569c2",
+          "ui-client": "3f73f293c09c07fda8e5d22da8ef381fc5594ce5d7736b4b123a1dc335ee0757",
+          "read-file-ipc": "6e51d2619ec37ca162f74263f5c46383c6c2c93182c4c3e68bfb48df088e0f4f",
+          "command-service": "3b6017c679f4ebf6c4e39ec7cd6d5a896b3ecc915acac89a1355d5514644f71d",
+          "open-document": "f58d0000e874027a32467979dc5dda706dc52beeb3824677c633b760bada9c75",
+          "preview-document": "02ccdbfd2f70d0c72b6c383adb8eded13d5927ce2ce15927d7d3f3b1b38a4fdd",
+          "open-action": "842abf2507c6896908df7f5f2c4c5a337183e419f06e0917a1df0f5762cce08a",
+          "open-ipc": "0f1f74dba594cfef02e9e0401c680adb7f9bd8a2b4d7d7a27ba8bed60bf754c3",
+          "open-command": "c425a1ec242a2f8acef3f8a75612fc32d704a4296cb51bf010c5195fa10600ee",
+          "preview-action": "8034215219b4a0dc0e9b88296009290ac43a1ac3f05e2c2dc2215460ddf0d7d1",
+          "preview-ipc": "d376cbffa3e1a470f4fad807b5461583a3592f6434802a8f5b33a758ec66c9eb",
+          "preview-command": "5449627593053c84f398286a41e305aeeb15c2c5aff4ea98be8693d4ee8ff27f"
+        }
+      }
+    ]
+  }
+}

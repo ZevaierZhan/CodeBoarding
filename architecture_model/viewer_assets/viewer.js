@@ -210,7 +210,8 @@
       field(node, "Binding status is relative to its saved evidence", binding.reason || binding.status);
       for (const [index, snippet] of documentData.snippets[id].entries()) {
         field(node, index === 0 ? "Referenced evidence" : "Historical binding evidence", snippet.location.symbol || snippet.location.path);
-        json(node, {snapshot_id:snippet.snapshot_id,source_version:snippet.source_version,...snippet.location});
+        const snapshot = model.facts.find(item => item.id === snippet.snapshot_id);
+        json(node, {source_root_id:snippet.source_root_id || "legacy single root", language:snapshot?.file_languages?.[snippet.location.path] || "legacy", project:snapshot?.file_projects?.[snippet.location.path] || "legacy", snapshot_id:snippet.snapshot_id,source_version:snippet.source_version,...snippet.location});
         if (snippet.status === "verified") node.append(element("p", "Exact file SHA-256 matched this evidence version.", "badge"), element("pre", snippet.text));
         else node.append(element("p", snippet.reason, "warning"));
       }
@@ -224,16 +225,19 @@
   function renderMaintenance(container, ids, displayed) {
     container.append(element("h3", "Maintenance & review history"));
     container.append(element("p", "Current means current explanation contents for a saved source comparison. It does not mean latest source verified.", "muted"));
-    field(container, "Latest target snapshot", report.latest_target_snapshot_id || "No source maintenance target saved");
+    field(container, "Legacy root latest target", report.latest_target_snapshot_id || "Unknown or no legacy target saved");
+    if (report.legacy_target_status) field(container, "Legacy target availability", report.legacy_target_status);
+    details(container, "Explicit root latest targets", report.source_root_targets || {});
     const matching = model.maintenance.filter(item => ids.has(item.binding_id) || [...item.component_ids,...item.relation_ids,...item.scenario_ids,...item.step_ids].some(id => ids.has(id)));
     if (!matching.length) container.append(element("p", "No maintenance observations for this selection. This is not evidence of verification."));
     for (const item of matching) {
       const current = report.current_coverage_ids.includes(item.id);
       const pending = report.pending_ids.includes(item.id);
       const currentPending = report.current_pending_ids.includes(item.id);
-      const latest = item.target_snapshot_id === report.latest_target_snapshot_id;
+      const latest = report.latest_observation_ids ? report.latest_observation_ids.includes(item.id) : item.target_snapshot_id === report.latest_target_snapshot_id;
+      const targetLabel = report.unknown_target_observation_ids?.includes(item.id) ? "target latestness unknown" : latest ? "latest target" : "older target";
       const node = element("details");
-      node.append(element("summary", `${current ? "Current explanation" : "Historical explanation"} · ${item.disposition} · ${currentPending ? "current pending" : pending ? "historical pending" : item.resolution ? "review recorded" : "unchanged comparison"} · ${latest ? "latest target" : "older target"}`));
+      node.append(element("summary", `${current ? "Current explanation" : "Historical explanation"} · ${item.disposition} · ${currentPending ? "current pending" : pending ? "historical pending" : item.resolution ? "review recorded" : "unchanged comparison"} · ${targetLabel}`));
       field(node, "Observation ID", item.id);
       field(node, "Target snapshot / source version", `${item.target_snapshot_id} / ${item.target_source_version}`);
       field(node, "Reasons", item.reasons);
@@ -265,6 +269,10 @@
           continue;
         }
         const node = details(container, `${name} · ${record.status || record.stance} · ${record.id}`, record);
+        if (name === "Verification") {
+          const scope = documentData.verification_scopes?.[record.id];
+          details(node, "Verification evidence scope (not whole-business approval)", scope || {scope_kind:"legacy_unscoped",notice:"Actual binding/root coverage was not declared."}).open = true;
+        }
         node.dataset.recordId = record.id;
         displayed.set(record.id, {node, context});
       }
@@ -275,6 +283,7 @@
     const object = byId.get(selection);
     if (!object) { json(container, model.project); return; }
     container.append(element("h3", object.name || object.id));
+    if (object.contract) details(container, "Cross-boundary contract (static evidence, not runtime proof)", object.contract);
     field(container, "Stable object ID", object.id);
     for (const name of ["responsibility", "rationale", "parent_id", "meaning", "source_id", "target_id", "component_ids"]) {
       if (object[name]) field(container, name.replaceAll("_", " "), object[name]);
@@ -342,8 +351,10 @@
     for (const binding of model.bindings) {
       container.append(button(`Inspect binding ${binding.id}`, () => select(binding.id)));
     }
-    field(container, "Latest source target", report.latest_target_snapshot_id || "none");
-    for (const facts of model.facts) details(container, `Snapshot ${facts.id}`, {id:facts.id, source:facts.source,tools:facts.tools,limitations:facts.limitations});
+    field(container, "Legacy root latest target", report.latest_target_snapshot_id || "Unknown or no legacy target saved");
+    if (report.legacy_target_status) field(container, "Legacy target availability", report.legacy_target_status);
+    details(container, "Independent source root maintenance targets", report.source_root_targets || {});
+    for (const facts of model.facts) details(container, `Snapshot ${facts.id}`, {id:facts.id,source_root_id:facts.source_root_id || "legacy single root",file_languages:facts.file_languages,file_projects:facts.file_projects, source:facts.source,tools:facts.tools,limitations:facts.limitations});
     details(container, "Maintenance coverage sets", report);
     details(container, "Revision metadata (not historical explanation bodies)", model.revisions);
   });

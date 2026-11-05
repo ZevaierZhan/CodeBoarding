@@ -75,7 +75,7 @@ def install_workspace_dependencies(repo: Path) -> None:
         finally:
             if process.poll() is None:  # timed out or interrupted
                 if hasattr(os, "killpg"):
-                    os.killpg(process.pid, signal.SIGKILL)
+                    os.killpg(process.pid, getattr(signal, "SIGKILL", 9))
                 else:
                     process.kill()
                 process.wait()

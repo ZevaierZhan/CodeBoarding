@@ -1,0 +1,9 @@
+{
+  "checks": [
+    "one scenario across Vue, TypeScript and Java",
+    "three explicit transitions to service",
+    "HTTP candidate inspected",
+    "no JavaScript errors"
+  ],
+  "passed": true
+}

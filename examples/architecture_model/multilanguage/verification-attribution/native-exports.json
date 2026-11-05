@@ -1,0 +1,75 @@
+[
+  {
+    "file": "E:\\Temp\\pytest-of-BW011222\\pytest-667\\test_real_multilanguage_export0\\backend.json",
+    "snapshot_id": "5741e2a015d3640650c797986d86872af197ce2fc56592647b9b8737eb995500",
+    "schema_version": 2,
+    "root": "backend",
+    "source_version": "5c0c4ee7f45d71895357626bc9f626271e057119ac8d41480db644083ee6c042",
+    "symbols": 3,
+    "calls": 1,
+    "languages": [
+      "rust"
+    ],
+    "tools": {
+      "engine": "StaticAnalyzer/native adapters",
+      "commands": "{\"lsp_servers\": {\"rust\": [\"C:\\\\Users\\\\BW011222\\\\.cargo\\\\bin\\\\rust-analyzer.exe\"]}, \"tokei\": [\"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\", \"-o\", \"json\"]}",
+      "versions": "{\"rust\": \"rust-analyzer 1.99.1 (58cf8f9c 2026-10-13)\", \"tokei\": \"tokei 14.0.0 compiled with serialization support: json\"}"
+    }
+  },
+  {
+    "file": "E:\\Temp\\pytest-of-BW011222\\pytest-667\\test_real_multilanguage_export0\\frontend.json",
+    "snapshot_id": "ca456764828a9561548dd27b7aefda637e59dd0d4663fa4c580d998e96696599",
+    "schema_version": 2,
+    "root": "frontend",
+    "source_version": "68e41c24084c9c32720bfa36dcd6dd569d0cd8dc23872d3746ac82879165c9bf",
+    "symbols": 3,
+    "calls": 2,
+    "languages": [
+      "typescript"
+    ],
+    "tools": {
+      "engine": "StaticAnalyzer/native adapters",
+      "commands": "{\"lsp_servers\": {\"typescript\": [\"D:\\\\Progrm Files\\\\nvm4w\\\\nodejs\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\m5-tools\\\\node_modules\\\\typescript-language-server\\\\lib\\\\cli.mjs\", \"--stdio\"]}, \"tokei\": [\"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\", \"-o\", \"json\"], \"typescript_sdk\": \"F:\\\\CodeBoarding\\\\temp\\\\m5-tools\\\\node_modules\\\\typescript\\\\lib\\\\tsserver.js\"}",
+      "versions": "{\"tokei\": \"tokei 14.0.0 compiled with serialization support: json\", \"typescript\": \"typescript-language-server 6.0.3\", \"typescript_sdk\": \"5.9.3\"}"
+    }
+  },
+  {
+    "file": "E:\\Temp\\pytest-of-BW011222\\pytest-667\\test_real_multilanguage_export0\\mixed.json",
+    "snapshot_id": "9e8360212b2eb6ff616ecddd72f98f036623b29740ccfac9e9885f3c709272a0",
+    "schema_version": 2,
+    "root": "mixed",
+    "source_version": "fcf5e4b1e1b560978731a72ae4bdd45ba786b51c94682bbe967cd71b2acc9354",
+    "symbols": 6,
+    "calls": 3,
+    "languages": [
+      "rust",
+      "typescript"
+    ],
+    "tools": {
+      "engine": "StaticAnalyzer/native adapters",
+      "commands": "{\"lsp_servers\": {\"rust\": [\"C:\\\\Users\\\\BW011222\\\\.cargo\\\\bin\\\\rust-analyzer.exe\"], \"typescript\": [\"D:\\\\Progrm Files\\\\nvm4w\\\\nodejs\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\m5-tools\\\\node_modules\\\\typescript-language-server\\\\lib\\\\cli.mjs\", \"--stdio\"]}, \"tokei\": [\"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\", \"-o\", \"json\"], \"typescript_sdk\": \"F:\\\\CodeBoarding\\\\temp\\\\m5-tools\\\\node_modules\\\\typescript\\\\lib\\\\tsserver.js\"}",
+      "versions": "{\"rust\": \"rust-analyzer 1.99.1 (58cf8f9c 2026-10-13)\", \"tokei\": \"tokei 14.0.0 compiled with serialization support: json\", \"typescript\": \"typescript-language-server 6.0.3\", \"typescript_sdk\": \"5.9.3\"}"
+    }
+  },
+  {
+    "file": "E:\\Temp\\pytest-of-BW011222\\pytest-667\\test_real_python_export_and_fa0\\published.json",
+    "snapshot_id": "d7750bd226190c89bebe90c50c1e96a0438be96a3d8f4c8faf095eed2702fc5a",
+    "schema_version": 1,
+    "root": "",
+    "source_version": "9847c32b9f85545616d5de20c6e67a470418c4639466091cabeb4d5a08cf57f9",
+    "symbols": 2,
+    "calls": 1,
+    "languages": [
+      "python"
+    ],
+    "tools": {
+      "engine": "StaticAnalyzer/PythonAdapter",
+      "node": "D:\\Progrm Files\\nvm\\v24.20.0\\node.exe",
+      "pyright_js": "F:\\CodeBoarding\\temp\\p0-tools\\node_modules\\pyright\\langserver.index.js",
+      "tokei": "F:\\CodeBoarding\\temp\\p0-tools\\tokei.exe",
+      "python_command": "[\"D:\\\\Progrm Files\\\\nvm\\\\v24.20.0\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\langserver.index.js\", \"--stdio\"]",
+      "tokei_command": "[\"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\", \"-o\", \"json\"]",
+      "maintenance_scope": "{\"complete\":true,\"configuration\":{},\"implementation\":\"6fbe81fc5ae9b673960993da099239abcac8d47e685b2e2661aa37d109af0d1f\",\"patterns\":[\"# CodeBoarding Ignore File\\n\",\"# Add patterns here for files and directories that should be excluded from CodeBoarding analysis.\\n\",\"# Use the same format as .gitignore (gitignore syntax / gitwildmatch patterns).\\n\",\"#\\n\",\"# To stop ignoring a pattern, prefix it with ! (e.g., !important_file.txt)\\n\",\"#\\n\",\"# NOTE: The following are ALWAYS excluded (not configurable):\\n\",\"#   - Hidden directories (starting with .)\\n\",\"#   - .git/, .codeboarding/, node_modules/, __pycache__/\\n\",\"#   - Build output: build/, dist/, coverage/\\n\",\"#\\n\",\"# This file is automatically loaded by CodeBoarding analysis tools to exclude\\n\",\"# specified paths from code analysis, architecture generation, and other processing.\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Ignored directories (customizable \\u2014 remove lines to include them)\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Python virtual environments\\n\",\"venv/\\n\",\"env/\\n\",\"*.egg-info/\\n\",\"\\n\",\"# Java (Maven/Gradle) and Rust (Cargo) build output. Both ecosystems\\n\",\"# produce a top-level ``target/`` directory full of compiled artifacts \\u2014\\n\",\"# kept here as well as in ``_ALWAYS_IGNORED_DIRS`` so users who customize\\n\",\"# their ``.codeboardingignore`` continue to skip it even after edits.\\n\",\"target/\\n\",\"bin/\\n\",\"out/\\n\",\"\\n\",\"# .NET / C# build output\\n\",\"obj/\\n\",\"\\n\",\"# Go\\n\",\"vendor/\\n\",\"testdata/\\n\",\"\\n\",\"# PHP\\n\",\"cache/\\n\",\"\\n\",\"# Custom\\n\",\"temp/\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Test and infrastructure files\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Test directories\\n\",\"**/__tests__/**\\n\",\"**/tests/**\\n\",\"**/test/**\\n\",\"**/__test__/**\\n\",\"**/testing/**\\n\",\"**/testutil/**\\n\",\"\\n\",\"# Java/Kotlin test directories (Maven/Gradle structure)\\n\",\"**/src/test/**\\n\",\"**/src/testFixtures/**\\n\",\"**/src/integration-test/**\\n\",\"**/src/jmh/**\\n\",\"**/src/contractTest/**\\n\",\"**/osgi-tests/**\\n\",\"\\n\",\"# Test files by naming convention\\n\",\"*.test.*\\n\",\"*.spec.*\\n\",\"*_test.*\\n\",\"*test_*.py\\n\",\"test_*.py\\n\",\"*Test.java\\n\",\"*IT.java\\n\",\"*Test.kt\\n\",\"*IT.kt\\n\",\"*Tests.java\\n\",\"\\n\",\"# Mock, fixture, and stub directories\\n\",\"**/__mocks__/**\\n\",\"**/mocks/**\\n\",\"**/fixtures/**\\n\",\"**/fixture/**\\n\",\"**/stubs/**\\n\",\"**/stub/**\\n\",\"**/fakes/**\\n\",\"**/fake/**\\n\",\"\\n\",\"# E2E and integration test directories\\n\",\"**/e2e/**\\n\",\"**/integration-tests/**\\n\",\"**/integration_test*/**\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Non-production code\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Example and documentation code\\n\",\"**/examples/**\\n\",\"**/documentation/examples/**\\n\",\"\\n\",\"# Generated code\\n\",\"*.pb.go\\n\",\"**/generated_parser*\\n\",\"\\n\",\"# Java/Kotlin metadata files\\n\",\"module-info.java\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build artifacts and minified files\\n\",\"# ============================================================================\\n\",\"\\n\",\"*.bundle.js\\n\",\"*.bundle.js.map\\n\",\"*.min.js\\n\",\"*.min.css\\n\",\"*.chunk.js\\n\",\"*.chunk.js.map\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build tool configs and infrastructure\\n\",\"# ============================================================================\\n\",\"\\n\",\"esbuild*\\n\",\"webpack*\\n\",\"rollup*\\n\",\"vite.config.*\\n\",\"gulpfile*\\n\",\"gruntfile*\\n\",\"*.config.*\\n\"],\"protocol\":\"python-file-v1\",\"tools\":[\"5c976096e04e5c2c1f091938926234cc9fbebfe9787ddd149351b3b0ecc707b5\",\"f200762078eb9880faf421a5b30f9ef3055b1d85c6f10780d75db4da8d8499f1\",\"7db547cb6bfa1722e89ca52a43426fb212aa53603a60256af25fb6e59ca12099\"]}"
+    }
+  }
+]
