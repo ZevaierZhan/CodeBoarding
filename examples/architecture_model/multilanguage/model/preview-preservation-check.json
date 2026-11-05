@@ -1,0 +1,16 @@
+{
+  "before_revision": 1,
+  "after_revision": 2,
+  "unchanged": {
+    "facts": true,
+    "bindings": true,
+    "components": true,
+    "relations": true,
+    "opinions": true,
+    "verifications": true,
+    "maintenance": true,
+    "open-document": true
+  },
+  "unique_step_ids": true,
+  "contract_status": "candidate"
+}

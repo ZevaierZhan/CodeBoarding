@@ -91,6 +91,7 @@ def model_diff(before: Model, after: Model) -> dict:
         for scenario in model.scenarios:
             if (
                 scenario.id in record_targets
+                or relation_ids.intersection(scenario.relation_ids)
                 or binding_ids.intersection(scenario.claim.binding_ids)
                 or any(
                     step.id in record_targets

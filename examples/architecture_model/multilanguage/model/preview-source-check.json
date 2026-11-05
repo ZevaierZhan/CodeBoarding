@@ -1,0 +1,32 @@
+[
+  {
+    "binding": "open",
+    "path": "src/utils.ts",
+    "hash_matches": true
+  },
+  {
+    "binding": "preview",
+    "path": "src/utils.ts",
+    "hash_matches": true
+  },
+  {
+    "binding": "invoke",
+    "path": "src/utils.ts",
+    "hash_matches": true
+  },
+  {
+    "binding": "command",
+    "path": "src/lib.rs",
+    "hash_matches": true
+  },
+  {
+    "binding": "service",
+    "path": "src/utils.rs",
+    "hash_matches": true
+  },
+  {
+    "binding": "registration",
+    "path": "src/lib.rs",
+    "hash_matches": true
+  }
+]

@@ -1,0 +1,93 @@
+{
+  "schema_version": 2,
+  "id": "97dd4d494add13cf71b83c2b30a882f5ac99de7c176a68e1f3ea6e92b3dada1e",
+  "project_id": "m5-system",
+  "source": {
+    "digest": "5c0c4ee7f45d71895357626bc9f626271e057119ac8d41480db644083ee6c042",
+    "git_commit": "fa9567b46d60be8d94ed30f35dc6a3c4836d0c1e",
+    "files": {
+      "src/lib.rs": "412913b8a7f6da06da550c03113a5ac5ecc11c34c543c9d1c96b11fe5dec394e",
+      "src/utils.rs": "da62b5bbaa80f6d705ad7c8448cc07eae25756f636f8184a1cfe4835a66a3e8a"
+    },
+    "scope": "Strict supported-source inventory; Vue file evidence only; native project symbol/call scope"
+  },
+  "symbols": {
+    "src/lib.rs|src.read_file": {
+      "path": "src/lib.rs",
+      "symbol": "src.read_file",
+      "kind": "FUNCTION",
+      "content_hash": "412913b8a7f6da06da550c03113a5ac5ecc11c34c543c9d1c96b11fe5dec394e",
+      "start": 4,
+      "end": 6
+    },
+    "src/lib.rs|src.register": {
+      "path": "src/lib.rs",
+      "symbol": "src.register",
+      "kind": "FUNCTION",
+      "content_hash": "412913b8a7f6da06da550c03113a5ac5ecc11c34c543c9d1c96b11fe5dec394e",
+      "start": 9,
+      "end": 11
+    },
+    "src/utils.rs|src.utils.read_document": {
+      "path": "src/utils.rs",
+      "symbol": "src.utils.read_document",
+      "kind": "FUNCTION",
+      "content_hash": "da62b5bbaa80f6d705ad7c8448cc07eae25756f636f8184a1cfe4835a66a3e8a",
+      "start": 1,
+      "end": 3
+    }
+  },
+  "file_locations": {
+    "src/lib.rs": {
+      "path": "src/lib.rs",
+      "symbol": "",
+      "kind": "FILE",
+      "content_hash": "412913b8a7f6da06da550c03113a5ac5ecc11c34c543c9d1c96b11fe5dec394e",
+      "start": 1,
+      "end": 11
+    },
+    "src/utils.rs": {
+      "path": "src/utils.rs",
+      "symbol": "",
+      "kind": "FILE",
+      "content_hash": "da62b5bbaa80f6d705ad7c8448cc07eae25756f636f8184a1cfe4835a66a3e8a",
+      "start": 1,
+      "end": 3
+    }
+  },
+  "calls": [
+    {
+      "source": "src/lib.rs|src.read_file",
+      "target": "src/utils.rs|src.utils.read_document",
+      "sites": [
+        {
+          "path": "src/lib.rs",
+          "line": 5,
+          "column": 12
+        }
+      ]
+    }
+  ],
+  "tools": {
+    "engine": "StaticAnalyzer/native adapters",
+    "maintenance_scope": "{\"complete\":true,\"configuration\":{\"Cargo.lock\":\"270556540b06847aa1c0539a6e69b265f3f4ab10d2298fecb6d4fb47eebc2b0a\",\"Cargo.toml\":\"d6ecf720424e3ef0211f51fd74d689e0e630cfc3486e5fe4eb53644288dc8404\"},\"implementation\":\"c5434e0e1259f5bbd12b6c72775699c7bc56ff8ac5f1a3ee4a16faf412be83b4\",\"patterns\":[\"# CodeBoarding Ignore File\\n\",\"# Add patterns here for files and directories that should be excluded from CodeBoarding analysis.\\n\",\"# Use the same format as .gitignore (gitignore syntax / gitwildmatch patterns).\\n\",\"#\\n\",\"# To stop ignoring a pattern, prefix it with ! (e.g., !important_file.txt)\\n\",\"#\\n\",\"# NOTE: The following are ALWAYS excluded (not configurable):\\n\",\"#   - Hidden directories (starting with .)\\n\",\"#   - .git/, .codeboarding/, node_modules/, __pycache__/\\n\",\"#   - Build output: build/, dist/, coverage/\\n\",\"#\\n\",\"# This file is automatically loaded by CodeBoarding analysis tools to exclude\\n\",\"# specified paths from code analysis, architecture generation, and other processing.\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Ignored directories (customizable \\u2014 remove lines to include them)\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Python virtual environments\\n\",\"venv/\\n\",\"env/\\n\",\"*.egg-info/\\n\",\"\\n\",\"# Java (Maven/Gradle) and Rust (Cargo) build output. Both ecosystems\\n\",\"# produce a top-level ``target/`` directory full of compiled artifacts \\u2014\\n\",\"# kept here as well as in ``_ALWAYS_IGNORED_DIRS`` so users who customize\\n\",\"# their ``.codeboardingignore`` continue to skip it even after edits.\\n\",\"target/\\n\",\"bin/\\n\",\"out/\\n\",\"\\n\",\"# .NET / C# build output\\n\",\"obj/\\n\",\"\\n\",\"# Go\\n\",\"vendor/\\n\",\"testdata/\\n\",\"\\n\",\"# PHP\\n\",\"cache/\\n\",\"\\n\",\"# Custom\\n\",\"temp/\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Test and infrastructure files\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Test directories\\n\",\"**/__tests__/**\\n\",\"**/tests/**\\n\",\"**/test/**\\n\",\"**/__test__/**\\n\",\"**/testing/**\\n\",\"**/testutil/**\\n\",\"\\n\",\"# Java/Kotlin test directories (Maven/Gradle structure)\\n\",\"**/src/test/**\\n\",\"**/src/testFixtures/**\\n\",\"**/src/integration-test/**\\n\",\"**/src/jmh/**\\n\",\"**/src/contractTest/**\\n\",\"**/osgi-tests/**\\n\",\"\\n\",\"# Test files by naming convention\\n\",\"*.test.*\\n\",\"*.spec.*\\n\",\"*_test.*\\n\",\"*test_*.py\\n\",\"test_*.py\\n\",\"*Test.java\\n\",\"*IT.java\\n\",\"*Test.kt\\n\",\"*IT.kt\\n\",\"*Tests.java\\n\",\"\\n\",\"# Mock, fixture, and stub directories\\n\",\"**/__mocks__/**\\n\",\"**/mocks/**\\n\",\"**/fixtures/**\\n\",\"**/fixture/**\\n\",\"**/stubs/**\\n\",\"**/stub/**\\n\",\"**/fakes/**\\n\",\"**/fake/**\\n\",\"\\n\",\"# E2E and integration test directories\\n\",\"**/e2e/**\\n\",\"**/integration-tests/**\\n\",\"**/integration_test*/**\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Non-production code\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Example and documentation code\\n\",\"**/examples/**\\n\",\"**/documentation/examples/**\\n\",\"\\n\",\"# Generated code\\n\",\"*.pb.go\\n\",\"**/generated_parser*\\n\",\"\\n\",\"# Java/Kotlin metadata files\\n\",\"module-info.java\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build artifacts and minified files\\n\",\"# ============================================================================\\n\",\"\\n\",\"*.bundle.js\\n\",\"*.bundle.js.map\\n\",\"*.min.js\\n\",\"*.min.css\\n\",\"*.chunk.js\\n\",\"*.chunk.js.map\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build tool configs and infrastructure\\n\",\"# ============================================================================\\n\",\"\\n\",\"esbuild*\\n\",\"webpack*\\n\",\"rollup*\\n\",\"vite.config.*\\n\",\"gulpfile*\\n\",\"gruntfile*\\n\",\"*.config.*\\n\"],\"protocol\":\"multilanguage-file-v2\",\"tools\":[\"a97741d2f93bada49450735580c9d37cc607f9820d4dedbc023eae296b33eac3\",\"f8ef6156b7da4cdf018c4708a43f2bfb498e81b9584540b6b91fe19492031695\"]}",
+    "commands": "{\"lsp_servers\": {\"rust\": [\"C:\\\\Users\\\\BW011222\\\\.cargo\\\\bin\\\\rust-analyzer.exe\"]}, \"tokei\": [\"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\", \"-o\", \"json\"]}",
+    "versions": "{\"rust\": \"rust-analyzer 1.99.1 (58cf8f9c 2026-10-13)\", \"tokei\": \"tokei 14.0.0 compiled with serialization support: json\"}"
+  },
+  "limitations": [
+    "Static calls are not executions. External/unresolved calls, registrations and dynamic dispatch are incomplete.",
+    "Non-Python symbol completeness is bounded by native LSP document symbols; no independent callable census.",
+    "Vue SFC has file-level evidence only; native adapters do not discover .vue functions.",
+    "Unknown source suffixes are outside scope. Root inventory completeness does not prove semantic completeness.",
+    "Symbol identity is (source_root_id, language, file project, path|native name), scoped to an immutable snapshot."
+  ],
+  "source_root_id": "backend",
+  "file_languages": {
+    "src/lib.rs": "rust",
+    "src/utils.rs": "rust"
+  },
+  "file_projects": {
+    "src/utils.rs": ".",
+    "src/lib.rs": "."
+  }
+}

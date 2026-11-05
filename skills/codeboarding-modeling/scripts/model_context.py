@@ -23,6 +23,8 @@ PATH_OPTIONS = {
     "--node",
     "--pyright",
     "--tokei",
+    "--tools",
+    "--source-map",
 }
 COLLECTIONS = ("facts", "bindings", "components", "relations", "scenarios", "opinions", "verifications", "maintenance")
 
@@ -108,6 +110,14 @@ def inventory(model: dict) -> list[dict]:
                     row[field] = item[field]
             if collection == "bindings":
                 row.update(path=item["location"]["path"], symbol=item["location"]["symbol"])
+                snapshot: dict = next((entry for entry in model["facts"] if entry["id"] == item["snapshot_id"]), {})
+                row["source_root_id"] = snapshot.get("source_root_id", "")
+                row["language"] = snapshot.get("file_languages", {}).get(item["location"]["path"], "legacy")
+            if collection == "facts":
+                row["source_root_id"] = item.get("source_root_id", "")
+            if collection == "relations" and item.get("contract"):
+                row["mechanism"] = item["contract"]["mechanism"]
+                row["operation"] = item["contract"]["operation"]
             rows.append(row)
             if collection == "scenarios":
                 rows.extend(
@@ -178,6 +188,7 @@ def overview(model: dict, index: dict, cache: Path) -> dict:
         "facts": [
             {
                 "id": item["id"],
+                "source_root_id": item.get("source_root_id", ""),
                 "source_version": item["source"]["digest"],
                 "git_commit": item["source"]["git_commit"],
                 "files": len(item["source"]["files"]),

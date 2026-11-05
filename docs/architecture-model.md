@@ -1,5 +1,13 @@
 # Architecture model CLI (M1 + M2 + M3)
 
+M5 adds [multiple source roots and native language facts](design/architecture-model-m5.md)
+without changing old Python snapshot IDs. Use `facts export --repo ROOT --project-id SYSTEM
+--source-root-id ROOT_ID --tools tools.json --output NEW.json` for the v2 native
+adapter path. The legacy explicit Node/Pyright/Tokei invocation below is unchanged.
+The [real mixed-language example](../examples/architecture_model/multilanguage/README.md)
+includes one model, two independent repositories, a shared IPC contract, continuing
+Agent session and a single-root maintenance trial.
+
 For a repeatable external-Agent workflow, use the repository-owned
 [modeling Skill](../skills/codeboarding-modeling/SKILL.md) and
 [real M4 continuation example](../examples/architecture_model/codeboarding/README.md).

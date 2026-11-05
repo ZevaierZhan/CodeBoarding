@@ -1,0 +1,1 @@
+Change only frontend/src/utils.ts: openDocument normalizes the configured path using "notes.txt".trim().

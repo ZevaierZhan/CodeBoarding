@@ -7,7 +7,7 @@ from typing import Never
 from filelock import Timeout
 
 from architecture_model.errors import ModelError
-from architecture_model.facts import export_facts
+from architecture_model.facts import export_facts, export_multilanguage
 from architecture_model.maintenance import preview, query, rebind, refresh, resolve
 from architecture_model.schema import Facts, Model
 from architecture_model.store import ModelStore, load_json
@@ -63,13 +63,26 @@ def run(arguments: list[str]) -> dict:
     export = actions.add_parser("export-html", help="Export one complete revision as an offline read-only document")
     export.add_argument("--output", type=Path, required=True)
     export.add_argument("--source-root", type=Path)
+    export.add_argument(
+        "--source-map", type=Path, help="JSON object mapping stable source root IDs to local directories"
+    )
     facts = commands.add_parser("facts").add_subparsers(dest="action", required=True).add_parser("export")
-    for name in ("repo", "output", "node", "pyright", "tokei"):
+    for name in ("repo", "output"):
         facts.add_argument(f"--{name}", type=Path, required=True)
+    for name in ("node", "pyright", "tokei", "tools"):
+        facts.add_argument(f"--{name}", type=Path)
+    facts.add_argument("--source-root-id", default="")
     facts.add_argument("--project-id", required=True)
     args = parser.parse_args(arguments)
     if args.resource == "facts":
-        snapshot = export_facts(args.repo, args.project_id, args.output, args.node, args.pyright, args.tokei)
+        if args.tools:
+            snapshot = export_multilanguage(args.repo, args.project_id, args.output, args.source_root_id, args.tools)
+        else:
+            if not all((args.node, args.pyright, args.tokei)) or args.source_root_id:
+                raise ModelError(
+                    "USAGE_ERROR", "/tools", "Use --tools with --source-root-id, or all legacy Python tool paths"
+                )
+            snapshot = export_facts(args.repo, args.project_id, args.output, args.node, args.pyright, args.tokei)
         return {
             "facts_id": snapshot.id,
             "source_version": snapshot.source.digest,
@@ -86,7 +99,14 @@ def run(arguments: list[str]) -> dict:
     if args.action == "read":
         return store.read_scope(args.component, args.scenario)
     if args.action == "export-html":
-        return export_html(store.read(), args.output, args.source_root)
+        mapping = load_json(args.source_map) if args.source_map else {}
+        if not isinstance(mapping, dict) or any(
+            not isinstance(k, str) or not isinstance(v, str) for k, v in mapping.items()
+        ):
+            raise ModelError("USAGE_ERROR", "/source-map", "Expected root ID to directory mapping")
+        return export_html(
+            store.read(), args.output, args.source_root, {key: Path(value) for key, value in mapping.items()}
+        )
     if args.action == "maintenance":
         return query(store.read(), args.binding, args.component, args.scenario)
     if args.action == "maintenance-preview":

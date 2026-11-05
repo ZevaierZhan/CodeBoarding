@@ -1,5 +1,12 @@
 # Read-only architecture and business flow explorer
 
+For named M5 roots, add `--source-map roots.json`, where the JSON object maps
+stable source root IDs to physical directories. Each evidence version uses its own
+snapshot's root and file hash. `--source-root` continues to serve only legacy
+single-root snapshots. The inspector shows language, source root, project and typed
+Relation contract metadata; pending maintenance remains distinct from an authored
+contract's static status. See the [M5 example](../examples/architecture_model/multilanguage/README.md).
+
 Open [the included example](../examples/architecture_model/interactive/index.html)
 in a browser, or generate a new offline document from your own complete model:
 

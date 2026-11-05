@@ -17,6 +17,7 @@ from static_analyzer.engine.lsp_constants import (
 from static_analyzer.engine.utils import total_ram_gb
 from static_analyzer.java_utils import create_jdtls_command, find_java_21_or_later
 from infra.utils import CODEBOARDING_DIR_NAME, get_config
+from infra.tool_registry.java import get_java_version
 
 logger = logging.getLogger(__name__)
 
@@ -63,13 +64,22 @@ class JavaAdapter(LanguageAdapter):
                 "JDTLS installation not found. Run `python install.py` or " "set the jdtls_root in the tool config."
             )
 
-        java_home = find_java_21_or_later()
+        configured = get_config("lsp_servers").get("java", {}).get("command", [])
+        if configured and Path(configured[0]).is_absolute():
+            if get_java_version(configured[0]) < 21:
+                raise RuntimeError("Explicit Java executable must provide Java 21 or later")
+            java_home = Path(configured[0]).parent.parent
+        else:
+            java_home = find_java_21_or_later()
         if java_home is None:
             raise RuntimeError("Java 21+ required to run JDTLS. Please install JDK 21 or later.")
 
         workspace_dir = Path(tempfile.mkdtemp(prefix="jdtls-workspace-"))
         heap_size = self._calculate_heap_size(project_root)
-        return create_jdtls_command(jdtls_root, workspace_dir, java_home, heap_size)
+        command = create_jdtls_command(jdtls_root, workspace_dir, java_home, heap_size)
+        if configured and Path(configured[0]).is_absolute():
+            command[0] = configured[0]
+        return command
 
     @staticmethod
     def _find_jdtls_root() -> Path | None:

@@ -1,0 +1,18 @@
+{
+  "same_model_id": "c3094cd2-b73e-4b0c-a3bb-6b9beb395a58",
+  "canonical_revision_unchanged": 10,
+  "original_root": "frontend",
+  "alternate_root": "alternate-frontend",
+  "same_manifest_digest": "68e41c24084c9c32720bfa36dcd6dd569d0cd8dc23872d3746ac82879165c9bf",
+  "same_symbol_keys": [
+    "src/utils.ts|src.utils.openDocument",
+    "src/utils.ts|src.utils.previewDocument",
+    "src/utils.ts|src.utils.readDocument"
+  ],
+  "different_snapshot_ids": [
+    "777d089327dbd628da5a96dc9cf2383353cd4943be67f8bcfe420e153c8bf837",
+    "f53c7a28ded91209d3d6370a6b6f02f96c8dffe121070bdd6a4c96ec2e3615aa"
+  ],
+  "validated_together": true,
+  "canonical_model_sha256_unchanged": "a31ae5db4d8b83cb8befb3159911f1568d4b035303667c892cce1095bd56f28b"
+}

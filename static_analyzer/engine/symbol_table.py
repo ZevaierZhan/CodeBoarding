@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 import logging
+import os
 from collections.abc import Collection, Iterable
 from pathlib import Path
 
 from static_analyzer.engine.protocols import SymbolNaming
-from static_analyzer.config import ANONYMOUS_SYMBOL_MARKERS, NodeType
+from static_analyzer.config import ANONYMOUS_SYMBOL_MARKERS, GRAPH_NODE_TYPES, NodeType
 from static_analyzer.engine.lsp_constants import CALLABLE_KINDS
 from static_analyzer.engine.models import SymbolInfo
 
@@ -164,6 +165,18 @@ class SymbolTable:
             info.parent_chain = list(parent_chain)
             info.owner_qualified_name = owner_qualified_name
 
+            previous = self._symbols.get(qualified_name)
+            if (
+                os.environ.get("CODEBOARDING_STRICT_SYMBOL_IDENTITY") == "true"
+                and kind in GRAPH_NODE_TYPES
+                and previous is not None
+                and previous.kind in GRAPH_NODE_TYPES
+                and previous in self._primary_file_symbols.get(str(previous.file_path), [])
+                and previous.definition_location != info.definition_location
+            ):
+                raise ValueError(
+                    f"Native qualified-name collision: {qualified_name} at {previous.definition_location} and {info.definition_location}"
+                )
             self._symbols[qualified_name] = info
             ref_key = self._naming.build_reference_key(qualified_name)
             self._ref_key_to_symbol[ref_key] = info

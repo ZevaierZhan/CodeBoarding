@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>CodeBoarding · Architecture explorer</title><style>:root{color-scheme:light;--ink:#213646;--muted:#506676;--paper:#f3f6f8;--line:#cbd6dd;--accent:#005e69;--active:#d5f0ec;--warn:#7f440a;--white:#fff;font-family:Segoe UI,system-ui,sans-serif;font-size:14px}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink)}header{display:flex;justify-content:space-between;gap:28px;padding:24px 30px;background:#e4edf2}h1{font-size:27px;letter-spacing:-.02em;margin:0 0 8px}h2{font-size:16px;margin:0 0 14px}h3{font-size:15px;margin:22px 0 10px}p{line-height:1.6;margin:6px 0}small,.muted{color:var(--muted)}button,select{font:inherit;color:var(--ink);background:var(--white);border:1px solid var(--line);border-radius:5px;padding:8px 11px;cursor:pointer}button:hover{background:#e5eef2}button:disabled{opacity:.5;cursor:default}button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px}button.active{background:var(--accent);color:white;border-color:var(--accent)}::selection{background:#b4ddd6;color:#123b41}*{scrollbar-color:#9aadb9 #edf2f5;scrollbar-width:thin}input{accent-color:var(--accent)}
+.provenance{display:flex;gap:22px;align-items:center;padding:10px 30px;border-bottom:1px solid var(--line);font-size:12px;flex-wrap:wrap}.provenance button{margin-left:auto}.toolbar{display:flex;gap:8px;align-items:center;padding:16px 30px 8px;flex-wrap:wrap}.toolbar label{display:flex;align-items:center;gap:8px}.toolbar select{max-width:260px}.notice{padding:4px 30px 14px;color:var(--muted);font-size:12px;margin:0}main{display:grid;grid-template-columns:220px minmax(400px,1fr) minmax(310px,380px);border-top:1px solid var(--line);min-height:75vh}nav,aside{padding:22px 18px;background:var(--white)}nav{border-right:1px solid var(--line)}aside{border-left:1px solid var(--line);overflow-wrap:anywhere}nav h2:not(:first-child){margin-top:28px}.workspace{padding:22px;min-width:0}.workspace-heading{display:flex;gap:12px;justify-content:space-between;align-items:baseline}.workspace-heading span{font-size:12px;color:var(--muted)}
+.tree-row{display:flex;align-items:center;gap:5px;margin:6px 0}.tree-row button{padding:6px;min-width:30px}.tree-row .object{border:0;text-align:left;min-width:0;overflow-wrap:anywhere}.step{display:block;text-align:left;width:100%;margin:6px 0;overflow-wrap:anywhere}.step small{display:block}.step.active small{color:#def2ef}#canvas{position:relative;overflow:auto;min-height:200px;background:#edf3f6;border:1px solid var(--line);border-radius:8px}#graph{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}#nodes{position:relative;min-width:340px}.node{position:absolute;width:190px;text-align:left;padding:12px;min-height:78px;border-radius:8px;transition:background .18s ease-out}.node strong{display:block}.node small{display:block;margin-top:5px}.node.current{background:var(--active);border:2px solid var(--accent)}.node.unrelated{opacity:.35}.node .inside{color:var(--accent);font-size:12px;display:block;margin-top:5px}.player{margin:18px 0 24px;padding:18px 0;border-bottom:1px solid var(--line)}#choices{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}#choices button{text-align:left;max-width:100%;overflow-wrap:anywhere}.warning{color:var(--warn)}.relation{display:block;width:100%;text-align:left;margin:7px 0;overflow-wrap:anywhere}.field{margin:10px 0}.field b{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}pre{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;font:12px/1.6 Consolas,monospace;background:#eef3f5;padding:12px;border-radius:5px;max-height:380px;overflow:auto}details{margin:12px 0;padding-bottom:10px;border-bottom:1px solid var(--line)}summary{cursor:pointer;line-height:1.6;font-weight:600}.badge{font-size:12px;color:var(--accent);background:var(--active);padding:3px 6px;display:inline-block;border-radius:3px}.record{margin-top:16px;padding-top:10px;border-top:1px solid var(--line)}.record h3{margin-top:8px}ul{padding-left:18px;line-height:1.6}svg text{font:11px Segoe UI,sans-serif;fill:var(--ink)}#incoming{font-size:12px;color:var(--muted);margin-top:10px}
+.diagram-help{font-size:12px;color:var(--muted);margin:0 0 12px}#canvas:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media(max-width:1100px){main{grid-template-columns:190px minmax(350px,1fr)}aside{grid-column:1/-1;border-left:0;border-top:1px solid var(--line)}.workspace-heading{display:block}}
+@media(max-width:600px){header{padding:20px;display:block}.toolbar,.provenance{padding:12px 16px}.notice{padding:8px 16px}main{display:block}nav{border-right:0;border-bottom:1px solid var(--line)}.workspace{padding:16px}.toolbar select{max-width:210px}#canvas{max-width:100%}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head>
+<body>
+<header><div><h1 id="project">Architecture explorer</h1><p id="boundary"></p></div><div><strong>CodeBoarding</strong><p>Read-only model explorer</p></div></header>
+<section class="provenance"><span id="identity"></span><span id="exported"></span><button id="metadata">Snapshots &amp; model metadata</button></section>
+<section class="toolbar" aria-label="Business playback controls">
+<label>Business <select id="scenario"></select></label>
+<button id="inspect-business">Business explanation</button>
+<button id="reset">Reset</button><button id="back">Back</button><button id="play">Play</button><button id="next">Step forward</button>
+<label><input id="focus" type="checkbox"> Focus business</label><button id="expand-all">Expand all</button><button id="collapse-all">Collapse all</button>
+</section>
+<p class="notice">Modeled business path · conditions are descriptions, never evaluated. Playback is not a runtime trace.</p>
+<main>
+<nav aria-label="Component hierarchy"><h2>Project structure</h2><div id="tree"></div><h2>Steps <small>display order</small></h2><div id="steps"></div></nav>
+<section class="workspace" aria-label="Architecture and business path"><div class="workspace-heading"><h2>Shared architecture</h2><span>Stable component identities</span></div><p class="diagram-help" id="diagram-help">Scroll the diagram horizontally to explore depth. Keyboard: focus the diagram and use arrow keys.</p><div id="canvas" tabindex="0" role="region" aria-label="Scrollable architecture diagram" aria-describedby="diagram-help"><svg id="graph" role="img" aria-label="Component relationships and explicit business transitions"></svg><div id="nodes"></div></div><section class="player" aria-live="polite"><h2 id="current"></h2><p id="playback-status"></p><div id="choices"></div><div id="incoming"></div></section><section><h2>Component relationships</h2><div id="relations"></div></section></section>
+<aside aria-label="Explanation, evidence and maintenance"><h2>Inspector</h2><div id="detail"></div></aside>
+</main>
+<script type="application/json" id="model-data">{"model": {"schema_version": 1, "id": "96e23721-4f8a-46ba-8e7a-59844203a40d", "project": {"id": "m5-system", "name": "Java/Vue capability check", "boundary": "Independent assessment fixture; no application host or deployment is included"}, "revision": 1, "facts": [{"schema_version": 2, "id": "02ecd3eb417cc4baa40660227f8bae4aa16b220e84ad04101d6d5681ff574303", "project_id": "m5-system", "source": {"digest": "b81e819d37c59da7ba0412355891ac4e8aed8361a52818e819737aa300874dc5", "git_commit": "4f73e07c46b21a1fc96426b4be9bf9ff96e8a7dd", "files": {"backend/src/main/java/example/OrderController.java": "55d121e001a0f033a240fc942301b24b9903c03978567e800aa47565d36465d3", "backend/src/main/java/example/OrderService.java": "948b9d441390bca787a7aa7e3ed609485ecd2a042333b156260872f845b2a97c", "frontend/src/api.ts": "2e71eb064a86412d0890dd5445dd2a362199de3a322a59e3d7b2b36fd5aaf13f", "frontend/src/Orders.vue": "1931e0e3e22cd13f275d7f1e78a1fac7c90f82f95e57865d57b0d910c6a178a5"}, "scope": "Strict supported-source inventory; Vue file evidence only; native project symbol/call scope"}, "symbols": {"backend/src/main/java/example/OrderController.java|backend.src.main.java.example.OrderController": {"path": "backend/src/main/java/example/OrderController.java", "symbol": "backend.src.main.java.example.OrderController", "kind": "CLASS", "content_hash": "55d121e001a0f033a240fc942301b24b9903c03978567e800aa47565d36465d3", "start": 9, "end": 14}, "backend/src/main/java/example/OrderController.java|backend.src.main.java.example.OrderController.createOrder()": {"path": "backend/src/main/java/example/OrderController.java", "symbol": "backend.src.main.java.example.OrderController.createOrder()", "kind": "METHOD", "content_hash": "55d121e001a0f033a240fc942301b24b9903c03978567e800aa47565d36465d3", "start": 13, "end": 13}, "backend/src/main/java/example/OrderService.java|backend.src.main.java.example.OrderService": {"path": "backend/src/main/java/example/OrderService.java", "symbol": "backend.src.main.java.example.OrderService", "kind": "CLASS", "content_hash": "948b9d441390bca787a7aa7e3ed609485ecd2a042333b156260872f845b2a97c", "start": 3, "end": 5}, "backend/src/main/java/example/OrderService.java|backend.src.main.java.example.OrderService.create()": {"path": "backend/src/main/java/example/OrderService.java", "symbol": "backend.src.main.java.example.OrderService.create()", "kind": "METHOD", "content_hash": "948b9d441390bca787a7aa7e3ed609485ecd2a042333b156260872f845b2a97c", "start": 4, "end": 4}, "frontend/src/api.ts|frontend.src.api.createOrder": {"path": "frontend/src/api.ts", "symbol": "frontend.src.api.createOrder", "kind": "FUNCTION", "content_hash": "2e71eb064a86412d0890dd5445dd2a362199de3a322a59e3d7b2b36fd5aaf13f", "start": 1, "end": 4}}, "file_locations": {"backend/src/main/java/example/OrderController.java": {"path": "backend/src/main/java/example/OrderController.java", "symbol": "", "kind": "FILE", "content_hash": "55d121e001a0f033a240fc942301b24b9903c03978567e800aa47565d36465d3", "start": 1, "end": 14}, "backend/src/main/java/example/OrderService.java": {"path": "backend/src/main/java/example/OrderService.java", "symbol": "", "kind": "FILE", "content_hash": "948b9d441390bca787a7aa7e3ed609485ecd2a042333b156260872f845b2a97c", "start": 1, "end": 5}, "frontend/src/api.ts": {"path": "frontend/src/api.ts", "symbol": "", "kind": "FILE", "content_hash": "2e71eb064a86412d0890dd5445dd2a362199de3a322a59e3d7b2b36fd5aaf13f", "start": 1, "end": 4}, "frontend/src/Orders.vue": {"path": "frontend/src/Orders.vue", "symbol": "", "kind": "FILE", "content_hash": "1931e0e3e22cd13f275d7f1e78a1fac7c90f82f95e57865d57b0d910c6a178a5", "start": 1, "end": 5}}, "calls": [{"source": "backend/src/main/java/example/OrderController.java|backend.src.main.java.example.OrderController", "target": "backend/src/main/java/example/OrderService.java|backend.src.main.java.example.OrderService", "sites": [{"path": "backend/src/main/java/example/OrderController.java", "line": 10, "column": 46}]}, {"source": "backend/src/main/java/example/OrderController.java|backend.src.main.java.example.OrderController.createOrder()", "target": "backend/src/main/java/example/OrderService.java|backend.src.main.java.example.OrderService", "sites": [{"path": "backend/src/main/java/example/OrderController.java", "line": 13, "column": 50}]}, {"source": "backend/src/main/java/example/OrderController.java|backend.src.main.java.example.OrderController.createOrder()", "target": "backend/src/main/java/example/OrderService.java|backend.src.main.java.example.OrderService.create()", "sites": [{"path": "backend/src/main/java/example/OrderController.java", "line": 13, "column": 50}]}], "tools": {"engine": "StaticAnalyzer/native adapters", "maintenance_scope": "{\"complete\":true,\"configuration\":{\"backend/pom.xml\":\"4b4da46845bfd22ca963d561faa449ee6bc50697eef78e873f3ec78f0bb17d7f\",\"frontend/tsconfig.json\":\"5429049c4a9f645aae56d39709457bc9275d1b53afc8a74891a3ddaff3a33f13\"},\"implementation\":\"be4739203edad2b7dd5a9c1462f8ea7401b18c1a24fb35dfa4bb847ed60a5b97\",\"patterns\":[\"# CodeBoarding Ignore File\\n\",\"# Add patterns here for files and directories that should be excluded from CodeBoarding analysis.\\n\",\"# Use the same format as .gitignore (gitignore syntax / gitwildmatch patterns).\\n\",\"#\\n\",\"# To stop ignoring a pattern, prefix it with ! (e.g., !important_file.txt)\\n\",\"#\\n\",\"# NOTE: The following are ALWAYS excluded (not configurable):\\n\",\"#   - Hidden directories (starting with .)\\n\",\"#   - .git/, .codeboarding/, node_modules/, __pycache__/\\n\",\"#   - Build output: build/, dist/, coverage/\\n\",\"#\\n\",\"# This file is automatically loaded by CodeBoarding analysis tools to exclude\\n\",\"# specified paths from code analysis, architecture generation, and other processing.\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Ignored directories (customizable \\u2014 remove lines to include them)\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Python virtual environments\\n\",\"venv/\\n\",\"env/\\n\",\"*.egg-info/\\n\",\"\\n\",\"# Java (Maven/Gradle) and Rust (Cargo) build output. Both ecosystems\\n\",\"# produce a top-level ``target/`` directory full of compiled artifacts \\u2014\\n\",\"# kept here as well as in ``_ALWAYS_IGNORED_DIRS`` so users who customize\\n\",\"# their ``.codeboardingignore`` continue to skip it even after edits.\\n\",\"target/\\n\",\"bin/\\n\",\"out/\\n\",\"\\n\",\"# .NET / C# build output\\n\",\"obj/\\n\",\"\\n\",\"# Go\\n\",\"vendor/\\n\",\"testdata/\\n\",\"\\n\",\"# PHP\\n\",\"cache/\\n\",\"\\n\",\"# Custom\\n\",\"temp/\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Test and infrastructure files\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Test directories\\n\",\"**/__tests__/**\\n\",\"**/tests/**\\n\",\"**/test/**\\n\",\"**/__test__/**\\n\",\"**/testing/**\\n\",\"**/testutil/**\\n\",\"\\n\",\"# Java/Kotlin test directories (Maven/Gradle structure)\\n\",\"**/src/test/**\\n\",\"**/src/testFixtures/**\\n\",\"**/src/integration-test/**\\n\",\"**/src/jmh/**\\n\",\"**/src/contractTest/**\\n\",\"**/osgi-tests/**\\n\",\"\\n\",\"# Test files by naming convention\\n\",\"*.test.*\\n\",\"*.spec.*\\n\",\"*_test.*\\n\",\"*test_*.py\\n\",\"test_*.py\\n\",\"*Test.java\\n\",\"*IT.java\\n\",\"*Test.kt\\n\",\"*IT.kt\\n\",\"*Tests.java\\n\",\"\\n\",\"# Mock, fixture, and stub directories\\n\",\"**/__mocks__/**\\n\",\"**/mocks/**\\n\",\"**/fixtures/**\\n\",\"**/fixture/**\\n\",\"**/stubs/**\\n\",\"**/stub/**\\n\",\"**/fakes/**\\n\",\"**/fake/**\\n\",\"\\n\",\"# E2E and integration test directories\\n\",\"**/e2e/**\\n\",\"**/integration-tests/**\\n\",\"**/integration_test*/**\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Non-production code\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Example and documentation code\\n\",\"**/examples/**\\n\",\"**/documentation/examples/**\\n\",\"\\n\",\"# Generated code\\n\",\"*.pb.go\\n\",\"**/generated_parser*\\n\",\"\\n\",\"# Java/Kotlin metadata files\\n\",\"module-info.java\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build artifacts and minified files\\n\",\"# ============================================================================\\n\",\"\\n\",\"*.bundle.js\\n\",\"*.bundle.js.map\\n\",\"*.min.js\\n\",\"*.min.css\\n\",\"*.chunk.js\\n\",\"*.chunk.js.map\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build tool configs and infrastructure\\n\",\"# ============================================================================\\n\",\"\\n\",\"esbuild*\\n\",\"webpack*\\n\",\"rollup*\\n\",\"vite.config.*\\n\",\"gulpfile*\\n\",\"gruntfile*\\n\",\"*.config.*\\n\"],\"protocol\":\"multilanguage-file-v2\",\"tools\":[\"a97741d2f93bada49450735580c9d37cc607f9820d4dedbc023eae296b33eac3\",\"3332eed47402eb7341ae9e4495d44ad0c7cdf2aa211d52173417db8be28d610c\",\"4736cfc0ba3c57734359f82883bcfed49a0ea748fdfcad3c137c0da112027f11\",\"e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb\",\"400064ce8fed655fe0bbc1c85cd0299faa76b2b98c8c30fc6a160df2cd7ef3e9\"]}", "commands": "{\"jdtls_root\": \"C:\\\\Users\\\\BW011222\\\\.codeboarding\\\\servers\\\\bin\\\\jdtls\", \"lsp_servers\": {\"java\": [\"D:\\\\Java\\\\jdk-21.0.8\\\\bin\\\\java.exe\"], \"typescript\": [\"D:\\\\Progrm Files\\\\nvm4w\\\\nodejs\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\m5-tools\\\\node_modules\\\\typescript-language-server\\\\lib\\\\cli.mjs\", \"--stdio\"]}, \"tokei\": [\"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\", \"-o\", \"json\"], \"typescript_sdk\": \"F:\\\\CodeBoarding\\\\temp\\\\m5-tools\\\\node_modules\\\\typescript\\\\lib\\\\tsserver.js\"}", "versions": "{\"java\": \"java 21.0.8 2025-07-15 LTS\\nJava(TM) SE Runtime Environment (build 21.0.8+12-LTS-250)\\nJava HotSpot(TM) 64-Bit Server VM (build 21.0.8+12-LTS-250, mixed mode, sharing)\", \"jdtls\": \"org.eclipse.jdt.ls.core_1.59.0.202605111959.jar\", \"tokei\": \"tokei 14.0.0 compiled with serialization support: json\", \"typescript\": \"typescript-language-server 6.0.3\", \"typescript_sdk\": \"5.9.3\"}"}, "limitations": ["Static calls are not executions. External/unresolved calls, registrations and dynamic dispatch are incomplete.", "Non-Python symbol completeness is bounded by native LSP document symbols; no independent callable census.", "Vue SFC has file-level evidence only; native adapters do not discover .vue functions.", "Unknown source suffixes are outside scope. Root inventory completeness does not prove semantic completeness.", "Symbol identity is (source_root_id, language, file project, path|native name), scoped to an immutable snapshot."], "source_root_id": "java-vue", "file_languages": {"backend/src/main/java/example/OrderController.java": "java", "backend/src/main/java/example/OrderService.java": "java", "frontend/src/api.ts": "typescript", "frontend/src/Orders.vue": "vue"}, "file_projects": {"backend/src/main/java/example/OrderController.java": "backend", "backend/src/main/java/example/OrderService.java": "backend", "frontend/src/api.ts": "frontend", "frontend/src/Orders.vue": "."}}], "bindings": [{"id": "vue-page", "snapshot_id": "02ecd3eb417cc4baa40660227f8bae4aa16b220e84ad04101d6d5681ff574303", "source_version": "b81e819d37c59da7ba0412355891ac4e8aed8361a52818e819737aa300874dc5", "location": {"path": "frontend/src/Orders.vue", "symbol": "", "kind": "FILE", "content_hash": "1931e0e3e22cd13f275d7f1e78a1fac7c90f82f95e57865d57b0d910c6a178a5", "start": 1, "end": 5}, "status": "current", "reason": "", "history": []}, {"id": "api-client", "snapshot_id": "02ecd3eb417cc4baa40660227f8bae4aa16b220e84ad04101d6d5681ff574303", "source_version": "b81e819d37c59da7ba0412355891ac4e8aed8361a52818e819737aa300874dc5", "location": {"path": "frontend/src/api.ts", "symbol": "frontend.src.api.createOrder", "kind": "FUNCTION", "content_hash": "2e71eb064a86412d0890dd5445dd2a362199de3a322a59e3d7b2b36fd5aaf13f", "start": 1, "end": 4}, "status": "current", "reason": "", "history": []}, {"id": "controller", "snapshot_id": "02ecd3eb417cc4baa40660227f8bae4aa16b220e84ad04101d6d5681ff574303", "source_version": "b81e819d37c59da7ba0412355891ac4e8aed8361a52818e819737aa300874dc5", "location": {"path": "backend/src/main/java/example/OrderController.java", "symbol": "backend.src.main.java.example.OrderController.createOrder()", "kind": "METHOD", "content_hash": "55d121e001a0f033a240fc942301b24b9903c03978567e800aa47565d36465d3", "start": 13, "end": 13}, "status": "current", "reason": "", "history": []}, {"id": "routes", "snapshot_id": "02ecd3eb417cc4baa40660227f8bae4aa16b220e84ad04101d6d5681ff574303", "source_version": "b81e819d37c59da7ba0412355891ac4e8aed8361a52818e819737aa300874dc5", "location": {"path": "backend/src/main/java/example/OrderController.java", "symbol": "", "kind": "FILE", "content_hash": "55d121e001a0f033a240fc942301b24b9903c03978567e800aa47565d36465d3", "start": 1, "end": 14}, "status": "current", "reason": "", "history": []}, {"id": "service", "snapshot_id": "02ecd3eb417cc4baa40660227f8bae4aa16b220e84ad04101d6d5681ff574303", "source_version": "b81e819d37c59da7ba0412355891ac4e8aed8361a52818e819737aa300874dc5", "location": {"path": "backend/src/main/java/example/OrderService.java", "symbol": "backend.src.main.java.example.OrderService.create()", "kind": "METHOD", "content_hash": "948b9d441390bca787a7aa7e3ed609485ecd2a042333b156260872f845b2a97c", "start": 4, "end": 4}, "status": "current", "reason": "", "history": []}], "components": [{"id": "page", "name": "Vue orders page", "responsibility": "Vue orders page", "rationale": "Separate UI, transport, HTTP handling and business service", "parent_id": "", "binding_ids": ["vue-page"], "claim": {"kind": "code_fact", "explanation": "Vue orders page as declared in source", "binding_ids": ["vue-page"], "assumptions": [], "issues": []}}, {"id": "client", "name": "TypeScript API client", "responsibility": "TypeScript API client", "rationale": "Separate UI, transport, HTTP handling and business service", "parent_id": "", "binding_ids": ["api-client"], "claim": {"kind": "code_fact", "explanation": "TypeScript API client as declared in source", "binding_ids": ["api-client"], "assumptions": [], "issues": []}}, {"id": "java-controller", "name": "Spring orders controller", "responsibility": "Spring orders controller", "rationale": "Separate UI, transport, HTTP handling and business service", "parent_id": "", "binding_ids": ["controller", "routes"], "claim": {"kind": "code_fact", "explanation": "Spring orders controller as declared in source", "binding_ids": ["controller", "routes"], "assumptions": [], "issues": []}}, {"id": "java-service", "name": "Order service", "responsibility": "Order service", "rationale": "Separate UI, transport, HTTP handling and business service", "parent_id": "", "binding_ids": ["service"], "claim": {"kind": "code_fact", "explanation": "Order service as declared in source", "binding_ids": ["service"], "assumptions": [], "issues": []}}], "relations": [{"id": "orders-http", "source_id": "client", "target_id": "java-controller", "meaning": "Candidate POST /api/orders mapping", "claim": {"kind": "inference", "explanation": "fetch POST /api/orders matches RequestMapping /api plus PostMapping /orders; application registration and deployment are outside the fixture", "binding_ids": ["api-client", "controller", "routes"], "assumptions": [], "issues": ["Vue has file evidence only. Host startup, component mounting and HTTP deployment/proxy mapping are unverified."]}, "contract": {"mechanism": "http", "operation": "POST /api/orders", "caller_binding_ids": ["api-client"], "receiver_binding_ids": ["controller"], "matching_binding_ids": ["routes"], "status": "candidate", "rationale": "Inspected HTTP method, class route prefix and method route suffix on both sides", "uncertainties": ["No Spring application boot/scan or frontend proxy/base URL configuration is included. Static route equality is not runtime proof."]}}], "scenarios": [{"id": "vue-order", "name": "Vue \u2192 API Client \u2192 Spring Controller \u2192 Service", "entry_step_id": "submit-page", "steps": [{"id": "submit-page", "component_ids": ["page"], "binding_ids": ["vue-page"], "claim": {"kind": "inference", "explanation": "Declared capability step", "binding_ids": ["vue-page"], "assumptions": [], "issues": ["Vue has file evidence only. Host startup, component mounting and HTTP deployment/proxy mapping are unverified."]}}, {"id": "request-order", "component_ids": ["client"], "binding_ids": ["api-client"], "claim": {"kind": "code_fact", "explanation": "Declared capability step", "binding_ids": ["api-client"], "assumptions": [], "issues": []}}, {"id": "handle-order", "component_ids": ["java-controller"], "binding_ids": ["controller"], "claim": {"kind": "code_fact", "explanation": "Declared capability step", "binding_ids": ["controller"], "assumptions": [], "issues": []}}, {"id": "create-order", "component_ids": ["java-service"], "binding_ids": ["service"], "claim": {"kind": "code_fact", "explanation": "Declared capability step", "binding_ids": ["service"], "assumptions": [], "issues": []}}], "order": ["submit-page", "request-order", "handle-order", "create-order"], "transitions": [{"source_id": "submit-page", "target_id": "request-order", "kind": "next", "condition": "Assuming UI mounting and host routing"}, {"source_id": "request-order", "target_id": "handle-order", "kind": "next", "condition": "Assuming UI mounting and host routing"}, {"source_id": "handle-order", "target_id": "create-order", "kind": "next", "condition": "Native service method call"}], "claim": {"kind": "inference", "explanation": "A source-evidenced HTTP candidate path, including explicit Vue file-only and host activation gaps", "binding_ids": ["vue-page", "api-client", "controller", "routes", "service"], "assumptions": [], "issues": ["Vue has file evidence only. Host startup, component mounting and HTTP deployment/proxy mapping are unverified."]}, "relation_ids": ["orders-http"]}], "opinions": [], "verifications": [], "revisions": [{"revision": 0, "author": "M5 external Agent", "summary": "Initialize architecture model", "timestamp": "2026-11-05T04:01:51.442730+00:00", "object_ids": [], "scenario_ids": []}, {"revision": 1, "author": "M5 external Agent", "summary": "Java/Vue capability check, distinct from the primary continuing Tauri model", "timestamp": "2026-11-05T04:01:52.199717+00:00", "object_ids": ["02ecd3eb417cc4baa40660227f8bae4aa16b220e84ad04101d6d5681ff574303", "api-client", "client", "controller", "java-controller", "java-service", "orders-http", "page", "routes", "service", "vue-order", "vue-page"], "scenario_ids": ["vue-order"]}], "maintenance": [], "maintenance_target_snapshot_id": ""}, "maintenance": {"model_id": "96e23721-4f8a-46ba-8e7a-59844203a40d", "revision": 1, "pending_ids": [], "current_coverage_ids": [], "current_pending_ids": [], "latest_target_snapshot_id": "", "observations": []}, "exported_at": "2026-11-05T04:01:52.927577+00:00", "snippets": {"vue-page": [{"snapshot_id": "02ecd3eb417cc4baa40660227f8bae4aa16b220e84ad04101d6d5681ff574303", "source_version": "b81e819d37c59da7ba0412355891ac4e8aed8361a52818e819737aa300874dc5", "location": {"path": "frontend/src/Orders.vue", "symbol": "", "kind": "FILE", "content_hash": "1931e0e3e22cd13f275d7f1e78a1fac7c90f82f95e57865d57b0d910c6a178a5", "start": 1, "end": 5}, "source_root_id": "java-vue", "status": "verified", "text": "    1  \u003cscript setup lang=\"ts\">\n    2  import { createOrder } from \"./api\";\n    3  async function submit() { await createOrder(); }\n    4  \u003c/script>\n    5  \u003ctemplate>\u003cbutton @click=\"submit\">Create order\u003c/button>\u003c/template>"}], "api-client": [{"snapshot_id": "02ecd3eb417cc4baa40660227f8bae4aa16b220e84ad04101d6d5681ff574303", "source_version": "b81e819d37c59da7ba0412355891ac4e8aed8361a52818e819737aa300874dc5", "location": {"path": "frontend/src/api.ts", "symbol": "frontend.src.api.createOrder", "kind": "FUNCTION", "content_hash": "2e71eb064a86412d0890dd5445dd2a362199de3a322a59e3d7b2b36fd5aaf13f", "start": 1, "end": 4}, "source_root_id": "java-vue", "status": "verified", "text": "    1  export async function createOrder(): Promise\u003cstring> {\n    2    const response = await fetch(\"/api/orders\", { method: \"POST\" });\n    3    return response.text();\n    4  }"}], "controller": [{"snapshot_id": "02ecd3eb417cc4baa40660227f8bae4aa16b220e84ad04101d6d5681ff574303", "source_version": "b81e819d37c59da7ba0412355891ac4e8aed8361a52818e819737aa300874dc5", "location": {"path": "backend/src/main/java/example/OrderController.java", "symbol": "backend.src.main.java.example.OrderController.createOrder()", "kind": "METHOD", "content_hash": "55d121e001a0f033a240fc942301b24b9903c03978567e800aa47565d36465d3", "start": 13, "end": 13}, "source_root_id": "java-vue", "status": "verified", "text": "   13      public String createOrder() { return service.create(); }"}], "routes": [{"snapshot_id": "02ecd3eb417cc4baa40660227f8bae4aa16b220e84ad04101d6d5681ff574303", "source_version": "b81e819d37c59da7ba0412355891ac4e8aed8361a52818e819737aa300874dc5", "location": {"path": "backend/src/main/java/example/OrderController.java", "symbol": "", "kind": "FILE", "content_hash": "55d121e001a0f033a240fc942301b24b9903c03978567e800aa47565d36465d3", "start": 1, "end": 14}, "source_root_id": "java-vue", "status": "verified", "text": "    1  package example;\n    2  \n    3  import org.springframework.web.bind.annotation.PostMapping;\n    4  import org.springframework.web.bind.annotation.RequestMapping;\n    5  import org.springframework.web.bind.annotation.RestController;\n    6  \n    7  @RestController\n    8  @RequestMapping(\"/api\")\n    9  public class OrderController {\n   10      private final OrderService service = new OrderService();\n   11  \n   12      @PostMapping(\"/orders\")\n   13      public String createOrder() { return service.create(); }\n   14  }"}], "service": [{"snapshot_id": "02ecd3eb417cc4baa40660227f8bae4aa16b220e84ad04101d6d5681ff574303", "source_version": "b81e819d37c59da7ba0412355891ac4e8aed8361a52818e819737aa300874dc5", "location": {"path": "backend/src/main/java/example/OrderService.java", "symbol": "backend.src.main.java.example.OrderService.create()", "kind": "METHOD", "content_hash": "948b9d441390bca787a7aa7e3ed609485ecd2a042333b156260872f845b2a97c", "start": 4, "end": 4}, "source_root_id": "java-vue", "status": "verified", "text": "    4      public String create() { return \"order-created\"; }"}]}}</script><script>/* Pure presentation and playback state; never mutates model objects. */
+"use strict";
+const ArchitectureView = (() => {
+  function visibleAncestor(id, components, expanded) {
+    const byId = new Map(components.map(c => [c.id, c]));
+    let visible = id;
+    let current = byId.get(id);
+    while (current && current.parent_id) {
+      if (!expanded.has(current.parent_id)) visible = current.parent_id;
+      current = byId.get(current.parent_id);
+    }
+    return visible;
+  }
+  function hierarchy(components) {
+    const children = new Map();
+    for (const component of components) {
+      if (!children.has(component.parent_id)) children.set(component.parent_id, []);
+      children.get(component.parent_id).push(component);
+    }
+    const rows = [];
+    function visit(parent, depth) {
+      for (const component of children.get(parent) || []) {
+        rows.push({component, depth, index: rows.length});
+        visit(component.id, depth + 1);
+      }
+    }
+    visit("", 0);
+    return rows;
+  }
+  function componentProjection(components, expanded) {
+    const byId = new Map(components.map(c => [c.id, c]));
+    const visibleById = new Map(), hiddenCounts = new Map(), parentIds = new Set();
+    for (const component of components) {
+      if (component.parent_id) parentIds.add(component.parent_id);
+      const path = [];
+      let current = component;
+      while (current && !visibleById.has(current.id)) {
+        path.push(current);
+        current = byId.get(current.parent_id);
+      }
+      while (path.length) {
+        const entry = path.pop();
+        const parent = byId.get(entry.parent_id);
+        const visibleParent = parent && visibleById.get(parent.id);
+        visibleById.set(entry.id, !parent ? entry.id : visibleParent !== parent.id
+          ? visibleParent : expanded.has(parent.id) ? entry.id : parent.id);
+      }
+    }
+    for (const [id, visible] of visibleById) {
+      if (id !== visible) hiddenCounts.set(visible, (hiddenCounts.get(visible) || 0) + 1);
+    }
+    return {byId, visibleById, hiddenCounts, parentIds};
+  }
+  function projectedEdges(model, scenario, expanded, projection = componentProjection(model.components, expanded)) {
+    const project = id => projection.visibleById.get(id);
+    const edges = model.relations.map(r => ({
+      source: project(r.source_id), target: project(r.target_id),
+      relation_id: r.id, component_ids: [r.source_id, r.target_id], kind: "relation"
+    }));
+    if (!scenario) return edges;
+    const steps = new Map(scenario.steps.map(s => [s.id, s]));
+    scenario.transitions.forEach((transition, index) => {
+      for (const source of steps.get(transition.source_id).component_ids) {
+        for (const target of steps.get(transition.target_id).component_ids) {
+          edges.push({source: project(source), target: project(target), kind: transition.kind,
+            source_step_id: transition.source_id, target_step_id: transition.target_id,
+            transition_index: index, component_ids: [source, target]});
+        }
+      }
+    });
+    return edges;
+  }
+  class Player {
+    constructor(scenario) {
+      this.scenario = scenario;
+      this.reset();
+    }
+    reset() {
+      this.current = this.scenario ? this.scenario.entry_step_id : "";
+      this.history = [];
+      this.incoming = null;
+    }
+    choices() {
+      return this.scenario ? this.scenario.transitions.map((transition, index) => ({transition, index}))
+        .filter(choice => choice.transition.source_id === this.current) : [];
+    }
+    forward(index) {
+      const choice = this.choices().find(c => c.index === index);
+      if (!choice) return false;
+      this.history.push({step: this.current, incoming: this.incoming});
+      this.current = choice.transition.target_id;
+      this.incoming = choice.index;
+      return true;
+    }
+    back() {
+      const previous = this.history.pop();
+      if (!previous) return false;
+      this.current = previous.step;
+      this.incoming = previous.incoming;
+      return true;
+    }
+    inspectStep(id) {
+      if (!this.scenario.steps.some(s => s.id === id)) return false;
+      this.current = id;
+      this.history = [];
+      this.incoming = null;
+      return true;
+    }
+    autoChoice() {
+      const choices = this.choices();
+      if (choices.length !== 1) return null;
+      const choice = choices[0];
+      if (choice.transition.kind === "loop" || this.history.some(h => h.step === choice.transition.target_id)
+          || choice.transition.target_id === this.current) return null;
+      return choice.index;
+    }
+  }
+  return {visibleAncestor, hierarchy, componentProjection, projectedEdges, Player};
+})();
+if (typeof module !== "undefined") module.exports = ArchitectureView;
+
+"use strict";
+(() => {
+  const documentData = JSON.parse(document.getElementById("model-data").textContent);
+  const model = documentData.model;
+  const report = documentData.maintenance;
+  const {componentProjection, hierarchy, projectedEdges, Player} = ArchitectureView;
+  const rows = hierarchy(model.components);
+  const byId = new Map([...model.components, ...model.relations, ...model.scenarios,
+    ...model.scenarios.flatMap(s => s.steps), ...model.bindings, ...model.maintenance].map(o => [o.id, o]));
+  const expanded = new Set(model.components.filter(c => !c.parent_id).map(c => c.id));
+  const bindingIds = new Set(model.bindings.map(b => b.id));
+  const players = new Map(model.scenarios.map(s => [s.id, new Player(s)]));
+  let scenario = model.scenarios[0] || null;
+  let player = scenario ? players.get(scenario.id) : new Player(null);
+  let selection = player.current || model.components[0]?.id || model.project.id;
+  let timer = null;
+  let message = "";
+  const el = id => document.getElementById(id);
+  const element = (tag, text = "", className = "") => {
+    const node = document.createElement(tag);
+    node.textContent = text;
+    if (className) node.className = className;
+    return node;
+  };
+  function button(text, action, className = "") {
+    const node = element("button", text, className);
+    node.type = "button";
+    node.addEventListener("click", action);
+    return node;
+  }
+  function field(container, label, value) {
+    const node = element("div", "", "field");
+    node.append(element("b", label));
+    node.append(element("div", typeof value === "string" ? value : JSON.stringify(value, null, 2)));
+    container.append(node);
+  }
+  function json(container, value) { container.append(element("pre", JSON.stringify(value, null, 2))); }
+  function details(container, title, value) {
+    const node = element("details");
+    node.append(element("summary", title));
+    json(node, value);
+    container.append(node);
+    return node;
+  }
+  function pause() {
+    if (timer !== null) clearInterval(timer);
+    timer = null;
+    el("play").textContent = "Play";
+  }
+  function select(id) { selection = id; renderDetail(); }
+  function moved() {
+    message = "";
+    selection = player.current;
+    render();
+  }
+  function advance(index) {
+    pause();
+    if (player.forward(index)) moved();
+  }
+  function autoTick() {
+    const index = player.autoChoice();
+    if (index === null) {
+      pause();
+      message = player.choices().length ? "Paused: choose a branch or explicitly enter a cycle." : "Paused at modeled endpoint or unexplained gap.";
+      renderPlayer();
+      return;
+    }
+    player.forward(index);
+    moved();
+  }
+  function renderTree(projection) {
+    el("tree").replaceChildren();
+    for (const {component, depth} of rows) {
+      if (projection.visibleById.get(component.id) !== component.id) continue;
+      const row = element("div", "", "tree-row");
+      row.style.paddingInlineStart = `${depth * 12}px`;
+      if (projection.parentIds.has(component.id)) {
+        const toggle = button(expanded.has(component.id) ? "−" : "+", () => {
+          expanded.has(component.id) ? expanded.delete(component.id) : expanded.add(component.id);
+          render();
+        });
+        toggle.setAttribute("aria-label", `Toggle ${component.name}`);
+        toggle.setAttribute("aria-expanded", String(expanded.has(component.id)));
+        row.append(toggle);
+      }
+      row.append(button(component.name, () => select(component.id), "object"));
+      el("tree").append(row);
+    }
+    el("steps").replaceChildren();
+    if (!scenario) { el("steps").append(element("p", "No modeled businesses. Update the model through the external Agent / CLI.")); return; }
+    for (const id of scenario.order) {
+      const step = scenario.steps.find(s => s.id === id);
+      const node = button(id, () => {
+        pause(); player.inspectStep(id); message = "Direct inspection starts a new browsing path.";
+        selection = id; render();
+      }, `step${id === player.current ? " active" : ""}`);
+      node.setAttribute("aria-current", id === player.current ? "step" : "false");
+      node.append(element("small", step.claim.explanation));
+      el("steps").append(node);
+    }
+  }
+  function svgElement(tag, attributes) {
+    const node = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    Object.entries(attributes).forEach(([key, value]) => node.setAttribute(key, String(value)));
+    return node;
+  }
+  function renderGraph(projection) {
+    const active = new Set(scenario?.steps.find(s => s.id === player.current)?.component_ids || []);
+    const involved = new Set(scenario?.steps.flatMap(s => s.component_ids) || []);
+    const project = id => projection.visibleById.get(id);
+    const activeVisible = new Set([...active].map(project));
+    const involvedVisible = new Set([...involved].map(project));
+    const graph = el("graph");
+    const nodes = el("nodes");
+    graph.replaceChildren(); nodes.replaceChildren();
+    const defs = svgElement("defs", {});
+    const marker = svgElement("marker", {id:"arrow",viewBox:"0 0 10 10",refX:9,refY:5,markerWidth:6,markerHeight:6,orient:"auto-start-reverse"});
+    marker.append(svgElement("path", {d:"M 0 0 L 10 5 L 0 10 z",fill:"context-stroke"}));
+    defs.append(marker); graph.append(defs);
+    const width = Math.max(430, ...rows.map(r => r.depth * 230 + 460));
+    const height = Math.max(230, rows.length * 105 + 30);
+    nodes.style.width = `${width}px`; nodes.style.height = `${height}px`;
+    graph.style.width = `${width}px`; graph.style.height = `${height}px`;
+    const positions = new Map(rows.map(r => [r.component.id, {x: r.depth * 230 + 20, y: r.index * 105 + 20}]));
+    const edges = projectedEdges(model, scenario, expanded, projection);
+    const groups = new Map();
+    for (const edge of edges) {
+      const activeEdge = edge.kind !== "relation" && (edge.source_step_id === player.current || edge.transition_index === player.incoming);
+      if (edge.kind !== "relation" && !activeEdge) continue;
+      const key = JSON.stringify([edge.source,edge.target]);
+      if (!groups.has(key)) groups.set(key,[]);
+      groups.get(key).push(edge);
+    }
+    const labelRows = new Map();
+    for (const grouped of groups.values()) {
+      const edge = grouped[0];
+      const transitions = grouped.filter(e => e.kind !== "relation");
+      const highlight = transitions.length > 0;
+      const source = positions.get(edge.source), target = positions.get(edge.target);
+      const stroke = highlight ? "#007c78" : "#9aadb9";
+      let path;
+      if (edge.source === edge.target) {
+        path = `M${source.x+170},${source.y+20} C${source.x+235},${source.y-16} ${source.x+235},${source.y+95} ${source.x+170},${source.y+66}`;
+      } else {
+        path = `M${source.x+190},${source.y+42} C${source.x+220},${source.y+42} ${target.x+220},${target.y+42} ${target.x+190},${target.y+42}`;
+      }
+      const line = svgElement("path", {d:path, fill:"none", stroke, "stroke-width":highlight?3:1.5,
+        "stroke-dasharray":highlight?"6 3":"none", "marker-end":"url(#arrow)"});
+      const title = svgElement("title", {});
+      title.textContent = grouped.map(item => item.kind === "relation" ? item.relation_id : `${item.source_step_id} → ${item.target_step_id} · ${item.kind}`).join("\n");
+      line.append(title); graph.append(line);
+      const labelRow = labelRows.get(edge.source) || 0;
+      labelRows.set(edge.source,labelRow+1);
+      const label = svgElement("text", {x:source.x+198,y:source.y+12+labelRow*15});
+      const relationCount = grouped.length - transitions.length;
+      label.textContent = [relationCount ? `${relationCount} relation${relationCount > 1 ? "s" : ""}` : "", ...new Set(transitions.map(item=>item.kind))].filter(Boolean).join(" · ");
+      graph.append(label);
+    }
+    for (const {component} of rows) {
+      if (project(component.id) !== component.id) continue;
+      const position = positions.get(component.id);
+      const node = button("", () => select(component.id), "node");
+      node.dataset.componentId = component.id;
+      node.style.left = `${position.x}px`; node.style.top = `${position.y}px`;
+      node.classList.toggle("current", activeVisible.has(component.id));
+      node.classList.toggle("unrelated", el("focus").checked && !involvedVisible.has(component.id));
+      node.append(element("strong", component.name), element("small", component.id));
+      if (activeVisible.has(component.id)) {
+        node.append(element("span", active.has(component.id) ? "Current step" : `Current step inside · ${player.current}`, "inside"));
+      }
+      const hidden = projection.hiddenCounts.get(component.id) || 0;
+      if (hidden) node.append(element("small", `${hidden} components inside · expand in structure`));
+      nodes.append(node);
+    }
+    el("relations").replaceChildren();
+    for (const relation of model.relations) {
+      el("relations").append(button(`${relation.source_id} → ${relation.target_id} · ${relation.meaning}`,
+        () => select(relation.id), "relation"));
+    }
+    if (!rows.length) nodes.append(element("p", "No components modeled yet."));
+    if (!model.relations.length) el("relations").append(element("p", "No component relations modeled. Business transitions remain separate."));
+  }
+  function renderPlayer() {
+    el("current").textContent = scenario ? `${scenario.name} / ${player.current}` : "No business selected";
+    el("choices").replaceChildren();
+    const choices = player.choices();
+    el("playback-status").textContent = message || (choices.length === 0
+      ? "No outgoing transition saved. Modeled endpoint or unexplained gap; no next step is inferred from display order."
+      : choices.length > 1 ? "Choose a saved transition. Conditions have not been evaluated."
+      : choices[0].transition.kind === "loop" ? "Loop boundary: paused until explicitly selected. Choose another transition to exit when available." : "Ready to follow the saved transition.");
+    for (const {transition, index} of choices) {
+      el("choices").append(button(`${transition.kind} → ${transition.target_id} · ${transition.condition}`, () => advance(index)));
+    }
+    const incoming = scenario?.transitions[player.incoming];
+    el("incoming").textContent = incoming ? `Last traversed: ${incoming.source_id} → ${incoming.target_id} · ${incoming.kind} · ${incoming.condition}` : "No transition traversed in this browsing path.";
+    el("back").disabled = player.history.length === 0;
+    el("next").disabled = choices.length !== 1;
+    el("play").disabled = !scenario || !choices.length;
+    el("reset").disabled = !scenario;
+  }
+  function renderBindings(container, ids, displayed) {
+    container.append(element("h3", "Code evidence"));
+    for (const id of ids) {
+      const binding = byId.get(id);
+      if (!binding) continue;
+      const node = element("details");
+      node.dataset.bindingId = id;
+      node.append(element("summary", `${id} · ${binding.location.path}:${binding.location.start} · ${binding.status}`));
+      node.append(button(`Inspect binding ${id}`, () => select(id)));
+      field(node, "Binding status is relative to its saved evidence", binding.reason || binding.status);
+      for (const [index, snippet] of documentData.snippets[id].entries()) {
+        field(node, index === 0 ? "Referenced evidence" : "Historical binding evidence", snippet.location.symbol || snippet.location.path);
+        const snapshot = model.facts.find(item => item.id === snippet.snapshot_id);
+        json(node, {source_root_id:snippet.source_root_id || "legacy single root", language:snapshot?.file_languages?.[snippet.location.path] || "legacy", project:snapshot?.file_projects?.[snippet.location.path] || "legacy", snapshot_id:snippet.snapshot_id,source_version:snippet.source_version,...snippet.location});
+        if (snippet.status === "verified") node.append(element("p", "Exact file SHA-256 matched this evidence version.", "badge"), element("pre", snippet.text));
+        else node.append(element("p", snippet.reason, "warning"));
+      }
+      details(node, "Binding history metadata", binding.history);
+      node.append(element("h3", "Binding opinions & verification"));
+      node.append(element("p", "Coverage is limited to the recorded object_ids, inputs and source_version. Binding checks do not verify a whole component or business.", "muted"));
+      renderRecords(node, new Set([id]), displayed, `binding ${id}`);
+      container.append(node);
+    }
+  }
+  function renderMaintenance(container, ids, displayed) {
+    container.append(element("h3", "Maintenance & review history"));
+    container.append(element("p", "Current means current explanation contents for a saved source comparison. It does not mean latest source verified.", "muted"));
+    field(container, "Latest target snapshot", report.latest_target_snapshot_id || "No source maintenance target saved");
+    const matching = model.maintenance.filter(item => ids.has(item.binding_id) || [...item.component_ids,...item.relation_ids,...item.scenario_ids,...item.step_ids].some(id => ids.has(id)));
+    if (!matching.length) container.append(element("p", "No maintenance observations for this selection. This is not evidence of verification."));
+    for (const item of matching) {
+      const current = report.current_coverage_ids.includes(item.id);
+      const pending = report.pending_ids.includes(item.id);
+      const currentPending = report.current_pending_ids.includes(item.id);
+      const rootId = model.facts.find(facts => facts.id === item.target_snapshot_id)?.source_root_id;
+      const latest = item.target_snapshot_id === (rootId ? report.source_root_targets?.[rootId] : report.latest_target_snapshot_id);
+      const node = element("details");
+      node.append(element("summary", `${current ? "Current explanation" : "Historical explanation"} · ${item.disposition} · ${currentPending ? "current pending" : pending ? "historical pending" : item.resolution ? "review recorded" : "unchanged comparison"} · ${latest ? "latest target" : "older target"}`));
+      field(node, "Observation ID", item.id);
+      field(node, "Target snapshot / source version", `${item.target_snapshot_id} / ${item.target_source_version}`);
+      field(node, "Reasons", item.reasons);
+      details(node, "Actual affected scope and content fingerprints", {component_ids:item.component_ids,relation_ids:item.relation_ids,scenario_ids:item.scenario_ids,step_ids:item.step_ids,coverage_version:item.coverage_version,object_versions:item.object_versions});
+      if (item.resolution) details(node, "Confirmation author, reason and actual version coverage", item.resolution).open = true;
+      else field(node, "Review", pending ? "Unresolved" : "No review required by this comparison");
+      details(node, "Source basis, candidates and static call changes", {basis:item.basis,candidates:item.candidates,call_changes:item.call_changes,compared_revision:item.compared_revision});
+      renderRecords(node, new Set([item.id]), displayed, `observation ${item.id}`);
+      container.append(node);
+    }
+    container.append(element("p", "Historical source bodies and old explanation bodies cannot be reconstructed from revisions or fingerprints.", "muted"));
+  }
+  function renderRecords(container, ids, displayed, context) {
+    for (const [name, records] of [["Human opinion", model.opinions], ["Verification", model.verifications]]) {
+      for (const record of records.filter(r => r.object_ids.some(id => ids.has(id)))) {
+        if (displayed.has(record.id)) {
+          const existing = displayed.get(record.id);
+          const reference = button(`View ${record.id} · also targets this selection; shown under ${existing.context}`, () => {
+            let ancestor = existing.node;
+            while (ancestor) {
+              if (ancestor.tagName === "DETAILS") ancestor.open = true;
+              ancestor = ancestor.parentElement;
+            }
+            existing.node.scrollIntoView({block:"nearest"});
+            existing.node.querySelector("summary").focus();
+          });
+          reference.dataset.recordReference = record.id;
+          container.append(reference);
+          continue;
+        }
+        const node = details(container, `${name} · ${record.status || record.stance} · ${record.id}`, record);
+        node.dataset.recordId = record.id;
+        displayed.set(record.id, {node, context});
+      }
+    }
+  }
+  function renderDetail() {
+    const container = el("detail"); container.replaceChildren();
+    const object = byId.get(selection);
+    if (!object) { json(container, model.project); return; }
+    container.append(element("h3", object.name || object.id));
+    if (object.contract) details(container, "Cross-boundary contract (static evidence, not runtime proof)", object.contract);
+    field(container, "Stable object ID", object.id);
+    for (const name of ["responsibility", "rationale", "parent_id", "meaning", "source_id", "target_id", "component_ids"]) {
+      if (object[name]) field(container, name.replaceAll("_", " "), object[name]);
+    }
+    const claim = object.claim;
+    if (claim) {
+      container.append(element("span", claim.kind, "badge"));
+      field(container, "Explanation", claim.explanation);
+      field(container, "Assumptions", claim.assumptions.length ? claim.assumptions : "None declared");
+      field(container, "Issues", claim.issues.length ? claim.issues : "None declared");
+    }
+    const ids = new Set([object.id]);
+    const bindings = new Set([...(object.binding_ids || []), ...(claim?.binding_ids || [])]);
+    if (bindingIds.has(object.id)) bindings.add(object.id);
+    if (object.component_ids) {
+      for (const id of object.component_ids) {
+        ids.add(id);
+        container.append(button(`Inspect component ${id}`, () => select(id)));
+        for (const bid of [...byId.get(id).binding_ids, ...byId.get(id).claim.binding_ids]) bindings.add(bid);
+      }
+    }
+    const displayed = new Map();
+    renderBindings(container, bindings, displayed);
+    container.append(element("h3", "Opinions & verification"));
+    container.append(element("p", "Planned checks are not executed results. An executed result applies only to its recorded inputs, objects and source version; it does not change claim kind.", "muted"));
+    renderRecords(container, ids, displayed, `selection ${object.id}`);
+    renderMaintenance(container, new Set([...ids, ...bindings]), displayed);
+  }
+  function render() {
+    const projection = componentProjection(model.components, expanded);
+    renderTree(projection); renderGraph(projection); renderPlayer(); renderDetail();
+  }
+  el("project").textContent = model.project.name;
+  el("boundary").textContent = model.project.boundary;
+  el("identity").textContent = `Model ${model.id} · revision ${model.revision}`;
+  el("exported").textContent = `Exported ${documentData.exported_at}`;
+  for (const item of model.scenarios) {
+    const option = element("option", item.name); option.value = item.id; el("scenario").append(option);
+  }
+  el("scenario").disabled = !scenario;
+  el("inspect-business").disabled = !scenario;
+  el("inspect-business").addEventListener("click", () => { if (scenario) select(scenario.id); });
+  el("scenario").addEventListener("change", () => {
+    pause(); scenario = model.scenarios.find(s => s.id === el("scenario").value);
+    player = players.get(scenario.id); message = ""; selection = player.current; render();
+  });
+  el("focus").addEventListener("change", () => renderGraph(componentProjection(model.components, expanded)));
+  el("reset").addEventListener("click", () => { pause(); player.reset(); moved(); });
+  el("back").addEventListener("click", () => { pause(); player.back(); moved(); });
+  el("next").addEventListener("click", () => {
+    const choices = player.choices(); if (choices.length === 1) advance(choices[0].index);
+  });
+  el("play").addEventListener("click", () => {
+    if (timer !== null) { pause(); return; }
+    timer = setInterval(autoTick, 1100); el("play").textContent = "Pause";
+  });
+  el("expand-all").addEventListener("click", () => { model.components.forEach(c => expanded.add(c.id)); render(); });
+  el("collapse-all").addEventListener("click", () => { expanded.clear(); render(); });
+  el("metadata").addEventListener("click", () => {
+    const container = el("detail"); container.replaceChildren();
+    field(container, "Model / revision / export", `${model.id} / ${model.revision} / ${documentData.exported_at}`);
+    field(container, "Selected business / step", `${scenario?.id || "none"} / ${player.current || "none"}`);
+    json(container, model.project);
+    container.append(element("h3", "Source bindings"));
+    for (const binding of model.bindings) {
+      container.append(button(`Inspect binding ${binding.id}`, () => select(binding.id)));
+    }
+    field(container, "Latest source target", report.latest_target_snapshot_id || "none");
+    details(container, "Independent source root maintenance targets", model.maintenance_targets || {});
+    for (const facts of model.facts) details(container, `Snapshot ${facts.id}`, {id:facts.id,source_root_id:facts.source_root_id || "legacy single root",file_languages:facts.file_languages,file_projects:facts.file_projects, source:facts.source,tools:facts.tools,limitations:facts.limitations});
+    details(container, "Maintenance coverage sets", report);
+    details(container, "Revision metadata (not historical explanation bodies)", model.revisions);
+  });
+  window.addEventListener("pagehide", pause);
+  render();
+})();
+</script>
+</body></html>

@@ -215,8 +215,11 @@
       "additionalProperties": false,
       "properties": {
         "schema_version": {
-          "const": 1,
           "default": 1,
+          "enum": [
+            1,
+            2
+          ],
           "title": "Schema Version",
           "type": "integer"
         },
@@ -278,6 +281,33 @@
           },
           "title": "Limitations",
           "type": "array"
+        },
+        "source_root_id": {
+          "default": "",
+          "title": "Source Root Id",
+          "type": "string"
+        },
+        "file_languages": {
+          "additionalProperties": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "propertyNames": {
+            "minLength": 1
+          },
+          "title": "File Languages",
+          "type": "object"
+        },
+        "file_projects": {
+          "additionalProperties": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "propertyNames": {
+            "minLength": 1
+          },
+          "title": "File Projects",
+          "type": "object"
         }
       },
       "required": [
@@ -321,6 +351,80 @@
         "reason"
       ],
       "title": "HistoricalLocation",
+      "type": "object"
+    },
+    "InterfaceContract": {
+      "additionalProperties": false,
+      "properties": {
+        "mechanism": {
+          "minLength": 1,
+          "title": "Mechanism",
+          "type": "string"
+        },
+        "operation": {
+          "minLength": 1,
+          "title": "Operation",
+          "type": "string"
+        },
+        "caller_binding_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Caller Binding Ids",
+          "type": "array"
+        },
+        "receiver_binding_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Receiver Binding Ids",
+          "type": "array"
+        },
+        "matching_binding_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Matching Binding Ids",
+          "type": "array"
+        },
+        "status": {
+          "default": "candidate",
+          "enum": [
+            "candidate",
+            "evidenced",
+            "ambiguous",
+            "missing"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "rationale": {
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "uncertainties": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Uncertainties",
+          "type": "array"
+        }
+      },
+      "required": [
+        "mechanism",
+        "operation",
+        "caller_binding_ids",
+        "receiver_binding_ids",
+        "rationale"
+      ],
+      "title": "InterfaceContract",
       "type": "object"
     },
     "Location": {
@@ -712,6 +816,17 @@
         },
         "claim": {
           "$ref": "#/$defs/Claim"
+        },
+        "contract": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/InterfaceContract"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
       "required": [
@@ -817,6 +932,14 @@
         },
         "claim": {
           "$ref": "#/$defs/Claim"
+        },
+        "relation_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Relation Ids",
+          "type": "array"
         }
       },
       "required": [
@@ -1118,6 +1241,17 @@
       "default": "",
       "title": "Maintenance Target Snapshot Id",
       "type": "string"
+    },
+    "maintenance_targets": {
+      "additionalProperties": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "propertyNames": {
+        "minLength": 1
+      },
+      "title": "Maintenance Targets",
+      "type": "object"
     }
   },
   "required": [

@@ -1,5 +1,7 @@
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 const {Player,visibleAncestor,componentProjection,projectedEdges,hierarchy} = require('../../architecture_model/viewer_assets/engine.js');
 const components = [{id:'root',parent_id:''},{id:'shared',parent_id:'root'},{id:'leaf',parent_id:'shared'}];
 const scenario = {entry_step_id:'a',order:['b','c','a'],steps:[
@@ -8,6 +10,26 @@ const scenario = {entry_step_id:'a',order:['b','c','a'],steps:[
     {source_id:'a',target_id:'b',kind:'branch',condition:'other'},
     {source_id:'c',target_id:'c',kind:'loop',condition:'repeat'},
     {source_id:'c',target_id:'a',kind:'return',condition:'exit'}]};
+test('real M5 businesses share a contract and play through both language roots',()=>{
+  const model=JSON.parse(fs.readFileSync(path.join(__dirname,'../../examples/architecture_model/multilanguage/model/model.json'),'utf8'));
+  const before=JSON.stringify(model);
+  assert.equal(model.scenarios.length,2);
+  for(const scenario of model.scenarios) {
+    assert.ok(scenario.relation_ids.includes('read-file-ipc'));
+    const player=new Player(scenario);
+    const visited=[player.current];
+    while(player.autoChoice()!==null) { player.forward(player.autoChoice()); visited.push(player.current); }
+    assert.deepEqual(visited,scenario.order);
+    const roots=new Set(scenario.steps.flatMap(step=>step.binding_ids).map(id=>{
+      const binding=model.bindings.find(item=>item.id===id);
+      return model.facts.find(item=>item.id===binding.snapshot_id).source_root_id;
+    }));
+    assert.deepEqual([...roots].sort(),['backend','frontend']);
+    const edges=projectedEdges(model,scenario,new Set());
+    assert.ok(edges.some(edge=>edge.relation_id==='read-file-ipc'));
+  }
+  assert.equal(JSON.stringify(model),before);
+});
 test('collapse projects references without changing stable objects or order',()=>{
   const model = {components,relations:[{id:'r',source_id:'leaf',target_id:'shared'}]};
   const before=JSON.stringify([model,scenario]);

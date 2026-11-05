@@ -1,0 +1,34 @@
+2026-11-05 11:44:22 INFO     [static_analyzer.typescript_config_scanner:108] Found 1 TypeScript project(s) in repository (1 total files across all projects)
+2026-11-05 11:44:22 INFO     [static_analyzer:185] Creating engine config for TypeScript at repo root (1 files across 1 tsconfig project(s): .)
+2026-11-05 11:44:22 INFO     [static_analyzer:387] 1 engine LSP client(s) will start during analysis, at most 1 running at a time.
+2026-11-05 11:44:22 INFO     [static_analyzer:741] analyze() called with skip_cache=True, source_sha=None
+2026-11-05 11:44:22 INFO     [static_analyzer:746] static_analysis_cache: outcome=bypass (skip_cache=True)
+2026-11-05 11:44:22 INFO     [static_analyzer:460] Starting engine LSP client for TypeScript at F:\CodeBoarding\temp\m5\native-trial\target\frontend
+2026-11-05 11:44:23 INFO     [static_analyzer:514] TypeScript LSP start: 0.4s
+2026-11-05 11:44:23 INFO     [static_analyzer:871] Starting engine analysis for TypeScript in F:\CodeBoarding\temp\m5\native-trial\target\frontend
+2026-11-05 11:44:23 INFO     [static_analyzer:1133] Analyzing 1 TypeScript files
+2026-11-05 11:44:23 INFO     [static_analyzer.engine.progress:49] Phase 0 (open): 100% (1/1 files, 0.1s elapsed)
+2026-11-05 11:44:23 INFO     [static_analyzer.engine.call_graph_builder:241] did_open 1 files: 0.1s
+2026-11-05 11:44:23 INFO     [static_analyzer.engine.call_graph_builder:251] Waiting for LSP server didOpen drain (timeout=62s)...
+2026-11-05 11:44:24 INFO     [static_analyzer.engine.call_graph_builder:265] Sync probe: 0.8s (3 symbols)
+2026-11-05 11:44:24 INFO     [static_analyzer.engine.progress:49] Phase 1 (symbols): 100% (1/1 files, 0.0s elapsed | symbols=5)
+2026-11-05 11:44:24 INFO     [static_analyzer.engine.call_graph_builder:223] Discovered 5 symbols across 1 files
+2026-11-05 11:44:24 INFO     [static_analyzer.engine.call_graph_builder:70] Phase 1 total (discover symbols): 0.9s
+2026-11-05 11:44:24 INFO     [static_analyzer.engine.call_graph_builder:74] Build indices: 0.0s
+2026-11-05 11:44:24 INFO     [static_analyzer.engine.progress:49] Phase 2 (definitions): 100% (1/1 files, 0.0s elapsed | edges=2, resolved=2)
+2026-11-05 11:44:24 INFO     [static_analyzer.engine.edge_builder:455] Phase 2b (implementations): 1 unique targets from 2 pending queries
+2026-11-05 11:44:24 INFO     [static_analyzer.engine.progress:49] Phase 2b (impl): 100% (1/1 targets, 0.0s elapsed | edges=2, resolved=1)
+2026-11-05 11:44:24 INFO     [static_analyzer.engine.edge_builder:236] Phase 2 summary: 3 call sites, 2 def resolved, 1 impl resolved, 0 iterated, 2 raw edges
+2026-11-05 11:44:24 INFO     [static_analyzer.engine.call_graph_builder:80] Phase 2 total (build edges): 0.0s, 2 edges
+2026-11-05 11:44:24 INFO     [static_analyzer.engine.hierarchy_builder:59] Hierarchy: 0 class symbols to process
+2026-11-05 11:44:24 INFO     [static_analyzer.engine.hierarchy_builder:106] Type hierarchy not supported, inferring from source code
+2026-11-05 11:44:24 INFO     [static_analyzer.engine.hierarchy_builder:110] Hierarchy complete: 0 classes, 0 inheritance links in 0.0s
+2026-11-05 11:44:24 INFO     [static_analyzer.engine.call_graph_builder:89] Phase 3 (hierarchy): 0.0s
+2026-11-05 11:44:24 INFO     [static_analyzer.engine.call_graph_builder:94] Phase 4 (package deps): 0.0s
+2026-11-05 11:44:24 INFO     [static_analyzer.engine.call_graph_builder:117] Pipeline complete: 1 files, 5 symbols, 2 edges, 0 hierarchy entries in 1.0s
+2026-11-05 11:44:24 INFO     [static_analyzer:1143] CallGraphBuilder.build() for TypeScript: 1.0s
+2026-11-05 11:44:24 INFO     [static_analyzer.engine.result_converter:104] Converted 3 nodes, 2 edges (0 skipped) for TypeScript
+2026-11-05 11:44:24 INFO     [static_analyzer.engine.result_converter:114] Reference edges for TypeScript: 0 ({})
+2026-11-05 11:44:24 INFO     [static_analyzer:1155] convert_to_codeboarding_format for TypeScript: 0.0s
+2026-11-05 11:44:24 INFO     [static_analyzer:880] Engine analysis for TypeScript completed in 1.4s
+2026-11-05 11:44:24 INFO     [static_analyzer:847] Static analysis complete: typescript: 1 files, 3 references, 3 nodes, 2 edges

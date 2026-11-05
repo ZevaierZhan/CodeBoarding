@@ -1,0 +1,10 @@
+[package]
+name = "m5-ipc-backend"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+desktop = ["dep:tauri"]
+
+[dependencies]
+tauri = { version = "=2.8.5", default-features = false, optional = true }

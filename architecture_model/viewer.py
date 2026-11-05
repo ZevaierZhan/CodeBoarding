@@ -16,7 +16,7 @@ ASSETS = Path(__file__).with_name("viewer_assets")
 MAX_SOURCE_BYTES = 2_000_000
 
 
-def projection(model: Model, source_root: Path | None = None) -> dict:
+def projection(model: Model, source_root: Path | None = None, source_map: dict[str, Path] | None = None) -> dict:
     """Freeze one complete validated revision and its maintenance view."""
     frozen = validate_model(model.model_dump())
     maintenance = query(frozen)
@@ -24,6 +24,8 @@ def projection(model: Model, source_root: Path | None = None) -> dict:
     # Derived contexts belong to this frozen view, without saving the model.
     value["maintenance"] = maintenance["observations"]
     snippets = {}
+    roots = {item.id: item.source_root_id for item in frozen.facts}
+    mapping = source_map or {}
     for binding in frozen.bindings:
         evidence: list[Binding | HistoricalLocation] = [binding, *binding.history]
         snippets[binding.id] = [
@@ -31,7 +33,11 @@ def projection(model: Model, source_root: Path | None = None) -> dict:
                 "snapshot_id": entry.snapshot_id,
                 "source_version": entry.source_version,
                 "location": entry.location.model_dump(),
-                **_snippet(entry.location, source_root),
+                "source_root_id": roots.get(entry.snapshot_id, ""),
+                **_snippet(
+                    entry.location,
+                    mapping.get(roots.get(entry.snapshot_id, "")) if roots.get(entry.snapshot_id, "") else source_root,
+                ),
             }
             for entry in evidence
         ]
@@ -43,9 +49,11 @@ def projection(model: Model, source_root: Path | None = None) -> dict:
     }
 
 
-def export_html(model: Model, output: Path, source_root: Path | None = None) -> dict:
+def export_html(
+    model: Model, output: Path, source_root: Path | None = None, source_map: dict[str, Path] | None = None
+) -> dict:
     """Create a self-contained document, refusing to overwrite any existing file."""
-    payload = projection(model, source_root)
+    payload = projection(model, source_root, source_map)
     serialized = json.dumps(payload, ensure_ascii=True, allow_nan=False).replace("<", "\\u003c")
     template = (ASSETS / "index.html").read_text(encoding="utf-8")
     document = template.replace("/*STYLE*/", (ASSETS / "style.css").read_text(encoding="utf-8"))

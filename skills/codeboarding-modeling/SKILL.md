@@ -1,6 +1,6 @@
 ---
 name: codeboarding-modeling
-description: Create and continue persistent CodeBoarding architecture models from real code, add shared business scenarios, handle source maintenance and session feedback, and export read-only interactive HTML.
+description: Continue persistent CodeBoarding architecture models, including mixed-language and multi-repository business paths, shared interface contracts, source maintenance and read-only interactive HTML.
 ---
 
 # Continue a CodeBoarding model
@@ -37,6 +37,8 @@ truncation as complete input or increase output budgets to fit the model.
 Only task-relevant objects need enter the conversation; all other IDs, bindings,
 facts and maintenance remain queryable from the captured complete file.
 Record model ID/revision, boundary, evidence scope/versions and review state.
+For mixed languages or multiple repositories, read [source roots and contracts](references/multilanguage.md)
+before exporting facts or writing a cross-boundary relation.
 `read --scenario ID` and `read --component ID` return `complete:false` context:
 they may omit parents and referenced objects and cannot replace the stored model.
 Temporary complete-read/index files are context envelopes, not another persistent

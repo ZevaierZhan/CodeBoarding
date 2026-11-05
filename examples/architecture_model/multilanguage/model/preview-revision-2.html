@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>CodeBoarding · Architecture explorer</title><style>:root{color-scheme:light;--ink:#213646;--muted:#506676;--paper:#f3f6f8;--line:#cbd6dd;--accent:#005e69;--active:#d5f0ec;--warn:#7f440a;--white:#fff;font-family:Segoe UI,system-ui,sans-serif;font-size:14px}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink)}header{display:flex;justify-content:space-between;gap:28px;padding:24px 30px;background:#e4edf2}h1{font-size:27px;letter-spacing:-.02em;margin:0 0 8px}h2{font-size:16px;margin:0 0 14px}h3{font-size:15px;margin:22px 0 10px}p{line-height:1.6;margin:6px 0}small,.muted{color:var(--muted)}button,select{font:inherit;color:var(--ink);background:var(--white);border:1px solid var(--line);border-radius:5px;padding:8px 11px;cursor:pointer}button:hover{background:#e5eef2}button:disabled{opacity:.5;cursor:default}button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px}button.active{background:var(--accent);color:white;border-color:var(--accent)}::selection{background:#b4ddd6;color:#123b41}*{scrollbar-color:#9aadb9 #edf2f5;scrollbar-width:thin}input{accent-color:var(--accent)}
+.provenance{display:flex;gap:22px;align-items:center;padding:10px 30px;border-bottom:1px solid var(--line);font-size:12px;flex-wrap:wrap}.provenance button{margin-left:auto}.toolbar{display:flex;gap:8px;align-items:center;padding:16px 30px 8px;flex-wrap:wrap}.toolbar label{display:flex;align-items:center;gap:8px}.toolbar select{max-width:260px}.notice{padding:4px 30px 14px;color:var(--muted);font-size:12px;margin:0}main{display:grid;grid-template-columns:220px minmax(400px,1fr) minmax(310px,380px);border-top:1px solid var(--line);min-height:75vh}nav,aside{padding:22px 18px;background:var(--white)}nav{border-right:1px solid var(--line)}aside{border-left:1px solid var(--line);overflow-wrap:anywhere}nav h2:not(:first-child){margin-top:28px}.workspace{padding:22px;min-width:0}.workspace-heading{display:flex;gap:12px;justify-content:space-between;align-items:baseline}.workspace-heading span{font-size:12px;color:var(--muted)}
+.tree-row{display:flex;align-items:center;gap:5px;margin:6px 0}.tree-row button{padding:6px;min-width:30px}.tree-row .object{border:0;text-align:left;min-width:0;overflow-wrap:anywhere}.step{display:block;text-align:left;width:100%;margin:6px 0;overflow-wrap:anywhere}.step small{display:block}.step.active small{color:#def2ef}#canvas{position:relative;overflow:auto;min-height:200px;background:#edf3f6;border:1px solid var(--line);border-radius:8px}#graph{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}#nodes{position:relative;min-width:340px}.node{position:absolute;width:190px;text-align:left;padding:12px;min-height:78px;border-radius:8px;transition:background .18s ease-out}.node strong{display:block}.node small{display:block;margin-top:5px}.node.current{background:var(--active);border:2px solid var(--accent)}.node.unrelated{opacity:.35}.node .inside{color:var(--accent);font-size:12px;display:block;margin-top:5px}.player{margin:18px 0 24px;padding:18px 0;border-bottom:1px solid var(--line)}#choices{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}#choices button{text-align:left;max-width:100%;overflow-wrap:anywhere}.warning{color:var(--warn)}.relation{display:block;width:100%;text-align:left;margin:7px 0;overflow-wrap:anywhere}.field{margin:10px 0}.field b{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}pre{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;font:12px/1.6 Consolas,monospace;background:#eef3f5;padding:12px;border-radius:5px;max-height:380px;overflow:auto}details{margin:12px 0;padding-bottom:10px;border-bottom:1px solid var(--line)}summary{cursor:pointer;line-height:1.6;font-weight:600}.badge{font-size:12px;color:var(--accent);background:var(--active);padding:3px 6px;display:inline-block;border-radius:3px}.record{margin-top:16px;padding-top:10px;border-top:1px solid var(--line)}.record h3{margin-top:8px}ul{padding-left:18px;line-height:1.6}svg text{font:11px Segoe UI,sans-serif;fill:var(--ink)}#incoming{font-size:12px;color:var(--muted);margin-top:10px}
+.diagram-help{font-size:12px;color:var(--muted);margin:0 0 12px}#canvas:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media(max-width:1100px){main{grid-template-columns:190px minmax(350px,1fr)}aside{grid-column:1/-1;border-left:0;border-top:1px solid var(--line)}.workspace-heading{display:block}}
+@media(max-width:600px){header{padding:20px;display:block}.toolbar,.provenance{padding:12px 16px}.notice{padding:8px 16px}main{display:block}nav{border-right:0;border-bottom:1px solid var(--line)}.workspace{padding:16px}.toolbar select{max-width:210px}#canvas{max-width:100%}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head>
+<body>
+<header><div><h1 id="project">Architecture explorer</h1><p id="boundary"></p></div><div><strong>CodeBoarding</strong><p>Read-only model explorer</p></div></header>
+<section class="provenance"><span id="identity"></span><span id="exported"></span><button id="metadata">Snapshots &amp; model metadata</button></section>
+<section class="toolbar" aria-label="Business playback controls">
+<label>Business <select id="scenario"></select></label>
+<button id="inspect-business">Business explanation</button>
+<button id="reset">Reset</button><button id="back">Back</button><button id="play">Play</button><button id="next">Step forward</button>
+<label><input id="focus" type="checkbox"> Focus business</label><button id="expand-all">Expand all</button><button id="collapse-all">Collapse all</button>
+</section>
+<p class="notice">Modeled business path · conditions are descriptions, never evaluated. Playback is not a runtime trace.</p>
+<main>
+<nav aria-label="Component hierarchy"><h2>Project structure</h2><div id="tree"></div><h2>Steps <small>display order</small></h2><div id="steps"></div></nav>
+<section class="workspace" aria-label="Architecture and business path"><div class="workspace-heading"><h2>Shared architecture</h2><span>Stable component identities</span></div><p class="diagram-help" id="diagram-help">Scroll the diagram horizontally to explore depth. Keyboard: focus the diagram and use arrow keys.</p><div id="canvas" tabindex="0" role="region" aria-label="Scrollable architecture diagram" aria-describedby="diagram-help"><svg id="graph" role="img" aria-label="Component relationships and explicit business transitions"></svg><div id="nodes"></div></div><section class="player" aria-live="polite"><h2 id="current"></h2><p id="playback-status"></p><div id="choices"></div><div id="incoming"></div></section><section><h2>Component relationships</h2><div id="relations"></div></section></section>
+<aside aria-label="Explanation, evidence and maintenance"><h2>Inspector</h2><div id="detail"></div></aside>
+</main>
+<script type="application/json" id="model-data">{"model": {"schema_version": 1, "id": "c3094cd2-b73e-4b0c-a3bb-6b9beb395a58", "project": {"id": "m5-system", "name": "Cross-language document system", "boundary": "TypeScript actions, explicit candidate Tauri IPC contract and Rust filesystem service. Desktop host activation and runtime execution are outside this fixture."}, "revision": 2, "facts": [{"schema_version": 2, "id": "777d089327dbd628da5a96dc9cf2383353cd4943be67f8bcfe420e153c8bf837", "project_id": "m5-system", "source": {"digest": "68e41c24084c9c32720bfa36dcd6dd569d0cd8dc23872d3746ac82879165c9bf", "git_commit": "afb2aa70c0462fb4b96f741e2822cc6703013b80", "files": {"src/utils.ts": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e"}, "scope": "Strict supported-source inventory; Vue file evidence only; native project symbol/call scope"}, "symbols": {"src/utils.ts|src.utils.openDocument": {"path": "src/utils.ts", "symbol": "src.utils.openDocument", "kind": "FUNCTION", "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e", "start": 7, "end": 9}, "src/utils.ts|src.utils.previewDocument": {"path": "src/utils.ts", "symbol": "src.utils.previewDocument", "kind": "FUNCTION", "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e", "start": 11, "end": 13}, "src/utils.ts|src.utils.readDocument": {"path": "src/utils.ts", "symbol": "src.utils.readDocument", "kind": "FUNCTION", "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e", "start": 3, "end": 5}}, "file_locations": {"src/utils.ts": {"path": "src/utils.ts", "symbol": "", "kind": "FILE", "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e", "start": 1, "end": 13}}, "calls": [{"source": "src/utils.ts|src.utils.openDocument", "target": "src/utils.ts|src.utils.readDocument", "sites": [{"path": "src/utils.ts", "line": 8, "column": 10}]}, {"source": "src/utils.ts|src.utils.previewDocument", "target": "src/utils.ts|src.utils.readDocument", "sites": [{"path": "src/utils.ts", "line": 12, "column": 10}]}], "tools": {"engine": "StaticAnalyzer/native adapters", "maintenance_scope": "{\"complete\":true,\"configuration\":{\"package.json\":\"8849d00fbb1272bf09c61986dc9260b8b2c31109801954957a3263635450cf15\",\"tsconfig.json\":\"efe768ae88fe443e13485c543fb49e7f46d600161d67f97c060221e9f0d71987\"},\"implementation\":\"49d4e71f575a1e3b0cff3da4b3679f0a8b3be779f5a76ad592a084d06ad8c7e6\",\"patterns\":[\"# CodeBoarding Ignore File\\n\",\"# Add patterns here for files and directories that should be excluded from CodeBoarding analysis.\\n\",\"# Use the same format as .gitignore (gitignore syntax / gitwildmatch patterns).\\n\",\"#\\n\",\"# To stop ignoring a pattern, prefix it with ! (e.g., !important_file.txt)\\n\",\"#\\n\",\"# NOTE: The following are ALWAYS excluded (not configurable):\\n\",\"#   - Hidden directories (starting with .)\\n\",\"#   - .git/, .codeboarding/, node_modules/, __pycache__/\\n\",\"#   - Build output: build/, dist/, coverage/\\n\",\"#\\n\",\"# This file is automatically loaded by CodeBoarding analysis tools to exclude\\n\",\"# specified paths from code analysis, architecture generation, and other processing.\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Ignored directories (customizable \\u2014 remove lines to include them)\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Python virtual environments\\n\",\"venv/\\n\",\"env/\\n\",\"*.egg-info/\\n\",\"\\n\",\"# Java (Maven/Gradle) and Rust (Cargo) build output. Both ecosystems\\n\",\"# produce a top-level ``target/`` directory full of compiled artifacts \\u2014\\n\",\"# kept here as well as in ``_ALWAYS_IGNORED_DIRS`` so users who customize\\n\",\"# their ``.codeboardingignore`` continue to skip it even after edits.\\n\",\"target/\\n\",\"bin/\\n\",\"out/\\n\",\"\\n\",\"# .NET / C# build output\\n\",\"obj/\\n\",\"\\n\",\"# Go\\n\",\"vendor/\\n\",\"testdata/\\n\",\"\\n\",\"# PHP\\n\",\"cache/\\n\",\"\\n\",\"# Custom\\n\",\"temp/\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Test and infrastructure files\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Test directories\\n\",\"**/__tests__/**\\n\",\"**/tests/**\\n\",\"**/test/**\\n\",\"**/__test__/**\\n\",\"**/testing/**\\n\",\"**/testutil/**\\n\",\"\\n\",\"# Java/Kotlin test directories (Maven/Gradle structure)\\n\",\"**/src/test/**\\n\",\"**/src/testFixtures/**\\n\",\"**/src/integration-test/**\\n\",\"**/src/jmh/**\\n\",\"**/src/contractTest/**\\n\",\"**/osgi-tests/**\\n\",\"\\n\",\"# Test files by naming convention\\n\",\"*.test.*\\n\",\"*.spec.*\\n\",\"*_test.*\\n\",\"*test_*.py\\n\",\"test_*.py\\n\",\"*Test.java\\n\",\"*IT.java\\n\",\"*Test.kt\\n\",\"*IT.kt\\n\",\"*Tests.java\\n\",\"\\n\",\"# Mock, fixture, and stub directories\\n\",\"**/__mocks__/**\\n\",\"**/mocks/**\\n\",\"**/fixtures/**\\n\",\"**/fixture/**\\n\",\"**/stubs/**\\n\",\"**/stub/**\\n\",\"**/fakes/**\\n\",\"**/fake/**\\n\",\"\\n\",\"# E2E and integration test directories\\n\",\"**/e2e/**\\n\",\"**/integration-tests/**\\n\",\"**/integration_test*/**\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Non-production code\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Example and documentation code\\n\",\"**/examples/**\\n\",\"**/documentation/examples/**\\n\",\"\\n\",\"# Generated code\\n\",\"*.pb.go\\n\",\"**/generated_parser*\\n\",\"\\n\",\"# Java/Kotlin metadata files\\n\",\"module-info.java\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build artifacts and minified files\\n\",\"# ============================================================================\\n\",\"\\n\",\"*.bundle.js\\n\",\"*.bundle.js.map\\n\",\"*.min.js\\n\",\"*.min.css\\n\",\"*.chunk.js\\n\",\"*.chunk.js.map\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build tool configs and infrastructure\\n\",\"# ============================================================================\\n\",\"\\n\",\"esbuild*\\n\",\"webpack*\\n\",\"rollup*\\n\",\"vite.config.*\\n\",\"gulpfile*\\n\",\"gruntfile*\\n\",\"*.config.*\\n\"],\"protocol\":\"multilanguage-file-v2\",\"tools\":[\"a97741d2f93bada49450735580c9d37cc607f9820d4dedbc023eae296b33eac3\",\"4736cfc0ba3c57734359f82883bcfed49a0ea748fdfcad3c137c0da112027f11\",\"f8ef6156b7da4cdf018c4708a43f2bfb498e81b9584540b6b91fe19492031695\",\"3dceeac4bea5af4e244b9a8a765671d5ccd48786f0149e03bc8bbe5cd4661ae8\",\"3332eed47402eb7341ae9e4495d44ad0c7cdf2aa211d52173417db8be28d610c\",\"e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb\"]}", "commands": "{\"lsp_servers\": {\"java\": [\"D:\\\\Java\\\\jdk-21.0.8\\\\bin\\\\java.exe\"], \"python\": [\"D:\\\\Progrm Files\\\\nvm4w\\\\nodejs\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\langserver.index.js\", \"--stdio\"], \"rust\": [\"C:\\\\Users\\\\BW011222\\\\.cargo\\\\bin\\\\rust-analyzer.exe\"], \"typescript\": [\"D:\\\\Progrm Files\\\\nvm4w\\\\nodejs\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\m5-tools\\\\node_modules\\\\typescript-language-server\\\\lib\\\\cli.mjs\", \"--stdio\"]}, \"tokei\": [\"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\", \"-o\", \"json\"], \"typescript_sdk\": \"F:\\\\CodeBoarding\\\\temp\\\\m5-tools\\\\node_modules\\\\typescript\\\\lib\\\\tsserver.js\"}", "versions": "{\"java\": \"java 21.0.8 2025-07-15 LTS\\nJava(TM) SE Runtime Environment (build 21.0.8+12-LTS-250)\\nJava HotSpot(TM) 64-Bit Server VM (build 21.0.8+12-LTS-250, mixed mode, sharing)\", \"python\": \"Error: Connection input stream is not set. Use arguments of createConnection or set command line parameters: '--node-ipc', '--stdio' or '--socket={number}'\\n    at _createConnection (F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\dist\\\\pyright-internal\\\\node_modules\\\\vscode-languageserver\\\\lib\\\\node\\\\main.js:204:15)\\n    at createConnection (F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\dist\\\\pyright-internal\\\\node_modules\\\\vscode-languageserver\\\\lib\\\\node\\\\main.js:149:12)\\n    at maxWorkers (F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\dist\\\\pyright-internal\\\\src\\\\nodeServer.ts:20:19)\\n    at t.main (F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\dist\\\\pyright-internal\\\\src\\\\nodeMain.ts:14:28)\", \"rust\": \"rust-analyzer 1.99.1 (58cf8f9c 2026-10-13)\", \"tokei\": \"tokei 14.0.0 compiled with serialization support: json\", \"typescript\": \"6.0.3\"}"}, "limitations": ["Static calls are not executions. External/unresolved calls, registrations and dynamic dispatch are incomplete.", "Non-Python symbol completeness is bounded by native LSP document symbols; no independent callable census.", "Vue SFC has file-level evidence only; native adapters do not discover .vue functions.", "Unknown source suffixes are outside scope. Root inventory completeness does not prove semantic completeness.", "Symbol identity is (source_root_id, language, file project, path|native name), scoped to an immutable snapshot."], "source_root_id": "frontend", "file_languages": {"src/utils.ts": "typescript"}, "file_projects": {"src/utils.ts": "."}}, {"schema_version": 2, "id": "4910f61974e5b420b12ed9593b0d056849b2c8dd5ae9dc0a5e790955695fca60", "project_id": "m5-system", "source": {"digest": "5c0c4ee7f45d71895357626bc9f626271e057119ac8d41480db644083ee6c042", "git_commit": "fa9567b46d60be8d94ed30f35dc6a3c4836d0c1e", "files": {"src/lib.rs": "412913b8a7f6da06da550c03113a5ac5ecc11c34c543c9d1c96b11fe5dec394e", "src/utils.rs": "da62b5bbaa80f6d705ad7c8448cc07eae25756f636f8184a1cfe4835a66a3e8a"}, "scope": "Strict supported-source inventory; Vue file evidence only; native project symbol/call scope"}, "symbols": {"src/lib.rs|src.read_file": {"path": "src/lib.rs", "symbol": "src.read_file", "kind": "FUNCTION", "content_hash": "412913b8a7f6da06da550c03113a5ac5ecc11c34c543c9d1c96b11fe5dec394e", "start": 4, "end": 6}, "src/lib.rs|src.register": {"path": "src/lib.rs", "symbol": "src.register", "kind": "FUNCTION", "content_hash": "412913b8a7f6da06da550c03113a5ac5ecc11c34c543c9d1c96b11fe5dec394e", "start": 9, "end": 11}, "src/utils.rs|src.utils.read_document": {"path": "src/utils.rs", "symbol": "src.utils.read_document", "kind": "FUNCTION", "content_hash": "da62b5bbaa80f6d705ad7c8448cc07eae25756f636f8184a1cfe4835a66a3e8a", "start": 1, "end": 3}}, "file_locations": {"src/lib.rs": {"path": "src/lib.rs", "symbol": "", "kind": "FILE", "content_hash": "412913b8a7f6da06da550c03113a5ac5ecc11c34c543c9d1c96b11fe5dec394e", "start": 1, "end": 11}, "src/utils.rs": {"path": "src/utils.rs", "symbol": "", "kind": "FILE", "content_hash": "da62b5bbaa80f6d705ad7c8448cc07eae25756f636f8184a1cfe4835a66a3e8a", "start": 1, "end": 3}}, "calls": [{"source": "src/lib.rs|src.read_file", "target": "src/utils.rs|src.utils.read_document", "sites": [{"path": "src/lib.rs", "line": 5, "column": 12}]}], "tools": {"engine": "StaticAnalyzer/native adapters", "maintenance_scope": "{\"complete\":true,\"configuration\":{\"Cargo.lock\":\"270556540b06847aa1c0539a6e69b265f3f4ab10d2298fecb6d4fb47eebc2b0a\",\"Cargo.toml\":\"d6ecf720424e3ef0211f51fd74d689e0e630cfc3486e5fe4eb53644288dc8404\"},\"implementation\":\"49d4e71f575a1e3b0cff3da4b3679f0a8b3be779f5a76ad592a084d06ad8c7e6\",\"patterns\":[\"# CodeBoarding Ignore File\\n\",\"# Add patterns here for files and directories that should be excluded from CodeBoarding analysis.\\n\",\"# Use the same format as .gitignore (gitignore syntax / gitwildmatch patterns).\\n\",\"#\\n\",\"# To stop ignoring a pattern, prefix it with ! (e.g., !important_file.txt)\\n\",\"#\\n\",\"# NOTE: The following are ALWAYS excluded (not configurable):\\n\",\"#   - Hidden directories (starting with .)\\n\",\"#   - .git/, .codeboarding/, node_modules/, __pycache__/\\n\",\"#   - Build output: build/, dist/, coverage/\\n\",\"#\\n\",\"# This file is automatically loaded by CodeBoarding analysis tools to exclude\\n\",\"# specified paths from code analysis, architecture generation, and other processing.\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Ignored directories (customizable \\u2014 remove lines to include them)\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Python virtual environments\\n\",\"venv/\\n\",\"env/\\n\",\"*.egg-info/\\n\",\"\\n\",\"# Java (Maven/Gradle) and Rust (Cargo) build output. Both ecosystems\\n\",\"# produce a top-level ``target/`` directory full of compiled artifacts \\u2014\\n\",\"# kept here as well as in ``_ALWAYS_IGNORED_DIRS`` so users who customize\\n\",\"# their ``.codeboardingignore`` continue to skip it even after edits.\\n\",\"target/\\n\",\"bin/\\n\",\"out/\\n\",\"\\n\",\"# .NET / C# build output\\n\",\"obj/\\n\",\"\\n\",\"# Go\\n\",\"vendor/\\n\",\"testdata/\\n\",\"\\n\",\"# PHP\\n\",\"cache/\\n\",\"\\n\",\"# Custom\\n\",\"temp/\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Test and infrastructure files\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Test directories\\n\",\"**/__tests__/**\\n\",\"**/tests/**\\n\",\"**/test/**\\n\",\"**/__test__/**\\n\",\"**/testing/**\\n\",\"**/testutil/**\\n\",\"\\n\",\"# Java/Kotlin test directories (Maven/Gradle structure)\\n\",\"**/src/test/**\\n\",\"**/src/testFixtures/**\\n\",\"**/src/integration-test/**\\n\",\"**/src/jmh/**\\n\",\"**/src/contractTest/**\\n\",\"**/osgi-tests/**\\n\",\"\\n\",\"# Test files by naming convention\\n\",\"*.test.*\\n\",\"*.spec.*\\n\",\"*_test.*\\n\",\"*test_*.py\\n\",\"test_*.py\\n\",\"*Test.java\\n\",\"*IT.java\\n\",\"*Test.kt\\n\",\"*IT.kt\\n\",\"*Tests.java\\n\",\"\\n\",\"# Mock, fixture, and stub directories\\n\",\"**/__mocks__/**\\n\",\"**/mocks/**\\n\",\"**/fixtures/**\\n\",\"**/fixture/**\\n\",\"**/stubs/**\\n\",\"**/stub/**\\n\",\"**/fakes/**\\n\",\"**/fake/**\\n\",\"\\n\",\"# E2E and integration test directories\\n\",\"**/e2e/**\\n\",\"**/integration-tests/**\\n\",\"**/integration_test*/**\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Non-production code\\n\",\"# ============================================================================\\n\",\"\\n\",\"# Example and documentation code\\n\",\"**/examples/**\\n\",\"**/documentation/examples/**\\n\",\"\\n\",\"# Generated code\\n\",\"*.pb.go\\n\",\"**/generated_parser*\\n\",\"\\n\",\"# Java/Kotlin metadata files\\n\",\"module-info.java\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build artifacts and minified files\\n\",\"# ============================================================================\\n\",\"\\n\",\"*.bundle.js\\n\",\"*.bundle.js.map\\n\",\"*.min.js\\n\",\"*.min.css\\n\",\"*.chunk.js\\n\",\"*.chunk.js.map\\n\",\"\\n\",\"# ============================================================================\\n\",\"# Build tool configs and infrastructure\\n\",\"# ============================================================================\\n\",\"\\n\",\"esbuild*\\n\",\"webpack*\\n\",\"rollup*\\n\",\"vite.config.*\\n\",\"gulpfile*\\n\",\"gruntfile*\\n\",\"*.config.*\\n\"],\"protocol\":\"multilanguage-file-v2\",\"tools\":[\"a97741d2f93bada49450735580c9d37cc607f9820d4dedbc023eae296b33eac3\",\"4736cfc0ba3c57734359f82883bcfed49a0ea748fdfcad3c137c0da112027f11\",\"f8ef6156b7da4cdf018c4708a43f2bfb498e81b9584540b6b91fe19492031695\",\"3dceeac4bea5af4e244b9a8a765671d5ccd48786f0149e03bc8bbe5cd4661ae8\",\"3332eed47402eb7341ae9e4495d44ad0c7cdf2aa211d52173417db8be28d610c\",\"e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb\"]}", "commands": "{\"lsp_servers\": {\"java\": [\"D:\\\\Java\\\\jdk-21.0.8\\\\bin\\\\java.exe\"], \"python\": [\"D:\\\\Progrm Files\\\\nvm4w\\\\nodejs\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\langserver.index.js\", \"--stdio\"], \"rust\": [\"C:\\\\Users\\\\BW011222\\\\.cargo\\\\bin\\\\rust-analyzer.exe\"], \"typescript\": [\"D:\\\\Progrm Files\\\\nvm4w\\\\nodejs\\\\node.exe\", \"F:\\\\CodeBoarding\\\\temp\\\\m5-tools\\\\node_modules\\\\typescript-language-server\\\\lib\\\\cli.mjs\", \"--stdio\"]}, \"tokei\": [\"F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\tokei.exe\", \"-o\", \"json\"], \"typescript_sdk\": \"F:\\\\CodeBoarding\\\\temp\\\\m5-tools\\\\node_modules\\\\typescript\\\\lib\\\\tsserver.js\"}", "versions": "{\"java\": \"java 21.0.8 2025-07-15 LTS\\nJava(TM) SE Runtime Environment (build 21.0.8+12-LTS-250)\\nJava HotSpot(TM) 64-Bit Server VM (build 21.0.8+12-LTS-250, mixed mode, sharing)\", \"python\": \"Error: Connection input stream is not set. Use arguments of createConnection or set command line parameters: '--node-ipc', '--stdio' or '--socket={number}'\\n    at _createConnection (F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\dist\\\\pyright-internal\\\\node_modules\\\\vscode-languageserver\\\\lib\\\\node\\\\main.js:204:15)\\n    at createConnection (F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\dist\\\\pyright-internal\\\\node_modules\\\\vscode-languageserver\\\\lib\\\\node\\\\main.js:149:12)\\n    at maxWorkers (F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\dist\\\\pyright-internal\\\\src\\\\nodeServer.ts:20:19)\\n    at t.main (F:\\\\CodeBoarding\\\\temp\\\\p0-tools\\\\node_modules\\\\pyright\\\\dist\\\\pyright-internal\\\\src\\\\nodeMain.ts:14:28)\", \"rust\": \"rust-analyzer 1.99.1 (58cf8f9c 2026-10-13)\", \"tokei\": \"tokei 14.0.0 compiled with serialization support: json\", \"typescript\": \"6.0.3\"}"}, "limitations": ["Static calls are not executions. External/unresolved calls, registrations and dynamic dispatch are incomplete.", "Non-Python symbol completeness is bounded by native LSP document symbols; no independent callable census.", "Vue SFC has file-level evidence only; native adapters do not discover .vue functions.", "Unknown source suffixes are outside scope. Root inventory completeness does not prove semantic completeness.", "Symbol identity is (source_root_id, language, file project, path|native name), scoped to an immutable snapshot."], "source_root_id": "backend", "file_languages": {"src/lib.rs": "rust", "src/utils.rs": "rust"}, "file_projects": {"src/lib.rs": ".", "src/utils.rs": "."}}], "bindings": [{"id": "open", "snapshot_id": "777d089327dbd628da5a96dc9cf2383353cd4943be67f8bcfe420e153c8bf837", "source_version": "68e41c24084c9c32720bfa36dcd6dd569d0cd8dc23872d3746ac82879165c9bf", "location": {"path": "src/utils.ts", "symbol": "src.utils.openDocument", "kind": "FUNCTION", "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e", "start": 7, "end": 9}, "status": "current", "reason": "", "history": []}, {"id": "preview", "snapshot_id": "777d089327dbd628da5a96dc9cf2383353cd4943be67f8bcfe420e153c8bf837", "source_version": "68e41c24084c9c32720bfa36dcd6dd569d0cd8dc23872d3746ac82879165c9bf", "location": {"path": "src/utils.ts", "symbol": "src.utils.previewDocument", "kind": "FUNCTION", "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e", "start": 11, "end": 13}, "status": "current", "reason": "", "history": []}, {"id": "invoke", "snapshot_id": "777d089327dbd628da5a96dc9cf2383353cd4943be67f8bcfe420e153c8bf837", "source_version": "68e41c24084c9c32720bfa36dcd6dd569d0cd8dc23872d3746ac82879165c9bf", "location": {"path": "src/utils.ts", "symbol": "src.utils.readDocument", "kind": "FUNCTION", "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e", "start": 3, "end": 5}, "status": "current", "reason": "", "history": []}, {"id": "command", "snapshot_id": "4910f61974e5b420b12ed9593b0d056849b2c8dd5ae9dc0a5e790955695fca60", "source_version": "5c0c4ee7f45d71895357626bc9f626271e057119ac8d41480db644083ee6c042", "location": {"path": "src/lib.rs", "symbol": "src.read_file", "kind": "FUNCTION", "content_hash": "412913b8a7f6da06da550c03113a5ac5ecc11c34c543c9d1c96b11fe5dec394e", "start": 4, "end": 6}, "status": "current", "reason": "", "history": []}, {"id": "service", "snapshot_id": "4910f61974e5b420b12ed9593b0d056849b2c8dd5ae9dc0a5e790955695fca60", "source_version": "5c0c4ee7f45d71895357626bc9f626271e057119ac8d41480db644083ee6c042", "location": {"path": "src/utils.rs", "symbol": "src.utils.read_document", "kind": "FUNCTION", "content_hash": "da62b5bbaa80f6d705ad7c8448cc07eae25756f636f8184a1cfe4835a66a3e8a", "start": 1, "end": 3}, "status": "current", "reason": "", "history": []}, {"id": "registration", "snapshot_id": "4910f61974e5b420b12ed9593b0d056849b2c8dd5ae9dc0a5e790955695fca60", "source_version": "5c0c4ee7f45d71895357626bc9f626271e057119ac8d41480db644083ee6c042", "location": {"path": "src/lib.rs", "symbol": "", "kind": "FILE", "content_hash": "412913b8a7f6da06da550c03113a5ac5ecc11c34c543c9d1c96b11fe5dec394e", "start": 1, "end": 11}, "status": "current", "reason": "", "history": []}], "components": [{"id": "frontend-ui", "name": "Document actions", "responsibility": "Choose a document path for open or preview", "rationale": "Two UI-facing actions share one client", "parent_id": "", "binding_ids": ["open", "preview"], "claim": {"kind": "code_fact", "explanation": "Choose a document path for open or preview", "binding_ids": ["open", "preview"], "assumptions": [], "issues": []}}, {"id": "ipc-client", "name": "Tauri IPC client", "responsibility": "Invoke read_file with a path payload", "rationale": "One operation is shared by both actions", "parent_id": "frontend-ui", "binding_ids": ["invoke"], "claim": {"kind": "code_fact", "explanation": "Invoke read_file with a path payload", "binding_ids": ["invoke"], "assumptions": [], "issues": []}}, {"id": "backend", "name": "Rust document backend", "responsibility": "Register and handle document requests", "rationale": "Rust boundary includes command registration and file service", "parent_id": "", "binding_ids": ["command", "registration", "service"], "claim": {"kind": "code_fact", "explanation": "Register and handle document requests", "binding_ids": ["command", "registration", "service"], "assumptions": [], "issues": []}}, {"id": "rust-command", "name": "Rust read_file command", "responsibility": "Delegate a path to the document service", "rationale": "IPC endpoint is separate from filesystem work", "parent_id": "backend", "binding_ids": ["command", "registration"], "claim": {"kind": "code_fact", "explanation": "Delegate a path to the document service", "binding_ids": ["command", "registration"], "assumptions": [], "issues": []}}, {"id": "document-service", "name": "Document file service", "responsibility": "Read UTF-8 file bytes and return errors", "rationale": "Filesystem responsibility can be reused outside IPC", "parent_id": "backend", "binding_ids": ["service"], "claim": {"kind": "code_fact", "explanation": "Read UTF-8 file bytes and return errors", "binding_ids": ["service"], "assumptions": [], "issues": []}}], "relations": [{"id": "ui-client", "source_id": "frontend-ui", "target_id": "ipc-client", "meaning": "Both actions call the shared client", "claim": {"kind": "code_fact", "explanation": "Native TypeScript call sites link openDocument/previewDocument to readDocument", "binding_ids": ["open", "preview", "invoke"], "assumptions": [], "issues": []}}, {"id": "read-file-ipc", "source_id": "ipc-client", "target_id": "rust-command", "meaning": "Candidate Tauri read_file request across the process boundary", "claim": {"kind": "inference", "explanation": "invoke read_file and the Rust command/handler macro provide both sides; the desktop host is outside this fixture", "binding_ids": ["invoke", "command", "registration"], "assumptions": ["Desktop host enables the desktop feature and installs this registered handler; runtime invocation has not been executed."], "issues": []}, "contract": {"mechanism": "tauri-ipc", "operation": "read_file", "caller_binding_ids": ["invoke"], "receiver_binding_ids": ["command"], "matching_binding_ids": ["registration"], "status": "candidate", "rationale": "utils.ts passes path to invoke(read_file); lib.rs declares command under desktop and registers generate_handler![read_file]", "uncertainties": ["Desktop feature is disabled in the native extraction. No Tauri host runtime or IPC execution was tested."]}}, {"id": "command-service", "source_id": "rust-command", "target_id": "document-service", "meaning": "Read document through the filesystem service", "claim": {"kind": "code_fact", "explanation": "Native Rust call site links read_file to utils.read_document", "binding_ids": ["command", "service"], "assumptions": [], "issues": []}}], "scenarios": [{"id": "open-document", "name": "Open document across TypeScript and Rust", "entry_step_id": "open-action", "steps": [{"id": "open-action", "component_ids": ["frontend-ui"], "binding_ids": ["open"], "claim": {"kind": "code_fact", "explanation": "Declared open-document step", "binding_ids": ["open"], "assumptions": [], "issues": []}}, {"id": "open-ipc", "component_ids": ["ipc-client"], "binding_ids": ["invoke"], "claim": {"kind": "code_fact", "explanation": "Declared open-document step", "binding_ids": ["invoke"], "assumptions": [], "issues": []}}, {"id": "open-command", "component_ids": ["rust-command"], "binding_ids": ["command"], "claim": {"kind": "code_fact", "explanation": "Declared open-document step", "binding_ids": ["command"], "assumptions": [], "issues": []}}, {"id": "open-service", "component_ids": ["document-service"], "binding_ids": ["service"], "claim": {"kind": "code_fact", "explanation": "Declared open-document step", "binding_ids": ["service"], "assumptions": [], "issues": []}}], "order": ["open-action", "open-ipc", "open-command", "open-service"], "transitions": [{"source_id": "open-action", "target_id": "open-ipc", "kind": "next", "condition": "Continue via the source call"}, {"source_id": "open-ipc", "target_id": "open-command", "kind": "next", "condition": "Host routes the declared request"}, {"source_id": "open-command", "target_id": "open-service", "kind": "next", "condition": "Continue via the source call"}], "claim": {"kind": "inference", "explanation": "Open notes.txt via the shared IPC contract and Rust file service", "binding_ids": ["open", "invoke", "command", "registration", "service"], "assumptions": ["Desktop host enables the desktop feature and installs this registered handler; runtime invocation has not been executed."], "issues": []}, "relation_ids": ["ui-client", "read-file-ipc", "command-service"]}, {"id": "preview-document", "name": "Preview document across TypeScript and Rust", "entry_step_id": "preview-action", "steps": [{"id": "preview-action", "component_ids": ["frontend-ui"], "binding_ids": ["preview"], "claim": {"kind": "code_fact", "explanation": "previewDocument delegates to readDocument with preview.txt and returns its Promise\u003cstring>.", "binding_ids": ["preview"], "assumptions": [], "issues": []}}, {"id": "preview-ipc", "component_ids": ["ipc-client"], "binding_ids": ["invoke"], "claim": {"kind": "code_fact", "explanation": "readDocument invokes read_file with a path payload and expects a string result.", "binding_ids": ["invoke"], "assumptions": [], "issues": []}}, {"id": "preview-command", "component_ids": ["rust-command"], "binding_ids": ["command", "registration"], "claim": {"kind": "code_fact", "explanation": "read_file delegates its String path to utils::read_document; command exposure and handler registration are gated by desktop.", "binding_ids": ["command", "registration"], "assumptions": [], "issues": []}}, {"id": "preview-service", "component_ids": ["document-service"], "binding_ids": ["service"], "claim": {"kind": "code_fact", "explanation": "read_document returns std::fs::read_to_string(path), converting a filesystem error to String; this is the modeled endpoint.", "binding_ids": ["service"], "assumptions": [], "issues": []}}], "order": ["preview-action", "preview-ipc", "preview-command", "preview-service"], "transitions": [{"source_id": "preview-action", "target_id": "preview-ipc", "kind": "next", "condition": "previewDocument calls readDocument with preview.txt."}, {"source_id": "preview-ipc", "target_id": "preview-command", "kind": "next", "condition": "Only if a desktop host enables the desktop feature and installs register's read_file handler; this candidate routing has not been executed."}, {"source_id": "preview-command", "target_id": "preview-service", "kind": "next", "condition": "read_file passes the received path to utils::read_document."}], "claim": {"kind": "inference", "explanation": "Preview preview.txt through the same candidate read-file-ipc contract and Rust filesystem service used by open-document. Source supports the local calls; cross-process delivery remains conditional. The fixture supplies no preview rendering or desktop entrypoint.", "binding_ids": ["preview", "invoke", "command", "registration", "service"], "assumptions": ["A desktop host enables the desktop feature and installs this registered handler; runtime invocation has not been executed."], "issues": ["Desktop host activation, IPC delivery, preview.txt availability and final UI rendering are outside the verified scope."]}, "relation_ids": ["ui-client", "read-file-ipc", "command-service"]}], "opinions": [], "verifications": [], "revisions": [{"revision": 0, "author": "M5 external modeling Agent", "summary": "Initialize architecture model", "timestamp": "2026-11-05T03:38:24.150646+00:00", "object_ids": [], "scenario_ids": []}, {"revision": 1, "author": "M5 external modeling Agent", "summary": "Explain one cross-language document request using two independent source roots", "timestamp": "2026-11-05T03:38:27.347625+00:00", "object_ids": ["4910f61974e5b420b12ed9593b0d056849b2c8dd5ae9dc0a5e790955695fca60", "777d089327dbd628da5a96dc9cf2383353cd4943be67f8bcfe420e153c8bf837", "backend", "command", "command-service", "document-service", "frontend-ui", "invoke", "ipc-client", "open", "open-document", "preview", "read-file-ipc", "registration", "rust-command", "service", "ui-client"], "scenario_ids": ["open-document"]}, {"revision": 2, "author": "independent-model-continuation-agent", "summary": "Add preview-document using the existing document actions, candidate IPC contract and Rust service without changing open-document.", "timestamp": "2026-11-05T03:40:45.072515+00:00", "object_ids": ["preview-document"], "scenario_ids": ["preview-document"]}], "maintenance": [], "maintenance_target_snapshot_id": ""}, "maintenance": {"model_id": "c3094cd2-b73e-4b0c-a3bb-6b9beb395a58", "revision": 2, "pending_ids": [], "current_coverage_ids": [], "current_pending_ids": [], "latest_target_snapshot_id": "", "observations": []}, "exported_at": "2026-11-05T03:41:12.352057+00:00", "snippets": {"open": [{"snapshot_id": "777d089327dbd628da5a96dc9cf2383353cd4943be67f8bcfe420e153c8bf837", "source_version": "68e41c24084c9c32720bfa36dcd6dd569d0cd8dc23872d3746ac82879165c9bf", "location": {"path": "src/utils.ts", "symbol": "src.utils.openDocument", "kind": "FUNCTION", "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e", "start": 7, "end": 9}, "source_root_id": "frontend", "status": "verified", "text": "    7  export async function openDocument(): Promise\u003cstring> {\n    8    return readDocument(\"notes.txt\");\n    9  }"}], "preview": [{"snapshot_id": "777d089327dbd628da5a96dc9cf2383353cd4943be67f8bcfe420e153c8bf837", "source_version": "68e41c24084c9c32720bfa36dcd6dd569d0cd8dc23872d3746ac82879165c9bf", "location": {"path": "src/utils.ts", "symbol": "src.utils.previewDocument", "kind": "FUNCTION", "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e", "start": 11, "end": 13}, "source_root_id": "frontend", "status": "verified", "text": "   11  export async function previewDocument(): Promise\u003cstring> {\n   12    return readDocument(\"preview.txt\");\n   13  }"}], "invoke": [{"snapshot_id": "777d089327dbd628da5a96dc9cf2383353cd4943be67f8bcfe420e153c8bf837", "source_version": "68e41c24084c9c32720bfa36dcd6dd569d0cd8dc23872d3746ac82879165c9bf", "location": {"path": "src/utils.ts", "symbol": "src.utils.readDocument", "kind": "FUNCTION", "content_hash": "089db4599cc6215621671193280bd87b0e69abde6c929f8152e7fac105d1688e", "start": 3, "end": 5}, "source_root_id": "frontend", "status": "verified", "text": "    3  export async function readDocument(path: string): Promise\u003cstring> {\n    4    return invoke\u003cstring>(\"read_file\", { path });\n    5  }"}], "command": [{"snapshot_id": "4910f61974e5b420b12ed9593b0d056849b2c8dd5ae9dc0a5e790955695fca60", "source_version": "5c0c4ee7f45d71895357626bc9f626271e057119ac8d41480db644083ee6c042", "location": {"path": "src/lib.rs", "symbol": "src.read_file", "kind": "FUNCTION", "content_hash": "412913b8a7f6da06da550c03113a5ac5ecc11c34c543c9d1c96b11fe5dec394e", "start": 4, "end": 6}, "source_root_id": "backend", "status": "verified", "text": "    4  pub fn read_file(path: String) -> Result\u003cString, String> {\n    5      utils::read_document(&path)\n    6  }"}], "service": [{"snapshot_id": "4910f61974e5b420b12ed9593b0d056849b2c8dd5ae9dc0a5e790955695fca60", "source_version": "5c0c4ee7f45d71895357626bc9f626271e057119ac8d41480db644083ee6c042", "location": {"path": "src/utils.rs", "symbol": "src.utils.read_document", "kind": "FUNCTION", "content_hash": "da62b5bbaa80f6d705ad7c8448cc07eae25756f636f8184a1cfe4835a66a3e8a", "start": 1, "end": 3}, "source_root_id": "backend", "status": "verified", "text": "    1  pub fn read_document(path: &str) -> Result\u003cString, String> {\n    2      std::fs::read_to_string(path).map_err(|error| error.to_string())\n    3  }"}], "registration": [{"snapshot_id": "4910f61974e5b420b12ed9593b0d056849b2c8dd5ae9dc0a5e790955695fca60", "source_version": "5c0c4ee7f45d71895357626bc9f626271e057119ac8d41480db644083ee6c042", "location": {"path": "src/lib.rs", "symbol": "", "kind": "FILE", "content_hash": "412913b8a7f6da06da550c03113a5ac5ecc11c34c543c9d1c96b11fe5dec394e", "start": 1, "end": 11}, "source_root_id": "backend", "status": "verified", "text": "    1  mod utils;\n    2  \n    3  #[cfg_attr(feature = \"desktop\", tauri::command)]\n    4  pub fn read_file(path: String) -> Result\u003cString, String> {\n    5      utils::read_document(&path)\n    6  }\n    7  \n    8  #[cfg(feature = \"desktop\")]\n    9  pub fn register\u003cR: tauri::Runtime>(builder: tauri::Builder\u003cR>) -> tauri::Builder\u003cR> {\n   10      builder.invoke_handler(tauri::generate_handler![read_file])\n   11  }"}]}}</script><script>/* Pure presentation and playback state; never mutates model objects. */
+"use strict";
+const ArchitectureView = (() => {
+  function visibleAncestor(id, components, expanded) {
+    const byId = new Map(components.map(c => [c.id, c]));
+    let visible = id;
+    let current = byId.get(id);
+    while (current && current.parent_id) {
+      if (!expanded.has(current.parent_id)) visible = current.parent_id;
+      current = byId.get(current.parent_id);
+    }
+    return visible;
+  }
+  function hierarchy(components) {
+    const children = new Map();
+    for (const component of components) {
+      if (!children.has(component.parent_id)) children.set(component.parent_id, []);
+      children.get(component.parent_id).push(component);
+    }
+    const rows = [];
+    function visit(parent, depth) {
+      for (const component of children.get(parent) || []) {
+        rows.push({component, depth, index: rows.length});
+        visit(component.id, depth + 1);
+      }
+    }
+    visit("", 0);
+    return rows;
+  }
+  function componentProjection(components, expanded) {
+    const byId = new Map(components.map(c => [c.id, c]));
+    const visibleById = new Map(), hiddenCounts = new Map(), parentIds = new Set();
+    for (const component of components) {
+      if (component.parent_id) parentIds.add(component.parent_id);
+      const path = [];
+      let current = component;
+      while (current && !visibleById.has(current.id)) {
+        path.push(current);
+        current = byId.get(current.parent_id);
+      }
+      while (path.length) {
+        const entry = path.pop();
+        const parent = byId.get(entry.parent_id);
+        const visibleParent = parent && visibleById.get(parent.id);
+        visibleById.set(entry.id, !parent ? entry.id : visibleParent !== parent.id
+          ? visibleParent : expanded.has(parent.id) ? entry.id : parent.id);
+      }
+    }
+    for (const [id, visible] of visibleById) {
+      if (id !== visible) hiddenCounts.set(visible, (hiddenCounts.get(visible) || 0) + 1);
+    }
+    return {byId, visibleById, hiddenCounts, parentIds};
+  }
+  function projectedEdges(model, scenario, expanded, projection = componentProjection(model.components, expanded)) {
+    const project = id => projection.visibleById.get(id);
+    const edges = model.relations.map(r => ({
+      source: project(r.source_id), target: project(r.target_id),
+      relation_id: r.id, component_ids: [r.source_id, r.target_id], kind: "relation"
+    }));
+    if (!scenario) return edges;
+    const steps = new Map(scenario.steps.map(s => [s.id, s]));
+    scenario.transitions.forEach((transition, index) => {
+      for (const source of steps.get(transition.source_id).component_ids) {
+        for (const target of steps.get(transition.target_id).component_ids) {
+          edges.push({source: project(source), target: project(target), kind: transition.kind,
+            source_step_id: transition.source_id, target_step_id: transition.target_id,
+            transition_index: index, component_ids: [source, target]});
+        }
+      }
+    });
+    return edges;
+  }
+  class Player {
+    constructor(scenario) {
+      this.scenario = scenario;
+      this.reset();
+    }
+    reset() {
+      this.current = this.scenario ? this.scenario.entry_step_id : "";
+      this.history = [];
+      this.incoming = null;
+    }
+    choices() {
+      return this.scenario ? this.scenario.transitions.map((transition, index) => ({transition, index}))
+        .filter(choice => choice.transition.source_id === this.current) : [];
+    }
+    forward(index) {
+      const choice = this.choices().find(c => c.index === index);
+      if (!choice) return false;
+      this.history.push({step: this.current, incoming: this.incoming});
+      this.current = choice.transition.target_id;
+      this.incoming = choice.index;
+      return true;
+    }
+    back() {
+      const previous = this.history.pop();
+      if (!previous) return false;
+      this.current = previous.step;
+      this.incoming = previous.incoming;
+      return true;
+    }
+    inspectStep(id) {
+      if (!this.scenario.steps.some(s => s.id === id)) return false;
+      this.current = id;
+      this.history = [];
+      this.incoming = null;
+      return true;
+    }
+    autoChoice() {
+      const choices = this.choices();
+      if (choices.length !== 1) return null;
+      const choice = choices[0];
+      if (choice.transition.kind === "loop" || this.history.some(h => h.step === choice.transition.target_id)
+          || choice.transition.target_id === this.current) return null;
+      return choice.index;
+    }
+  }
+  return {visibleAncestor, hierarchy, componentProjection, projectedEdges, Player};
+})();
+if (typeof module !== "undefined") module.exports = ArchitectureView;
+
+"use strict";
+(() => {
+  const documentData = JSON.parse(document.getElementById("model-data").textContent);
+  const model = documentData.model;
+  const report = documentData.maintenance;
+  const {componentProjection, hierarchy, projectedEdges, Player} = ArchitectureView;
+  const rows = hierarchy(model.components);
+  const byId = new Map([...model.components, ...model.relations, ...model.scenarios,
+    ...model.scenarios.flatMap(s => s.steps), ...model.bindings, ...model.maintenance].map(o => [o.id, o]));
+  const expanded = new Set(model.components.filter(c => !c.parent_id).map(c => c.id));
+  const bindingIds = new Set(model.bindings.map(b => b.id));
+  const players = new Map(model.scenarios.map(s => [s.id, new Player(s)]));
+  let scenario = model.scenarios[0] || null;
+  let player = scenario ? players.get(scenario.id) : new Player(null);
+  let selection = player.current || model.components[0]?.id || model.project.id;
+  let timer = null;
+  let message = "";
+  const el = id => document.getElementById(id);
+  const element = (tag, text = "", className = "") => {
+    const node = document.createElement(tag);
+    node.textContent = text;
+    if (className) node.className = className;
+    return node;
+  };
+  function button(text, action, className = "") {
+    const node = element("button", text, className);
+    node.type = "button";
+    node.addEventListener("click", action);
+    return node;
+  }
+  function field(container, label, value) {
+    const node = element("div", "", "field");
+    node.append(element("b", label));
+    node.append(element("div", typeof value === "string" ? value : JSON.stringify(value, null, 2)));
+    container.append(node);
+  }
+  function json(container, value) { container.append(element("pre", JSON.stringify(value, null, 2))); }
+  function details(container, title, value) {
+    const node = element("details");
+    node.append(element("summary", title));
+    json(node, value);
+    container.append(node);
+    return node;
+  }
+  function pause() {
+    if (timer !== null) clearInterval(timer);
+    timer = null;
+    el("play").textContent = "Play";
+  }
+  function select(id) { selection = id; renderDetail(); }
+  function moved() {
+    message = "";
+    selection = player.current;
+    render();
+  }
+  function advance(index) {
+    pause();
+    if (player.forward(index)) moved();
+  }
+  function autoTick() {
+    const index = player.autoChoice();
+    if (index === null) {
+      pause();
+      message = player.choices().length ? "Paused: choose a branch or explicitly enter a cycle." : "Paused at modeled endpoint or unexplained gap.";
+      renderPlayer();
+      return;
+    }
+    player.forward(index);
+    moved();
+  }
+  function renderTree(projection) {
+    el("tree").replaceChildren();
+    for (const {component, depth} of rows) {
+      if (projection.visibleById.get(component.id) !== component.id) continue;
+      const row = element("div", "", "tree-row");
+      row.style.paddingInlineStart = `${depth * 12}px`;
+      if (projection.parentIds.has(component.id)) {
+        const toggle = button(expanded.has(component.id) ? "−" : "+", () => {
+          expanded.has(component.id) ? expanded.delete(component.id) : expanded.add(component.id);
+          render();
+        });
+        toggle.setAttribute("aria-label", `Toggle ${component.name}`);
+        toggle.setAttribute("aria-expanded", String(expanded.has(component.id)));
+        row.append(toggle);
+      }
+      row.append(button(component.name, () => select(component.id), "object"));
+      el("tree").append(row);
+    }
+    el("steps").replaceChildren();
+    if (!scenario) { el("steps").append(element("p", "No modeled businesses. Update the model through the external Agent / CLI.")); return; }
+    for (const id of scenario.order) {
+      const step = scenario.steps.find(s => s.id === id);
+      const node = button(id, () => {
+        pause(); player.inspectStep(id); message = "Direct inspection starts a new browsing path.";
+        selection = id; render();
+      }, `step${id === player.current ? " active" : ""}`);
+      node.setAttribute("aria-current", id === player.current ? "step" : "false");
+      node.append(element("small", step.claim.explanation));
+      el("steps").append(node);
+    }
+  }
+  function svgElement(tag, attributes) {
+    const node = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    Object.entries(attributes).forEach(([key, value]) => node.setAttribute(key, String(value)));
+    return node;
+  }
+  function renderGraph(projection) {
+    const active = new Set(scenario?.steps.find(s => s.id === player.current)?.component_ids || []);
+    const involved = new Set(scenario?.steps.flatMap(s => s.component_ids) || []);
+    const project = id => projection.visibleById.get(id);
+    const activeVisible = new Set([...active].map(project));
+    const involvedVisible = new Set([...involved].map(project));
+    const graph = el("graph");
+    const nodes = el("nodes");
+    graph.replaceChildren(); nodes.replaceChildren();
+    const defs = svgElement("defs", {});
+    const marker = svgElement("marker", {id:"arrow",viewBox:"0 0 10 10",refX:9,refY:5,markerWidth:6,markerHeight:6,orient:"auto-start-reverse"});
+    marker.append(svgElement("path", {d:"M 0 0 L 10 5 L 0 10 z",fill:"context-stroke"}));
+    defs.append(marker); graph.append(defs);
+    const width = Math.max(430, ...rows.map(r => r.depth * 230 + 460));
+    const height = Math.max(230, rows.length * 105 + 30);
+    nodes.style.width = `${width}px`; nodes.style.height = `${height}px`;
+    graph.style.width = `${width}px`; graph.style.height = `${height}px`;
+    const positions = new Map(rows.map(r => [r.component.id, {x: r.depth * 230 + 20, y: r.index * 105 + 20}]));
+    const edges = projectedEdges(model, scenario, expanded, projection);
+    const groups = new Map();
+    for (const edge of edges) {
+      const activeEdge = edge.kind !== "relation" && (edge.source_step_id === player.current || edge.transition_index === player.incoming);
+      if (edge.kind !== "relation" && !activeEdge) continue;
+      const key = JSON.stringify([edge.source,edge.target]);
+      if (!groups.has(key)) groups.set(key,[]);
+      groups.get(key).push(edge);
+    }
+    const labelRows = new Map();
+    for (const grouped of groups.values()) {
+      const edge = grouped[0];
+      const transitions = grouped.filter(e => e.kind !== "relation");
+      const highlight = transitions.length > 0;
+      const source = positions.get(edge.source), target = positions.get(edge.target);
+      const stroke = highlight ? "#007c78" : "#9aadb9";
+      let path;
+      if (edge.source === edge.target) {
+        path = `M${source.x+170},${source.y+20} C${source.x+235},${source.y-16} ${source.x+235},${source.y+95} ${source.x+170},${source.y+66}`;
+      } else {
+        path = `M${source.x+190},${source.y+42} C${source.x+220},${source.y+42} ${target.x+220},${target.y+42} ${target.x+190},${target.y+42}`;
+      }
+      const line = svgElement("path", {d:path, fill:"none", stroke, "stroke-width":highlight?3:1.5,
+        "stroke-dasharray":highlight?"6 3":"none", "marker-end":"url(#arrow)"});
+      const title = svgElement("title", {});
+      title.textContent = grouped.map(item => item.kind === "relation" ? item.relation_id : `${item.source_step_id} → ${item.target_step_id} · ${item.kind}`).join("\n");
+      line.append(title); graph.append(line);
+      const labelRow = labelRows.get(edge.source) || 0;
+      labelRows.set(edge.source,labelRow+1);
+      const label = svgElement("text", {x:source.x+198,y:source.y+12+labelRow*15});
+      const relationCount = grouped.length - transitions.length;
+      label.textContent = [relationCount ? `${relationCount} relation${relationCount > 1 ? "s" : ""}` : "", ...new Set(transitions.map(item=>item.kind))].filter(Boolean).join(" · ");
+      graph.append(label);
+    }
+    for (const {component} of rows) {
+      if (project(component.id) !== component.id) continue;
+      const position = positions.get(component.id);
+      const node = button("", () => select(component.id), "node");
+      node.dataset.componentId = component.id;
+      node.style.left = `${position.x}px`; node.style.top = `${position.y}px`;
+      node.classList.toggle("current", activeVisible.has(component.id));
+      node.classList.toggle("unrelated", el("focus").checked && !involvedVisible.has(component.id));
+      node.append(element("strong", component.name), element("small", component.id));
+      if (activeVisible.has(component.id)) {
+        node.append(element("span", active.has(component.id) ? "Current step" : `Current step inside · ${player.current}`, "inside"));
+      }
+      const hidden = projection.hiddenCounts.get(component.id) || 0;
+      if (hidden) node.append(element("small", `${hidden} components inside · expand in structure`));
+      nodes.append(node);
+    }
+    el("relations").replaceChildren();
+    for (const relation of model.relations) {
+      el("relations").append(button(`${relation.source_id} → ${relation.target_id} · ${relation.meaning}`,
+        () => select(relation.id), "relation"));
+    }
+    if (!rows.length) nodes.append(element("p", "No components modeled yet."));
+    if (!model.relations.length) el("relations").append(element("p", "No component relations modeled. Business transitions remain separate."));
+  }
+  function renderPlayer() {
+    el("current").textContent = scenario ? `${scenario.name} / ${player.current}` : "No business selected";
+    el("choices").replaceChildren();
+    const choices = player.choices();
+    el("playback-status").textContent = message || (choices.length === 0
+      ? "No outgoing transition saved. Modeled endpoint or unexplained gap; no next step is inferred from display order."
+      : choices.length > 1 ? "Choose a saved transition. Conditions have not been evaluated."
+      : choices[0].transition.kind === "loop" ? "Loop boundary: paused until explicitly selected. Choose another transition to exit when available." : "Ready to follow the saved transition.");
+    for (const {transition, index} of choices) {
+      el("choices").append(button(`${transition.kind} → ${transition.target_id} · ${transition.condition}`, () => advance(index)));
+    }
+    const incoming = scenario?.transitions[player.incoming];
+    el("incoming").textContent = incoming ? `Last traversed: ${incoming.source_id} → ${incoming.target_id} · ${incoming.kind} · ${incoming.condition}` : "No transition traversed in this browsing path.";
+    el("back").disabled = player.history.length === 0;
+    el("next").disabled = choices.length !== 1;
+    el("play").disabled = !scenario || !choices.length;
+    el("reset").disabled = !scenario;
+  }
+  function renderBindings(container, ids, displayed) {
+    container.append(element("h3", "Code evidence"));
+    for (const id of ids) {
+      const binding = byId.get(id);
+      if (!binding) continue;
+      const node = element("details");
+      node.dataset.bindingId = id;
+      node.append(element("summary", `${id} · ${binding.location.path}:${binding.location.start} · ${binding.status}`));
+      node.append(button(`Inspect binding ${id}`, () => select(id)));
+      field(node, "Binding status is relative to its saved evidence", binding.reason || binding.status);
+      for (const [index, snippet] of documentData.snippets[id].entries()) {
+        field(node, index === 0 ? "Referenced evidence" : "Historical binding evidence", snippet.location.symbol || snippet.location.path);
+        const snapshot = model.facts.find(item => item.id === snippet.snapshot_id);
+        json(node, {source_root_id:snippet.source_root_id || "legacy single root", language:snapshot?.file_languages?.[snippet.location.path] || "legacy", project:snapshot?.file_projects?.[snippet.location.path] || "legacy", snapshot_id:snippet.snapshot_id,source_version:snippet.source_version,...snippet.location});
+        if (snippet.status === "verified") node.append(element("p", "Exact file SHA-256 matched this evidence version.", "badge"), element("pre", snippet.text));
+        else node.append(element("p", snippet.reason, "warning"));
+      }
+      details(node, "Binding history metadata", binding.history);
+      node.append(element("h3", "Binding opinions & verification"));
+      node.append(element("p", "Coverage is limited to the recorded object_ids, inputs and source_version. Binding checks do not verify a whole component or business.", "muted"));
+      renderRecords(node, new Set([id]), displayed, `binding ${id}`);
+      container.append(node);
+    }
+  }
+  function renderMaintenance(container, ids, displayed) {
+    container.append(element("h3", "Maintenance & review history"));
+    container.append(element("p", "Current means current explanation contents for a saved source comparison. It does not mean latest source verified.", "muted"));
+    field(container, "Latest target snapshot", report.latest_target_snapshot_id || "No source maintenance target saved");
+    const matching = model.maintenance.filter(item => ids.has(item.binding_id) || [...item.component_ids,...item.relation_ids,...item.scenario_ids,...item.step_ids].some(id => ids.has(id)));
+    if (!matching.length) container.append(element("p", "No maintenance observations for this selection. This is not evidence of verification."));
+    for (const item of matching) {
+      const current = report.current_coverage_ids.includes(item.id);
+      const pending = report.pending_ids.includes(item.id);
+      const currentPending = report.current_pending_ids.includes(item.id);
+      const latest = item.target_snapshot_id === report.latest_target_snapshot_id;
+      const node = element("details");
+      node.append(element("summary", `${current ? "Current explanation" : "Historical explanation"} · ${item.disposition} · ${currentPending ? "current pending" : pending ? "historical pending" : item.resolution ? "review recorded" : "unchanged comparison"} · ${latest ? "latest target" : "older target"}`));
+      field(node, "Observation ID", item.id);
+      field(node, "Target snapshot / source version", `${item.target_snapshot_id} / ${item.target_source_version}`);
+      field(node, "Reasons", item.reasons);
+      details(node, "Actual affected scope and content fingerprints", {component_ids:item.component_ids,relation_ids:item.relation_ids,scenario_ids:item.scenario_ids,step_ids:item.step_ids,coverage_version:item.coverage_version,object_versions:item.object_versions});
+      if (item.resolution) details(node, "Confirmation author, reason and actual version coverage", item.resolution).open = true;
+      else field(node, "Review", pending ? "Unresolved" : "No review required by this comparison");
+      details(node, "Source basis, candidates and static call changes", {basis:item.basis,candidates:item.candidates,call_changes:item.call_changes,compared_revision:item.compared_revision});
+      renderRecords(node, new Set([item.id]), displayed, `observation ${item.id}`);
+      container.append(node);
+    }
+    container.append(element("p", "Historical source bodies and old explanation bodies cannot be reconstructed from revisions or fingerprints.", "muted"));
+  }
+  function renderRecords(container, ids, displayed, context) {
+    for (const [name, records] of [["Human opinion", model.opinions], ["Verification", model.verifications]]) {
+      for (const record of records.filter(r => r.object_ids.some(id => ids.has(id)))) {
+        if (displayed.has(record.id)) {
+          const existing = displayed.get(record.id);
+          const reference = button(`View ${record.id} · also targets this selection; shown under ${existing.context}`, () => {
+            let ancestor = existing.node;
+            while (ancestor) {
+              if (ancestor.tagName === "DETAILS") ancestor.open = true;
+              ancestor = ancestor.parentElement;
+            }
+            existing.node.scrollIntoView({block:"nearest"});
+            existing.node.querySelector("summary").focus();
+          });
+          reference.dataset.recordReference = record.id;
+          container.append(reference);
+          continue;
+        }
+        const node = details(container, `${name} · ${record.status || record.stance} · ${record.id}`, record);
+        node.dataset.recordId = record.id;
+        displayed.set(record.id, {node, context});
+      }
+    }
+  }
+  function renderDetail() {
+    const container = el("detail"); container.replaceChildren();
+    const object = byId.get(selection);
+    if (!object) { json(container, model.project); return; }
+    container.append(element("h3", object.name || object.id));
+    if (object.contract) details(container, "Cross-boundary contract (static evidence, not runtime proof)", object.contract);
+    field(container, "Stable object ID", object.id);
+    for (const name of ["responsibility", "rationale", "parent_id", "meaning", "source_id", "target_id", "component_ids"]) {
+      if (object[name]) field(container, name.replaceAll("_", " "), object[name]);
+    }
+    const claim = object.claim;
+    if (claim) {
+      container.append(element("span", claim.kind, "badge"));
+      field(container, "Explanation", claim.explanation);
+      field(container, "Assumptions", claim.assumptions.length ? claim.assumptions : "None declared");
+      field(container, "Issues", claim.issues.length ? claim.issues : "None declared");
+    }
+    const ids = new Set([object.id]);
+    const bindings = new Set([...(object.binding_ids || []), ...(claim?.binding_ids || [])]);
+    if (bindingIds.has(object.id)) bindings.add(object.id);
+    if (object.component_ids) {
+      for (const id of object.component_ids) {
+        ids.add(id);
+        container.append(button(`Inspect component ${id}`, () => select(id)));
+        for (const bid of [...byId.get(id).binding_ids, ...byId.get(id).claim.binding_ids]) bindings.add(bid);
+      }
+    }
+    const displayed = new Map();
+    renderBindings(container, bindings, displayed);
+    container.append(element("h3", "Opinions & verification"));
+    container.append(element("p", "Planned checks are not executed results. An executed result applies only to its recorded inputs, objects and source version; it does not change claim kind.", "muted"));
+    renderRecords(container, ids, displayed, `selection ${object.id}`);
+    renderMaintenance(container, new Set([...ids, ...bindings]), displayed);
+  }
+  function render() {
+    const projection = componentProjection(model.components, expanded);
+    renderTree(projection); renderGraph(projection); renderPlayer(); renderDetail();
+  }
+  el("project").textContent = model.project.name;
+  el("boundary").textContent = model.project.boundary;
+  el("identity").textContent = `Model ${model.id} · revision ${model.revision}`;
+  el("exported").textContent = `Exported ${documentData.exported_at}`;
+  for (const item of model.scenarios) {
+    const option = element("option", item.name); option.value = item.id; el("scenario").append(option);
+  }
+  el("scenario").disabled = !scenario;
+  el("inspect-business").disabled = !scenario;
+  el("inspect-business").addEventListener("click", () => { if (scenario) select(scenario.id); });
+  el("scenario").addEventListener("change", () => {
+    pause(); scenario = model.scenarios.find(s => s.id === el("scenario").value);
+    player = players.get(scenario.id); message = ""; selection = player.current; render();
+  });
+  el("focus").addEventListener("change", () => renderGraph(componentProjection(model.components, expanded)));
+  el("reset").addEventListener("click", () => { pause(); player.reset(); moved(); });
+  el("back").addEventListener("click", () => { pause(); player.back(); moved(); });
+  el("next").addEventListener("click", () => {
+    const choices = player.choices(); if (choices.length === 1) advance(choices[0].index);
+  });
+  el("play").addEventListener("click", () => {
+    if (timer !== null) { pause(); return; }
+    timer = setInterval(autoTick, 1100); el("play").textContent = "Pause";
+  });
+  el("expand-all").addEventListener("click", () => { model.components.forEach(c => expanded.add(c.id)); render(); });
+  el("collapse-all").addEventListener("click", () => { expanded.clear(); render(); });
+  el("metadata").addEventListener("click", () => {
+    const container = el("detail"); container.replaceChildren();
+    field(container, "Model / revision / export", `${model.id} / ${model.revision} / ${documentData.exported_at}`);
+    field(container, "Selected business / step", `${scenario?.id || "none"} / ${player.current || "none"}`);
+    json(container, model.project);
+    container.append(element("h3", "Source bindings"));
+    for (const binding of model.bindings) {
+      container.append(button(`Inspect binding ${binding.id}`, () => select(binding.id)));
+    }
+    field(container, "Latest source target", report.latest_target_snapshot_id || "none");
+    details(container, "Independent source root maintenance targets", model.maintenance_targets || {});
+    for (const facts of model.facts) details(container, `Snapshot ${facts.id}`, {id:facts.id,source_root_id:facts.source_root_id || "legacy single root",file_languages:facts.file_languages,file_projects:facts.file_projects, source:facts.source,tools:facts.tools,limitations:facts.limitations});
+    details(container, "Maintenance coverage sets", report);
+    details(container, "Revision metadata (not historical explanation bodies)", model.revisions);
+  });
+  window.addEventListener("pagehide", pause);
+  render();
+})();
+</script>
+</body></html>

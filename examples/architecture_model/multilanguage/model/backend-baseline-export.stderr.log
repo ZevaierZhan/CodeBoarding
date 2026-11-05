@@ -1,0 +1,41 @@
+2026-11-05 11:44:29 INFO     [static_analyzer.engine.language_adapter:329] Found 2 Rust files in F:\CodeBoarding\temp\m5\native-trial\target\backend
+2026-11-05 11:44:29 INFO     [static_analyzer:387] 1 engine LSP client(s) will start during analysis, at most 1 running at a time.
+2026-11-05 11:44:29 INFO     [static_analyzer:741] analyze() called with skip_cache=True, source_sha=None
+2026-11-05 11:44:29 INFO     [static_analyzer:746] static_analysis_cache: outcome=bypass (skip_cache=True)
+2026-11-05 11:44:29 INFO     [static_analyzer:460] Starting engine LSP client for Rust at F:\CodeBoarding\temp\m5\native-trial\target\backend
+2026-11-05 11:44:30 INFO     [static_analyzer:514] Rust LSP start: 0.7s
+2026-11-05 11:44:30 INFO     [static_analyzer.engine.lsp_client:607] Waiting for LSP server to be ready...
+2026-11-05 11:44:36 INFO     [static_analyzer.engine.lsp_client:964] LSP server: rust-analyzer quiescent (health=ok)
+2026-11-05 11:44:36 INFO     [static_analyzer.engine.lsp_client:609] Server ready
+2026-11-05 11:44:36 INFO     [static_analyzer:523] Rust workspace ready: 6.5s
+2026-11-05 11:44:36 INFO     [static_analyzer:871] Starting engine analysis for Rust in F:\CodeBoarding\temp\m5\native-trial\target\backend
+2026-11-05 11:44:36 INFO     [static_analyzer:1133] Analyzing 2 Rust files
+2026-11-05 11:44:36 INFO     [static_analyzer.engine.progress:49] Phase 0 (open): 100% (2/2 files, 0.1s elapsed)
+2026-11-05 11:44:36 INFO     [static_analyzer.engine.call_graph_builder:241] did_open 2 files: 0.1s
+2026-11-05 11:44:36 INFO     [static_analyzer.engine.call_graph_builder:251] Waiting for LSP server didOpen drain (timeout=64s)...
+2026-11-05 11:44:36 INFO     [static_analyzer.engine.call_graph_builder:265] Sync probe: 0.0s (3 symbols)
+2026-11-05 11:44:36 INFO     [static_analyzer.engine.progress:49] Phase 1 (symbols): 100% (2/2 files, 0.0s elapsed | symbols=4)
+2026-11-05 11:44:36 INFO     [static_analyzer.engine.call_graph_builder:223] Discovered 4 symbols across 2 files
+2026-11-05 11:44:36 INFO     [static_analyzer.engine.call_graph_builder:70] Phase 1 total (discover symbols): 0.1s
+2026-11-05 11:44:36 INFO     [static_analyzer.engine.call_graph_builder:74] Build indices: 0.0s
+2026-11-05 11:44:39 INFO     [static_analyzer.engine.progress:49] Phase 2 (definitions): 100% (2/2 files, 3.1s elapsed | edges=1, resolved=1)
+2026-11-05 11:44:39 INFO     [static_analyzer.engine.edge_builder:455] Phase 2b (implementations): 1 unique targets from 1 pending queries
+2026-11-05 11:44:39 INFO     [static_analyzer.engine.progress:49] Phase 2b (impl): 100% (1/1 targets, 0.0s elapsed | edges=1, resolved=0)
+2026-11-05 11:44:39 INFO     [static_analyzer.engine.edge_builder:236] Phase 2 summary: 7 call sites, 1 def resolved, 0 impl resolved, 0 iterated, 1 raw edges
+2026-11-05 11:44:39 INFO     [static_analyzer.engine.call_graph_builder:80] Phase 2 total (build edges): 3.1s, 1 edges
+2026-11-05 11:44:39 INFO     [static_analyzer.engine.hierarchy_builder:59] Hierarchy: 0 class symbols to process
+2026-11-05 11:44:39 INFO     [static_analyzer.engine.hierarchy_builder:106] Type hierarchy not supported, inferring from source code
+2026-11-05 11:44:39 INFO     [static_analyzer.engine.hierarchy_builder:110] Hierarchy complete: 0 classes, 0 inheritance links in 0.0s
+2026-11-05 11:44:39 INFO     [static_analyzer.engine.call_graph_builder:89] Phase 3 (hierarchy): 0.0s
+2026-11-05 11:44:39 INFO     [static_analyzer.engine.call_graph_builder:94] Phase 4 (package deps): 0.0s
+2026-11-05 11:44:39 INFO     [static_analyzer.engine.call_graph_builder:117] Pipeline complete: 2 files, 4 symbols, 1 edges, 0 hierarchy entries in 3.2s
+2026-11-05 11:44:39 INFO     [static_analyzer:1143] CallGraphBuilder.build() for Rust: 3.2s
+2026-11-05 11:44:39 INFO     [static_analyzer.engine.result_converter:104] Converted 3 nodes, 1 edges (0 skipped) for Rust
+2026-11-05 11:44:39 INFO     [static_analyzer.engine.result_converter:114] Reference edges for Rust: 0 ({})
+2026-11-05 11:44:39 INFO     [static_analyzer:1155] convert_to_codeboarding_format for Rust: 0.0s
+2026-11-05 11:44:39 INFO     [static_analyzer.engine.lsp_client:607] Waiting for LSP server to be ready...
+2026-11-05 11:44:49 WARNING  [static_analyzer.engine.lsp_client:611] Server ready timeout after 10s. Proceeding with analysis anyway.
+2026-11-05 11:44:52 INFO     [static_analyzer:1084] Diagnostics for Rust: 2 files, 0 items (cache=0, live=2)
+2026-11-05 11:44:52 INFO     [static_analyzer:880] Engine analysis for Rust completed in 23.4s
+2026-11-05 11:44:52 INFO     [static_analyzer.external_calls:93] External call sites: 3 kept, 0 new edges, 3 point outside this graph
+2026-11-05 11:44:52 INFO     [static_analyzer:847] Static analysis complete: rust: 2 files, 3 references, 3 nodes, 1 edges

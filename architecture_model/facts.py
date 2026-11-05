@@ -13,23 +13,29 @@ from architecture_model.store import atomic_write, load_json
 from architecture_model.validation import parse, validate_facts
 
 
+def export_multilanguage(repo: Path, project_id: str, output: Path, source_root_id: str, tools: Path) -> Facts:
+    if not repo.is_dir() or not tools.is_file() or not source_root_id.strip():
+        raise ModelError("TOOL_MISSING", "/tools", "Repository, tool configuration and source root ID are required")
+    return _publish_worker(["--multi", str(repo.resolve()), project_id, source_root_id, str(tools.resolve())], output)
+
+
 def export_facts(repo: Path, project_id: str, output: Path, node: Path, pyright: Path, tokei: Path) -> Facts:
     paths = [repo, node, pyright, tokei]
     if not repo.is_dir() or any(not path.is_file() for path in paths[1:]):
         raise ModelError("TOOL_MISSING", "/tools", "Repository and explicit Node, Pyright JS, Tokei paths must exist")
+    return _publish_worker(
+        [str(repo.resolve()), project_id, str(node.resolve()), str(pyright.resolve()), str(tokei.resolve())], output
+    )
+
+
+def _publish_worker(arguments: list[str], output: Path) -> Facts:
     with tempfile.TemporaryDirectory(prefix="codeboarding-facts-") as temporary:
         result = Path(temporary) / "facts.json"
-        command = [
-            sys.executable,
-            "-m",
-            "architecture_model.facts_worker",
-            str(repo.resolve()),
-            project_id,
-            str(result),
-            str(node.resolve()),
-            str(pyright.resolve()),
-            str(tokei.resolve()),
-        ]
+        module = "architecture_model.facts_worker"
+        if arguments[0] == "--multi":
+            module = "architecture_model.multilanguage_worker"
+            arguments = arguments[1:]
+        command = [sys.executable, "-m", module, *arguments[:2], str(result), *arguments[2:]]
         try:
             process = run_worker(command)
         except subprocess.TimeoutExpired as error:
