@@ -1,0 +1,3 @@
+warning: The `tool.uv.dev-dependencies` field (used in `pyproject.toml`) is deprecated and will be removed in a future release; use `dependency-groups.dev` instead
+static_analyzer\workspace_dependencies.py:78: error: Module has no attribute "SIGKILL"; maybe "SIGILL"?  [attr-defined]
+Found 1 error in 1 file (checked 365 source files)

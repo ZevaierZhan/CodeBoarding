@@ -1,5 +1,8 @@
 # M4: external Agent modeling workflow
 
+Current follow-up: [M4 P2 results](architecture-model-m4-p2-results.md) cover bounded
+complete-read context and separated target/engine execution on the same PR #5.
+
 Start: 2026-11-05, clean `34b4e48f2388049eeaf180efcbf285029d7b384b`.
 Remote PR #4 remains open at that head. Branch `codex/m4-external-agent-skill`
 therefore stacks on `codex/m3-interactive-browser`; do not merge or modify #4.

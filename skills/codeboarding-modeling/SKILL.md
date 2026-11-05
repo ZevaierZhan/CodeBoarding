@@ -5,29 +5,42 @@ description: Create and continue persistent CodeBoarding architecture models fro
 
 # Continue a CodeBoarding model
 
-Inputs: repository location, this skill folder, modeling task, and optionally a
-model path. Treat source as evidence and architecture boundaries as reviewable
+Inputs: `TARGET_REPO` (analyzed source), `MODEL` (persistent artifact), this skill
+folder, modeling task, and an engine locator when no installed CLI is available.
+`CODEBOARDING_HOME` is the engine checkout, separate from the target and model.
+Treat source as evidence and architecture boundaries as reviewable
 interpretations. Use the external Agent's reasoning; no internal LLM is required.
 
 ## Locate and establish context
 
-Read the repository's agent instructions. Prefer an explicit model path, then the
+Read the target repository's agent instructions. Prefer an explicit model path, then the
 project's documented location. Otherwise inspect `architecture-model.json`,
 `.codeboarding/`, and tracked model candidates (`rg --files -g '*model*.json'`).
 Read candidates through the CLI to distinguish models from schemas and snapshots.
 If multiple plausible models remain, ask which to continue. Initialize only when
 there is no existing model for the requested boundary; never reset an existing file.
 
-Run commands from the CodeBoarding checkout with `uv run python -m
-architecture_model`; use absolute paths for a separately located target project.
+Locate the engine in this order: explicit checkout path, installed
+`codeboarding-model` CLI, then `CODEBOARDING_HOME` environment variable. An invalid
+explicit locator fails; it does not silently switch engines. If none is available,
+request the missing locator. Do not assume CodeBoarding source exists in the target.
+Use the engine's prepared Python environment; do not install into or alter the
+target environment. Resolve target/model/source/output paths from the caller's
+directory before running the engine. The bundled helper does this mechanically.
 Read [the command protocol](references/protocol.md) before a write or source export.
 The target project need not install CodeBoarding or expose provider credentials.
 
-Read the **complete** model using `model --file MODEL read`. Record model ID,
-revision, project boundary, each facts snapshot's source digest/manifest/Git context,
-current maintenance target, pending reviews, and existing scenario/component IDs.
+Use the [large-model workflow](references/context.md) for **every complete read**:
+capture the CLI's complete JSON directly to a fresh temporary context directory,
+then load its bounded summary and paginated ID inventory. Never treat console
+truncation as complete input or increase output budgets to fit the model.
+Only task-relevant objects need enter the conversation; all other IDs, bindings,
+facts and maintenance remain queryable from the captured complete file.
+Record model ID/revision, boundary, evidence scope/versions and review state.
 `read --scenario ID` and `read --component ID` return `complete:false` context:
 they may omit parents and referenced objects and cannot replace the stored model.
+Temporary complete-read/index files are context envelopes, not another persistent
+architecture model. Never submit them as patches or replace MODEL with them.
 HTML is a frozen display artifact; changes go through the model CLI.
 
 ## Explain code and reuse objects
@@ -54,12 +67,16 @@ in the protocol; allocate fresh IDs only for genuinely new logical objects.
 
 ## Commit feedback or a new business
 
-Read the current revision, prepare a minimal patch, run `validate --patch` and
+Capture the complete current model, prepare a minimal patch, run `validate --patch` and
 `diff --patch`, inspect actual affected objects/scenarios, then `apply` with that
-expected revision. Compare the result with the pre-write model: previous scenarios
+expected revision. Immediately before apply run helper `check` against that context;
+the CLI's expected-revision check still protects against races after this check.
+Save large validate/diff responses to separate files and query relevant changes.
+Compare the result with the pre-write model: previous scenarios
 and continuing IDs survive, new businesses share existing components, unrelated
-explanations remain intact. On revision conflict reread the complete model and
-reconcile differences before rebuilding the patch. Exit 2 may mean a committed
+explanations remain intact. On stale context or revision conflict discard the stale
+candidate, capture a new complete read, inspect concurrent changes and rebuild the
+patch rather than retrying with an incremented revision. Exit 2 may mean a committed
 write whose output failed; read the model before retrying.
 
 For feedback, save its author, exact text, stance and targeted IDs as an opinion,
@@ -87,8 +104,10 @@ means the latest business was executed or verified. See protocol for commands.
 
 ## Deliver and hand off
 
-Export to a new HTML filename after the final write, with the appropriate source
-root for hash-checked snippets. Check its embedded model ID/revision against the
+Export to a new HTML filename after the final write. `--repo` for facts export
+always names TARGET_REPO; `--file` names MODEL, which may be elsewhere. Export's
+`--source-root` names the exact target source version being cited, never the
+engine merely because it runs the CLI. Check embedded model ID/revision against the
 complete read, then validate expand/collapse, scenario switching, explicit step
 playback and evidence inspection when browser access is available. Respect denied
 browser paths and report unperformed checks.
@@ -96,5 +115,5 @@ browser paths and report unperformed checks.
 Report model and HTML paths, revision, source scope/version, added/reused/changed
 IDs, assumptions, pending reviews and actual verification limits. Users review the
 read-only browser and request changes in conversation. A new Agent needs only this
-skill, repo path, model locator and task; save those inputs and its actual result
+skill, target path, model locator, engine locator and task; save those inputs and its actual result
 when testing continuation. A new CLI process alone is not a new Agent session.

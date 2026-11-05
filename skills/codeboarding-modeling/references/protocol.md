@@ -2,20 +2,25 @@
 
 Use Python 3.12+ and `uv sync --dev` in the CodeBoarding checkout. These commands
 do not read `.env` or invoke an LLM. Below, replace uppercase arguments with actual
-paths/values; the shell examples use a single line to work in PowerShell or bash.
-Inspect `uv run python -m architecture_model --help` and the relevant subcommand's
+absolute paths/values. `CODEBOARDING_HOME` selects the prepared **engine checkout**
+and execution directory. `TARGET_REPO` is analyzed source, `MODEL` is the persistent
+artifact, and `--source-root` is the target source version cited by that model.
+None is inferred from the Agent's current directory. Models may be outside the
+target. Do not install dependencies or copy engine code into the target.
+Use [context.md](context.md) to capture complete reads and large diffs directly to
+temporary files; the raw commands below describe protocol, not conversation output.
+Inspect `uv run --directory CODEBOARDING_HOME --no-sync python -m architecture_model --help` and the relevant subcommand's
 help if working against another CodeBoarding version.
 
 ## Read and patch
 
 ```sh
-uv run python -m architecture_model model --file MODEL read
-uv run python -m architecture_model model --file MODEL maintenance
-uv run python -m architecture_model model schema
-uv run python -m architecture_model model --file MODEL validate --patch PATCH
-uv run python -m architecture_model model --file MODEL diff --patch PATCH
-uv run python -m architecture_model model --file MODEL apply --patch PATCH --expected-revision REVISION
-uv run python -m architecture_model model --file MODEL export-html --output NEW.html --source-root TARGET_REPO
+uv run --directory CODEBOARDING_HOME --no-sync python -m architecture_model model --file MODEL maintenance
+uv run --directory CODEBOARDING_HOME --no-sync python -m architecture_model model schema
+uv run --directory CODEBOARDING_HOME --no-sync python -m architecture_model model --file MODEL validate --patch PATCH
+uv run --directory CODEBOARDING_HOME --no-sync python -m architecture_model model --file MODEL diff --patch PATCH
+uv run --directory CODEBOARDING_HOME --no-sync python -m architecture_model model --file MODEL apply --patch PATCH --expected-revision REVISION
+uv run --directory CODEBOARDING_HOME --no-sync python -m architecture_model model --file MODEL export-html --output NEW.html --source-root TARGET_REPO
 ```
 
 Responses are JSON `{ok:true,result:...}`; check exit status and `ok`. Full read's
@@ -66,12 +71,12 @@ Preinstall Node, Pyright language-server JS and Tokei; supply executable paths
 explicitly. The CLI does not install them or silently choose replacements.
 
 ```sh
-uv run python -m architecture_model facts export --repo TARGET_REPO --project-id PROJECT_ID --node NODE --pyright PYRIGHT_JS --tokei TOKEI --output NEW_FACTS.json
-uv run python -m architecture_model model --file MODEL maintenance-preview --facts NEW_FACTS.json
-uv run python -m architecture_model model --file MODEL maintenance-refresh --facts NEW_FACTS.json --token PREVIEW_TOKEN --author AUTHOR --expected-revision REVISION
-uv run python -m architecture_model model --file MODEL maintenance --binding BINDING_ID
-uv run python -m architecture_model model --file MODEL maintenance-rebind --item ITEM_ID --candidate EXACT_CANDIDATE_KEY --author AUTHOR --reason REASON --expected-revision REVISION
-uv run python -m architecture_model model --file MODEL maintenance-resolve --item ITEM_ID --review REVIEW.json --expected-revision REVISION
+uv run --directory CODEBOARDING_HOME --no-sync python -m architecture_model facts export --repo TARGET_REPO --project-id PROJECT_ID --node NODE --pyright PYRIGHT_JS --tokei TOKEI --output NEW_FACTS.json
+uv run --directory CODEBOARDING_HOME --no-sync python -m architecture_model model --file MODEL maintenance-preview --facts NEW_FACTS.json
+uv run --directory CODEBOARDING_HOME --no-sync python -m architecture_model model --file MODEL maintenance-refresh --facts NEW_FACTS.json --token PREVIEW_TOKEN --author AUTHOR --expected-revision REVISION
+uv run --directory CODEBOARDING_HOME --no-sync python -m architecture_model model --file MODEL maintenance --binding BINDING_ID
+uv run --directory CODEBOARDING_HOME --no-sync python -m architecture_model model --file MODEL maintenance-rebind --item ITEM_ID --candidate EXACT_CANDIDATE_KEY --author AUTHOR --reason REASON --expected-revision REVISION
+uv run --directory CODEBOARDING_HOME --no-sync python -m architecture_model model --file MODEL maintenance-resolve --item ITEM_ID --review REVIEW.json --expected-revision REVISION
 ```
 
 Preview is read-only. Refresh saves comparison history and the new immutable

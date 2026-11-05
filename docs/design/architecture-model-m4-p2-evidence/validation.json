@@ -1,0 +1,75 @@
+{
+  "reviewed_head": "2e741c37e2afcc747180e151cde4f1f84b187a12",
+  "main_merge_of_pr4": "0897007f83ad7231f210cb593432ed953fb6a1f1",
+  "local_main_integration": "5ebb9154",
+  "pr5_base": "main",
+  "rebase_or_force_push_required": false,
+  "architecture_and_helper_suite": {
+    "passed": 173,
+    "seconds": 300.88,
+    "coverage_percent": 96.53,
+    "statements": 1298,
+    "missed": 45,
+    "coverage_file": "temp/m4-p2-module.coverage"
+  },
+  "final_focused": {
+    "passed": 17,
+    "seconds": 61.57,
+    "helper_coverage_percent": 92.27,
+    "statements": 207,
+    "missed": 16,
+    "coverage_file": "temp/m4-p2-final-helper.coverage",
+    "includes": "10 helper + 4 original M4 + 3 new separated artifact tests"
+  },
+  "node_engine": {
+    "passed": 6
+  },
+  "black": {
+    "passed": true,
+    "files": 365
+  },
+  "relevant_mypy": {
+    "passed": true,
+    "files": 4
+  },
+  "windows_mypy": {
+    "exit_code": 1,
+    "files": 365,
+    "errors": [
+      "static_analyzer/workspace_dependencies.py:78 SIGKILL attr-defined"
+    ]
+  },
+  "skill_validator": "PASS",
+  "original_m4_0_to_13_unchanged": true,
+  "fresh_agent_trial": "trial.json",
+  "whole_repository": {
+    "command": [
+      "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+      "-m",
+      "pytest",
+      "--cov=.",
+      "--cov-report=term",
+      "--cov-fail-under=80"
+    ],
+    "exit_code": 1,
+    "timeout": true,
+    "elapsed_seconds": 300.6559999999881,
+    "bound_seconds": 300
+  },
+  "whole_repository_collected": 2872,
+  "repository_80_percent": "unconfirmed",
+  "private_integration": "unavailable; not run",
+  "browser_in_this_followup": "not run; original browser evidence is historical",
+  "temporary_context_contents_committed": false,
+  "log_hashes": {
+    "black.log": "f8079ab68a4e1e30b0a7787121be14cbfb6e4b9c487c4d122242f7eac140db69",
+    "final-context-check.log": "13e073548e13dadf14449cd922df3f1c3260c85f58f987f64718f32ee7eea1ca",
+    "final-focused.log": "0440ab1c57e141c36be88301ffb71d4376c6dacecbc63d91ed23617b044df3b2",
+    "full-tests.log": "01dc011aef786717f13453d829f9de8f80a3e8d395f43b5558c3ee78b77e46cd",
+    "module-tests.log": "603925086eefe6a7698345d8c5cc80293a73c185c3ea65b2c4cb9de3ad4297eb",
+    "mypy.log": "1df58284ca3dd2cfca2d9977e5349abc36fa87be6653e760d6c047945230bd24",
+    "node-tests.log": "ff5ce33e72731143e665532938271b94016969758ffa4db9b59aee505e901989",
+    "relevant-mypy.log": "669e18dadad338a1280d4b94fa3b48bd6914ff76f1d8a548fd90c1ecd5c60cc5",
+    "skill-validation.log": "90ffda13bb00966a719a899cb65965bd6d9c8ee55fd1d9780972f5323215dbbc"
+  }
+}

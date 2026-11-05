@@ -1,5 +1,9 @@
 # M4 acceptance — 2026-11-05 (Asia/Shanghai)
 
+The [M4 P2 follow-up](architecture-model-m4-p2-results.md) formalizes large-model
+context and engine/target separation. PR #4 has since merged; PR #5 now targets
+main. The original acceptance and 0–13 evidence below remain historical.
+
 M4 delivers an executable external-Agent workflow and actual continuing model,
 not an internal business-analysis Agent. Start was a clean checkout of reviewed
 M3 head `34b4e48f2388049eeaf180efcbf285029d7b384b`. Remote PR #4 was checked at

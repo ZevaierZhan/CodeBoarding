@@ -1,0 +1,42 @@
+{
+  "actual_cwd": "F:\\CodeBoarding M4 Target",
+  "model_id": "2300aa45-f4ac-466e-a8c3-e7081dd4dcc8",
+  "before_revision": 2,
+  "after_revision": 3,
+  "preservation": {
+    "facts": true,
+    "bindings": true,
+    "components": true,
+    "relations": true,
+    "opinions": true,
+    "verifications": true,
+    "maintenance": true,
+    "all_129_existing_scenarios_exactly_equal": true,
+    "one_scenario_added": true,
+    "project_and_model_identity": true,
+    "target_source_files_unchanged": true,
+    "html_embedded_model_exactly_matches_revision_3": true
+  },
+  "source": {
+    "digest": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+    "git_commit": "",
+    "files": {
+      "app.py": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413",
+      "delivery/orders.py": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+      "persistence/store.py": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4",
+      "policies/pricing.py": "42868ea99cc362de16f58190ac37c79d345533641e5662adcad76de06154c77c"
+    },
+    "scope": "All Python files discovered by PythonAdapter and repository ignore rules"
+  },
+  "fresh_facts_id": "2e01b3f08644c5e4348a3345d2741151514b2af1fcb232aee6c2fedeb64e8b6f",
+  "new_ids": {
+    "scenario": "8e49f803-0756-4d12-bc0d-da18008a0218",
+    "entry": "0ce38b4f-21a0-46ba-aeee-11f8119b8fdc",
+    "price": "44c29084-049e-47d2-93f7-9ff9f624b94d",
+    "return": "0796f849-355b-47f5-a89f-70632ae4e896"
+  },
+  "pending_historical": 0,
+  "pending_current": 0,
+  "browser_checks": "not performed: no browser tool available",
+  "business_execution": "not performed: source interpretation only"
+}

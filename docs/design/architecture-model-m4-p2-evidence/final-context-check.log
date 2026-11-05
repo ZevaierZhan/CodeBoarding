@@ -1,0 +1,3 @@
+warning: The `tool.uv.dev-dependencies` field (used in `F:\CodeBoarding\pyproject.toml`) is deprecated and will be removed in a future release; use `dependency-groups.dev` instead
+warning: The `tool.uv.dev-dependencies` field (used in `pyproject.toml`) is deprecated and will be removed in a future release; use `dependency-groups.dev` instead
+{"ok":true,"result":{"current":true,"model_id":"2300aa45-f4ac-466e-a8c3-e7081dd4dcc8","revision":3,"notice":"Apply still requires this expected revision; the store rejects races."}}

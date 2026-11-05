@@ -1,5 +1,10 @@
 # Real CodeBoarding continuous model
 
+For an independent target and large-context continuation, use the
+[separated ENGINE/TARGET example](../separated/README.md). Its Skill workflow
+captures full reads outside conversation and does not rely on the target being
+the CodeBoarding checkout. The original 0–13 trial below remains historical evidence.
+
 Open [index.html](index.html) to inspect revision **13** of model
 `ba06c25c-e8de-4781-8a09-e7643b9e4721`. Its source boundary is
 `architecture_model/*.py` from CodeBoarding, not all CodeBoarding behavior.
@@ -18,9 +23,13 @@ Give an external Agent this prompt, replacing the checkout path if necessary:
 
 > Read F:/CodeBoarding/skills/codeboarding-modeling/SKILL.md and follow it.
 > Repository: F:/CodeBoarding. Continue the model at
-> examples/architecture_model/codeboarding/model.json. Task: explain or revise
+> F:/CodeBoarding/examples/architecture_model/codeboarding/model.json. Task: explain or revise
 > [the requested business] using real code, reusing the existing objects, and
 > export a new HTML document.
+
+For that original self-model, engine and target both happen to be F:/CodeBoarding;
+provide the engine locator explicitly when loading the current Skill. For another
+project pass its own TARGET_REPO and MODEL separately, as in the example above.
 
 This explicit file-loading method was executed by the separate fresh-context
 Agent in [03-agent-session.md](03-agent-session.md). No user-wide configuration

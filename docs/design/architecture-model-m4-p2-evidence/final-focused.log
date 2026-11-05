@@ -1,0 +1,12 @@
+warning: The `tool.uv.dev-dependencies` field (used in `pyproject.toml`) is deprecated and will be removed in a future release; use `dependency-groups.dev` instead
+.................                                                        [100%]
+=============================== tests coverage ================================
+______________ coverage: platform win32, python 3.12.13-final-0 _______________
+
+Name                                                    Stmts   Miss  Cover   Missing
+-------------------------------------------------------------------------------------
+skills\codeboarding-modeling\scripts\model_context.py     207     16    92%   46, 72, 123, 133, 163, 165, 209, 220, 227, 234, 237, 250, 305, 316, 319, 341
+-------------------------------------------------------------------------------------
+TOTAL                                                     207     16    92%
+Required test coverage of 80% reached. Total coverage: 92.27%
+17 passed in 61.57s (0:01:01)

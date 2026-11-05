@@ -1,0 +1,14 @@
+{
+  "command": [
+    "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+    "-m",
+    "pytest",
+    "--cov=.",
+    "--cov-report=term",
+    "--cov-fail-under=80"
+  ],
+  "exit_code": 1,
+  "timeout": true,
+  "elapsed_seconds": 300.6559999999881,
+  "bound_seconds": 300
+}
