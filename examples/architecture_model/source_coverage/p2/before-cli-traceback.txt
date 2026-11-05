@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "temp\m6-p2\reproduce.py", line 36, in <module>
+    cli.main()
+  File "architecture_model\cli.py", line 176, in main
+    result = {"ok": True, "result": run(sys.argv[1:])}
+                                    ^^^^^^^^^^^^^^^^^
+  File "architecture_model\cli.py", line 126, in run
+    report = coverage_report(
+             ^^^^^^^^^^^^^^^^
+  File "baseline/architecture_model/coverage.py", line 46, in coverage_report
+KeyError: 'unavailable-snapshot'

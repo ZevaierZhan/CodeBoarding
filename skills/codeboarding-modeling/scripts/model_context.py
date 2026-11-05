@@ -311,7 +311,9 @@ def main() -> int:
             command.add_argument("--output", type=Path)
     coverage = commands.add_parser("coverage")
     coverage.add_argument("--report", type=Path, required=True)
-    coverage.add_argument("--collection", choices=("roots", "files", "overlaps"), default="files")
+    coverage.add_argument(
+        "--collection", choices=("roots", "files", "overlaps", "unattributed_bindings"), default="files"
+    )
     coverage.add_argument("--search", default="")
     coverage.add_argument("--offset", type=int, default=0)
     coverage.add_argument("--limit", type=int, default=10)

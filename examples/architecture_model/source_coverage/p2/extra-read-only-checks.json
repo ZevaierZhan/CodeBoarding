@@ -1,0 +1,12 @@
+{
+  "virtual_current_pending_detected": true,
+  "virtual_observations_persisted": false,
+  "virtual_model_mutated_by_report": false,
+  "model_sha256_before": "30fb252c657febb31b693e0b57a7b5dd8864125dc0f410f997ffeb0d9d9bad74",
+  "model_sha256_after": "30fb252c657febb31b693e0b57a7b5dd8864125dc0f410f997ffeb0d9d9bad74",
+  "revision_before": 7,
+  "revision_after": 7,
+  "legacy_scalar_target_supported": true,
+  "legacy_current_pending_matches_m2": true,
+  "legacy_bytes_preserved": true
+}

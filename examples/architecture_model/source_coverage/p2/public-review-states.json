@@ -1,0 +1,53 @@
+{
+  "latest-reviewed": [
+    {
+      "source_root_id": "all-files",
+      "latest_recorded_maintenance_target": "0767377fcb7bfbff939e101e86a2ba9a6cf97bd732b084d2ac11e489584cdc49",
+      "current_pending_ids": [],
+      "historical_pending_ids": [
+        "maintenance-83131590f837be8201abc4a62f6611730fa84e8a40afaaa648305af31bac4da3"
+      ],
+      "historical_resolved_ids": [],
+      "review_coverage_status": "established"
+    },
+    {
+      "source_root_id": "native-typescript",
+      "latest_recorded_maintenance_target": "9b94d47a2b2b8be2763f4884ddaa34a434917a170f243fa73321d1ba422bd677",
+      "current_pending_ids": [
+        "maintenance-b2f1b9caf8816f6836b917bdd1a40133e37737107b6d13111036f4b417bed5cc"
+      ],
+      "historical_pending_ids": [],
+      "historical_resolved_ids": [],
+      "review_coverage_status": "established"
+    }
+  ],
+  "interpretation-edited": [
+    {
+      "source_root_id": "all-files",
+      "latest_recorded_maintenance_target": "0767377fcb7bfbff939e101e86a2ba9a6cf97bd732b084d2ac11e489584cdc49",
+      "current_pending_ids": [
+        "maintenance-ab510769108435b0a2e73665e547e663883efdf0ee7a8545e9c70bf13490ff9a"
+      ],
+      "historical_pending_ids": [
+        "maintenance-5dc3a49011550bcd68c9cfe8cec93619fafe43570f29cdae3618230e673efbc3",
+        "maintenance-83131590f837be8201abc4a62f6611730fa84e8a40afaaa648305af31bac4da3"
+      ],
+      "historical_resolved_ids": [
+        "maintenance-246f17fd6da64997dd4f0b54cc9428ae81d76f335e5d62631a145bd745d0b27f"
+      ],
+      "review_coverage_status": "established"
+    },
+    {
+      "source_root_id": "native-typescript",
+      "latest_recorded_maintenance_target": "9b94d47a2b2b8be2763f4884ddaa34a434917a170f243fa73321d1ba422bd677",
+      "current_pending_ids": [
+        "maintenance-a08b2addad2c289881ad8490bf85484f83bb438e9598b88353eda85bf629717b"
+      ],
+      "historical_pending_ids": [
+        "maintenance-b2f1b9caf8816f6836b917bdd1a40133e37737107b6d13111036f4b417bed5cc"
+      ],
+      "historical_resolved_ids": [],
+      "review_coverage_status": "established"
+    }
+  ]
+}

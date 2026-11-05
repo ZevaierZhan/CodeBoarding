@@ -13,7 +13,7 @@ from architecture_model.cli import run
 from architecture_model.coverage import coverage_report
 from architecture_model.errors import ModelError
 from architecture_model.file_inventory import export_inventory
-from architecture_model.maintenance import extraction_differences, preview, query, rebind, refresh
+from architecture_model.maintenance import extraction_differences, preview, query, rebind, refresh, resolve
 from architecture_model.schema import Facts
 from architecture_model.store import ModelStore
 from architecture_model.validation import digest, validate_facts
@@ -88,6 +88,187 @@ def model_with_roots(tmp_path: Path, snapshots: list[Facts]) -> ModelStore:
         operations.append({"action": "create", "collection": collection, "id": item["id"], "value": item})
     store.apply(0, {"author": "test", "summary": "Attach independent evidence", "operations": operations})
     return store
+
+
+@pytest.mark.parametrize("status", ["missing", "changed"])
+def test_unavailable_historical_binding_is_unattributed(source: Path, tmp_path: Path, status: str) -> None:
+    store = model_with_roots(
+        tmp_path, [snapshot(source, tmp_path / "inventory.json"), native_fixture(source, tmp_path / "native.json")]
+    )
+    historical = store.read().bindings[0].model_dump() | {
+        "id": "historical",
+        "snapshot_id": "unavailable-snapshot",
+        "status": status,
+        "reason": "Historical source snapshot is no longer available",
+    }
+    store.apply(
+        store.read().revision,
+        {
+            "author": "test",
+            "summary": "Retain historical evidence",
+            "operations": [{"action": "create", "collection": "bindings", "id": "historical", "value": historical}],
+        },
+    )
+    before = store.path.read_bytes()
+    model = store.read()
+    assert run(["model", "--file", str(store.path), "validate"])["valid"]
+    output = tmp_path / "coverage.json"
+    mapping = tmp_path / "mapping.json"
+    mapping.write_text(json.dumps({"all-files": str(source), "native": str(source)}))
+    result = run(
+        ["model", "--file", str(store.path), "coverage-report", "--source-map", str(mapping), "--output", str(output)]
+    )
+    report = json.loads(output.read_text())
+    assert result["summary"]["confirmed_overlaps"] == 3
+    assert report["unattributed_bindings"] == [
+        {
+            "binding_id": "historical",
+            "snapshot_id": "unavailable-snapshot",
+            "status": status,
+            "attribution": "unknown",
+            "reason": "snapshot_unavailable",
+        }
+    ]
+    assert "historical" not in report["affected"]["binding_ids"]
+    assert all("historical" not in entry["binding_ids"] for entry in report["files"])
+    assert store.path.read_bytes() == before and store.read() == model
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            "from architecture_model.cli import main; raise SystemExit(main())",
+            "model",
+            "--file",
+            str(store.path),
+            "coverage-report",
+            "--source-map",
+            str(mapping),
+            "--output",
+            str(tmp_path / "cli.json"),
+        ],
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+    assert completed.returncode == 0 and json.loads(completed.stdout)["ok"] is True
+    assert not completed.stderr and store.path.read_bytes() == before
+    with pytest.raises(ModelError, match="snapshot"):
+        store.apply(
+            model.revision,
+            {
+                "author": "test",
+                "summary": "Invalid current evidence",
+                "operations": [
+                    {"action": "update", "collection": "bindings", "id": "historical", "value": {"status": "current"}}
+                ],
+            },
+        )
+    assert store.path.read_bytes() == before
+
+
+def test_coverage_separates_latest_current_and_historical_reviews(source: Path, tmp_path: Path) -> None:
+    initial = snapshot(source, tmp_path / "initial.json")
+    store = model_with_roots(tmp_path, [initial])
+    observations = []
+    for number in (2, 3):
+        (source / "src/rules.ts").write_text(f"export function rules() {{ return {number}; }}\n")
+        target = snapshot(source, tmp_path / f"target-{number}.json")
+        proposed = preview(store.read(), target)
+        observations.append(proposed["observations"][0])
+        refresh(store, target, store.read().revision, proposed["token"], "test")
+    latest = observations[-1]
+    rebind(store, latest["id"], "src/rules.ts", store.read().revision, "test", "Inspected latest source")
+    resolve(
+        store,
+        latest["id"],
+        {
+            "author": "test",
+            "reason": "Confirmed shared component",
+            "outcome": "confirmed",
+            "source_version": target.source.digest,
+        },
+        store.read().revision,
+    )
+    saved = store.read()
+    before = store.path.read_bytes()
+    report = coverage_report(saved, {}, [], [], [])
+    row = report["roots"][0]
+    assert row["latest_recorded_maintenance_target"] == target.id
+    assert row["current_pending_ids"] == []
+    assert observations[0]["id"] in row["historical_pending_ids"]
+    assert latest["id"] in row["current_coverage_ids"]
+    assert latest["id"] in row["resolved_ids"]
+    assert row["review_coverage_status"] == "established"
+    assert set(row["pending_ids"]) == set(query(saved)["pending_ids"])
+    assert store.path.read_bytes() == before
+    explicit = coverage_report(saved, {}, [initial.id], [], [])["roots"][0]
+    assert explicit["selected_snapshot_id"] == initial.id
+    assert explicit["current_coverage_ids"] == row["current_coverage_ids"]
+    store.apply(
+        saved.revision,
+        {
+            "author": "test",
+            "summary": "Revise interpretation",
+            "operations": [
+                {
+                    "action": "update",
+                    "collection": "components",
+                    "id": "component",
+                    "value": {"responsibility": "New rules"},
+                }
+            ],
+        },
+    )
+    before = store.path.read_bytes()
+    modified = store.read()
+    row = coverage_report(modified, {}, [], [], [])["roots"][0]
+    assert row["current_pending_ids"]
+    assert set(row["current_pending_ids"]) <= set(query(modified)["current_pending_ids"])
+    assert latest["id"] in row["historical_resolved_ids"]
+    assert observations[0]["id"] in row["historical_pending_ids"]
+    assert modified.maintenance[: len(saved.maintenance)] == saved.maintenance
+    assert modified.facts == saved.facts and modified.bindings == saved.bindings
+    assert modified.verifications == saved.verifications
+    assert store.path.read_bytes() == before
+    assert coverage_report(modified, {}, [], [], [])["roots"][0] == row
+
+
+def test_coverage_does_not_infer_review_from_target_or_selection(source: Path, tmp_path: Path) -> None:
+    facts = snapshot(source, tmp_path / "facts.json")
+    store = model_with_roots(tmp_path, [facts])
+    model = store.read()
+    before = model.model_dump()
+    row = coverage_report(model, {}, [facts.id], [], [])["roots"][0]
+    assert row["review_coverage_status"] == "unknown_target"
+    assert row["unassessed_binding_ids"] == ["all-files-binding"]
+    model.maintenance_targets["all-files"] = facts.id
+    row = coverage_report(model, {}, [], [], [])["roots"][0]
+    assert row["review_coverage_status"] == "unknown_coverage"
+    assert row["current_pending_ids"] == []
+    assert store.read().model_dump() == before
+
+
+@pytest.mark.parametrize("field,value", [("reason", ""), ("status", "current")])
+def test_invalid_historical_binding_still_rejected(source: Path, tmp_path: Path, field: str, value: str) -> None:
+    store = model_with_roots(tmp_path, [snapshot(source, tmp_path / "facts.json")])
+    binding = store.read().bindings[0].model_dump() | {
+        "id": "invalid",
+        "snapshot_id": "unavailable",
+        "status": "missing",
+        "reason": "Historical evidence",
+        field: value,
+    }
+    before = store.path.read_bytes()
+    with pytest.raises(ModelError):
+        store.apply(
+            store.read().revision,
+            {
+                "author": "test",
+                "summary": "Invalid evidence",
+                "operations": [{"action": "create", "collection": "bindings", "id": "invalid", "value": binding}],
+            },
+        )
+    assert store.path.read_bytes() == before
 
 
 def test_inventory_is_reproducible_file_only_and_provider_free(source: Path, tmp_path: Path) -> None:
@@ -378,18 +559,31 @@ def test_inventory_permission_error_and_size_limit_never_publish(
     assert not (tmp_path / "limited.json").exists() and not (tmp_path / "denied.json").exists()
 
 
-def test_coverage_helper_pages_large_results(source: Path, tmp_path: Path) -> None:
+@pytest.mark.parametrize("collection", ["files", "unattributed_bindings"])
+def test_coverage_helper_pages_large_results(source: Path, tmp_path: Path, collection: str) -> None:
     store = model_with_roots(tmp_path, [snapshot(source, tmp_path / "facts.json")])
     report = coverage_report(store.read(), {}, [], [], [])
-    report["files"] *= 1000
+    report[collection] = report["files"] * 1000
     path = tmp_path / "report.json"
     path.write_text(json.dumps(report), encoding="utf-8")
     script = Path("skills/codeboarding-modeling/scripts/model_context.py").resolve()
     helper = runpy.run_path(str(script))
-    first = helper["page"]({"inventory": report["files"]}, "", "rules.ts", 0, 100)
+    first = helper["page"]({"inventory": report[collection]}, "", "rules.ts", 0, 100)
     assert first["total"] == 1000 and first["next_offset"] < 100
     result = subprocess.run(
-        [sys.executable, str(script), "coverage", "--report", str(path), "--search", "rules.ts", "--limit", "100"],
+        [
+            sys.executable,
+            str(script),
+            "coverage",
+            "--report",
+            str(path),
+            "--collection",
+            collection,
+            "--search",
+            "rules.ts",
+            "--limit",
+            "100",
+        ],
         capture_output=True,
         text=True,
         timeout=20,

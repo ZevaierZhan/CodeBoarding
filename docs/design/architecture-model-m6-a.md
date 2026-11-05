@@ -164,3 +164,110 @@ models and enterprise filenames stay in the private acceptance workspace.
   Agent inspection and root-specific exports/reviews remain explicit decisions.
 
 No M6-B implementation, automatic cross-root reconciliation or merge is included.
+
+## P2 reliability correction (review baseline e93dc733)
+
+The two regression commands exercise real ModelStore transactions and validation:
+
+```powershell
+uv run pytest tests/architecture_model/test_source_coverage.py -k "unavailable_historical or separates_latest" -q
+uv run pytest tests/architecture_model/test_source_coverage.py -q
+```
+
+Before the fix, both valid historical statuses (`missing` and `changed`, with a
+reason and an unavailable snapshot) failed at `catalog[binding.snapshot_id]` with
+`KeyError: 'unavailable-snapshot'`. The model validated successfully first. A
+separate invocation through the real CLI dispatcher with the baseline coverage
+function produced the same unhandled exception. The second reproduction recorded
+two targets on the same component and explicitly rebound/reviewed the newer one:
+the old report retained one undifferentiated pending ID and exposed no current or
+historical classification. The initial regression run failed all three cases.
+Sanitized evidence is in `examples/architecture_model/source_coverage/p2/`.
+The committed `p2/negative-model.json` retains the valid ModelStore negative
+fixture. Runtime before/after hashes and the portable LF fixture hash are in
+`reproduction-summary.json`. Validate it with
+`uv run codeboarding-model model --file examples/architecture_model/source_coverage/p2/negative-model.json validate`.
+Run its `coverage-report` with `--source-map` pointing to `p2/empty-mapping.json`
+and a new `--output` path. On the review baseline this raises the recorded
+KeyError; after the fix it returns the structured report in `negative-report.json`.
+
+Coverage now omits unavailable binding snapshots from the root/path index and
+descriptor comparisons. Top-level `unattributed_bindings` records contain
+`binding_id`, `snapshot_id`, original `status`, `attribution: unknown` and
+`reason: snapshot_unavailable`; the summary includes their count. These bindings
+are never inferred from paths, names, digests or local mappings, and never enter
+file overlap or affected-binding sets. Unattributed entries remain visible even
+with a root filter, since the report cannot determine their membership. Valid
+roots continue to be analyzed. Current bindings with unavailable snapshots and
+non-current bindings without reasons still fail the existing model validator.
+There is no schema or historical-data repair.
+
+All review observations and interpretation-version coverage come directly from
+M2 `maintenance.query()`, which already uses `maintained_observations()` and
+`capture_coverage()`. The report applies only a root/latest-target partition to
+that result; it does not implement another object-version or review algorithm.
+For each root, let `C` be M2's current interpretation coverage IDs restricted to
+the root's latest **recorded maintenance target**, `P` all M2 pending IDs for
+that root, and `R` its explicitly resolved observation IDs:
+
+| Root field | Meaning |
+| --- | --- |
+| `latest_recorded_maintenance_target` | Existing root-target resolution, including supported legacy scalar targets; empty means unknown |
+| `current_coverage_ids` | `C`; an old target may still have current object coverage in M2 but belongs to history in this root/latest-target view |
+| `current_pending_ids` | `P` intersect `C` |
+| `historical_pending_ids` | `P` minus `C`, including earlier source targets and earlier interpretation versions |
+| `resolved_ids` | `R`, all explicitly completed reviews |
+| `historical_resolved_ids` | `R` minus `C` |
+| `pending_ids` | Compatibility aggregate `P`; includes M2-derived observations rather than only persisted records |
+| `unassessed_binding_ids` | Attributed root bindings without coverage in `C` |
+| `review_coverage_status` | `unknown_target` if no root target is recorded; `unknown_coverage` if current target coverage is absent/incomplete; otherwise `established` |
+
+`established` describes the coverage relation, not successful review: inspect
+`current_pending_ids` separately. Empty pending with unknown coverage never
+certifies review. An explicitly selected old or proposed snapshot affects file
+comparison only, not the recorded maintenance target or this review partition.
+`architecture_review` remains `not_established_by_coverage`. Matching target IDs
+alone do not prove that current interpretation objects were reviewed.
+
+Compatibility is additive within the derived `source-coverage-v1` report. The
+model envelope, Facts, bindings, Verification and Maintenance schemas and M2
+query semantics remain unchanged. `pending_ids` remains the all-pending union;
+consumers needing current counts must use the new partition and unknown status.
+The bounded CLI envelope still returns only summary and output path. The M4
+coverage helper additionally pages `unattributed_bindings`; root/file/overlap
+pagination is retained with the same size limit.
+
+The extended public acceptance runs actual TypeScript analysis and verifies:
+3 overlaps; 1 saved-version difference after native-only refresh; 3 agreeing
+overlaps after explicit inventory refresh; retained historical pending after
+latest-target rebind/review; zero latest-current pending at that point; new
+latest-current pending after an explicit interpretation edit; unchanged old
+reviews, facts, bindings and Verification. Each of five coverage phases checks
+full model equality, exact bytes, SHA-256 and revision before/after. The public
+acceptance summary includes those five paired hashes and revisions.
+The additional read-only checks exercise legacy scalar target selection and
+virtual interpretation edits without a ModelStore commit: newly derived pending
+IDs match M2, while both the input model object and file bytes/revision stay intact.
+
+Private compatibility remains a separate unresolved issue: formal revision 9
+and isolated revision 38 carry `analysis_kind`, `facet_order`, `facet_checks`
+extensions rejected by the public schema. A separate decision must specify the
+supported scenario/step extension schema, versioning/migration policy and
+round-trip preservation before complete original-model acceptance can be claimed.
+This correction does not open, rewrite or project either private model. Previous
+projection diagnostics remain explicitly partial and are not full acceptance.
+No Kotlin installation, optional-dependency change, M6-B work or model protocol
+expansion is included.
+
+Final P2 validation: **2957 passed, 5 failed, 55 skipped**, with **40.57%** full
+coverage against the unchanged **80%** requirement. All five failed test IDs match
+the independently recorded baseline (four Windows installer assertions and one
+devcontainer bash/path assertion); there are no new failures. The full-run
+M1–M5/model and Q1 path/cache subset is **337 passed, 5 skipped**, with its exact
+module list in `p2/validation-summary.json`. The dedicated exporter/coverage run
+is **38 passed, 1 skipped** (Windows symlink privileges; real junction rejection
+passes). Node **7 passed**; Black and mypy **386 files** pass, as do pre-commit
+hooks. Coverage module coverage is **93.70%**, inventory **93.33%**. Full logs and
+JUnit results are archived under `p2/`; the earlier baseline results remain
+separate in the parent `validation-summary.json`. No test skip, threshold or
+coverage omit was added to hide the existing full-repository gate failure.

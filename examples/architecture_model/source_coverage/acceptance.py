@@ -1,6 +1,7 @@
 """Exercise real TypeScript exports and inventory against shared physical files."""
 
 import argparse
+import hashlib
 import json
 import shutil
 from pathlib import Path
@@ -62,13 +63,28 @@ def accept(output: Path, tools: Path) -> dict:
     }
     for collection, value in (("components", component), ("scenarios", scenario)):
         operations.append({"action": "create", "collection": collection, "id": value["id"], "value": value})
+    verification = {
+        "id": "policy-verification",
+        "status": "planned",
+        "object_ids": ["policy"],
+        "command": "Review authorization policy against recorded source",
+        "environment": "Public synthetic fixture",
+        "inputs": "Independent inventory and TypeScript evidence",
+        "source_version": inventory.source.digest,
+        "binding_snapshots": {inventory.source_root_id: inventory.id, native.source_root_id: native.id},
+    }
+    operations.append(
+        {"action": "create", "collection": "verifications", "id": verification["id"], "value": verification}
+    )
     store.apply(0, {"author": "acceptance", "summary": "Attach two independent roots", "operations": operations})
     mapping = output / "mapping.json"
     atomic_write(mapping, {root: str(source.resolve()) for root in ids})
     reports = []
+    read_only_checks = []
 
     def report(name: str) -> dict:
         before = store.path.read_bytes()
+        original = store.read()
         result = run(
             [
                 "model",
@@ -82,6 +98,16 @@ def accept(output: Path, tools: Path) -> dict:
             ]
         )
         assert store.path.read_bytes() == before and len(json.dumps(result)) < 2048
+        assert store.read() == original
+        read_only_checks.append(
+            {
+                "phase": name,
+                "revision_before": original.revision,
+                "revision_after": store.read().revision,
+                "sha256_before": hashlib.sha256(before).hexdigest(),
+                "sha256_after": hashlib.sha256(store.path.read_bytes()).hexdigest(),
+            }
+        )
         reports.append(result["summary"])
         return json.loads((output / f"{name}.json").read_text(encoding="utf-8"))
 
@@ -124,6 +150,34 @@ def accept(output: Path, tools: Path) -> dict:
     )
     assert preview(store.read(), upgraded)["observations"][0]["disposition"] == "unchanged"
     assert store.read().facts[0] == inventory and store.read().facts[1] == native
+    reviewed = report("latest-reviewed")
+    root = next(row for row in reviewed["roots"] if row["source_root_id"] == "all-files")
+    assert root["current_pending_ids"] == [] and root["historical_pending_ids"]
+    assert observation["id"] in root["resolved_ids"]
+    saved = store.read()
+    store.apply(
+        saved.revision,
+        {
+            "author": "acceptance",
+            "summary": "Revise policy interpretation",
+            "operations": [
+                {
+                    "action": "update",
+                    "collection": "components",
+                    "id": "policy",
+                    "value": {"responsibility": "Authorize roles under revised business policy"},
+                }
+            ],
+        },
+    )
+    edited = report("interpretation-edited")
+    root = next(row for row in edited["roots"] if row["source_root_id"] == "all-files")
+    assert root["current_pending_ids"] and root["historical_pending_ids"]
+    assert observation["id"] in root["historical_resolved_ids"]
+    assert store.read().maintenance[: len(saved.maintenance)] == saved.maintenance
+    assert store.read().facts == saved.facts and store.read().bindings == saved.bindings
+    assert store.read().verifications == saved.verifications
+    assert saved.verifications and saved.verifications[0].binding_snapshots == verification["binding_snapshots"]
     summary = {
         "real_native_typescript": True,
         "native_symbols": len(native.symbols),
@@ -131,11 +185,16 @@ def accept(output: Path, tools: Path) -> dict:
         "inventory_files": len(inventory.source.files),
         "reports": reports,
         "read_only_bytes_preserved": True,
+        "read_only_checks": read_only_checks,
         "root_isolation": after_native["maintenance_targets"] == {native.source_root_id: changed.id},
         "descriptor_upgrade": observation["disposition"],
         "explicit_baseline_reestablished": True,
         "historical_pending_retained": bool(query(store.read())["pending_ids"]),
         "historical_snapshots_preserved": True,
+        "latest_review_separated_from_historical_pending": True,
+        "interpretation_edit_requires_new_review": True,
+        "historical_reviews_preserved": True,
+        "original_verification_scope_preserved": True,
     }
     atomic_write(output / "summary.json", summary)
     return summary

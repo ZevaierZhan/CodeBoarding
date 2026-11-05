@@ -1,0 +1,131 @@
+{
+  "protocol": "source-coverage-v1",
+  "model_id": "6dc06dcd-90d4-4864-9f39-e24cf7f2a69d",
+  "revision": 2,
+  "committed": false,
+  "summary": {
+    "roots": 1,
+    "file_records": 4,
+    "confirmed_overlaps": 0,
+    "same_version": 0,
+    "different_versions": 0,
+    "unknown_physical_identity": 4,
+    "unattributed_bindings": 1
+  },
+  "roots": [
+    {
+      "source_root_id": "all-files",
+      "snapshot_ids": [
+        "aa14ffc07413c71a96ab08ae7cb930ebd262854c24d16758d125b7c7df9b6b47"
+      ],
+      "selected_snapshot_id": "aa14ffc07413c71a96ab08ae7cb930ebd262854c24d16758d125b7c7df9b6b47",
+      "selected_source_version": "d1fb88012d9abf6955d792e09ddb2347965532f13877e8f903e3d6786dec6ad5",
+      "selection": "only_snapshot",
+      "latest_recorded_maintenance_target": "",
+      "maintenance_target_status": "not_recorded",
+      "extraction": {
+        "status": "declared_complete",
+        "descriptor": {
+          "protocol": "file-inventory-v1",
+          "complete": true,
+          "implementation": "c5ead125889421a0f692ac58de0bf5060fd8d614aeaa5e0af3dbb3e215768fc3",
+          "patterns": [
+            "*"
+          ],
+          "tools": [],
+          "configuration": {
+            "evidence": "file content only; no symbols, calls or runtime analysis",
+            "hash": "sha256 raw bytes",
+            "limits": "files=100000; entries=500000; bytes_per_file=268435456",
+            "links": "reject non-ignored symlinks and junctions",
+            "matching": "fnmatchcase over root-relative POSIX paths; star includes slash; exclude prunes directories",
+            "rules": "{\"exclude\": [], \"excluded_directory_names\": [\".git\", \".venv\", \"node_modules\", \"__pycache__\", \".codegraph\", \".codeboarding\"], \"include\": [\"*\"]}"
+          }
+        }
+      },
+      "evidence": "file_only",
+      "limitations": [
+        "Proves selected file bytes only; no symbols, calls or runtime behavior are analyzed.",
+        "Absent symbols do not imply absent code. Inventory completeness is not symbol completeness.",
+        "Excluded directories and patterns are outside scope; file languages are unclassified.",
+        "Physical source range is root-relative and requires an explicit local root mapping."
+      ],
+      "file_count": 4,
+      "mapping": "unknown",
+      "reexport": "unknown",
+      "architecture_review": "not_established_by_coverage",
+      "pending_ids": [],
+      "current_coverage_ids": [],
+      "current_pending_ids": [],
+      "historical_pending_ids": [],
+      "resolved_ids": [],
+      "historical_resolved_ids": [],
+      "unassessed_binding_ids": [
+        "all-files-binding"
+      ],
+      "review_coverage_status": "unknown_target",
+      "descriptor_differences": []
+    }
+  ],
+  "unattributed_bindings": [
+    {
+      "binding_id": "historical",
+      "snapshot_id": "unavailable-snapshot",
+      "status": "missing",
+      "attribution": "unknown",
+      "reason": "snapshot_unavailable"
+    }
+  ],
+  "overlaps": [],
+  "files": [
+    {
+      "source_root_id": "all-files",
+      "snapshot_id": "aa14ffc07413c71a96ab08ae7cb930ebd262854c24d16758d125b7c7df9b6b47",
+      "path": "docs/policy.md",
+      "saved_hash": "2dfd7ef997eea6588d64a06573d72412c738400c869aeb54cdbc9cdeee13774a",
+      "physical_identity": "unknown_mapping",
+      "workspace_content": "unknown",
+      "binding_ids": []
+    },
+    {
+      "source_root_id": "all-files",
+      "snapshot_id": "aa14ffc07413c71a96ab08ae7cb930ebd262854c24d16758d125b7c7df9b6b47",
+      "path": "src/gateway.ts",
+      "saved_hash": "ae1993c51e92858d566d576bf6925ea5d40d3976b14ac5c12e3cbad0f7acf04c",
+      "physical_identity": "unknown_mapping",
+      "workspace_content": "unknown",
+      "binding_ids": []
+    },
+    {
+      "source_root_id": "all-files",
+      "snapshot_id": "aa14ffc07413c71a96ab08ae7cb930ebd262854c24d16758d125b7c7df9b6b47",
+      "path": "src/helpers.ts",
+      "saved_hash": "3daf1d6e3a9e80718d671e8528657d627bafeeeca8a31afd280f8e8c1e4f1792",
+      "physical_identity": "unknown_mapping",
+      "workspace_content": "unknown",
+      "binding_ids": []
+    },
+    {
+      "source_root_id": "all-files",
+      "snapshot_id": "aa14ffc07413c71a96ab08ae7cb930ebd262854c24d16758d125b7c7df9b6b47",
+      "path": "src/rules.ts",
+      "saved_hash": "2e861033fcdf3ad92954738d4b253edaec4efc4235503bba41451052a95324ad",
+      "physical_identity": "unknown_mapping",
+      "workspace_content": "unknown",
+      "binding_ids": [
+        "all-files-binding"
+      ]
+    }
+  ],
+  "affected": {
+    "binding_ids": [],
+    "component_ids": [],
+    "scenario_ids": []
+  },
+  "limits": [
+    "Live local mappings establish identity only at observation time; files may change afterwards.",
+    "Workspace checks cover saved files only, not new files or whole extraction completeness.",
+    "Content equality, evidence scope synchronization and interpretation review are separate judgments.",
+    "No root, binding, history, review or verification is modified; missing mappings remain unknown."
+  ]
+}

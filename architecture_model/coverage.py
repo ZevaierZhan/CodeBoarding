@@ -6,7 +6,7 @@ from pathlib import Path
 
 from architecture_model.errors import ModelError
 from architecture_model.file_inventory import MAX_FILES, file_digest, safe_file
-from architecture_model.maintenance import extraction_differences, extraction_status, root_targets
+from architecture_model.maintenance import extraction_differences, extraction_status, query, root_targets
 from architecture_model.schema import Facts, Model
 from architecture_model.validation import validate_facts
 from architecture_model.verification import referenced_bindings
@@ -37,13 +37,30 @@ def coverage_report(
             raise ModelError("USAGE_ERROR", "/snapshot", "Select at most one snapshot per root")
         selected[snapshot.source_root_id] = snapshot
     recorded = root_targets(model)
+    maintenance = query(model)
+    observations = maintenance["observations"]
+    coverage_ids = set(maintenance["current_coverage_ids"])
+    pending_ids = set(maintenance["pending_ids"])
     groups: dict[tuple, list[dict]] = {}
     fingerprints: dict[tuple, tuple[int, ...]] = {}
     files: list[dict] = []
     rows = []
     binding_index: dict[tuple[str, str], list[str]] = {}
+    unattributed = []
     for binding in model.bindings:
-        root = catalog[binding.snapshot_id].source_root_id
+        basis = catalog.get(binding.snapshot_id)
+        if basis is None:
+            unattributed.append(
+                {
+                    "binding_id": binding.id,
+                    "snapshot_id": binding.snapshot_id,
+                    "status": binding.status,
+                    "attribution": "unknown",
+                    "reason": "snapshot_unavailable",
+                }
+            )
+            continue
+        root = basis.source_root_id
         binding_index.setdefault((root, binding.location.path), []).append(binding.id)
     object_evidence = {
         item.id: referenced_bindings(model, [item.id])
@@ -51,6 +68,22 @@ def coverage_report(
         for item in collection
     }
     for root in sorted(roots if not root_ids else set(root_ids)):
+        root_observations = [
+            item for item in observations if catalog[item["target_snapshot_id"]].source_root_id == root
+        ]
+        current = {
+            item["id"]
+            for item in root_observations
+            if item["id"] in coverage_ids and item["target_snapshot_id"] == recorded.get(root)
+        }
+        root_pending = {item["id"] for item in root_observations if item["id"] in pending_ids}
+        resolved = {item["id"] for item in root_observations if item["resolution"] is not None}
+        root_bindings = {
+            binding.id
+            for binding in model.bindings
+            if binding.snapshot_id in catalog and catalog[binding.snapshot_id].source_root_id == root
+        }
+        covered_bindings = {item["binding_id"] for item in root_observations if item["id"] in current}
         versions = [item for item in catalog.values() if item.source_root_id == root]
         choice = selected.get(root)
         selection = "explicit" if choice else "unknown"
@@ -91,17 +124,24 @@ def coverage_report(
             "mapping": "supplied" if root in mapping else "unknown",
             "reexport": "unknown",
             "architecture_review": "not_established_by_coverage",
-            "pending_ids": [
-                item.id
-                for item in model.maintenance
-                if catalog[item.target_snapshot_id].source_root_id == root
-                and item.disposition != "unchanged"
-                and item.resolution is None
-            ],
+            "pending_ids": sorted(root_pending),
+            "current_coverage_ids": sorted(current),
+            "current_pending_ids": sorted(root_pending & current),
+            "historical_pending_ids": sorted(root_pending - current),
+            "resolved_ids": sorted(resolved),
+            "historical_resolved_ids": sorted(resolved - current),
+            "unassessed_binding_ids": sorted(root_bindings - covered_bindings),
+            "review_coverage_status": (
+                "unknown_target"
+                if root not in recorded
+                else "established" if current and root_bindings <= covered_bindings else "unknown_coverage"
+            ),
             "descriptor_differences": [],
         }
         bases = {
-            binding.snapshot_id for binding in model.bindings if catalog[binding.snapshot_id].source_root_id == root
+            binding.snapshot_id
+            for binding in model.bindings
+            if binding.snapshot_id in catalog and catalog[binding.snapshot_id].source_root_id == root
         }
         if choice:
             row["descriptor_differences"] = [
@@ -193,8 +233,10 @@ def coverage_report(
             "same_version": counts["same_version"],
             "different_versions": counts["different_versions"],
             "unknown_physical_identity": sum(entry["physical_identity"] != "confirmed_local_file" for entry in files),
+            "unattributed_bindings": len(unattributed),
         },
         "roots": rows,
+        "unattributed_bindings": unattributed,
         "overlaps": overlaps,
         "files": files,
         "affected": {
