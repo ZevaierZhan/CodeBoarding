@@ -1,0 +1,103 @@
+"""One-off authoring transcript, not a Skill helper or reusable runner."""
+
+import hashlib
+import json
+import subprocess
+from pathlib import Path
+from string import Template
+
+ROOT = Path.cwd()
+OUT = ROOT / "examples/architecture_model/codeboarding"
+PREFIX = ["uv", "run", "python", "-m", "architecture_model", "model", "--file", "examples/architecture_model/codeboarding/model.json"]
+records = []
+
+
+def command(arguments, artifact):
+    argv = PREFIX + arguments
+    result = subprocess.run(argv, cwd=ROOT, capture_output=True, text=True, encoding="utf-8")
+    records.append({"argv": argv, "cwd": str(ROOT), "exit_code": result.returncode, "stdout": result.stdout, "stderr": result.stderr})
+    (OUT / "03-commands.json").write_text(json.dumps(records, indent=2), encoding="utf-8")
+    (OUT / artifact).write_text(result.stdout, encoding="utf-8")
+    parsed = json.loads(result.stdout)
+    if result.returncode or not parsed.get("ok"):
+        raise RuntimeError(f"Command failed; inspect {artifact}")
+    return parsed["result"]
+
+
+before = command(["read"], "03-before-read.json")["model"]
+scope = json.loads((OUT / "scope.json").read_text(encoding="utf-8"))
+hashes = {path: hashlib.sha256((ROOT / path).read_bytes()).hexdigest() for path in scope["included"]}
+assert hashes == scope["included"] == before["facts"][0]["source"]["files"]
+(OUT / "03-source-check.json").write_text(json.dumps({"all_manifest_bytes_match": True, "files": hashes, "snapshot_id": before["facts"][0]["id"], "source_version": before["facts"][0]["source"]["digest"]}, indent=2), encoding="utf-8")
+assert before["revision"] == 2
+command(["maintenance"], "03-maintenance-before.json")
+
+
+def claim(text, bindings, inference=False):
+    return {"kind": "inference" if inference else "code_fact", "explanation": text, "binding_ids": bindings, "assumptions": ["An external Agent chooses whether to apply after reviewing preview output."] if inference else [], "issues": []}
+
+
+def step(identity, components, bindings, text, inference=False):
+    return {"id": identity, "component_ids": components, "binding_ids": bindings, "claim": claim(text, bindings, inference)}
+
+
+steps = [
+    step("patch-submit", ["cli", "store"], ["e-cli-run", "e-store-json"], "run accepts --patch for validate/diff/apply; load_json rejects malformed JSON and duplicate keys before dispatch into preview/apply. apply also requires --expected-revision."),
+    step("patch-preview", ["store", "validation"], ["e-store-preview", "e-store-candidate", "e-store-patched", "e-store-revision", "e-validate"], "validate --patch and diff --patch both call preview: read and validate current model, build a candidate, calculate impact and append a candidate revision in memory. The response reports committed:false; no save or lock is performed."),
+    step("patch-agent-review", ["cli", "store"], ["e-cli-run", "e-store-preview", "e-store-apply"], "The external Agent inspects affected objects/scenarios and may submit apply in a separate invocation. Preview does not reserve its revision, and review/retry policy belongs to the caller.", True),
+    step("patch-lock-read", ["store", "validation"], ["e-store-apply", "e-store-commit", "e-store-read"], "apply delegates to commit with a candidate-builder callback. Under the file lock (30-second timeout), commit rereads and validates the saved model before comparing expected_revision."),
+    step("patch-conflict", ["store", "cli"], ["e-store-commit", "e-cli-main"], "A revision mismatch raises REVISION_CONFLICT before invoking the builder or writing. main returns ok:false and exit 1; the caller must reread and reconcile before resubmission."),
+    step("patch-candidate", ["store", "validation"], ["e-store-candidate", "e-store-patched", "e-store-revision", "e-store-diff", "e-validate"], "The builder parses Patch, copies current model data, derives maintenance observations and processes operations sequentially. Facts are append-only, IDs cannot change, create cannot overwrite reserved IDs, and update/delete require existing objects. Update fields replace whole values. Complete-model validation checks references, hierarchy and evidence. revision_candidate preserves binding history, derives impact, increments revision, appends author/summary/timestamp/affected IDs and validates again."),
+    step("patch-atomic-save", ["store"], ["e-store-commit", "e-store-atomic"], "Still holding the lock, commit prepares the committed:true result and atomic_write serializes the candidate into a temporary file beside the model, flushes and fsyncs, then os.replace publishes it. os.replace is the commit point; finally removes a remaining temporary file."),
+    step("patch-rejected", ["cli", "store", "validation"], ["e-cli-main", "e-store-commit", "e-store-atomic", "e-validate"], "ModelError or caught IO/lock errors become ok:false JSON and exit 1 if output delivery succeeds. LOCK_TIMEOUT and pre-replace validation/save failures do not commit this patch. Errors after os.replace or output delivery require reading the model to establish outcome."),
+    step("patch-response", ["cli"], ["e-cli-main", "e-store-commit"], "After commit returns, main writes and flushes ok:true JSON with committed:true, revision and diff, then exits 0 if delivery succeeds."),
+    step("patch-output-uncertain", ["cli"], ["e-cli-main", "e-store-atomic"], "If JSON stdout write/flush raises OSError or UnicodeError, main attempts an stderr diagnostic and returns 2. This does not roll back os.replace; an observed delivery failure alone does not establish whether apply committed."),
+    step("patch-read-recovery", ["cli", "store", "validation"], ["e-cli-run", "e-store-read", "e-store-scope"], "A separate read invocation returns the complete validated saved model when no scope is supplied. Inspect revision and explanation before retrying after conflict or uncertain delivery; read itself does not retry apply."),
+]
+edges = [
+    ("patch-submit", "patch-preview", "branch", "validate/diff with a successfully loaded patch"),
+    ("patch-submit", "patch-lock-read", "branch", "apply with successfully loaded patch and required expected revision"),
+    ("patch-submit", "patch-rejected", "branch", "Argument or patch JSON load failure caught by main"),
+    ("patch-preview", "patch-agent-review", "next", "Preview succeeds and its JSON is delivered; no persistent mutation"),
+    ("patch-preview", "patch-rejected", "branch", "Preview model/patch validation fails"),
+    ("patch-agent-review", "patch-submit", "loop", "External Agent elects a separate apply invocation using the reviewed patch and read revision; this is not an internal call"),
+    ("patch-lock-read", "patch-conflict", "branch", "Saved revision differs from expected revision"),
+    ("patch-lock-read", "patch-candidate", "branch", "Lock acquired, read succeeds, saved revision equals expected revision"),
+    ("patch-lock-read", "patch-rejected", "branch", "Lock timeout or read failure before builder"),
+    ("patch-conflict", "patch-read-recovery", "next", "Caller elects to inspect current model before rebuilding a patch"),
+    ("patch-candidate", "patch-atomic-save", "next", "All operation, evidence, history and model validation succeeds"),
+    ("patch-candidate", "patch-rejected", "branch", "Candidate construction or validation raises; saved model remains unchanged"),
+    ("patch-atomic-save", "patch-response", "return", "Save completes and commit returns its prepared result"),
+    ("patch-atomic-save", "patch-rejected", "branch", "Save raises; before os.replace no commit, after it inspect model rather than assuming rollback"),
+    ("patch-response", "patch-output-uncertain", "branch", "stdout write/flush fails after successful commit return"),
+    ("patch-rejected", "patch-output-uncertain", "branch", "Error JSON stdout write/flush also fails"),
+    ("patch-conflict", "patch-output-uncertain", "branch", "Conflict JSON stdout write/flush fails"),
+    ("patch-output-uncertain", "patch-read-recovery", "next", "Caller performs a separate read to determine actual persisted state"),
+]
+values = {"scenario_id": "agent-submits-patch", "name": "External Agent submits a model patch", "entry_step_id": steps[0]["id"], "steps": steps, "order": [s["id"] for s in steps], "transitions": [{"source_id": a, "target_id": b, "kind": k, "condition": c} for a,b,k,c in edges], "explanation": "Source-backed explanation of the optional external preview/review loop and transactional apply boundary. Component reuse reflects shared responsibilities with read-to-html. Conditional transitions summarize nested calls and caller actions; display order is not an execution trace.", "binding_ids": ["e-cli-run", "e-cli-main", "e-store-preview", "e-store-apply", "e-store-commit", "e-store-patched", "e-store-revision", "e-store-atomic", "e-validate"], "assumptions": ["The external Agent authors a patch against a complete read; user intent and semantic correctness are not validated by this subsystem.", "Filesystem supports the file lock and same-directory os.replace used by the implementation."], "issues": ["Agent decision/reconciliation is outside Python source and is marked inference; no internal provider or automatic retry exists.", "The filelock implementation, filesystem durability guarantees and browser JS are outside this Python-only snapshot.", "Structural validation is not proof of the submitted business explanation; exceptional stderr failure can prevent the intended exit-2 diagnostic."]}
+template = Template((ROOT / "skills/codeboarding-modeling/assets/scenario.json.template").read_text(encoding="utf-8"))
+scenario = json.loads(template.substitute({key: json.dumps(value) for key,value in values.items()}))
+patch_values = {"author": "m4-fresh-context-agent", "summary": "Continue existing model: external Agent submits a transactional model patch", "operations": [{"action": "create", "collection": "scenarios", "id": scenario["id"], "value": scenario}]}
+template = Template((ROOT / "skills/codeboarding-modeling/assets/patch.json.template").read_text(encoding="utf-8"))
+patch = json.loads(template.substitute({key: json.dumps(value) for key,value in patch_values.items()}))
+(OUT / "03-agent-business.patch.json").write_text(json.dumps(patch, indent=2), encoding="utf-8")
+patch_path = "examples/architecture_model/codeboarding/03-agent-business.patch.json"
+command(["validate", "--patch", patch_path], "03-validate.json")
+difference = command(["diff", "--patch", patch_path], "03-diff.json")
+assert difference["diff"]["object_ids"] == ["agent-submits-patch"]
+assert difference["diff"]["scenario_ids"] == ["agent-submits-patch"]
+command(["apply", "--patch", patch_path, "--expected-revision", str(before["revision"])], "03-apply.json")
+after = command(["read"], "03-after-read.json")["model"]
+assert after["id"] == before["id"] and after["revision"] == 3
+for collection in ["facts", "bindings", "components", "relations", "opinions", "verifications", "maintenance"]:
+    assert before[collection] == after[collection], collection
+assert after["scenarios"][:-1] == before["scenarios"]
+assert after["revisions"][:-1] == before["revisions"]
+(OUT / "03-agent-business.model.json").write_text(json.dumps(after, indent=2), encoding="utf-8")
+command(["maintenance"], "03-maintenance-after.json")
+command(["export-html", "--output", "examples/architecture_model/codeboarding/03-agent-business.html", "--source-root", str(ROOT)], "03-export.json")
+html = (OUT / "03-agent-business.html").read_text(encoding="utf-8")
+assert after["id"] in html and '"revision":3' in html.replace(" ", "")
+assert "agent-submits-patch" in html and "read-to-html" in html
+(OUT / "03-preservation.json").write_text(json.dumps({"model_id": after["id"], "before_revision": before["revision"], "after_revision": after["revision"], "all_preexisting_collections_and_scenarios_unchanged": True, "revision_history_prefix_unchanged": True, "html_model_id_revision_and_both_scenarios_present": True, "new_scenario": scenario["id"], "new_step_ids": scenario["order"], "reused_components": ["cli", "store", "validation"], "reused_bindings": sorted({b for s in steps for b in s["binding_ids"]}), "new_components_bindings_relations": []}, indent=2), encoding="utf-8")
+print(json.dumps({"revision": after["revision"], "scenario": scenario["id"], "preservation": True, "export": "03-agent-business.html"}))

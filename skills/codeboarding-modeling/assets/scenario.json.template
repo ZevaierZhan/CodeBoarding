@@ -1,0 +1,15 @@
+{
+  "id": $scenario_id,
+  "name": $name,
+  "entry_step_id": $entry_step_id,
+  "steps": $steps,
+  "order": $order,
+  "transitions": $transitions,
+  "claim": {
+    "kind": "inference",
+    "explanation": $explanation,
+    "binding_ids": $binding_ids,
+    "assumptions": $assumptions,
+    "issues": $issues
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "engine": "F:\\CodeBoarding",
+  "target": "F:\\CodeBoarding M4 Target",
+  "model": "F:\\CodeBoarding M4 Target\\architecture-model.json",
+  "cache_root": "F:/CodeBoarding M4 Session Cache",
+  "model_id": "2300aa45-f4ac-466e-a8c3-e7081dd4dcc8",
+  "revision_before": 2,
+  "persistent_model_bytes_before": 9650537,
+  "original_m4_model_bytes": 554108,
+  "synthetic_extension": {
+    "explicitly_labeled": true,
+    "count": 128,
+    "meaning": "Repeated purchase-path context drills, not 128 genuine businesses"
+  },
+  "real_source_files": {
+    "app.py": "0f0cd32520b62df120cca20c1cc3a636fa310de4dff2238f0fb78af547da1413",
+    "delivery/orders.py": "9801a2701dd1b42bf76089b01f3de076f74e58d3fe37d10f9ab47f3ef92e9a44",
+    "persistence/store.py": "ae9ad82a3aab49e405699a9cacfebcf429d3c364741c8af3cd5f3692487ad2b4",
+    "policies/pricing.py": "42868ea99cc362de16f58190ac37c79d345533641e5662adcad76de06154c77c"
+  },
+  "source_version": "52785ff2dcb7ec175bb1a5d0b952922423413ff4484d526f1558403e9f3554ca",
+  "symbols": 5,
+  "calls": 5,
+  "target_files_before": [
+    "app.py",
+    "architecture-model.json",
+    "delivery/orders.py",
+    "persistence/store.py",
+    "policies/pricing.py"
+  ],
+  "no_target_environment_configuration_before": true,
+  "counts_before": {
+    "components": 4,
+    "scenarios": 129,
+    "bindings": 5,
+    "relations": 2
+  },
+  "archive_note": "before.archive.json.gz is a read-only archive of the actual persistent TARGET model, not a temporary CLI read/index; no context captures are committed.",
+  "revision_after": 3,
+  "persistent_model_bytes_after": 9654588,
+  "counts_after": {
+    "components": 4,
+    "scenarios": 130,
+    "bindings": 5,
+    "relations": 2
+  },
+  "fresh_agent": {
+    "fork_turns": "none",
+    "received_inputs": "Exact prompt in fresh-agent-report.md; no parent history or later steering",
+    "new_scenario": "8e49f803-0756-4d12-bc0d-da18008a0218",
+    "reused_components": [
+      "order-entry",
+      "shared-pricing"
+    ],
+    "reused_bindings": [
+      "bind-quote",
+      "bind-total"
+    ],
+    "all_129_old_scenarios_exactly_preserved": true
+  },
+  "target_files_after": [
+    "app.py",
+    "architecture-model.json",
+    "delivery/orders.py",
+    "persistence/store.py",
+    "policies/pricing.py",
+    "quotation-r3.html",
+    "trial-evidence/bounded-command-journal.json",
+    "trial-evidence/fresh-agent-report.md",
+    "trial-evidence/preservation-checks.json",
+    "trial-evidence/quotation-patch.json"
+  ],
+  "no_target_environment_configuration_after": true,
+  "source_unchanged": true,
+  "capture_metadata": {
+    "read-001": {
+      "index.json": {
+        "bytes": 103717,
+        "sha256": "ebfc51ef903f51abbc5917c43f3e788de204ddcd4825a7ff2fa9560e1a0f8a54"
+      },
+      "read.json": {
+        "bytes": 9508194,
+        "sha256": "4b17a05462a504e40b704200048069696b1611c4c6bf587361d3cb16d3e89827"
+      }
+    },
+    "read-002": {
+      "index.json": {
+        "bytes": 104511,
+        "sha256": "5188ea4426198d66d3a49b525303789c67c6c93156541d43dde4df0814962d4e"
+      },
+      "read.json": {
+        "bytes": 9511057,
+        "sha256": "16dffd3ffe896c88d509fc76cd9a9cfec96f24ccb437116fce332d5c1754b939"
+      }
+    }
+  },
+  "html": {
+    "actual_path": "F:\\CodeBoarding M4 Target\\quotation-r3.html",
+    "bytes": 9547194,
+    "archive": "quotation-r3.html.gz",
+    "model_id": "2300aa45-f4ac-466e-a8c3-e7081dd4dcc8",
+    "revision": 3
+  },
+  "snapshot_archive_note": "Read-only archives of persistent TARGET model before and after; no temporary read.json or index.json file is committed.",
+  "helper_sha256_at_trial": "08857f25888ccf7517f0e4c302502481086d301ca7623cabbc55815f95f23185",
+  "helper_sha256_final": "64b1bcb5e616cc0a352c4c43d07204aff00989efc236ae72bdfb5d8d258f0941",
+  "final_helper_note": "Final guard requires explicit MODEL even for a scenario named schema; serialization enforces bounded stdout. Focused regressions and the unchanged real-target revision-3 context check pass. Actual fresh-agent commands always supplied explicit MODEL."
+}

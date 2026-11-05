@@ -1,5 +1,9 @@
 # Continuous architecture modeling
 
+The [real CodeBoarding M4 trial](codeboarding/README.md) provides a distributable
+external-Agent Skill, two shared-component businesses, actual fresh-context Agent
+continuation, feedback, controlled source maintenance and a ready-to-open HTML.
+
 The fixture source templates are real Python once materialized. `app.start`
 registers two callable routes; it does not run them or start a server. Purchase
 `buy` rejects nonpositive quantity, calculates a total and formats an order ID.

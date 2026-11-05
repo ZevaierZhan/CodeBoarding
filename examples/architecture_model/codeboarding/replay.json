@@ -1,0 +1,77 @@
+{
+  "verification_commands": {
+    "executed-revision3-validation": ["validate"]
+  },
+  "patches": [
+    "01-foundation.patch.json",
+    "02-html-business.patch.json",
+    "03-agent-business.patch.json",
+    "04-feedback.patch.json"
+  ],
+  "source_change": {
+    "path": "architecture_model/viewer.py",
+    "before": "Cannot publish document; choose a new output path",
+    "after": "Cannot publish document; choose a new output path on a filesystem supporting hard links"
+  },
+  "maintenance_actions": [
+    {
+      "command": "rebind",
+      "binding": "e-export-html",
+      "candidate": "architecture_model/viewer.py|architecture_model.viewer.export_html",
+      "reason": "Inspected controlled viewer.py diagnostic-only change; select the exact same path/symbol at the new containing-file hash. Success-path behavior is unchanged."
+    },
+    {
+      "command": "rebind",
+      "binding": "e-projection",
+      "candidate": "architecture_model/viewer.py|architecture_model.viewer.projection",
+      "reason": "Inspected controlled viewer.py diagnostic-only change; select the exact same path/symbol at the new containing-file hash. Success-path behavior is unchanged."
+    },
+    {
+      "command": "rebind",
+      "binding": "e-snippet",
+      "candidate": "architecture_model/viewer.py|architecture_model.viewer._snippet",
+      "reason": "Inspected controlled viewer.py diagnostic-only change; select the exact same path/symbol at the new containing-file hash. Success-path behavior is unchanged."
+    },
+    {
+      "command": "resolve",
+      "binding": "e-export-html",
+      "review": {
+        "author": "m4-modeling-agent",
+        "reason": "Read the exact controlled diff and affected success-path explanation. Only failure guidance changes; component responsibilities and existing scenarios still hold. Confirmation is interpretation review, not executed business verification.",
+        "outcome": "confirmed"
+      }
+    },
+    {
+      "command": "resolve",
+      "binding": "e-projection",
+      "review": {
+        "author": "m4-modeling-agent",
+        "reason": "Read the exact controlled diff and affected success-path explanation. Only failure guidance changes; component responsibilities and existing scenarios still hold. Confirmation is interpretation review, not executed business verification.",
+        "outcome": "confirmed"
+      }
+    },
+    {
+      "command": "resolve",
+      "binding": "e-snippet",
+      "review": {
+        "author": "m4-modeling-agent",
+        "reason": "Read the exact controlled diff and affected success-path explanation. Only failure guidance changes; component responsibilities and existing scenarios still hold. Confirmation is interpretation review, not executed business verification.",
+        "outcome": "confirmed"
+      }
+    },
+    {
+      "command": "patch",
+      "file": "07-publication-precondition.patch.json"
+    },
+    {
+      "command": "resolve",
+      "binding": "e-export-html",
+      "review": {
+        "author": "m4-modeling-agent",
+        "reason": "Read updated viewer rationale and both retained scenarios against the controlled target. The hard-link prerequisite is accurate; no runtime business validation claimed.",
+        "outcome": "confirmed"
+      }
+    }
+  ],
+  "expected_revision": 13
+}

@@ -1,0 +1,127 @@
+{
+  "baseline": "34b4e48f2388049eeaf180efcbf285029d7b384b",
+  "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+  "revision": 13,
+  "facts": {
+    "before": "62487d77d2876770b740a4bd1e1d6971a55940b9819c99ce571cfd80402c0036",
+    "after": "3fa8e8addd1da7c3c86f00ae54f72196dedc858f866fcbb6377214a9410e5e78",
+    "before_digest": "ea441b5103ee08ec854f05c62873bb798cabb6b57ff9f32b1d02608b57e01001",
+    "after_digest": "ae6414d6a204eb199be1dd20de745730478f2bd286d2e740085d6935214e4125",
+    "files": 12,
+    "before_symbols": 88,
+    "before_calls": 153,
+    "after_symbols": 88,
+    "after_calls": 153
+  },
+  "counts": {
+    "components": 7,
+    "bindings": 26,
+    "relations": 5,
+    "scenarios": 2,
+    "opinions": 1,
+    "verifications": 2,
+    "maintenance": 31
+  },
+  "model_sha256": "22a27c14d7ee1bf3295584e798305b6353c5823f6200205f2a27900cc8485a6b",
+  "production_source_still_matches_baseline_manifest": true,
+  "fresh_agent": {
+    "fork_turns": "none",
+    "input_report": "examples/architecture_model/codeboarding/03-agent-session.md",
+    "start_revision": 2,
+    "end_revision": 3,
+    "new_scenario": "agent-submits-patch",
+    "reused_components": [
+      "cli",
+      "store",
+      "validation"
+    ]
+  },
+  "replay": {
+    "exit_code": 0,
+    "model_id": "b6a01e51-170f-4fa6-853a-9a4c2a9a0f7e",
+    "revision": 13,
+    "equal_to_original_fields": [
+      "components",
+      "scenarios",
+      "bindings",
+      "facts",
+      "opinions"
+    ],
+    "structural_verification_reexecuted_for_actual_model": true,
+    "executed_verification": {
+      "id": "executed-revision3-validation",
+      "status": "executed",
+      "object_ids": [
+        "store",
+        "read-to-html",
+        "agent-submits-patch"
+      ],
+      "command": "[\"F:\\\\CodeBoarding\\\\.venv\\\\Scripts\\\\python.exe\", \"-m\", \"architecture_model\", \"model\", \"--file\", \"F:\\\\CodeBoarding\\\\temp\\\\m4-replay-final\\\\model.json\", \"validate\"]",
+      "environment": "Windows-11-10.0.26100-SP0; Python 3.12.13; replay venv",
+      "inputs": "Model b6a01e51-170f-4fa6-853a-9a4c2a9a0f7e, revision 3; complete persisted JSON; structural validation only, not business execution.",
+      "source_version": "ea441b5103ee08ec854f05c62873bb798cabb6b57ff9f32b1d02608b57e01001",
+      "executor": "replay-agent",
+      "executed_at": "2026-11-05T01:37:01.505674+00:00",
+      "exit_code": 0,
+      "result": "{\"valid\": true, \"model_id\": \"b6a01e51-170f-4fa6-853a-9a4c2a9a0f7e\", \"revision\": 3, \"committed\": false}"
+    },
+    "is_new_agent_session": false
+  },
+  "checks": {
+    "architecture_tests": {
+      "passed": 159,
+      "coverage_percent": 97.08,
+      "log": "module-tests.log"
+    },
+    "artifact_template_tests": {
+      "passed": 4,
+      "log": "trial-tests.log"
+    },
+    "node_tests": {
+      "passed": 6,
+      "log": "node-tests.log"
+    },
+    "black": {
+      "exit_code": 0,
+      "files": 361
+    },
+    "windows_mypy": {
+      "exit_code": 1,
+      "errors": [
+        "static_analyzer/workspace_dependencies.py:78 SIGKILL attr-defined"
+      ]
+    },
+    "whole_repository": {
+      "command": [
+        "F:\\CodeBoarding\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "--cov=.",
+        "--cov-report=term",
+        "--cov-fail-under=80"
+      ],
+      "exit_code": 1,
+      "timeout": true,
+      "elapsed_seconds": 300.3429999999935,
+      "bound_seconds": 300
+    },
+    "private_integration": "Not run; private CodeBoarding-tests unavailable"
+  },
+  "browser": {
+    "browser": "138.0.7204.184",
+    "protocol": "localhost HTTP (no file: navigation)",
+    "model_id": "ba06c25c-e8de-4781-8a09-e7643b9e4721",
+    "revision": 13,
+    "checks": [
+      "HTML model identity/revision equals saved model; two businesses render",
+      "Hierarchy collapses and expands without replacing component IDs",
+      "Business switching preserves position; explicit next and automatic success-path playback reach the modeled endpoint",
+      "Hash-verified source, boundary rationale, maintenance history and planned/executed records are inspectable",
+      "Mobile has no page overflow; no page errors or external requests; model bytes unchanged"
+    ],
+    "errors": [],
+    "external_requests": [],
+    "model_sha256": "22a27c14d7ee1bf3295584e798305b6353c5823f6200205f2a27900cc8485a6b"
+  },
+  "coverage_first_attempt": "159 tests passed; concurrent full-suite run polluted the shared coverage data, so its 6.21% report is discarded. Final module run used independent COVERAGE_FILE=temp/m4-module-isolated.coverage."
+}

@@ -1,0 +1,88 @@
+{
+  "project": {
+    "id": "separated-orders",
+    "name": "Independent order fixture: separated engine trial",
+    "boundary": "Only the four materialized Python files from examples/architecture_model/fixture. buy validates quantity, total multiplies by ten, save formats a string, quote reuses total, start registers callable values. No database, web server, package installation or runtime correctness claim. Synthetic context drills repeat the same purchase explanation only to test large-context continuation."
+  },
+  "bindings": {
+    "bind-register": "app.start",
+    "bind-buy": "delivery.orders.buy",
+    "bind-quote": "delivery.orders.quote",
+    "bind-total": "policies.pricing.total",
+    "bind-save": "persistence.store.save"
+  },
+  "operations": [
+    {
+      "action": "create", "collection": "components", "id": "application",
+      "value": {
+        "id": "application", "name": "Callable registration", "parent_id": "",
+        "responsibility": "Return the buy/quote callable registry; does not start a server.",
+        "rationale": "Registration is distinct from calling an order business.",
+        "binding_ids": ["bind-register"],
+        "claim": {"kind": "inference", "explanation": "A logical root for the small order fixture, not a runtime orchestrator.", "binding_ids": ["bind-register"], "assumptions": ["Boundary interpretation of the inspected fixture only."], "issues": []}
+      }
+    },
+    {
+      "action": "create", "collection": "components", "id": "order-entry",
+      "value": {
+        "id": "order-entry", "name": "Purchase and quotation entry", "parent_id": "application",
+        "responsibility": "Expose buy and quote functions; buy rejects nonpositive quantity.",
+        "rationale": "The two entry functions share an API boundary while retaining different outcomes.",
+        "binding_ids": ["bind-buy", "bind-quote"],
+        "claim": {"kind": "inference", "explanation": "Group the two order entry functions without treating them as the same business.", "binding_ids": ["bind-buy", "bind-quote"], "assumptions": ["Logical responsibilities need not mirror every function."], "issues": []}
+      }
+    },
+    {
+      "action": "create", "collection": "components", "id": "shared-pricing",
+      "value": {
+        "id": "shared-pricing", "name": "Shared quantity pricing", "parent_id": "application",
+        "responsibility": "Multiply quantity by ten for buy and quote.",
+        "rationale": "Both consumers use the same policies.pricing.total function; use one stable component.",
+        "binding_ids": ["bind-total"],
+        "claim": {"kind": "inference", "explanation": "One shared pricing responsibility for both consumers.", "binding_ids": ["bind-total", "bind-buy", "bind-quote"], "assumptions": ["This is responsibility interpretation, not proof of business policy correctness."], "issues": []}
+      }
+    },
+    {
+      "action": "create", "collection": "components", "id": "receipt-format",
+      "value": {
+        "id": "receipt-format", "name": "Order string formatting", "parent_id": "application",
+        "responsibility": "Format an amount as an order string; no persistent write.",
+        "rationale": "The directory is named persistence, but save only returns a formatted string.",
+        "binding_ids": ["bind-save"],
+        "claim": {"kind": "inference", "explanation": "A formatting boundary named for behavior instead of directory ownership.", "binding_ids": ["bind-save"], "assumptions": ["Scope is the actual fixture source, not a production database design."], "issues": []}
+      }
+    },
+    {
+      "action": "create", "collection": "relations", "id": "entry-pricing",
+      "value": {"id": "entry-pricing", "source_id": "order-entry", "target_id": "shared-pricing", "meaning": "buy and quote call total.", "claim": {"kind": "code_fact", "explanation": "Both entry bodies call the imported total function.", "binding_ids": ["bind-buy", "bind-quote", "bind-total"], "assumptions": [], "issues": []}}
+    },
+    {
+      "action": "create", "collection": "relations", "id": "entry-receipt",
+      "value": {"id": "entry-receipt", "source_id": "order-entry", "target_id": "receipt-format", "meaning": "buy formats its computed total using save.", "claim": {"kind": "code_fact", "explanation": "buy returns save(total(quantity)); quote does not use save.", "binding_ids": ["bind-buy", "bind-save"], "assumptions": [], "issues": []}}
+    },
+    {
+      "action": "create", "collection": "scenarios", "id": "purchase",
+      "value": {
+        "id": "purchase", "name": "Purchase success path", "entry_step_id": "purchase-entry",
+        "steps": [
+          {"id": "purchase-entry", "component_ids": ["order-entry"], "binding_ids": ["bind-buy"], "claim": {"kind": "code_fact", "explanation": "buy rejects quantity <= 0; the modeled path continues for positive quantity.", "binding_ids": ["bind-buy"], "assumptions": [], "issues": []}},
+          {"id": "purchase-price", "component_ids": ["shared-pricing"], "binding_ids": ["bind-total"], "claim": {"kind": "code_fact", "explanation": "total returns quantity times ten.", "binding_ids": ["bind-total"], "assumptions": [], "issues": []}},
+          {"id": "purchase-format", "component_ids": ["receipt-format"], "binding_ids": ["bind-save"], "claim": {"kind": "code_fact", "explanation": "save returns an order string for buy to return; no database operation is modeled.", "binding_ids": ["bind-save"], "assumptions": [], "issues": []}}
+        ],
+        "order": ["purchase-entry", "purchase-price", "purchase-format"],
+        "transitions": [
+          {"source_id": "purchase-entry", "target_id": "purchase-price", "kind": "next", "condition": "quantity > 0; validation did not raise"},
+          {"source_id": "purchase-price", "target_id": "purchase-format", "kind": "next", "condition": "total returns normally; buy supplies the result to save"}
+        ],
+        "claim": {"kind": "inference", "explanation": "Summarize the actual nested purchase calls as an explicit success path, not a measured execution trace.", "binding_ids": ["bind-buy", "bind-total", "bind-save"], "assumptions": ["Positive integer quantity and normal function returns."], "issues": ["Exception paths and external integrations are outside this partial explanation."]}
+      }
+    }
+  ],
+  "extension": {
+    "base_scenario": "purchase",
+    "prefix": "synthetic-context-drill",
+    "count": 128,
+    "repeat": 512,
+    "explanation": "Synthetic context-size exercise only: this repeats the same purchase explanation, not another demonstrated business or independent evidence. "
+  }
+}

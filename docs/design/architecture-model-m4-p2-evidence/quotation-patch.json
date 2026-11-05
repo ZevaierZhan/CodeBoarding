@@ -1,0 +1,109 @@
+{
+  "author": "fresh-agent",
+  "summary": "Explain quotation using existing entry and shared pricing evidence; preserve every existing business.",
+  "operations": [
+    {
+      "action": "create",
+      "collection": "scenarios",
+      "id": "8e49f803-0756-4d12-bc0d-da18008a0218",
+      "value": {
+        "id": "8e49f803-0756-4d12-bc0d-da18008a0218",
+        "name": "Quotation numeric return path",
+        "entry_step_id": "0ce38b4f-21a0-46ba-aeee-11f8119b8fdc",
+        "steps": [
+          {
+            "id": "0ce38b4f-21a0-46ba-aeee-11f8119b8fdc",
+            "component_ids": [
+              "order-entry"
+            ],
+            "binding_ids": [
+              "bind-quote"
+            ],
+            "claim": {
+              "kind": "code_fact",
+              "explanation": "quote(quantity: int) accepts quantity without the positive-quantity validation used by buy and directly calls total(quantity).",
+              "binding_ids": [
+                "bind-quote",
+                "bind-buy"
+              ],
+              "assumptions": [],
+              "issues": []
+            }
+          },
+          {
+            "id": "44c29084-049e-47d2-93f7-9ff9f624b94d",
+            "component_ids": [
+              "shared-pricing"
+            ],
+            "binding_ids": [
+              "bind-total"
+            ],
+            "claim": {
+              "kind": "code_fact",
+              "explanation": "total(quantity) returns quantity * 10, so integer zero and negative inputs also produce their multiplied value.",
+              "binding_ids": [
+                "bind-total"
+              ],
+              "assumptions": [],
+              "issues": []
+            }
+          },
+          {
+            "id": "0796f849-355b-47f5-a89f-70632ae4e896",
+            "component_ids": [
+              "order-entry"
+            ],
+            "binding_ids": [
+              "bind-quote"
+            ],
+            "claim": {
+              "kind": "code_fact",
+              "explanation": "quote returns the numeric total directly; this path never calls save and has no order string or persistence step.",
+              "binding_ids": [
+                "bind-quote",
+                "bind-save"
+              ],
+              "assumptions": [],
+              "issues": []
+            }
+          }
+        ],
+        "order": [
+          "0ce38b4f-21a0-46ba-aeee-11f8119b8fdc",
+          "44c29084-049e-47d2-93f7-9ff9f624b94d",
+          "0796f849-355b-47f5-a89f-70632ae4e896"
+        ],
+        "transitions": [
+          {
+            "source_id": "0ce38b4f-21a0-46ba-aeee-11f8119b8fdc",
+            "target_id": "44c29084-049e-47d2-93f7-9ff9f624b94d",
+            "kind": "next",
+            "condition": "quote is called with an integer quantity; no positivity guard is evaluated"
+          },
+          {
+            "source_id": "44c29084-049e-47d2-93f7-9ff9f624b94d",
+            "target_id": "0796f849-355b-47f5-a89f-70632ae4e896",
+            "kind": "next",
+            "condition": "total returns normally; quote returns that value to its caller"
+          }
+        ],
+        "claim": {
+          "kind": "inference",
+          "explanation": "Quotation starts at delivery.orders.quote, reuses policies.pricing.total, and returns a numeric amount. app.start exposes the quote callable but does not execute a quotation. The entry/pricing/return display sequence explains nested calls, not a recorded runtime trace.",
+          "binding_ids": [
+            "bind-register",
+            "bind-quote",
+            "bind-total"
+          ],
+          "assumptions": [
+            "The caller invokes the quote callable with an integer; annotations are not runtime input validation."
+          ],
+          "issues": [
+            "Caller selection/invocation after app.start is outside this source boundary; no execution edge is claimed from registration.",
+            "Currency, rounding, taxes, external persistence, and policy correctness are not specified by these four files."
+          ]
+        }
+      }
+    }
+  ]
+}

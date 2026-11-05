@@ -1,0 +1,14 @@
+✔ collapse projects references without changing stable objects or order (2.9664ms)
+✔ play follows explicit transitions, branches and actual history, never display order (0.5355ms)
+✔ autoplay stops on a single loop and on cycles even when mislabeled next (0.2838ms)
+✔ direct inspection is explicit and starts a fresh path; empty models are playable safely (0.2744ms)
+✔ shared projection matches ancestor semantics and preserves original edge references for every collapse state (2.2221ms)
+✔ projection handles deep chains and out-of-order parents without changing identities (6.4466ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 287.0859

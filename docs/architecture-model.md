@@ -1,5 +1,9 @@
 # Architecture model CLI (M1 + M2 + M3)
 
+For a repeatable external-Agent workflow, use the repository-owned
+[modeling Skill](../skills/codeboarding-modeling/SKILL.md) and
+[real M4 continuation example](../examples/architecture_model/codeboarding/README.md).
+
 An external Agent reads source, writes its interpretation, and revises the same
 logical objects over successive sessions. CodeBoarding validates declared structure,
 references, versions and writes. It does not prove an explanation correct.
@@ -243,8 +247,8 @@ Python library; CLI messages are compact machine-readable summaries.
 See [the example guide](../examples/architecture_model/README.md) and the
 [actual validation record](design/architecture-model-m1-results.md). M1 provides
 Agent modeling and structured review. M2 source maintenance is described below.
-Interactive diagrams and scenario playback (M3), MCP, internal business generation,
-accounts and approval workflows are not implemented.
+Interactive diagrams and explicit scenario playback are available through M3.
+MCP, internal business generation, accounts and approval workflows are not implemented.
 
 ## M2 source maintenance
 
