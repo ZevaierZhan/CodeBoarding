@@ -22,6 +22,9 @@ class Strict(BaseModel):
             field = type(self).model_fields.get(name)
             if field is not None and not field.is_required() and value.get(name, default) == default:
                 value.pop(name, None)
+        for name, default in (("analysis_kind", "operation"), ("facet_order", []), ("facet_checks", {})):
+            if name not in self.model_fields_set and value.get(name) == default:
+                value.pop(name, None)
         return value
 
     @field_validator("schema_version", mode="before", check_fields=False)
@@ -178,6 +181,7 @@ class Step(Strict):
     component_ids: list[Text]
     binding_ids: list[Text]
     claim: Claim
+    facet_checks: dict[Text, Text] = Field(default_factory=dict)
 
 
 class Transition(Strict):
@@ -196,6 +200,8 @@ class Scenario(Strict):
     transitions: list[Transition]
     claim: Claim
     relation_ids: list[Text] = Field(default_factory=list)
+    analysis_kind: Literal["operation", "comparison"] = "operation"
+    facet_order: list[Text] = Field(default_factory=list)
 
 
 class Opinion(Strict):

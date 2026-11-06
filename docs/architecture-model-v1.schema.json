@@ -940,6 +940,23 @@
           },
           "title": "Relation Ids",
           "type": "array"
+        },
+        "analysis_kind": {
+          "default": "operation",
+          "enum": [
+            "operation",
+            "comparison"
+          ],
+          "title": "Analysis Kind",
+          "type": "string"
+        },
+        "facet_order": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Facet Order",
+          "type": "array"
         }
       },
       "required": [
@@ -1018,6 +1035,17 @@
         },
         "claim": {
           "$ref": "#/$defs/Claim"
+        },
+        "facet_checks": {
+          "additionalProperties": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "propertyNames": {
+            "minLength": 1
+          },
+          "title": "Facet Checks",
+          "type": "object"
         }
       },
       "required": [

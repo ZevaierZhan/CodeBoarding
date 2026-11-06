@@ -1,0 +1,79 @@
+{
+  "base_sha": "deebabf9030eadbf0a4f1e73218a822d268fcbf5",
+  "full_command": "uv run --no-sync pytest --cov=. --cov-report=term --cov-fail-under=80 (explicit M1_* and M5_TOOLS enabled)",
+  "native_tools_enabled": [
+    "python",
+    "typescript",
+    "rust"
+  ],
+  "full": {
+    "passed": 2988,
+    "failed": 5,
+    "skipped": 55,
+    "errors": 0,
+    "coverage_percent": 40.61,
+    "required_coverage_percent": 80,
+    "gate": "failed"
+  },
+  "failed_test_ids": [
+    "tests.infra.test_tool_registry.TestInstallEmbeddedNode.test_rejects_non_executable_node_binary",
+    "tests.infra.test_tool_registry.TestInstallEmbeddedNodeEndToEnd.test_full_install_flow_with_mocked_download",
+    "tests.infra.test_tool_registry.TestInstallNativeToolsCompressed.test_gz_asset_is_decompressed_and_chmod_set",
+    "tests.infra.test_tool_registry.TestToolRegistry.test_install_node_tools_prefers_embedded_npm",
+    "tests.test_devcontainer.TestDevcontainer.test_post_create_script_bash_syntax"
+  ],
+  "matches_preexisting_five_failures": true,
+  "model_and_q1_subset": {
+    "passed": 368,
+    "failed": 0,
+    "skipped": 5,
+    "errors": 0
+  },
+  "new_schema_tests": 28,
+  "terminal_line_boundary_tests": 3,
+  "node": {
+    "passed": 8,
+    "failed": 0
+  },
+  "black": "passed, 388 files",
+  "mypy": "passed, 388 files",
+  "precommit": "passed; commit hooks enabled",
+  "chrome": {
+    "real_models": 2,
+    "revisions_each": [
+      "before",
+      "after"
+    ],
+    "passed": true,
+    "page_errors": 0
+  },
+  "private_acceptance": {
+    "formal": {
+      "revision_before": 9,
+      "revision_after": 10,
+      "original_unchanged": true,
+      "current_snippets_verified": 81
+    },
+    "isolated": {
+      "revision_before": 38,
+      "revision_after": 39,
+      "original_unchanged": true,
+      "current_snippets_verified": 72,
+      "original_pending_preserved": 20,
+      "original_current_pending": 13,
+      "original_maintenance_preserved": 66,
+      "new_coverage_observations": 26,
+      "historical_snippet_mismatches_withheld": 2
+    }
+  },
+  "initial_run": {
+    "passed": 2970,
+    "failed": 6,
+    "skipped": 64,
+    "coverage_percent": 39.44,
+    "additional_failure": "60-second bounded-context capture timeout; isolated rerun 10 passed; final full run passed"
+  },
+  "threshold_or_timeout_changed": false,
+  "kotlin_installed_or_downloaded": false,
+  "runtime_behavior_verified": false
+}

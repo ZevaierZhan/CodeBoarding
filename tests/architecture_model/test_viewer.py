@@ -18,6 +18,21 @@ from examples.architecture_model.demo import cli
 
 
 @pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+def test_file_evidence_can_include_terminal_empty_line(tmp_path: Path, newline: str) -> None:
+    content = ("value = 1" + newline).encode()
+    (tmp_path / "app.py").write_bytes(content)
+    checksum = hashlib.sha256(content).hexdigest()
+    location = Location(path="app.py", kind="FILE", content_hash=checksum, start=1, end=2)
+    snippet = _snippet(location, tmp_path)
+    assert snippet["status"] == "verified" and snippet["text"] == "    1  value = 1\n    2  "
+    assert _snippet(location.model_copy(update={"end": 3}), tmp_path)["status"] == "unavailable"
+    assert _snippet(location.model_copy(update={"kind": "FUNCTION"}), tmp_path)["status"] == "unavailable"
+    (tmp_path / "app.py").write_bytes(b"value = 1")
+    without_newline = location.model_copy(update={"content_hash": hashlib.sha256(b"value = 1").hexdigest()})
+    assert _snippet(without_newline, tmp_path)["status"] == "unavailable"
+
+
+@pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
 @pytest.mark.parametrize("separator", ["\u2028", "\u2029", "\u0085"])
 @pytest.mark.parametrize("final_newline", [False, True])
 def test_snippets_follow_source_document_lines(

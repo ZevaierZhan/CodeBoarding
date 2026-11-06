@@ -1,5 +1,12 @@
 # Read-only architecture and business flow explorer
 
+Scenario choices distinguish operations from comparison topics. Comparisons offer
+independent item inspection with playback disabled; their reading order asserts no
+execution sequence. The inspector shows ordered analysis questions, authored
+answers and missing answers as unknown, alongside the step's claim and code evidence.
+These answers have no execution status; planned/executed Verification remains
+separate with its original evidence scope.
+
 For named M5 roots, add `--source-map roots.json`, where the JSON object maps
 stable source root IDs to physical directories. Each evidence version uses its own
 snapshot's root and file hash. `--source-root` continues to serve only legacy

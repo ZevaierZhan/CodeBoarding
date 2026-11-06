@@ -39,6 +39,10 @@ Schema source: `architecture_model/schema.py`; invariants:
 `docs/architecture-model.md`. Consult these in the CodeBoarding checkout when
 building less common objects. The portable skill does not bundle a stale schema.
 
+For the optional schema 1 `analysis_kind` / `facet_order` / `facet_checks`
+capability, follow [analysis-topics.md](analysis-topics.md) before authoring or
+updating a topic. Unknown fields and unsupported versions fail without migration.
+
 ### Template expansion
 
 `assets/*.json.template` are text templates, **not executable patches**. Each

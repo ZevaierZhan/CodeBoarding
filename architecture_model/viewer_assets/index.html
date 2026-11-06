@@ -7,12 +7,12 @@
 <header><div><h1 id="project">Architecture explorer</h1><p id="boundary"></p></div><div><strong>CodeBoarding</strong><p>Read-only model explorer</p></div></header>
 <section class="provenance"><span id="identity"></span><span id="exported"></span><button id="metadata">Snapshots &amp; model metadata</button></section>
 <section class="toolbar" aria-label="Business playback controls">
-<label>Business <select id="scenario"></select></label>
-<button id="inspect-business">Business explanation</button>
+<label>Scenario / topic <select id="scenario"></select></label>
+<button id="inspect-business">Scenario explanation</button>
 <button id="reset">Reset</button><button id="back">Back</button><button id="play">Play</button><button id="next">Step forward</button>
 <label><input id="focus" type="checkbox"> Focus business</label><button id="expand-all">Expand all</button><button id="collapse-all">Collapse all</button>
 </section>
-<p class="notice">Modeled business path · conditions are descriptions, never evaluated. Playback is not a runtime trace.</p>
+<p class="notice">Operations follow explicit modeled transitions; comparison topics are independent explanations. Conditions are never evaluated. Playback is not a runtime trace.</p>
 <main>
 <nav aria-label="Component hierarchy"><h2>Project structure</h2><div id="tree"></div><h2>Steps <small>display order</small></h2><div id="steps"></div></nav>
 <section class="workspace" aria-label="Architecture and business path"><div class="workspace-heading"><h2>Shared architecture</h2><span>Stable component identities</span></div><p class="diagram-help" id="diagram-help">Scroll the diagram horizontally to explore depth. Keyboard: focus the diagram and use arrow keys.</p><div id="canvas" tabindex="0" role="region" aria-label="Scrollable architecture diagram" aria-describedby="diagram-help"><svg id="graph" role="img" aria-label="Component relationships and explicit business transitions"></svg><div id="nodes"></div></div><section class="player" aria-live="polite"><h2 id="current"></h2><p id="playback-status"></p><div id="choices"></div><div id="incoming"></div></section><section><h2>Component relationships</h2><div id="relations"></div></section></section>

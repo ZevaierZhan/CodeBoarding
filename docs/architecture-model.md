@@ -1,5 +1,14 @@
 # Architecture model CLI (M1 + M2 + M3)
 
+Schema 1 also supports optional [analysis topics and question facets](design/architecture-model-m6-compat.md).
+`Scenario.analysis_kind` is `operation` (absent default) or `comparison`.
+Comparisons reject execution transitions and disable playback. `facet_order` is a
+unique string-label display order; `Step.facet_checks` maps declared labels to
+authored explanations using the step's claim and bindings. Missing entries mean
+unknown. These explanations never become executed Verification records.
+Absent extension defaults stay absent; explicit values round-trip. Unknown fields
+remain errors. No migration or model schema version change is required.
+
 M5 adds [multiple source roots and native language facts](design/architecture-model-m5.md)
 without changing old Python snapshot IDs. Use `facts export --repo ROOT --project-id SYSTEM
 --source-root-id ROOT_ID --tools tools.json --output NEW.json` for the v2 native
@@ -247,6 +256,7 @@ commands are running.
 | `USAGE_ERROR`, `JSON_INVALID`, `SCHEMA_INVALID`, `UNSUPPORTED_VERSION` | Bad arguments, JSON, domain shape or schema version |
 | `DUPLICATE_ID`, `NOT_FOUND`, `ALREADY_EXISTS`, `IMMUTABLE` | Create/update/delete/initialization identity violation |
 | `DANGLING_REFERENCE`, `PARENT_CYCLE`, `STEP_ORDER` | Internal reference or structural inconsistency |
+| `SCENARIO_KIND`, `FACET_ORDER` | Comparison declares execution transitions, or question labels repeat |
 | `FACTS_MISMATCH`, `BINDING_MISMATCH`, `HISTORY_REQUIRED` | Catalog/version contradiction or discarded binding history |
 | `REVISION_INVALID`, `REVISION_CONFLICT`, `LOCK_TIMEOUT` | Invalid revision history, optimistic conflict, or apply lock wait exceeded |
 | `IO_ERROR`, `SAVE_FAILED` | Read/lock/filesystem error, or failure before atomic commit |

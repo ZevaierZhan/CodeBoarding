@@ -132,6 +132,10 @@ def validate_model(value: object) -> Model:
                 raise ModelError("CONTRACT_INVALID", location, "Unconfirmed contract requires explicit uncertainty")
     for scenario in model.scenarios:
         location = f"/scenarios/{scenario.id}"
+        if scenario.analysis_kind == "comparison" and scenario.transitions:
+            raise ModelError("SCENARIO_KIND", location, "Comparison topics cannot declare execution transitions")
+        if len(set(scenario.facet_order)) != len(scenario.facet_order):
+            raise ModelError("FACET_ORDER", location + "/facet_order", "Facet labels must be unique")
         steps = {step.id for step in scenario.steps}
         if len(scenario.order) != len(steps) or set(scenario.order) != steps:
             raise ModelError("STEP_ORDER", location + "/order", "Order must contain every step exactly once")
@@ -139,6 +143,7 @@ def validate_model(value: object) -> Model:
         _references(scenario.claim.binding_ids, bindings, location + "/claim")
         _references(scenario.relation_ids, {item.id for item in model.relations}, location + "/relation_ids")
         for step in scenario.steps:
+            _references(list(step.facet_checks), set(scenario.facet_order), location + f"/steps/{step.id}/facet_checks")
             _references(step.component_ids, set(components), location + f"/steps/{step.id}/component_ids")
             _references(step.binding_ids + step.claim.binding_ids, bindings, location + f"/steps/{step.id}/bindings")
         for transition in scenario.transitions:

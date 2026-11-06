@@ -23,7 +23,7 @@ def capture_coverage(model: Model, item: Maintenance, impact_of: Callable[[Model
         for entry in collection
     ]
     objects.extend(step.model_dump() for scenario in model.scenarios for step in scenario.steps)
-    versions = {entry["id"]: digest(entry) for entry in objects if entry["id"] in ids}
+    versions = {entry["id"]: digest(_coverage_body(entry)) for entry in objects if entry["id"] in ids}
     updated = item.model_copy(deep=True)
     updated.component_ids = impact["component_ids"]
     updated.relation_ids = impact["relation_ids"]
@@ -52,3 +52,16 @@ def maintained_observations(model: Model, impact_of: Callable[[Model, Model], di
 
 def comparison_key(item: Maintenance) -> str:
     return digest({"binding": item.binding_id, "basis": item.basis.model_dump(), "target": item.target_snapshot_id})
+
+
+def _coverage_body(entry: dict) -> dict:
+    value = dict(entry)
+    if "entry_step_id" in value:
+        if value.get("analysis_kind") == "operation":
+            value.pop("analysis_kind")
+        if not value.get("facet_order"):
+            value.pop("facet_order", None)
+        value["steps"] = [_coverage_body(step) for step in value["steps"]]
+    if "component_ids" in value and not value.get("facet_checks"):
+        value.pop("facet_checks", None)
+    return value
