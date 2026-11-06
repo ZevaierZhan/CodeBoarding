@@ -1,0 +1,42 @@
+{
+  "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+  "python": "3.13.5",
+  "scope": "Actual stdlib-only observation source; not the full project or ModelStore suite",
+  "cases": [
+    {
+      "case": "normal",
+      "reference_equal": true,
+      "rejected": false
+    },
+    {
+      "case": "colon-file",
+      "reference_equal": true,
+      "rejected": true
+    },
+    {
+      "case": "backslash-file",
+      "reference_equal": true,
+      "rejected": true
+    },
+    {
+      "case": "colon-directory",
+      "reference_equal": true,
+      "rejected": true
+    },
+    {
+      "case": "backslash-directory",
+      "reference_equal": true,
+      "rejected": true
+    },
+    {
+      "case": "symlink",
+      "reference_equal": true,
+      "rejected": true
+    },
+    {
+      "case": "restored-mtime",
+      "metadata_unchanged": true,
+      "closing_content_rejected": true
+    }
+  ]
+}

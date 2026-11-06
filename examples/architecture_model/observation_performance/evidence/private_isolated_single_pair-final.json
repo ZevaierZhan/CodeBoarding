@@ -1,0 +1,83 @@
+{
+  "environment": {
+    "platform": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.13",
+    "logical_cpus": 12
+  },
+  "model_unchanged": true,
+  "samples": {
+    "generate": [
+      {
+        "seconds": 22.598533400014276,
+        "status": "blocked",
+        "summary": {
+          "roots": 3,
+          "file_records": 16215,
+          "confirmed_overlaps": 6,
+          "same_version": 6,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 20,
+          "issues": 0,
+          "blocked_roots": 1,
+          "ready_items": 11,
+          "confirmation_items": 4
+        },
+        "requires_replan": false,
+        "stdout_bytes": 641,
+        "plan_bytes": 18476979,
+        "peak_rss_bytes": 177618944,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 23.790759599971352
+      }
+    ],
+    "check": [
+      {
+        "seconds": 22.970199400006095,
+        "status": "blocked",
+        "summary": {
+          "roots": 3,
+          "file_records": 16215,
+          "confirmed_overlaps": 6,
+          "same_version": 6,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 20,
+          "issues": 0,
+          "blocked_roots": 1,
+          "ready_items": 11,
+          "confirmation_items": 4
+        },
+        "requires_replan": false,
+        "stdout_bytes": 974,
+        "plan_bytes": 0,
+        "peak_rss_bytes": 209743872,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 24.227516699989792
+      }
+    ],
+    "same_process_check": [],
+    "profile_generate": [],
+    "profile_check": []
+  },
+  "timing_summary": {
+    "generate": {
+      "median_s": 22.598533400014276,
+      "max_s": 22.598533400014276,
+      "min_s": 22.598533400014276
+    },
+    "check": {
+      "median_s": 22.970199400006095,
+      "max_s": 22.970199400006095,
+      "min_s": 22.970199400006095
+    }
+  }
+}

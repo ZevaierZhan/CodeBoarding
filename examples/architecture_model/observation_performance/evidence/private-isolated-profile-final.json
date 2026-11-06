@@ -1,0 +1,95 @@
+[
+  {
+    "seconds": 35.34581520000938,
+    "status": "blocked",
+    "summary": {
+      "roots": 3,
+      "file_records": 16215,
+      "confirmed_overlaps": 6,
+      "same_version": 6,
+      "different_versions": 0,
+      "unknown_physical_identity": 0,
+      "unattributed_bindings": 0,
+      "items": 30,
+      "current_pending": 0,
+      "historical_pending": 20,
+      "issues": 0,
+      "blocked_roots": 1,
+      "ready_items": 11,
+      "confirmation_items": 4
+    },
+    "requires_replan": false,
+    "stdout_bytes": 974,
+    "plan_bytes": 0,
+    "peak_rss_bytes": 208687104,
+    "counters": {
+      "stat": 225760,
+      "path_opens": 32509,
+      "binary_opens": 32506,
+      "binary_bytes_read": 2174472857,
+      "lstat": 52660
+    },
+    "profile": {
+      "benchmark.py:read": {
+        "calls": 66082,
+        "own_s": 0.0773529,
+        "inclusive_s": 1.6627677
+      },
+      "file_inventory.py:safe_file": {
+        "calls": 11516,
+        "own_s": 0.1259429,
+        "inclusive_s": 7.3757429000000005
+      },
+      "validation.py:validate_model": {
+        "calls": 1,
+        "own_s": 0.0037806000000000003,
+        "inclusive_s": 0.8048487000000001
+      },
+      "maintenance_plan.py:generate_plan": {
+        "calls": 1,
+        "own_s": 0.038570600000000003,
+        "inclusive_s": 33.4977302
+      },
+      "maintenance_plan.py:check_plan": {
+        "calls": 1,
+        "own_s": 0.007552100000000001,
+        "inclusive_s": 34.076774400000005
+      },
+      "file_inventory.py:file_digest": {
+        "calls": 32506,
+        "own_s": 0.49951730000000005,
+        "inclusive_s": 10.0839393
+      },
+      "maintenance_plan.py:_engine_digest": {
+        "calls": 1,
+        "own_s": 0.0004761,
+        "inclusive_s": 0.0305037
+      },
+      "maintenance_plan.py:_workspace": {
+        "calls": 2,
+        "own_s": 0.0047505,
+        "inclusive_s": 20.057608600000002
+      },
+      "coverage.py:coverage_report": {
+        "calls": 1,
+        "own_s": 0.186427,
+        "inclusive_s": 10.0519789
+      },
+      "maintenance.py:query": {
+        "calls": 1,
+        "own_s": 0.0022123,
+        "inclusive_s": 0.7278428
+      },
+      "maintenance_plan.py:_impact": {
+        "calls": 1,
+        "own_s": 1.54e-05,
+        "inclusive_s": 1.1133751
+      },
+      "store.py:read": {
+        "calls": 1,
+        "own_s": 0.0023528,
+        "inclusive_s": 0.9615108000000001
+      }
+    }
+  }
+]

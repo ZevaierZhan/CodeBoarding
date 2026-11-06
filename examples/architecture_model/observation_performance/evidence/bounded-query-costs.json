@@ -1,0 +1,44 @@
+[
+  {
+    "fixture": "synthetic",
+    "query": "ready-items",
+    "stdout_characters": 380,
+    "stdout_utf8_bytes": 380,
+    "process_seconds": 0.8686879000160843
+  },
+  {
+    "fixture": "synthetic",
+    "query": "pending",
+    "stdout_characters": 70,
+    "stdout_utf8_bytes": 70,
+    "process_seconds": 0.743747100001201
+  },
+  {
+    "fixture": "formal",
+    "query": "ready-items",
+    "stdout_characters": 398,
+    "stdout_utf8_bytes": 398,
+    "process_seconds": 0.5663801000046078
+  },
+  {
+    "fixture": "formal",
+    "query": "pending",
+    "stdout_characters": 70,
+    "stdout_utf8_bytes": 70,
+    "process_seconds": 0.5543850999965798
+  },
+  {
+    "fixture": "isolated",
+    "query": "ready-items",
+    "stdout_characters": 398,
+    "stdout_utf8_bytes": 398,
+    "process_seconds": 0.594228000001749
+  },
+  {
+    "fixture": "isolated",
+    "query": "pending",
+    "stdout_characters": 1650,
+    "stdout_utf8_bytes": 1650,
+    "process_seconds": 0.6626914000080433
+  }
+]

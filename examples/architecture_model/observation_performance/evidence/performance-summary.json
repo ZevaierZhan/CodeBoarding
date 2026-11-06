@@ -1,0 +1,191 @@
+{
+  "synthetic": {
+    "generate": {
+      "seconds": {
+        "baseline": {
+          "min": 38.6144674999814,
+          "median": 39.237572200014256,
+          "max": 39.38369610000518
+        },
+        "final": {
+          "min": 11.186867299984442,
+          "median": 11.997036599990679,
+          "max": 16.012374699988868
+        },
+        "median_reduction_percent": 69.42462051720335,
+        "samples_per_version": 3
+      },
+      "process_seconds": {
+        "baseline": {
+          "min": 39.91542460001074,
+          "median": 40.61909749999177,
+          "max": 40.67258809998748
+        },
+        "final": {
+          "min": 12.321221799997147,
+          "median": 14.708427799982019,
+          "max": 17.242431199993007
+        },
+        "median_reduction_percent": 63.78937813676191,
+        "samples_per_version": 3
+      }
+    },
+    "check": {
+      "seconds": {
+        "baseline": {
+          "min": 38.378935699991416,
+          "median": 38.62741369998548,
+          "max": 41.31297279999126
+        },
+        "final": {
+          "min": 11.171366399998078,
+          "median": 11.864939099992625,
+          "max": 12.655402300006244
+        },
+        "median_reduction_percent": 69.28363055278255,
+        "samples_per_version": 3
+      },
+      "process_seconds": {
+        "baseline": {
+          "min": 39.61032139998861,
+          "median": 40.00897110000369,
+          "max": 42.82686519998242
+        },
+        "final": {
+          "min": 15.683783399988897,
+          "median": 27.84877189999679,
+          "max": 50.58198669998092
+        },
+        "median_reduction_percent": 30.393681381138492,
+        "samples_per_version": 3
+      }
+    },
+    "fixed_input_plan_comparison": "All fields equal after independently validating complete plan identities, except engine_digest and derived plan_id; compare_plans.py passed."
+  },
+  "private_formal": {
+    "generate": {
+      "seconds": {
+        "baseline": {
+          "min": 47.26944329999969,
+          "median": 48.25984850001987,
+          "max": 54.423852100007934
+        },
+        "final": {
+          "min": 22.05094590000226,
+          "median": 22.52180810002028,
+          "max": 22.881805699988035
+        },
+        "median_reduction_percent": 53.33220306315092,
+        "samples_per_version": 3
+      },
+      "process_seconds": {
+        "baseline": {
+          "min": 48.56500299999607,
+          "median": 49.53375020000385,
+          "max": 56.990486700000474
+        },
+        "final": {
+          "min": 23.319445500004804,
+          "median": 23.737057199992705,
+          "max": 24.158302299998468
+        },
+        "median_reduction_percent": 52.07902267817619,
+        "samples_per_version": 3
+      }
+    },
+    "check": {
+      "seconds": {
+        "baseline": {
+          "min": 44.126519100012956,
+          "median": 46.85264209998422,
+          "max": 49.90662819999852
+        },
+        "final": {
+          "min": 22.091076399985468,
+          "median": 25.49091849999968,
+          "max": 25.71960680000484
+        },
+        "median_reduction_percent": 45.593423641719745,
+        "samples_per_version": 3
+      },
+      "process_seconds": {
+        "baseline": {
+          "min": 45.41844189999392,
+          "median": 48.12956829997711,
+          "max": 51.37356419998105
+        },
+        "final": {
+          "min": 23.363178899977356,
+          "median": 26.682939200021792,
+          "max": 27.460650900000473
+        },
+        "median_reduction_percent": 44.56019419556173,
+        "samples_per_version": 3
+      }
+    },
+    "fixed_input_plan_comparison": "All fields equal after independently validating complete plan identities, except engine_digest and derived plan_id; compare_plans.py passed."
+  },
+  "private_isolated_single_pair": {
+    "generate": {
+      "seconds": {
+        "baseline": {
+          "min": 42.70090110000456,
+          "median": 42.70090110000456,
+          "max": 42.70090110000456
+        },
+        "final": {
+          "min": 22.598533400014276,
+          "median": 22.598533400014276,
+          "max": 22.598533400014276
+        },
+        "median_reduction_percent": 47.07715102524648,
+        "samples_per_version": 1
+      },
+      "process_seconds": {
+        "baseline": {
+          "min": 43.807235699991,
+          "median": 43.807235699991,
+          "max": 43.807235699991
+        },
+        "final": {
+          "min": 23.790759599971352,
+          "median": 23.790759599971352,
+          "max": 23.790759599971352
+        },
+        "median_reduction_percent": 45.692168839641624,
+        "samples_per_version": 1
+      }
+    },
+    "check": {
+      "seconds": {
+        "baseline": {
+          "min": 43.79573780001374,
+          "median": 43.79573780001374,
+          "max": 43.79573780001374
+        },
+        "final": {
+          "min": 22.970199400006095,
+          "median": 22.970199400006095,
+          "max": 22.970199400006095
+        },
+        "median_reduction_percent": 47.55151858636142,
+        "samples_per_version": 1
+      },
+      "process_seconds": {
+        "baseline": {
+          "min": 44.90581779999775,
+          "median": 44.90581779999775,
+          "max": 44.90581779999775
+        },
+        "final": {
+          "min": 24.227516699989792,
+          "median": 24.227516699989792,
+          "max": 24.227516699989792
+        },
+        "median_reduction_percent": 46.048156147841034,
+        "samples_per_version": 1
+      }
+    },
+    "fixed_input_plan_comparison": "All fields equal after independently validating complete plan identities, except engine_digest and derived plan_id; compare_plans.py passed."
+  }
+}

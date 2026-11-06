@@ -1,0 +1,83 @@
+{
+  "environment": {
+    "platform": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.13",
+    "logical_cpus": 12
+  },
+  "model_unchanged": true,
+  "samples": {
+    "generate": [
+      {
+        "seconds": 42.70090110000456,
+        "status": "blocked",
+        "summary": {
+          "roots": 3,
+          "file_records": 16215,
+          "confirmed_overlaps": 6,
+          "same_version": 6,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 20,
+          "issues": 0,
+          "blocked_roots": 1,
+          "ready_items": 11,
+          "confirmation_items": 4
+        },
+        "requires_replan": false,
+        "stdout_bytes": 644,
+        "plan_bytes": 18476979,
+        "peak_rss_bytes": 170369024,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 43.807235699991
+      }
+    ],
+    "check": [
+      {
+        "seconds": 43.79573780001374,
+        "status": "blocked",
+        "summary": {
+          "roots": 3,
+          "file_records": 16215,
+          "confirmed_overlaps": 6,
+          "same_version": 6,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 20,
+          "issues": 0,
+          "blocked_roots": 1,
+          "ready_items": 11,
+          "confirmation_items": 4
+        },
+        "requires_replan": false,
+        "stdout_bytes": 974,
+        "plan_bytes": 0,
+        "peak_rss_bytes": 203542528,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 44.90581779999775
+      }
+    ],
+    "same_process_check": [],
+    "profile_generate": [],
+    "profile_check": []
+  },
+  "timing_summary": {
+    "generate": {
+      "median_s": 42.70090110000456,
+      "max_s": 42.70090110000456,
+      "min_s": 42.70090110000456
+    },
+    "check": {
+      "median_s": 43.79573780001374,
+      "max_s": 43.79573780001374,
+      "min_s": 43.79573780001374
+    }
+  }
+}

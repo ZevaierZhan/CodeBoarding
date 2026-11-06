@@ -36,22 +36,23 @@ def safe_file(root: Path, relative: str) -> Path:
     return resolved
 
 
-def file_digest(path: Path) -> tuple[str, int, tuple[int, ...]]:
+def file_digest(path: Path, *, enforce_source_limit: bool = True) -> tuple[str, int, tuple[int, ...]]:
     """Hash bounded chunks and reject changes during a read."""
     before = path.stat()
-    if not stat.S_ISREG(before.st_mode) or before.st_size > MAX_FILE_BYTES:
+    if not stat.S_ISREG(before.st_mode) or (enforce_source_limit and before.st_size > MAX_FILE_BYTES):
         raise ModelError("INVENTORY_LIMIT", "/source/files", "Expected a regular file within the 256 MiB limit")
     fingerprint = _fingerprint(before)
     hashed = hashlib.sha256()
     lines = 0
     size = 0
     last = b""
+    block_size = min(1024 * 1024, max(8192, before.st_size + 1))
     with path.open("rb") as stream:
         if _fingerprint(os.fstat(stream.fileno())) != fingerprint:
             raise ModelError("SOURCE_CHANGED", "/source/files", "Source identity changed before reading")
-        while block := stream.read(1024 * 1024):
+        while block := stream.read(block_size):
             size += len(block)
-            if size > MAX_FILE_BYTES:
+            if enforce_source_limit and size > MAX_FILE_BYTES:
                 raise ModelError("INVENTORY_LIMIT", "/source/files", "File grew beyond the 256 MiB limit")
             hashed.update(block)
             lines += block.count(b"\n") + block.count(b"\r") - block.count(b"\r\n")

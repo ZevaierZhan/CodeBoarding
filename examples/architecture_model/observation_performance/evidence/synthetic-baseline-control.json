@@ -1,0 +1,93 @@
+{
+  "seconds": 54.47302639999543,
+  "status": "ready",
+  "summary": {
+    "roots": 3,
+    "file_records": 32100,
+    "confirmed_overlaps": 16000,
+    "same_version": 16000,
+    "different_versions": 0,
+    "unknown_physical_identity": 0,
+    "unattributed_bindings": 0,
+    "items": 30,
+    "current_pending": 0,
+    "historical_pending": 0,
+    "issues": 0,
+    "blocked_roots": 0,
+    "ready_items": 12,
+    "confirmation_items": 3
+  },
+  "requires_replan": false,
+  "stdout_bytes": 836,
+  "plan_bytes": 0,
+  "peak_rss_bytes": 324153344,
+  "counters": {
+    "stat": 353973,
+    "path_opens": 16088,
+    "binary_opens": 16085,
+    "binary_bytes_read": 1345275,
+    "lstat": 128520
+  },
+  "profile": {
+    "validation.py:validate_model": {
+      "calls": 1,
+      "own_s": 0.0037133,
+      "inclusive_s": 0.9027886
+    },
+    "store.py:read": {
+      "calls": 1,
+      "own_s": 0.0023517,
+      "inclusive_s": 1.0362390000000001
+    },
+    "maintenance_plan.py:_engine_digest": {
+      "calls": 1,
+      "own_s": 0.0005874000000000001,
+      "inclusive_s": 0.0779316
+    },
+    "file_inventory.py:file_digest": {
+      "calls": 16085,
+      "own_s": 0.37495480000000003,
+      "inclusive_s": 10.3581885
+    },
+    "maintenance_plan.py:_workspace": {
+      "calls": 2,
+      "own_s": 0.3723675,
+      "inclusive_s": 22.6595356
+    },
+    "file_inventory.py:safe_file": {
+      "calls": 64420,
+      "own_s": 0.42676080000000005,
+      "inclusive_s": 28.408375900000003
+    },
+    "coverage.py:coverage_report": {
+      "calls": 1,
+      "own_s": 0.35630470000000003,
+      "inclusive_s": 26.728489200000002
+    },
+    "maintenance.py:query": {
+      "calls": 1,
+      "own_s": 1.9900000000000003e-05,
+      "inclusive_s": 4.6700000000000003e-05
+    },
+    "maintenance_plan.py:generate_plan": {
+      "calls": 1,
+      "own_s": 0.0140172,
+      "inclusive_s": 50.618755300000004
+    },
+    "maintenance_plan.py:check_plan": {
+      "calls": 1,
+      "own_s": 0.0083354,
+      "inclusive_s": 51.379526000000006
+    },
+    "benchmark.py:read": {
+      "calls": 32170,
+      "own_s": 0.0633718,
+      "inclusive_s": 7.4227565
+    },
+    "maintenance_plan.py:_impact": {
+      "calls": 1,
+      "own_s": 8.000000000000001e-06,
+      "inclusive_s": 1.45e-05
+    }
+  }
+}

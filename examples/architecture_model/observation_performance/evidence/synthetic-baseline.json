@@ -1,0 +1,479 @@
+{
+  "environment": {
+    "platform": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.13",
+    "logical_cpus": 12
+  },
+  "model_unchanged": true,
+  "samples": {
+    "generate": [
+      {
+        "seconds": 39.38369610000518,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 630,
+        "plan_bytes": 52856809,
+        "peak_rss_bytes": null,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 40.67258809998748
+      },
+      {
+        "seconds": 39.237572200014256,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 630,
+        "plan_bytes": 52856809,
+        "peak_rss_bytes": null,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 40.61909749999177
+      },
+      {
+        "seconds": 38.6144674999814,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 630,
+        "plan_bytes": 52856809,
+        "peak_rss_bytes": null,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 39.91542460001074
+      }
+    ],
+    "check": [
+      {
+        "seconds": 38.378935699991416,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 835,
+        "plan_bytes": 0,
+        "peak_rss_bytes": null,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 39.61032139998861
+      },
+      {
+        "seconds": 38.62741369998548,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 835,
+        "plan_bytes": 0,
+        "peak_rss_bytes": null,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 40.00897110000369
+      },
+      {
+        "seconds": 41.31297279999126,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 835,
+        "plan_bytes": 0,
+        "peak_rss_bytes": null,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 42.82686519998242
+      }
+    ],
+    "same_process_check": [
+      {
+        "seconds": 39.731004300003406,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 835,
+        "plan_bytes": 0,
+        "peak_rss_bytes": null,
+        "counters": {},
+        "profile": {}
+      },
+      {
+        "seconds": 49.050029800011544,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 835,
+        "plan_bytes": 0,
+        "peak_rss_bytes": null,
+        "counters": {},
+        "profile": {}
+      },
+      {
+        "seconds": 37.08723269999609,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 835,
+        "plan_bytes": 0,
+        "peak_rss_bytes": null,
+        "counters": {},
+        "profile": {}
+      }
+    ],
+    "profile_generate": [
+      {
+        "seconds": 62.88017389999004,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 630,
+        "plan_bytes": 52856809,
+        "peak_rss_bytes": null,
+        "counters": {
+          "stat": 353980,
+          "path_opens": 16087,
+          "binary_opens": 16085,
+          "binary_bytes_read": 1345275,
+          "lstat": 128520
+        },
+        "profile": {
+          "benchmark.py:read": {
+            "calls": 32170,
+            "own_s": 0.07801430000000001,
+            "inclusive_s": 8.6021449
+          },
+          "maintenance_plan.py:_workspace": {
+            "calls": 2,
+            "own_s": 0.42894350000000003,
+            "inclusive_s": 23.6476888
+          },
+          "store.py:atomic_write": {
+            "calls": 1,
+            "own_s": 6.36e-05,
+            "inclusive_s": 8.4707541
+          },
+          "file_inventory.py:file_digest": {
+            "calls": 16085,
+            "own_s": 0.38835660000000005,
+            "inclusive_s": 11.872959700000001
+          },
+          "coverage.py:coverage_report": {
+            "calls": 1,
+            "own_s": 0.43070060000000004,
+            "inclusive_s": 28.1567869
+          },
+          "maintenance_plan.py:_engine_digest": {
+            "calls": 1,
+            "own_s": 0.0006029000000000001,
+            "inclusive_s": 0.0680471
+          },
+          "file_inventory.py:safe_file": {
+            "calls": 64420,
+            "own_s": 0.47275130000000004,
+            "inclusive_s": 28.1329822
+          },
+          "validation.py:validate_model": {
+            "calls": 1,
+            "own_s": 0.0037422,
+            "inclusive_s": 1.0523679000000001
+          },
+          "maintenance.py:query": {
+            "calls": 1,
+            "own_s": 2.4800000000000003e-05,
+            "inclusive_s": 5.7700000000000007e-05
+          },
+          "maintenance_plan.py:generate_plan": {
+            "calls": 1,
+            "own_s": 0.0162197,
+            "inclusive_s": 53.125195600000005
+          },
+          "store.py:read": {
+            "calls": 1,
+            "own_s": 0.0025870000000000003,
+            "inclusive_s": 1.2209908
+          },
+          "maintenance_plan.py:_impact": {
+            "calls": 1,
+            "own_s": 6.7e-06,
+            "inclusive_s": 1.2600000000000001e-05
+          }
+        },
+        "process_seconds": 64.33456250000745
+      }
+    ],
+    "profile_check": [
+      {
+        "seconds": 62.926428000006126,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 835,
+        "plan_bytes": 0,
+        "peak_rss_bytes": null,
+        "counters": {
+          "stat": 353973,
+          "path_opens": 16088,
+          "binary_opens": 16085,
+          "binary_bytes_read": 1345275,
+          "lstat": 128520
+        },
+        "profile": {
+          "benchmark.py:read": {
+            "calls": 32170,
+            "own_s": 0.0747158,
+            "inclusive_s": 7.693717
+          },
+          "file_inventory.py:file_digest": {
+            "calls": 16085,
+            "own_s": 0.38849360000000005,
+            "inclusive_s": 10.8653717
+          },
+          "maintenance_plan.py:_engine_digest": {
+            "calls": 1,
+            "own_s": 0.0006145,
+            "inclusive_s": 0.0707204
+          },
+          "coverage.py:coverage_report": {
+            "calls": 1,
+            "own_s": 0.38678270000000003,
+            "inclusive_s": 27.0414536
+          },
+          "maintenance_plan.py:generate_plan": {
+            "calls": 1,
+            "own_s": 0.014866800000000001,
+            "inclusive_s": 59.330890100000005
+          },
+          "maintenance_plan.py:check_plan": {
+            "calls": 1,
+            "own_s": 0.015936600000000002,
+            "inclusive_s": 60.5235981
+          },
+          "file_inventory.py:safe_file": {
+            "calls": 64420,
+            "own_s": 0.5258845000000001,
+            "inclusive_s": 33.2054349
+          },
+          "maintenance_plan.py:_workspace": {
+            "calls": 2,
+            "own_s": 0.5877299,
+            "inclusive_s": 31.0173327
+          },
+          "validation.py:validate_model": {
+            "calls": 1,
+            "own_s": 0.0085004,
+            "inclusive_s": 1.2444247000000002
+          },
+          "maintenance.py:query": {
+            "calls": 1,
+            "own_s": 2.39e-05,
+            "inclusive_s": 5.2000000000000004e-05
+          },
+          "store.py:read": {
+            "calls": 1,
+            "own_s": 0.006232400000000001,
+            "inclusive_s": 1.5001503
+          },
+          "maintenance_plan.py:_impact": {
+            "calls": 1,
+            "own_s": 9.3e-06,
+            "inclusive_s": 1.7100000000000002e-05
+          }
+        },
+        "process_seconds": 65.56019359998754
+      }
+    ]
+  },
+  "timing_summary": {
+    "generate": {
+      "median_s": 39.237572200014256,
+      "max_s": 39.38369610000518,
+      "min_s": 38.6144674999814
+    },
+    "check": {
+      "median_s": 38.62741369998548,
+      "max_s": 41.31297279999126,
+      "min_s": 38.378935699991416
+    },
+    "same_process_check": {
+      "median_s": 39.731004300003406,
+      "max_s": 49.050029800011544,
+      "min_s": 37.08723269999609
+    },
+    "profile_generate": {
+      "median_s": 62.88017389999004,
+      "max_s": 62.88017389999004,
+      "min_s": 62.88017389999004
+    },
+    "profile_check": {
+      "median_s": 62.926428000006126,
+      "max_s": 62.926428000006126,
+      "min_s": 62.926428000006126
+    }
+  },
+  "measurement_notes": [
+    "Initial Windows peak-memory readings unavailable; see the corrected late reference control.",
+    "Initial stdout_bytes counts omit the final newline; later harness measurements include it."
+  ]
+}

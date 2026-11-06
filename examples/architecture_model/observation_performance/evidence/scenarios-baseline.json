@@ -1,0 +1,142 @@
+{
+  "files": 100,
+  "results": [
+    {
+      "scenario": "unchanged",
+      "seconds": 0.3381144000159111,
+      "status": "ready",
+      "requires_replan": false,
+      "reason_codes": [
+        "prerequisites_unchanged"
+      ]
+    },
+    {
+      "scenario": "modified",
+      "seconds": 0.3540764999925159,
+      "status": "stale",
+      "requires_replan": true,
+      "reason_codes": [
+        "workspace_changed",
+        "file_observations_changed"
+      ]
+    },
+    {
+      "scenario": "restored_mtime",
+      "seconds": 0.3284529000229668,
+      "status": "stale",
+      "requires_replan": true,
+      "reason_codes": [
+        "file_observations_changed"
+      ]
+    },
+    {
+      "scenario": "restored_bytes",
+      "seconds": 0.3273717000265606,
+      "status": "ready",
+      "requires_replan": false,
+      "reason_codes": [
+        "prerequisites_unchanged"
+      ]
+    },
+    {
+      "scenario": "added",
+      "seconds": 0.33589470002334565,
+      "status": "stale",
+      "requires_replan": true,
+      "reason_codes": [
+        "workspace_changed"
+      ]
+    },
+    {
+      "scenario": "deleted",
+      "seconds": 0.3172756999847479,
+      "status": "stale",
+      "requires_replan": true,
+      "reason_codes": [
+        "workspace_changed",
+        "file_observations_changed"
+      ]
+    },
+    {
+      "scenario": "renamed",
+      "seconds": 0.3032455999928061,
+      "status": "stale",
+      "requires_replan": true,
+      "reason_codes": [
+        "workspace_changed",
+        "file_observations_changed"
+      ]
+    },
+    {
+      "scenario": "mapping_copy",
+      "seconds": 0.4822773000050802,
+      "status": "stale",
+      "requires_replan": true,
+      "reason_codes": [
+        "external_changed",
+        "mapping_changed",
+        "workspace_changed"
+      ]
+    },
+    {
+      "scenario": "mapping_bytes",
+      "seconds": 0.3126316000125371,
+      "status": "stale",
+      "requires_replan": true,
+      "reason_codes": [
+        "external_changed"
+      ]
+    },
+    {
+      "scenario": "facts",
+      "seconds": 0.3125075999996625,
+      "status": "stale",
+      "requires_replan": true,
+      "reason_codes": [
+        "facts_changed",
+        "external_changed",
+        "file_observations_changed"
+      ]
+    },
+    {
+      "scenario": "extractor",
+      "seconds": 0.33121080001001246,
+      "status": "stale",
+      "requires_replan": true,
+      "reason_codes": [
+        "facts_changed",
+        "external_changed",
+        "file_observations_changed"
+      ]
+    },
+    {
+      "scenario": "revision",
+      "seconds": 0.31966340000508353,
+      "status": "stale",
+      "requires_replan": true,
+      "reason_codes": [
+        "model_revision_changed",
+        "model_content_changed"
+      ]
+    },
+    {
+      "scenario": "model_content",
+      "seconds": 0.3200751999975182,
+      "status": "stale",
+      "requires_replan": true,
+      "reason_codes": [
+        "model_content_changed"
+      ]
+    },
+    {
+      "scenario": "engine",
+      "seconds": 0.3344529999885708,
+      "status": "stale",
+      "requires_replan": true,
+      "reason_codes": [
+        "engine_digest_changed"
+      ]
+    }
+  ],
+  "model_unchanged": true
+}

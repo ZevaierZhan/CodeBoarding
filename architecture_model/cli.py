@@ -9,7 +9,7 @@ from filelock import FileLock, Timeout
 from architecture_model.coverage import coverage_report
 from architecture_model.errors import ModelError
 from architecture_model.facts import export_facts, export_multilanguage
-from architecture_model.file_inventory import export_inventory
+from architecture_model.file_inventory import export_inventory, file_digest
 from architecture_model.maintenance import preview, query, rebind, refresh, resolve
 from architecture_model.maintenance_plan import check_plan, generate_plan
 from architecture_model.schema import Facts, Model
@@ -132,10 +132,18 @@ def run(arguments: list[str]) -> dict:
         return {"model_id": initialized.id, "revision": initialized.revision, "committed": True}
     if args.action == "read":
         return store.read_scope(args.component, args.scenario)
-    if args.action == "maintenance-plan-check":
-        return check_plan(store.read(), load_json(args.plan))
-    if args.action == "maintenance-plan":
-        report = generate_plan(store.read(), args.source_map, args.facts, args.root, args.file, args.preview)
+    if args.action in ("maintenance-plan", "maintenance-plan-check"):
+        model_hash = file_digest(store.path, enforce_source_limit=False)[0]
+        current = store.read()
+        report = (
+            check_plan(current, load_json(args.plan))
+            if args.action == "maintenance-plan-check"
+            else generate_plan(current, args.source_map, args.facts, args.root, args.file, args.preview)
+        )
+        if file_digest(store.path, enforce_source_limit=False)[0] != model_hash:
+            raise ModelError("SOURCE_CHANGED", "/model", "Model changed during plan observation; read it again")
+        if args.action == "maintenance-plan-check":
+            return report
         output = args.output.resolve()
         if any(output.is_relative_to(Path(path).resolve()) for path in report["validity"]["mapping"].values()):
             raise ModelError("USAGE_ERROR", "/output", "Save plans outside observed source directories")
