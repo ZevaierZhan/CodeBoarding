@@ -126,7 +126,21 @@ coverage. Screenshots and all private data remain outside this repository.
 
 ### Validation and remaining limits
 
-Final automated measurements are recorded below when the final run completes.
+Final native-enabled full run: **2988 passed, 5 failed, 55 skipped**, **40.61%**
+coverage against the unchanged **80%** requirement. The five failed test IDs exactly
+match the existing baseline: four Windows installer assumptions and one devcontainer
+bash/path assertion. There are **no new failures**. All M1–M6-A/model and Q1 path/cache
+subset results and failed IDs are recorded in the sanitized
+[validation summary](../../examples/architecture_model/schema_compat/validation-summary.json).
+The gate remains failed; this change does not claim a passing whole-repository gate.
+
+The 28 new compatibility tests, 3 terminal-line boundary cases, real Python/TypeScript/
+Rust exports, Node's 8 tests and Chrome checks passed. Black and mypy pass for 388
+files. Pre-commit and the actual commit hook pass. No Kotlin grammar or toolchain
+was installed or downloaded; existing optional-dependency skips remain intact.
+The environment uses Python 3.12.13 and the prepared virtual environment. `.env` is
+absent; these CLI/native checks use explicit local tools and invoke no LLM pipeline.
+
 The initial broad run had the five documented Windows/bashed-path baseline failures,
 plus a 60-second bounded-context subprocess timeout under concurrent acceptance load.
 All 10 context tests passed on isolated rerun. No timeout, threshold or test was weakened.
