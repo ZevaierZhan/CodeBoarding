@@ -309,12 +309,27 @@ def main() -> int:
             command.add_argument("--id", default="")
             command.add_argument("--pointer", default="")
             command.add_argument("--output", type=Path)
+    coverage = commands.add_parser("coverage")
+    coverage.add_argument("--report", type=Path, required=True)
+    coverage.add_argument(
+        "--collection", choices=("roots", "files", "overlaps", "unattributed_bindings"), default="files"
+    )
+    coverage.add_argument("--search", default="")
+    coverage.add_argument("--offset", type=int, default=0)
+    coverage.add_argument("--limit", type=int, default=10)
     proxy = commands.add_parser("cli")
     proxy.add_argument("--response", type=Path, required=True)
     proxy.add_argument("arguments", nargs=argparse.REMAINDER)
     args = parser.parse_args()
     try:
-        if args.command == "capture":
+        if args.command == "coverage":
+            if args.offset < 0 or not 1 <= args.limit <= 100:
+                raise ValueError("offset must be nonnegative and limit must be 1..100")
+            report = json.loads(args.report.read_text(encoding="utf-8"))
+            if report.get("protocol") != "source-coverage-v1" or report.get("committed") is not False:
+                raise ValueError("Expected a read-only source-coverage-v1 report")
+            result = page({"inventory": report[args.collection]}, "", args.search, args.offset, args.limit)
+        elif args.command == "capture":
             result = capture(args.engine, args.model, args.cache)
         elif args.command == "cli":
             arguments = args.arguments[1:] if args.arguments[:1] == ["--"] else args.arguments

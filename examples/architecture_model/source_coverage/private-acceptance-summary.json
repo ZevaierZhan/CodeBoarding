@@ -1,0 +1,71 @@
+{
+  "private_artifacts_kept_outside_repository": true,
+  "reports": [
+    {
+      "case": "formal-r9",
+      "revision": 9,
+      "roots": 3,
+      "file_records": 16215,
+      "confirmed_overlaps": 46,
+      "same_version": 46,
+      "different_versions": 0,
+      "unknown_physical_identity": 0,
+      "elapsed_seconds_including_validation_and_pending_queries": 24.009,
+      "report_bytes": 8740586,
+      "stdout_summary_bytes": 433,
+      "historical_pending_count": 0,
+      "model_bytes_preserved": true,
+      "missing_descriptor_roots": 1,
+      "descriptor_different_basis_count": 1
+    },
+    {
+      "case": "isolated-r38",
+      "revision": 38,
+      "roots": 3,
+      "file_records": 16215,
+      "confirmed_overlaps": 6,
+      "same_version": 6,
+      "different_versions": 0,
+      "unknown_physical_identity": 0,
+      "elapsed_seconds_including_validation_and_pending_queries": 24.187,
+      "report_bytes": 8685323,
+      "stdout_summary_bytes": 435,
+      "historical_pending_count": 20,
+      "model_bytes_preserved": true,
+      "missing_descriptor_roots": 1,
+      "descriptor_different_basis_count": 1
+    },
+    {
+      "case": "r38-canonical-physical-mapping",
+      "revision": 38,
+      "roots": 3,
+      "file_records": 16215,
+      "confirmed_overlaps": 46,
+      "same_version": 45,
+      "different_versions": 1,
+      "unknown_physical_identity": 0,
+      "elapsed_seconds_including_validation_and_pending_queries": 22.989,
+      "report_bytes": 8741910,
+      "stdout_summary_bytes": 455,
+      "historical_pending_count": 20,
+      "model_bytes_preserved": true,
+      "missing_descriptor_roots": 1,
+      "descriptor_different_basis_count": 1
+    }
+  ],
+  "full_original_model_validation": "blocked_by_existing_out_of_main_scenario_extensions",
+  "private_projection_only": true,
+  "omitted_extension_fields": [
+    "analysis_kind",
+    "facet_order",
+    "facet_checks"
+  ],
+  "inventory_benchmark": {
+    "selected_files": 16169,
+    "elapsed_seconds": 48.626,
+    "snapshot_bytes": 10708780,
+    "default_explicit_exclusions_used": true
+  },
+  "formal_revision_9_and_drill_revision_38_unchanged": true,
+  "mapping_note": "isolated-r38 maps the native root to its focused physical copy; canonical mapping instead compares saved versions at original physical paths, without claiming they match live bytes"
+}

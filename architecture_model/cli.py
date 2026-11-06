@@ -4,13 +4,15 @@ import sys
 from pathlib import Path
 from typing import Never
 
-from filelock import Timeout
+from filelock import FileLock, Timeout
 
+from architecture_model.coverage import coverage_report
 from architecture_model.errors import ModelError
 from architecture_model.facts import export_facts, export_multilanguage
+from architecture_model.file_inventory import export_inventory
 from architecture_model.maintenance import preview, query, rebind, refresh, resolve
 from architecture_model.schema import Facts, Model
-from architecture_model.store import ModelStore, load_json
+from architecture_model.store import ModelStore, atomic_write, load_json
 from architecture_model.validation import parse
 from architecture_model.viewer import export_html
 
@@ -32,6 +34,12 @@ def run(arguments: list[str]) -> dict:
     read = actions.add_parser("read")
     read.add_argument("--component", default="")
     read.add_argument("--scenario", default="")
+    coverage = actions.add_parser("coverage-report", help="Read-only physical overlap and independent root versions")
+    coverage.add_argument("--source-map", type=Path, required=True)
+    coverage.add_argument("--output", type=Path, required=True)
+    coverage.add_argument("--snapshot", action="append", default=[])
+    coverage.add_argument("--facts", type=Path, action="append", default=[])
+    coverage.add_argument("--root", action="append", default=[])
     maintenance = actions.add_parser(
         "maintenance", help="Show current interpretation coverage and historical observations"
     )
@@ -73,9 +81,20 @@ def run(arguments: list[str]) -> dict:
         facts.add_argument(f"--{name}", type=Path)
     facts.add_argument("--source-root-id", default="")
     facts.add_argument("--project-id", required=True)
+    facts.add_argument("--file-inventory", action="store_true")
+    facts.add_argument("--include", action="append", default=[])
+    facts.add_argument("--exclude", action="append", default=[])
     args = parser.parse_args(arguments)
     if args.resource == "facts":
-        if args.tools:
+        if args.file_inventory:
+            if any((args.tools, args.node, args.pyright, args.tokei)):
+                raise ModelError("USAGE_ERROR", "/tools", "File inventory does not use native analysis tools")
+            snapshot = export_inventory(
+                args.repo, args.project_id, args.output, args.source_root_id, args.include, args.exclude
+            )
+        elif args.include or args.exclude:
+            raise ModelError("USAGE_ERROR", "/include", "Selection rules require --file-inventory")
+        elif args.tools:
             snapshot = export_multilanguage(args.repo, args.project_id, args.output, args.source_root_id, args.tools)
         else:
             if not all((args.node, args.pyright, args.tokei)) or args.source_root_id:
@@ -98,6 +117,32 @@ def run(arguments: list[str]) -> dict:
         return {"model_id": initialized.id, "revision": initialized.revision, "committed": True}
     if args.action == "read":
         return store.read_scope(args.component, args.scenario)
+    if args.action == "coverage-report":
+        mapping = load_json(args.source_map)
+        if not isinstance(mapping, dict) or any(
+            not isinstance(key, str) or not isinstance(value, str) for key, value in mapping.items()
+        ):
+            raise ModelError("USAGE_ERROR", "/source-map", "Expected root ID to absolute local directory mapping")
+        report = coverage_report(
+            store.read(),
+            {key: Path(value) for key, value in mapping.items()},
+            args.snapshot,
+            [parse(Facts, load_json(path)) for path in args.facts],
+            args.root,
+        )
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        with FileLock(str(args.output) + ".lock", timeout=30):
+            if args.output.exists():
+                raise ModelError("ALREADY_EXISTS", str(args.output), "Choose a new coverage output path")
+            atomic_write(args.output, report)
+        return {
+            "protocol": report["protocol"],
+            "model_id": report["model_id"],
+            "revision": report["revision"],
+            "committed": False,
+            "summary": report["summary"],
+            "output": str(args.output.resolve()),
+        }
     if args.action == "export-html":
         mapping = load_json(args.source_map) if args.source_map else {}
         if not isinstance(mapping, dict) or any(

@@ -1,0 +1,48 @@
+{
+  "source_root_id": "all-files",
+  "snapshot_ids": [
+    "9fb15fac96105a12b5e74893c1bf9881d9c011f0c20aa35dacbcde30a47f7b9d",
+    "aa14ffc07413c71a96ab08ae7cb930ebd262854c24d16758d125b7c7df9b6b47",
+    "ce01a62af6d731a305d746171c16e135319fbeea98e0c82dfc9dc1cb21028b8e"
+  ],
+  "selected_snapshot_id": "ce01a62af6d731a305d746171c16e135319fbeea98e0c82dfc9dc1cb21028b8e",
+  "selected_source_version": "b0e1d1a4cfd317860c836ab869aad564cad8715492a3b298e3aa4e7f3f010a22",
+  "selection": "maintenance_target",
+  "latest_recorded_maintenance_target": "ce01a62af6d731a305d746171c16e135319fbeea98e0c82dfc9dc1cb21028b8e",
+  "maintenance_target_status": "selected_target_recorded",
+  "extraction": {
+    "status": "declared_complete",
+    "descriptor": {
+      "protocol": "file-inventory-v1",
+      "complete": true,
+      "implementation": "c5ead125889421a0f692ac58de0bf5060fd8d614aeaa5e0af3dbb3e215768fc3",
+      "patterns": [
+        "*"
+      ],
+      "tools": [],
+      "configuration": {
+        "evidence": "file content only; no symbols, calls or runtime analysis",
+        "hash": "sha256 raw bytes",
+        "limits": "files=100000; entries=500000; bytes_per_file=268435456",
+        "links": "reject non-ignored symlinks and junctions",
+        "matching": "fnmatchcase over root-relative POSIX paths; star includes slash; exclude prunes directories",
+        "rules": "{\"exclude\": [], \"excluded_directory_names\": [\".git\", \".venv\", \"node_modules\", \"__pycache__\", \".codegraph\", \".codeboarding\"], \"include\": [\"*\"]}"
+      }
+    }
+  },
+  "evidence": "file_only",
+  "limitations": [
+    "Proves selected file bytes only; no symbols, calls or runtime behavior are analyzed.",
+    "Absent symbols do not imply absent code. Inventory completeness is not symbol completeness.",
+    "Excluded directories and patterns are outside scope; file languages are unclassified.",
+    "Physical source range is root-relative and requires an explicit local root mapping."
+  ],
+  "file_count": 4,
+  "mapping": "unknown",
+  "reexport": "unknown",
+  "architecture_review": "not_established_by_coverage",
+  "pending_ids": [
+    "maintenance-9176cf6fa3118766cf74732632f3122cc746bccad54c08c8e513be3002b12ccf"
+  ],
+  "descriptor_differences": []
+}

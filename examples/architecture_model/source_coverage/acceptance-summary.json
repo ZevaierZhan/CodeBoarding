@@ -1,0 +1,100 @@
+{
+  "real_native_typescript": true,
+  "native_symbols": 3,
+  "native_calls": 2,
+  "inventory_files": 4,
+  "reports": [
+    {
+      "roots": 2,
+      "file_records": 7,
+      "confirmed_overlaps": 3,
+      "same_version": 3,
+      "different_versions": 0,
+      "unknown_physical_identity": 0,
+      "unattributed_bindings": 0
+    },
+    {
+      "roots": 2,
+      "file_records": 7,
+      "confirmed_overlaps": 3,
+      "same_version": 2,
+      "different_versions": 1,
+      "unknown_physical_identity": 0,
+      "unattributed_bindings": 0
+    },
+    {
+      "roots": 2,
+      "file_records": 7,
+      "confirmed_overlaps": 3,
+      "same_version": 3,
+      "different_versions": 0,
+      "unknown_physical_identity": 0,
+      "unattributed_bindings": 0
+    },
+    {
+      "roots": 2,
+      "file_records": 7,
+      "confirmed_overlaps": 3,
+      "same_version": 3,
+      "different_versions": 0,
+      "unknown_physical_identity": 0,
+      "unattributed_bindings": 0
+    },
+    {
+      "roots": 2,
+      "file_records": 7,
+      "confirmed_overlaps": 3,
+      "same_version": 3,
+      "different_versions": 0,
+      "unknown_physical_identity": 0,
+      "unattributed_bindings": 0
+    }
+  ],
+  "read_only_bytes_preserved": true,
+  "read_only_checks": [
+    {
+      "phase": "baseline",
+      "revision_before": 1,
+      "revision_after": 1,
+      "sha256_before": "44394a5818a323c5f88f54a9f574a6bd20c3ecaf9668df63aa562426cc02a60a",
+      "sha256_after": "44394a5818a323c5f88f54a9f574a6bd20c3ecaf9668df63aa562426cc02a60a"
+    },
+    {
+      "phase": "native-refreshed",
+      "revision_before": 2,
+      "revision_after": 2,
+      "sha256_before": "25d7d33c871432e8a3cd39efcb274a18df4bbc06e183a98936f06dee7aa8d81d",
+      "sha256_after": "25d7d33c871432e8a3cd39efcb274a18df4bbc06e183a98936f06dee7aa8d81d"
+    },
+    {
+      "phase": "both-exported",
+      "revision_before": 3,
+      "revision_after": 3,
+      "sha256_before": "83c2bc30d17b5fda8ee9e5b028c90808c906669767b5e6a1a7a8ba22034424e2",
+      "sha256_after": "83c2bc30d17b5fda8ee9e5b028c90808c906669767b5e6a1a7a8ba22034424e2"
+    },
+    {
+      "phase": "latest-reviewed",
+      "revision_before": 6,
+      "revision_after": 6,
+      "sha256_before": "edd0e8ba29a1a05179b48ace6e9f3f9dabec65ea66bebbaa93f4a6d6ae98ccf1",
+      "sha256_after": "edd0e8ba29a1a05179b48ace6e9f3f9dabec65ea66bebbaa93f4a6d6ae98ccf1"
+    },
+    {
+      "phase": "interpretation-edited",
+      "revision_before": 7,
+      "revision_after": 7,
+      "sha256_before": "30fb252c657febb31b693e0b57a7b5dd8864125dc0f410f997ffeb0d9d9bad74",
+      "sha256_after": "30fb252c657febb31b693e0b57a7b5dd8864125dc0f410f997ffeb0d9d9bad74"
+    }
+  ],
+  "root_isolation": true,
+  "descriptor_upgrade": "indeterminate",
+  "explicit_baseline_reestablished": true,
+  "historical_pending_retained": true,
+  "historical_snapshots_preserved": true,
+  "latest_review_separated_from_historical_pending": true,
+  "interpretation_edit_requires_new_review": true,
+  "historical_reviews_preserved": true,
+  "original_verification_scope_preserved": true
+}

@@ -1,0 +1,31 @@
+{
+  "baseline": "e93dc73388c60aff152adc9ae9f1f85444e2599c",
+  "model_valid": true,
+  "old_cli_error": "KeyError: 'unavailable-snapshot'",
+  "fixed_cli": {
+    "ok": true,
+    "result": {
+      "protocol": "source-coverage-v1",
+      "model_id": "6dc06dcd-90d4-4864-9f39-e24cf7f2a69d",
+      "revision": 2,
+      "committed": false,
+      "summary": {
+        "roots": 1,
+        "file_records": 4,
+        "confirmed_overlaps": 0,
+        "same_version": 0,
+        "different_versions": 0,
+        "unknown_physical_identity": 4,
+        "unattributed_bindings": 1
+      },
+      "output": "negative-report.json"
+    }
+  },
+  "model_sha256_before": "d54ff721c17455144b3961cf7f8b1cd2a84f26f1cb4e4ef406549c9fcbd21044",
+  "model_sha256_after": "d54ff721c17455144b3961cf7f8b1cd2a84f26f1cb4e4ef406549c9fcbd21044",
+  "m2_pending_ids": [
+    "maintenance-9176cf6fa3118766cf74732632f3122cc746bccad54c08c8e513be3002b12ccf"
+  ],
+  "read_only_review_model": true,
+  "committed_fixture_lf_sha256": "e3858f976e874c1bf5405641931e335b4df23f0fb19536cc6ced1caa2f6e75ab"
+}

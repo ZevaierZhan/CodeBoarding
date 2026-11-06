@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "id": "6dc06dcd-90d4-4864-9f39-e24cf7f2a69d",
+  "project": {
+    "id": "sample",
+    "name": "Sample",
+    "boundary": "Synthetic evidence"
+  },
+  "revision": 2,
+  "facts": [
+    {
+      "schema_version": 2,
+      "id": "aa14ffc07413c71a96ab08ae7cb930ebd262854c24d16758d125b7c7df9b6b47",
+      "project_id": "sample",
+      "source": {
+        "digest": "d1fb88012d9abf6955d792e09ddb2347965532f13877e8f903e3d6786dec6ad5",
+        "git_commit": "",
+        "files": {
+          "docs/policy.md": "2dfd7ef997eea6588d64a06573d72412c738400c869aeb54cdbc9cdeee13774a",
+          "src/gateway.ts": "ae1993c51e92858d566d576bf6925ea5d40d3976b14ac5c12e3cbad0f7acf04c",
+          "src/helpers.ts": "3daf1d6e3a9e80718d671e8528657d627bafeeeca8a31afd280f8e8c1e4f1792",
+          "src/rules.ts": "2e861033fcdf3ad92954738d4b253edaec4efc4235503bba41451052a95324ad"
+        },
+        "scope": "Complete file-inventory-v1 selection"
+      },
+      "symbols": {},
+      "file_locations": {
+        "docs/policy.md": {
+          "path": "docs/policy.md",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "2dfd7ef997eea6588d64a06573d72412c738400c869aeb54cdbc9cdeee13774a",
+          "start": 1,
+          "end": 1
+        },
+        "src/gateway.ts": {
+          "path": "src/gateway.ts",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "ae1993c51e92858d566d576bf6925ea5d40d3976b14ac5c12e3cbad0f7acf04c",
+          "start": 1,
+          "end": 1
+        },
+        "src/helpers.ts": {
+          "path": "src/helpers.ts",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "3daf1d6e3a9e80718d671e8528657d627bafeeeca8a31afd280f8e8c1e4f1792",
+          "start": 1,
+          "end": 1
+        },
+        "src/rules.ts": {
+          "path": "src/rules.ts",
+          "symbol": "",
+          "kind": "FILE",
+          "content_hash": "2e861033fcdf3ad92954738d4b253edaec4efc4235503bba41451052a95324ad",
+          "start": 1,
+          "end": 1
+        }
+      },
+      "calls": [],
+      "tools": {
+        "engine": "file-inventory-v1",
+        "maintenance_scope": "{\"complete\": true, \"configuration\": {\"evidence\": \"file content only; no symbols, calls or runtime analysis\", \"hash\": \"sha256 raw bytes\", \"limits\": \"files=100000; entries=500000; bytes_per_file=268435456\", \"links\": \"reject non-ignored symlinks and junctions\", \"matching\": \"fnmatchcase over root-relative POSIX paths; star includes slash; exclude prunes directories\", \"rules\": \"{\\\"exclude\\\": [], \\\"excluded_directory_names\\\": [\\\".git\\\", \\\".venv\\\", \\\"node_modules\\\", \\\"__pycache__\\\", \\\".codegraph\\\", \\\".codeboarding\\\"], \\\"include\\\": [\\\"*\\\"]}\"}, \"implementation\": \"c5ead125889421a0f692ac58de0bf5060fd8d614aeaa5e0af3dbb3e215768fc3\", \"patterns\": [\"*\"], \"protocol\": \"file-inventory-v1\", \"tools\": []}"
+      },
+      "limitations": [
+        "Proves selected file bytes only; no symbols, calls or runtime behavior are analyzed.",
+        "Absent symbols do not imply absent code. Inventory completeness is not symbol completeness.",
+        "Excluded directories and patterns are outside scope; file languages are unclassified.",
+        "Physical source range is root-relative and requires an explicit local root mapping."
+      ],
+      "source_root_id": "all-files",
+      "file_languages": {
+        "docs/policy.md": "unclassified",
+        "src/gateway.ts": "unclassified",
+        "src/helpers.ts": "unclassified",
+        "src/rules.ts": "unclassified"
+      },
+      "file_projects": {
+        "docs/policy.md": ".",
+        "src/gateway.ts": ".",
+        "src/helpers.ts": ".",
+        "src/rules.ts": "."
+      }
+    }
+  ],
+  "bindings": [
+    {
+      "id": "all-files-binding",
+      "snapshot_id": "aa14ffc07413c71a96ab08ae7cb930ebd262854c24d16758d125b7c7df9b6b47",
+      "source_version": "d1fb88012d9abf6955d792e09ddb2347965532f13877e8f903e3d6786dec6ad5",
+      "location": {
+        "path": "src/rules.ts",
+        "symbol": "",
+        "kind": "FILE",
+        "content_hash": "2e861033fcdf3ad92954738d4b253edaec4efc4235503bba41451052a95324ad",
+        "start": 1,
+        "end": 1
+      },
+      "status": "current",
+      "reason": "",
+      "history": []
+    },
+    {
+      "id": "historical",
+      "snapshot_id": "unavailable-snapshot",
+      "source_version": "d1fb88012d9abf6955d792e09ddb2347965532f13877e8f903e3d6786dec6ad5",
+      "location": {
+        "path": "src/rules.ts",
+        "symbol": "",
+        "kind": "FILE",
+        "content_hash": "2e861033fcdf3ad92954738d4b253edaec4efc4235503bba41451052a95324ad",
+        "start": 1,
+        "end": 1
+      },
+      "status": "missing",
+      "reason": "Historical evidence with unavailable snapshot",
+      "history": []
+    }
+  ],
+  "components": [
+    {
+      "id": "component",
+      "name": "Rules",
+      "responsibility": "Sample rules",
+      "rationale": "Fixture",
+      "parent_id": "",
+      "binding_ids": [
+        "all-files-binding"
+      ],
+      "claim": {
+        "kind": "code_fact",
+        "explanation": "Evidence from independent roots",
+        "binding_ids": [
+          "all-files-binding"
+        ],
+        "assumptions": [],
+        "issues": []
+      }
+    }
+  ],
+  "relations": [],
+  "scenarios": [
+    {
+      "id": "scenario",
+      "name": "Policy",
+      "entry_step_id": "step",
+      "steps": [
+        {
+          "id": "step",
+          "component_ids": [
+            "component"
+          ],
+          "binding_ids": [
+            "all-files-binding"
+          ],
+          "claim": {
+            "kind": "code_fact",
+            "explanation": "Evidence from independent roots",
+            "binding_ids": [
+              "all-files-binding"
+            ],
+            "assumptions": [],
+            "issues": []
+          }
+        }
+      ],
+      "order": [
+        "step"
+      ],
+      "transitions": [],
+      "claim": {
+        "kind": "code_fact",
+        "explanation": "Evidence from independent roots",
+        "binding_ids": [
+          "all-files-binding"
+        ],
+        "assumptions": [],
+        "issues": []
+      }
+    }
+  ],
+  "opinions": [],
+  "verifications": [],
+  "revisions": [
+    {
+      "revision": 0,
+      "author": "test",
+      "summary": "Initialize architecture model",
+      "timestamp": "2026-11-05T16:23:13.843232+00:00",
+      "object_ids": [],
+      "scenario_ids": []
+    },
+    {
+      "revision": 1,
+      "author": "test",
+      "summary": "Attach independent evidence",
+      "timestamp": "2026-11-05T16:23:13.848231+00:00",
+      "object_ids": [
+        "aa14ffc07413c71a96ab08ae7cb930ebd262854c24d16758d125b7c7df9b6b47",
+        "all-files-binding",
+        "component",
+        "scenario"
+      ],
+      "scenario_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "revision": 2,
+      "author": "repro",
+      "summary": "Keep historical evidence",
+      "timestamp": "2026-11-05T16:23:13.855240+00:00",
+      "object_ids": [
+        "historical"
+      ],
+      "scenario_ids": []
+    }
+  ],
+  "maintenance": [],
+  "maintenance_target_snapshot_id": ""
+}
