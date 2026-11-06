@@ -11,6 +11,7 @@ from architecture_model.errors import ModelError
 from architecture_model.facts import export_facts, export_multilanguage
 from architecture_model.file_inventory import export_inventory
 from architecture_model.maintenance import preview, query, rebind, refresh, resolve
+from architecture_model.maintenance_plan import check_plan, generate_plan
 from architecture_model.schema import Facts, Model
 from architecture_model.store import ModelStore, atomic_write, load_json
 from architecture_model.validation import parse
@@ -40,6 +41,13 @@ def run(arguments: list[str]) -> dict:
     coverage.add_argument("--snapshot", action="append", default=[])
     coverage.add_argument("--facts", type=Path, action="append", default=[])
     coverage.add_argument("--root", action="append", default=[])
+    plan = actions.add_parser("maintenance-plan", help="Derive a read-only cross-root maintenance plan")
+    plan.add_argument("--source-map", type=Path)
+    plan.add_argument("--output", type=Path, required=True)
+    plan.add_argument("--facts", type=Path, action="append", default=[])
+    plan.add_argument("--root", action="append", default=[])
+    plan_check = actions.add_parser("maintenance-plan-check", help="Reobserve a plan's prerequisites without writing")
+    plan_check.add_argument("--plan", type=Path, required=True)
     maintenance = actions.add_parser(
         "maintenance", help="Show current interpretation coverage and historical observations"
     )
@@ -117,6 +125,22 @@ def run(arguments: list[str]) -> dict:
         return {"model_id": initialized.id, "revision": initialized.revision, "committed": True}
     if args.action == "read":
         return store.read_scope(args.component, args.scenario)
+    if args.action == "maintenance-plan-check":
+        return check_plan(store.read(), load_json(args.plan))
+    if args.action == "maintenance-plan":
+        report = generate_plan(store.read(), args.source_map, args.facts, args.root, args.file)
+        output = args.output.resolve()
+        if any(output.is_relative_to(Path(path).resolve()) for path in report["validity"]["mapping"].values()):
+            raise ModelError("USAGE_ERROR", "/output", "Save plans outside observed source directories")
+        output.parent.mkdir(parents=True, exist_ok=True)
+        with FileLock(str(output) + ".lock", timeout=30):
+            if output.exists():
+                raise ModelError("ALREADY_EXISTS", str(output), "Choose a new plan output path")
+            atomic_write(output, report)
+        return {
+            key: report[key]
+            for key in ("protocol", "plan_id", "model_id", "base_revision", "status", "committed", "summary")
+        } | {"output": str(output)}
     if args.action == "coverage-report":
         mapping = load_json(args.source_map)
         if not isinstance(mapping, dict) or any(
