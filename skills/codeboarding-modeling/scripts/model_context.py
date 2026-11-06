@@ -26,6 +26,7 @@ PATH_OPTIONS = {
     "--tools",
     "--source-map",
     "--plan",
+    "--preview",
 }
 COLLECTIONS = ("facts", "bindings", "components", "relations", "scenarios", "opinions", "verifications", "maintenance")
 
@@ -340,7 +341,9 @@ def main() -> int:
             if args.offset < 0 or not 1 <= args.limit <= 100:
                 raise ValueError("offset must be nonnegative and limit must be 1..100")
             report = json.loads(args.report.read_text(encoding="utf-8"))
-            protocol = "source-coverage-v1" if args.command == "coverage" else "cross-root-maintenance-plan-v1"
+            protocol = "source-coverage-v1" if args.command == "coverage" else "cross-root-maintenance-plan-v2"
+            if args.command == "plan" and report.get("protocol") == "cross-root-maintenance-plan-v1":
+                raise ValueError("Legacy plan item states require regeneration; check the old plan, then generate v2")
             if report.get("protocol") != protocol or report.get("committed") is not False:
                 raise ValueError(f"Expected a read-only {protocol} report")
             if args.command == "plan" and args.output and not (args.id or args.pointer):
@@ -359,6 +362,7 @@ def main() -> int:
                 result = walk(selected, args.pointer)
                 if args.output:
                     protected = [args.report, *[Path(path) for path in report["inputs"]["facts"]]]
+                    protected.extend(Path(path) for path in report["inputs"]["previews"])
                     protected.extend(
                         Path(report["inputs"][key]) for key in ("source_map", "model_path") if report["inputs"][key]
                     )

@@ -1,7 +1,8 @@
 # Cross-root maintenance acceptance
 
 M6-B adds read-only `maintenance-plan` and `maintenance-plan-check`, using
-`cross-root-maintenance-plan-v1`. See the
+`cross-root-maintenance-plan-v2`. Valid v1 artifacts are retained for audit and
+check as stale; regenerate before choosing actions. See the
 [design and protocol](../../../docs/design/architecture-model-m6-b.md) and
 [Agent continuation workflow](../../../skills/codeboarding-modeling/references/maintenance-plan.md).
 
@@ -32,6 +33,11 @@ result. `real-acceptance-summary.json` contains counts and integrity assertions
 from the private original model and revision 38 isolation; private source names,
 models, manifests, source digests and detailed hash inventories stay private.
 
-Ready is a statement about observed continuation prerequisites. Completed item
+Ready permits the named read-only action with satisfied hard prerequisites. Completed item
 counts refer to recorded maintenance actions only. Pending historical reviews,
 semantic scope differences and unexecuted runtime checks remain distinct.
+
+The [P2 dependency correction](p2/README.md) records the reviewed-head red output,
+the v2 per-item states, dependency invariants, current-preview response input and
+new validation. Earlier summaries/logs in this directory describe the original
+reviewed head and remain historical evidence.

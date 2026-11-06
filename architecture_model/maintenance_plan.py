@@ -8,15 +8,17 @@ from architecture_model.coverage import coverage_report
 from architecture_model.errors import ModelError
 from architecture_model.file_inventory import DEFAULT_EXCLUDES, MAX_ENTRIES, file_digest, safe_file
 from architecture_model.maintenance import preview, query, root_targets
+from architecture_model.maintenance_plan_states import evaluate_dependencies, root_items
 from architecture_model.schema import Facts, Model
 from architecture_model.store import load_json
 from architecture_model.validation import digest, parse, validate_facts
 from architecture_model.verification import referenced_bindings, verification_scope
 
-PROTOCOL = "cross-root-maintenance-plan-v1"
+PROTOCOL = "cross-root-maintenance-plan-v2"
+LEGACY_PROTOCOL = "cross-root-maintenance-plan-v1"
 LIMITS = [
     "Independent roots retain independent extraction scopes and maintenance transactions.",
-    "Ready permits inspection of prerequisites, not execution or user approval.",
+    "Ready permits a read-only action now with satisfied hard prerequisites; writes require explicit decisions.",
     "Completed describes a recorded maintenance action only; it is not runtime or interpretation proof.",
     "Any changed revision requires replanning; obtain a new preview token immediately before refresh.",
     "Checks are advisory and cannot prevent callers from invoking the existing CLI directly.",
@@ -26,13 +28,19 @@ LIMITS = [
 
 
 def generate_plan(
-    model: Model, source_map: Path | None, facts_paths: list[Path], roots: list[str], model_path: Path | None = None
+    model: Model,
+    source_map: Path | None,
+    facts_paths: list[Path],
+    roots: list[str],
+    model_path: Path | None = None,
+    preview_paths: list[Path] | None = None,
 ) -> dict:
-    inputs = {
+    inputs: dict = {
         "source_map": str(source_map.absolute()) if source_map else "",
         "facts": [str(path.absolute()) for path in facts_paths],
         "roots": sorted(set(roots)),
         "model_path": str(model_path.absolute()) if model_path else "",
+        "previews": [str(path.absolute()) for path in preview_paths or []],
     }
     mapping, targets, external, input_issues = _inputs(inputs)
     catalog = {snapshot.id: snapshot for snapshot in model.facts}
@@ -57,6 +65,7 @@ def generate_plan(
         logging.exception("Plan source coverage could not establish physical identity")
         issues.append({"code": "source_observation_failed", "detail": str(error)})
         coverage = coverage_report(model, {}, [], targets, [], maintenance)
+    receipts = _preview_inputs(inputs["previews"], catalog)
     pending = set(maintenance["pending_ids"])
     latest = set(maintenance.get("latest_observation_ids", [item["id"] for item in maintenance["observations"]]))
     current = set(maintenance["current_coverage_ids"]) & latest
@@ -94,6 +103,7 @@ def generate_plan(
             blockers.append("workspace_differs_from_selected_facts")
         if issues:
             blockers.append("incomplete_input_observation")
+        comparison_report: dict = {}
         if selected and row["extraction"]["status"] == "declared_complete":
             try:
                 proposed_observations = [
@@ -110,8 +120,9 @@ def generate_plan(
                     for entry in model.bindings
                     if entry.snapshot_id in catalog and catalog[entry.snapshot_id].source_root_id == root
                 )
-                if selected.id in {entry.id for entry in targets} or needs_comparison:
-                    proposed_observations = preview(model, selected)["observations"]
+                if selected.id in {entry.id for entry in targets} or needs_comparison or root in receipts:
+                    comparison_report = preview(model, selected)
+                    proposed_observations = comparison_report["observations"]
                 observations.extend(proposed_observations)
                 if any(
                     item["disposition"] in ("ambiguous", "missing", "indeterminate") and item["resolution"] is None
@@ -122,127 +133,77 @@ def generate_plan(
                 logging.exception("Plan comparison could not establish an extraction baseline")
                 blockers.append("comparison_unavailable")
                 issues.append({"code": "comparison_unavailable", "root_id": root, "detail": str(error)})
-        inspect = _item(
-            items,
-            root,
-            "inspect-source",
-            basis,
-            [],
-            "blocked" if blockers else "ready",
-            blockers,
-            "Confirm explicit mapping, physical files and independent extraction scope",
-            "Observation only; recheck before export",
-        )
-        export = _item(
-            items,
-            root,
-            "reexport",
-            basis,
-            [inspect],
-            "blocked" if blockers else "ready",
-            blockers,
-            "Export this root explicitly if source differs or completeness is unknown",
-            "Supply real facts from the intended scope; matching saved bytes do not check new files",
-        )
-        baseline = _item(
-            items,
-            root,
-            "establish-baseline",
-            basis,
-            [inspect],
-            "blocked" if row["descriptor_differences"] else "ready",
-            ["indeterminate_extraction_comparison"] if row["descriptor_differences"] else [],
-            "Inspect descriptor differences and explicitly choose a comparable baseline",
-            "Agent decision required; extractor changes preserve indeterminate comparisons",
-        )
-        compare = _item(
-            items,
-            root,
-            "maintenance-preview",
-            basis,
-            [baseline, export] if "workspace_differs_from_selected_facts" in blockers else [baseline],
-            "blocked" if blockers else "ready",
-            blockers,
-            "Obtain a fresh single-root preview against the current model",
-            "Preview is ephemeral; this plan contains no preview token",
-        )
-        recorded = selected is not None and root_targets(model).get(root) == selected.id
-        update = _item(
-            items,
-            root,
-            "maintenance-refresh",
-            basis,
-            [compare],
-            "completed" if recorded else "blocked" if blockers else "ready",
-            [] if recorded else blockers,
-            "Record only this root's maintenance target with explicit authorization",
-            "Completion requires the current recorded target to equal the selected snapshot",
-            True,
-        )
-        inspect_candidates = _item(
-            items,
-            root,
-            "inspect-candidates",
-            basis,
-            [update],
-            "ready",
-            [],
-            "Read affected evidence and choose candidates without guessing",
-            "Multiple candidates require an Agent decision; source inspection remains external",
-        )
         root_bindings = [
             entry
             for entry in model.bindings
             if entry.snapshot_id in catalog and catalog[entry.snapshot_id].source_root_id == root
         ]
-        rebound = (
-            selected is not None
-            and recorded
-            and bool(root_bindings)
-            and all(entry.snapshot_id == selected.id and entry.status == "current" for entry in root_bindings)
-        )
-        rebind_item = _item(
-            items,
-            root,
-            "maintenance-rebind",
-            basis,
-            [inspect_candidates],
-            "completed" if rebound else "ready",
-            [],
-            "Rebind each selected observation through the existing atomic operation",
-            "Agent must select a real candidate and reread revision before each write",
-            True,
-        )
-        reviewed = recorded and row["review_coverage_status"] == "established" and not row["pending_ids"]
-        review = _item(
-            items,
-            root,
-            "maintenance-resolve",
-            basis,
-            [update],
-            "completed" if reviewed else "ready",
-            [],
-            "Review affected interpretations and resolve exact observations",
-            "Current and historical pending are separate obligations; resolution requires real evidence",
-            True,
-        )
-        _item(
-            items,
-            root,
-            "runtime-verification",
-            basis,
-            [],
-            "unknown",
-            ["execution_not_established"],
-            "Retain unexecuted Verification as planned",
-            "Plan and coverage checks never prove runtime behavior",
-        )
+        recorded = selected is not None and root_targets(model).get(root) == selected.id
+        matching = bool(root_files) and all(entry["workspace_content"] == "same" for entry in root_files)
+        root_observations = [
+            item for item in maintenance["observations"] if item["target_snapshot_id"] == row["selected_snapshot_id"]
+        ]
+        needed = [
+            entry
+            for entry in root_bindings
+            if entry.snapshot_id != row["selected_snapshot_id"] or entry.status != "current"
+        ]
+        candidate_observations = [
+            item
+            for item in root_observations
+            if item["candidates"]
+            and any(
+                item["binding_id"] == entry.id
+                and item["basis"]["snapshot_id"] == entry.snapshot_id
+                and item["basis"]["source_version"] == entry.source_version
+                and item["basis"]["location"] == entry.location.model_dump()
+                for entry in needed
+            )
+        ]
+        candidate_coverage = {item["binding_id"] for item in candidate_observations}
+        verified = root in receipts and bool(comparison_report) and digest(receipts[root]) == digest(comparison_report)
+        state = {
+            "revision": model.revision,
+            "source_available": root in usable,
+            "source_errors": [
+                issue["code"] for issue in source_issues + input_issues if issue.get("root_id", root) == root
+            ],
+            "descriptor_supported": row["extraction"]["status"] == "declared_complete",
+            "descriptor_differences": row["descriptor_differences"],
+            "workspace_matches": matching,
+            "proposed_facts": row["selected_snapshot_id"] in {target.id for target in targets},
+            "comparison_available": "comparison_unavailable" not in blockers,
+            "preview_verified": verified,
+            "preview_reasons": (
+                ["preview_response_does_not_match_current_model_and_target"]
+                if root in receipts and not verified
+                else []
+            ),
+            "recorded": recorded,
+            "binding_ids": [entry.id for entry in root_bindings],
+            "rebound": recorded and bool(root_bindings) and not needed,
+            "review_established": row["review_coverage_status"] == "established",
+            "reviewed": recorded and row["review_coverage_status"] == "established" and not row["pending_ids"],
+            "coverage_ids": row["current_coverage_ids"],
+            "review_ids": [item["id"] for item in root_observations if item["id"] in row["current_pending_ids"]],
+            "historical_pending_ids": row["historical_pending_ids"],
+            "observation_ids": [item["id"] for item in root_observations],
+            "candidate_ids": (
+                [item["id"] for item in candidate_observations]
+                if all(entry.id in candidate_coverage for entry in needed)
+                else []
+            ),
+            "ambiguous_candidates": any(len(item["candidates"]) > 1 for item in candidate_observations),
+        }
+        items.extend(root_items(root, basis, state))
         row["requested"] = not roots or root in roots
         row["blocking_reasons"] = blockers
         row["independent_transactions_of_roots"] = sorted(known_roots - {root})
         row["cross_root_order"] = "unknown_requires_agent_decision; no inferred priority"
         row["recommended_after"] = []
-        row["next_review_item_id"] = review
+        row["next_review_item_id"] = next(
+            item["id"] for item in items if item["root_id"] == root and item["action"] == "maintenance-resolve"
+        )
         recorded_snapshot = catalog.get(row["latest_recorded_maintenance_target"])
         row["recorded_target"] = (
             {
@@ -253,7 +214,7 @@ def generate_plan(
             if recorded_snapshot
             else {"status": "unknown"}
         )
-        next(item for item in items if item["id"] == review)["recommended_after"] = [inspect_candidates, rebind_item]
+    evaluate_dependencies(items)
     for item in observations:
         if item["disposition"] != "unchanged":
             affected.add(item["binding_id"])
@@ -313,6 +274,8 @@ def generate_plan(
         },
         "issues": issues,
         "items": items,
+        "ready_item_ids": [item["id"] for item in items if item["status"] == "ready"],
+        "confirmation_item_ids": [item["id"] for item in items if item["status"] == "requires-confirmation"],
         "requires_confirmation": True,
         "summary": {
             **coverage["summary"],
@@ -321,6 +284,8 @@ def generate_plan(
             "historical_pending": len(pending - current),
             "issues": len(issues),
             "blocked_roots": sum(bool(row["blocking_reasons"]) for row in coverage["roots"]),
+            "ready_items": sum(item["status"] == "ready" for item in items),
+            "confirmation_items": sum(item["status"] == "requires-confirmation" for item in items),
         },
         "limits": LIMITS,
     }
@@ -333,7 +298,7 @@ def generate_plan(
 
 
 def check_plan(model: Model, value: object) -> dict:
-    if not isinstance(value, dict) or value.get("protocol") != PROTOCOL:
+    if not isinstance(value, dict) or value.get("protocol") not in (PROTOCOL, LEGACY_PROTOCOL):
         raise ModelError("PLAN_INVALID", "/plan", "Unsupported maintenance plan protocol")
     body = {key: entry for key, entry in value.items() if key != "plan_id"}
     if digest(body) != value.get("plan_id"):
@@ -347,6 +312,15 @@ def check_plan(model: Model, value: object) -> dict:
         reasons.append({"code": "model_revision_changed", "before": old["revision"], "after": model.revision})
     if old["model_digest"] != digest(model.model_dump()):
         reasons.append({"code": "model_content_changed"})
+    if value["protocol"] == LEGACY_PROTOCOL:
+        return {
+            "protocol": PROTOCOL,
+            "plan_id": value["plan_id"],
+            "status": "stale",
+            "committed": False,
+            "requires_replan": True,
+            "reasons": [*reasons, {"code": "legacy_item_states_require_replan", "from_protocol": LEGACY_PROTOCOL}],
+        }
     try:
         inputs = value["inputs"]
         fresh = generate_plan(
@@ -355,6 +329,7 @@ def check_plan(model: Model, value: object) -> dict:
             [Path(path) for path in inputs["facts"]],
             inputs["roots"],
             Path(inputs["model_path"]) if inputs["model_path"] else None,
+            [Path(path) for path in inputs["previews"]],
         )
     except (ModelError, OSError) as error:
         logging.exception("Plan prerequisites could not be reobserved")
@@ -426,7 +401,7 @@ def _inputs(inputs: dict) -> tuple[dict[str, Path], list[Facts], dict, list[dict
     mapping = {}
     external = {}
     issues = []
-    for path in [inputs["source_map"], *inputs["facts"]]:
+    for path in [inputs["source_map"], *inputs["facts"], *inputs["previews"]]:
         if not path:
             continue
         external[path] = file_digest(Path(path))[0]
@@ -451,7 +426,7 @@ def _validate_envelope(value: dict) -> None:
     for key in ("source_map", "model_path"):
         if not isinstance(inputs.get(key), str):
             raise ModelError("PLAN_INVALID", "/inputs", "Plan locators must be strings")
-    for key in ("facts", "roots"):
+    for key in ("facts", "roots", *(["previews"] if value["protocol"] == PROTOCOL else [])):
         if not isinstance(inputs.get(key), list) or any(not isinstance(item, str) for item in inputs[key]):
             raise ModelError("PLAN_INVALID", "/inputs", "Facts locators and roots must be string arrays")
     expected = {
@@ -469,6 +444,23 @@ def _validate_envelope(value: dict) -> None:
     }
     if any(type(validity.get(key)) is not kind for key, kind in expected.items()):
         raise ModelError("PLAN_INVALID", "/validity", "Incomplete or invalid plan validity binding")
+
+
+def _preview_inputs(paths: list[str], catalog: dict[str, Facts]) -> dict[str, dict]:
+    receipts = {}
+    for path in paths:
+        value = load_json(Path(path))
+        if isinstance(value, dict) and value.get("ok") is True:
+            value = value.get("result")
+        if not isinstance(value, dict) or value.get("target_snapshot_id") not in catalog:
+            raise ModelError(
+                "PREVIEW_INVALID", "/preview", "A successful preview must reference saved or proposed facts"
+            )
+        root = catalog[value["target_snapshot_id"]].source_root_id
+        if root in receipts:
+            raise ModelError("PREVIEW_INVALID", "/preview", "Supply at most one preview response per root")
+        receipts[root] = value
+    return receipts
 
 
 def _engine_digest() -> str:
@@ -533,41 +525,6 @@ def _workspace(mapping: dict[str, Path]) -> tuple[dict, dict[str, Path], list[di
             observations[root] = {"status": "unavailable", "reason": str(error)}
             issues.append({"code": "mapping_unavailable", "root_id": root, "detail": str(error)})
     return observations, usable, issues
-
-
-def _item(
-    items: list[dict],
-    root: str,
-    action: str,
-    basis: dict,
-    dependencies: list[str],
-    status: str,
-    blockers: list[str],
-    purpose: str,
-    completion: str,
-    authorization: bool = False,
-) -> str:
-    identity = digest({"root": root, "action": action})
-    items.append(
-        {
-            "id": identity,
-            "root_id": root,
-            "action": action,
-            "purpose": purpose,
-            "basis": basis,
-            "hard_prerequisites": dependencies,
-            "recommended_after": [],
-            "status": status,
-            "reasons": blockers,
-            "stop_when": ["Plan stale or unknown", *blockers],
-            "why": "Derived from this root's saved scope, local observation and maintenance records; other roots cannot complete it",
-            "execution": "external_only; validate hard prerequisites and request confirmation at execution time",
-            "completion": completion,
-            "requires_user_confirmation": authorization,
-            "requires_agent_review": True,
-        }
-    )
-    return identity
 
 
 def _impact(model: Model, binding_ids: set[str]) -> dict:

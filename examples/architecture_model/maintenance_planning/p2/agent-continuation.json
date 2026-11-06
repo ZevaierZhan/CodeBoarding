@@ -1,0 +1,81 @@
+{
+  "fresh_agent_without_creating_chat_history": true,
+  "semantic_continuation_passed": true,
+  "legacy_status": "stale",
+  "legacy_reason": "legacy_item_states_require_replan",
+  "independent_roots": {
+    "all-files": {
+      "immediate_read_only": [
+        "inspect-mapping",
+        "inspect-source",
+        "establish-baseline"
+      ],
+      "export": "requires-confirmation: Agent selects intended root scope/tools; requires_user_confirmation=false. Normal workspace drift does not block investigation or export selection. Acceptance task itself forbids export.",
+      "waiting": [
+        "maintenance-preview",
+        "maintenance-refresh",
+        "inspect-candidates",
+        "maintenance-rebind",
+        "maintenance-resolve"
+      ],
+      "reason": "Workspace differs from selected old inventory catalog; new matching actual facts and current preview are missing. Empty pending does not establish review coverage."
+    },
+    "native-typescript": {
+      "immediate_read_only": [
+        "inspect-mapping",
+        "inspect-source",
+        "establish-baseline",
+        "maintenance-preview",
+        "inspect-candidates"
+      ],
+      "confirmation_eligible": [
+        "reexport",
+        "maintenance-rebind",
+        "maintenance-resolve"
+      ],
+      "recorded_completed": [
+        "maintenance-refresh"
+      ],
+      "reason": "Selected maintenance target is recorded. Current pending=1, historical pending=0. Manifest matches recorded files only; additions/scope freshness are not established."
+    }
+  },
+  "dependency_audit": {
+    "eligible_items": 12,
+    "violations": 0,
+    "meaning": "Every ready/requires-confirmation item has empty unmet_hard_prerequisites; every strict dependent of waiting all-files refresh remains waiting."
+  },
+  "supplied_input_experiment": "Extracted an existing immutable Native snapshot from captured model and ran the existing readonly CLI preview; both validated inputs satisfied their prerequisites. Recorded refresh remained completed for its exact target.",
+  "new_unrecorded_target_confirmation_exercised_by_agent": false,
+  "new_unrecorded_target_confirmation_covered_by_automated_test": true,
+  "confirmation_required_before_writes": true,
+  "preservation": {
+    "hash_algorithm": "SHA256",
+    "files_checked": 5,
+    "model_and_source_unchanged": true,
+    "model_written": false,
+    "source_written": false,
+    "facts_export_executed": false,
+    "refresh_rebind_resolve_executed": false,
+    "implementation_or_tests_inspected": false
+  },
+  "context": {
+    "complete_read_bytes": 23164,
+    "index_bytes": 2320,
+    "persistent_model_bytes": 27545,
+    "legacy_plan_bytes": 121156,
+    "current_plan_bytes": 144522,
+    "actual_preview_bytes": 2616,
+    "helper_max_response_characters": 4096,
+    "roots_inventory_page": 2,
+    "items_inventory_page": 20,
+    "complete_model_or_plan_pasted": false,
+    "bounded_workflow_caveat": "One native root helper get correctly failed the 4096-character guard. A subsequent manual selected-field query inadvertently included verbose descriptor basis in rebind/resolve items and exceeded that per-response bound. Later queries narrowed to status/prerequisite/evidence fields. Thus semantic continuation succeeded, but strict per-response boundedness was not perfectly maintained."
+  },
+  "strict_per_response_budget_followed": false,
+  "limitations": [
+    "Source candidate body was not inspected, so no candidate suitability or interpretation judgment was made.",
+    "Root mapping is supplied and physical overlap established by plan; provenance still merits intended read-only mapping inspection.",
+    "Top-level blocked wording can be mistaken for blanket prohibition; Skill explicitly prevents this.",
+    "No new unrecorded-target facts were supplied, so new-target refresh confirmation transition is a Skill rule here, not experimentally established."
+  ]
+}

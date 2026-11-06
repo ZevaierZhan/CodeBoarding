@@ -12,7 +12,10 @@ reuse existing component, relation, binding, scenario and step IDs.
 2. If PLAN exists, run `model --file MODEL maintenance-plan-check --plan PLAN`.
    `stale` requires a new complete read and a new plan. Inspect the structured
    reasons; increasing expected-revision alone does not repair stale context.
-   `unknown` requires investigation; `blocked` names missing evidence or choices.
+   A v1 plan is a read-only audit artifact: check returns `stale` with
+   `legacy_item_states_require_replan`. Generate v2 before choosing any action.
+   `unknown` requires investigation. A top-level `blocked` reports maintenance
+   risks; it does not block independent `ready` investigations in a current v2 plan.
 3. Generate a fresh plan outside mapped source directories:
 
    ```text
@@ -35,6 +38,8 @@ reuse existing component, relation, binding, scenario and step IDs.
    unattributed_bindings. Index rows contain JSON pointers. For a large detail,
    select its pointer and `--output DETAIL_FILE`, then query narrower pointers.
    Each response is at most 4096 characters. Keep full plans out of the prompt.
+   Query `/ready_item_ids` and `/confirmation_item_ids` or filter item index pages
+   by status. Check each chosen item's reasons and `unmet_hard_prerequisites`.
 5. Read source for affected bindings and both interface-contract sides. A physical
    overlap identifies a shared local file, not shared roots or interchangeable
    extraction scopes. Matching bytes do not establish semantic synchronization.
@@ -51,13 +56,41 @@ Export real facts explicitly with the intended root/scope and prepared tools;
 plan generation never runs exporters, LSPs or installers. Preserve every old facts
 snapshot and history record. A file-only export cannot replace Native facts.
 
-Read MODEL again. With the actual newly exported facts path, obtain
-`maintenance-preview --facts REAL_FACTS` and save its full response. Inspect its
-observations, target and revision. Immediately before a confirmed refresh, check
-the current plan and use that fresh preview's token and revision in
+Read MODEL again. Generate a plan with `--facts REAL_FACTS`. Matching facts satisfy
+the export input; this does not assert an export command was executed. With those
+actual facts, run `maintenance-preview --facts REAL_FACTS` and save its complete
+CLI response outside mapped source directories. Inspect observations, target and
+revision. Generate a new plan with the same facts and `--preview RESPONSE_FILE`.
+The planner validates that response against the existing canonical preview for
+the exact current model/revision/target. A valid preview input is `satisfied`;
+refresh becomes `requires-confirmation`, never automatically authorized.
+
+Immediately before a confirmed refresh, check the current plan and use the token
+and revision from that actual fresh response in
 `maintenance-refresh --facts REAL_FACTS --token FRESH_TOKEN --expected-revision CURRENT_REVISION --author AUTHOR`.
-If export introduced a new facts input, regenerate the plan including that path
-before acquiring the preview. Never copy a token from an old session.
+Plans contain response locators/hashes, not tokens. Receipt matching proves current
+input compatibility, not command execution time or user approval. Never copy a
+token from an old session. If any input/revision changes, discard that response,
+replan and run preview again. Missing/incorrect responses leave refresh waiting.
+
+The item states mean:
+
+| State | Allowed next action |
+| --- | --- |
+| `ready` | Perform this read-only inspection now; every hard prerequisite is satisfied |
+| `requires-confirmation` | Obtain the named Agent selection/review and any explicit user confirmation before execution |
+| `waiting` | Acquire the named facts, current preview, recorded target, candidate or review context; do not execute the action |
+| `blocked` | Investigate the untrusted input or blocked dependency; use independently ready mapping/source inspections |
+| `satisfied` | A supplied facts/preview input has been validated; this is not persistent action completion |
+| `completed` | The current model proves this operation for this root and exact target only |
+| `unknown` | External execution cannot be inferred; retain planned checks |
+
+Hard prerequisites use only `prerequisite_satisfied` evidence (`satisfied` input or
+`completed` recorded operation). Source/candidate reading and Agent decisions have
+no persistent completion record; their recommended order is separate from hard
+prerequisites. Reading a candidate does not satisfy a rebind decision. A waiting or
+blocked predecessor propagates to every strict dependent, including candidates,
+rebind and resolve. Different roots can investigate independently.
 
 After **each** write, capture the model again and regenerate the remaining plan.
 A successful refresh/rebind/resolve increases revision and makes the old plan stale.
@@ -74,8 +107,11 @@ separately. Item `completed` is computed from the current model: recorded target
 bindings at that target, or established review coverage with no pending reviews.
 No editable checkbox establishes completion. Preview, source inspection, export
 selection and runtime proof cannot be reconstructed from model state alone; retain
-their stated uncertainty. A ready plan means its observed inputs remain usable,
-not that its suggested writes have been approved or executed.
+their stated uncertainty. Recompute item states from current inputs; never mark
+external inspections done manually. A ready item allows only the stated read-only
+operation, while ready plan inputs grant no write approval. An old recorded refresh
+can remain completed after workspace drift; export/preview/write gates still name
+that newer drift. Empty pending without established coverage is not completed review.
 
 Preserve unresolved historical pending even when current coverage is reviewed.
 Report both contract sides and Verification scope; leave unexecuted checks planned.

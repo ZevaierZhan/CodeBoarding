@@ -19,10 +19,15 @@ the existing engine unchanged. No GUI or runtime orchestration is added.
 ```text
 codeboarding-model model --file MODEL maintenance-plan --source-map MAP --output PLAN
 codeboarding-model model --file MODEL maintenance-plan --facts NEW_FACTS --root ROOT --source-map MAP --output NEW_PLAN
+codeboarding-model model --file MODEL maintenance-plan --facts NEW_FACTS --preview CURRENT_RESPONSE --source-map MAP --output CONFIRMATION_PLAN
 codeboarding-model model --file MODEL maintenance-plan-check --plan PLAN
 ```
 
-`--facts` and `--root` may repeat. At most one proposed snapshot per root is
+`--facts`, `--root` and `--preview` may repeat. At most one proposed snapshot and
+one saved preview response per root are accepted. Preview inputs must be full
+responses from the existing CLI; the planner reuses its canonical comparison and
+validates exact response content against the current model, revision and target.
+No token is copied into the plan. At most one proposed snapshot per root is
 accepted. Proposed facts must validate, belong to the model project and an existing
 root, and preserve immutable identities. Invalid input fails specifically instead
 of inventing evidence. Missing mapping, inaccessible sources and unsupported
@@ -35,13 +40,19 @@ mapped source directories so publication cannot invalidate its own observation.
 Existing files, including MODEL, are never overwritten. CLI stdout contains only
 identity, status, counts and an absolute output path; complete details are on disk.
 
-## `cross-root-maintenance-plan-v1`
+## `cross-root-maintenance-plan-v2`
+
+P2 changes item eligibility semantics and therefore emits v2. A valid v1 artifact
+can still be checked, but always returns read-only `stale` with
+`legacy_item_states_require_replan`; it is never silently upgraded or executed.
+The context helper rejects v1 continuation and requests regeneration. Original
+v1 files remain unchanged for audit. The persistent domain schema is unchanged.
 
 | Field | Meaning |
 | --- | --- |
 | `plan_id` | SHA-256 of canonical plan content excluding this field; integrity identity, not authorization |
 | `model_id`, `project_id`, `base_revision` | Exact model identity and revision used for analysis |
-| `inputs` | Absolute model, mapping and proposed-facts locators; requested roots |
+| `inputs` | Absolute model, mapping, proposed-facts and preview-response locators; requested roots |
 | `validity` | Model content hash, revision, per-root recorded targets, all snapshot hashes, input file hashes, mapping, workspace and saved-file observations, engine hash |
 | `roots` | Selected snapshot/digest/scope, recorded target/digest/scope, extraction differences, pending groups, source observation and requested focus |
 | `overlaps`, `files` | M6-A physical identity, saved versus observed content, separate root scope and binding references |
@@ -49,7 +60,8 @@ identity, status, counts and an absolute output path; complete details are on di
 | `contracts` | Saved contract status, separate caller/receiver evidence and targets, reexport/pending state, historical Verification scope |
 | `observations` | Existing read-only maintenance preview results; no preview token |
 | `pending` | Current target-and-content coverage versus historical pending, with independent IDs |
-| `items` | Stable root/action ID, purpose, factual basis, why, hard prerequisites, recommended order, status, stop reasons, completion criterion and confirmation requirements |
+| `items` | Stable root/action ID, kind, gates, evidence, hard prerequisites, unmet dependency IDs, recommended order, status, reasons and completion/confirmation limits |
+| `ready_item_ids`, `confirmation_item_ids` | Read-only actions currently allowed versus actions eligible to request decisions |
 | `issues`, `limits` | Explicit blockers, unknown provenance and limits of the observation |
 
 The file is a derived work artifact. Editing a status or setting `done=true` does
@@ -68,13 +80,28 @@ bytes requires export investigation; another root's matching bytes cannot satisf
 its maintenance obligations. Matching recorded bytes does not check additions or
 establish extraction completeness or semantic equivalence.
 
-Per root, inspect mappings/scope before establishing a baseline. When saved bytes
-differ, export is a hard prerequisite for preview. Every refresh depends on a new
-single-root preview. Candidate inspection precedes recommended rebind and review;
-resolve requires the saved root maintenance target, while rebind is recommended
-because an unchanged observation need not rebind. Dependencies between different
-roots remain independent; root ID, language and size never imply priority. An
-Agent chooses unknown relationships and extraction baselines explicitly.
+Per root, normal source drift keeps mapped source investigation available and
+export eligible for scope/tool selection. Missing maps still allow inspection of
+model root locators. Missing/unsupported scope blocks reliable export/comparison,
+not source reading or baseline investigation. A pending export input prevents a
+new-version preview; supplied matching proposed facts satisfy that input without
+claiming the exporter ran. An actual current CLI preview response satisfies the
+refresh prerequisite. User confirmation remains required.
+
+Candidate inspection, rebind and resolve depend on this root's recorded refresh
+for the selected target. Rebind also needs actual candidate evidence and Agent
+selection; resolve needs actual current review observations. Historical pending
+uses explicit historical target context and cannot disappear into current review.
+Reading source/candidates and deciding baselines are external actions with no
+persistent completion record, so their order is recommended rather than an
+unprovable hard dependency. No lexical/language priority is inferred across roots.
+
+`maintenance_plan_states.py` evaluates local trust/input/decision gates and then
+walks a validated dependency DAG. Missing edges, cycles and accidental cross-root
+hard dependencies fail specifically. Unmet hard prerequisites yield waiting or
+blocked, never executable ready or confirmation eligibility. Only evidence with
+the matching root and target can satisfy a prerequisite. Recorded completed
+operations do not reconstruct their old ephemeral preview history.
 
 Affected evidence includes workspace differences, differing overlap versions,
 unresolved maintenance, and non-unchanged preview results. `referenced_bindings`
@@ -96,13 +123,17 @@ The checker returns structured reasons with these meanings:
 
 | Status | Meaning |
 | --- | --- |
-| `ready` | Bound inputs still match; inspect outstanding actions and obtain required decisions |
-| `blocked` | A stable observation lacks a prerequisite, reliable scope, physical provenance or candidate decision |
+| item `ready` | This read-only action is allowed now and all hard prerequisites are satisfied |
+| item `requires-confirmation` | Facts/dependencies permit requesting explicit Agent choices/review and user confirmation |
+| item `waiting` | Required facts, preview, target, candidate/review context or hard prerequisite is not yet available |
+| item `blocked` | An input is untrusted or a strict prerequisite is blocked; independent investigations remain possible |
+| item `satisfied` | An actual supplied facts/preview input is validated, without asserting external execution |
 | `stale` | Revision, model content/identity, root targets, snapshot/input file, mapping, source observation or engine changed; regenerate |
 | `unknown` | No evidence roots or no support for determining an action's completion |
 | item `completed` | Current recorded state satisfies the named maintenance action only |
 
-Overall ready/blocked describes continuation prerequisites, not global completion.
+Overall ready/blocked describes maintenance risks, not global action eligibility
+or completion. Inspect current item states to choose the first allowed action.
 The CLI reports a bounded count of recomputed completed actions. Refresh completion
 requires the saved target equal the selected snapshot. Rebind completion requires
 the root's actual bindings point at that target. Review completion requires
@@ -110,6 +141,17 @@ established current coverage and no root pending observations, including histori
 ones. Source inspection, export choice and ephemeral preview are not marked
 completed merely because the plan recommends them. Runtime verification remains
 unknown; actual saved Verification status and scope stay unchanged.
+
+Ready cannot mean theoretically executable later. Hard dependencies are satisfied
+only by validated-input or recorded-operation evidence. A completed refresh names
+its exact saved target, and remains completed if the workspace later changes;
+newer workspace drift still gates new facts/preview and further writes. No pending
+without established interpretation coverage cannot complete review.
+
+Preview response validation establishes equivalence to the current canonical
+comparison, not when a command ran, a signed capability or user approval. Skills
+require a newly obtained response before a real confirmed write; existing CLI
+revision/token checks remain the authority at execution time.
 
 Revision is always checked even if unrelated changes seem harmless. A committed
 refresh increments revision, making the old plan stale. Check may report newly

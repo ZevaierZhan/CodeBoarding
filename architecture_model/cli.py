@@ -46,6 +46,13 @@ def run(arguments: list[str]) -> dict:
     plan.add_argument("--output", type=Path, required=True)
     plan.add_argument("--facts", type=Path, action="append", default=[])
     plan.add_argument("--root", action="append", default=[])
+    plan.add_argument(
+        "--preview",
+        type=Path,
+        action="append",
+        default=[],
+        help="Saved current maintenance-preview response; never copied as a token into the plan",
+    )
     plan_check = actions.add_parser("maintenance-plan-check", help="Reobserve a plan's prerequisites without writing")
     plan_check.add_argument("--plan", type=Path, required=True)
     maintenance = actions.add_parser(
@@ -128,7 +135,7 @@ def run(arguments: list[str]) -> dict:
     if args.action == "maintenance-plan-check":
         return check_plan(store.read(), load_json(args.plan))
     if args.action == "maintenance-plan":
-        report = generate_plan(store.read(), args.source_map, args.facts, args.root, args.file)
+        report = generate_plan(store.read(), args.source_map, args.facts, args.root, args.file, args.preview)
         output = args.output.resolve()
         if any(output.is_relative_to(Path(path).resolve()) for path in report["validity"]["mapping"].values()):
             raise ModelError("USAGE_ERROR", "/output", "Save plans outside observed source directories")
