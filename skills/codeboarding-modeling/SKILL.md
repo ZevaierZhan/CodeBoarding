@@ -99,6 +99,13 @@ rule before omitting the scope map; a matching root or digest alone is insuffici
 
 ## Explain current source or maintain changed evidence
 
+For a saved maintenance plan, overlapping roots, or a request to resume source
+maintenance, follow [cross-root continuation](references/maintenance-plan.md)
+before selecting a write. Check plan validity and replan after every committed step.
+Use v2 item eligibility: `ready` is a currently allowed read-only action;
+`requires-confirmation` names a decision, and `waiting`/`blocked` cannot execute.
+Validated input `satisfied` is distinct from model-proven `completed`. Regenerate v1 plans.
+
 For multiple facts roots, file-only evidence, physical overlap, unknown maintenance
 scope or extractor upgrades, read [source coverage](references/coverage.md).
 Query the persisted report in bounded pages; keep root maintenance decisions explicit.

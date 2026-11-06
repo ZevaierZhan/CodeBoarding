@@ -1,0 +1,261 @@
+{
+  "head": "b21098289949d0e975e8fc9948861efd5ac7e06e",
+  "source": "existing public real Native TypeScript/file-inventory demo, copied without rewriting facts",
+  "model_revision": 2,
+  "different_versions": 1,
+  "items": [
+    {
+      "id": "5a54516ea63fa103f5a833b9d7d60907c75fca3b6cd1d1a6e26e689456fd7809",
+      "root_id": "all-files",
+      "action": "inspect-source",
+      "status": "blocked",
+      "hard_prerequisites": [],
+      "reasons": [
+        "workspace_differs_from_selected_facts"
+      ]
+    },
+    {
+      "id": "01582da9d047361844783de020a0e739ed6d17e38b895905f0bea08f230134ae",
+      "root_id": "all-files",
+      "action": "reexport",
+      "status": "blocked",
+      "hard_prerequisites": [
+        "5a54516ea63fa103f5a833b9d7d60907c75fca3b6cd1d1a6e26e689456fd7809"
+      ],
+      "reasons": [
+        "workspace_differs_from_selected_facts"
+      ]
+    },
+    {
+      "id": "68c71db159fff3b533d4a391674ce2cc0d3f75dc764cd51f135bfd53c9f6390d",
+      "root_id": "all-files",
+      "action": "establish-baseline",
+      "status": "ready",
+      "hard_prerequisites": [
+        "5a54516ea63fa103f5a833b9d7d60907c75fca3b6cd1d1a6e26e689456fd7809"
+      ],
+      "reasons": []
+    },
+    {
+      "id": "10809c8a4e87285e2b21890523f0d72bc4dc9c47e6f1fd8138725d27afa9de38",
+      "root_id": "all-files",
+      "action": "maintenance-preview",
+      "status": "blocked",
+      "hard_prerequisites": [
+        "68c71db159fff3b533d4a391674ce2cc0d3f75dc764cd51f135bfd53c9f6390d",
+        "01582da9d047361844783de020a0e739ed6d17e38b895905f0bea08f230134ae"
+      ],
+      "reasons": [
+        "workspace_differs_from_selected_facts"
+      ]
+    },
+    {
+      "id": "b97cb0b785dcb4f975ebf9444b031980081ecf6471c9cf6e0bed3c0ea3e64384",
+      "root_id": "all-files",
+      "action": "maintenance-refresh",
+      "status": "blocked",
+      "hard_prerequisites": [
+        "10809c8a4e87285e2b21890523f0d72bc4dc9c47e6f1fd8138725d27afa9de38"
+      ],
+      "reasons": [
+        "workspace_differs_from_selected_facts"
+      ]
+    },
+    {
+      "id": "a0888e51be871a045757da7615b8b2f0103f79f8406b8b0941a809da65fc6954",
+      "root_id": "all-files",
+      "action": "inspect-candidates",
+      "status": "ready",
+      "hard_prerequisites": [
+        "b97cb0b785dcb4f975ebf9444b031980081ecf6471c9cf6e0bed3c0ea3e64384"
+      ],
+      "reasons": []
+    },
+    {
+      "id": "5b3674f6a71ac0608e9630d5f2e62541671ebafbc1f8a763ff0dd22241331e8a",
+      "root_id": "all-files",
+      "action": "maintenance-rebind",
+      "status": "ready",
+      "hard_prerequisites": [
+        "a0888e51be871a045757da7615b8b2f0103f79f8406b8b0941a809da65fc6954"
+      ],
+      "reasons": []
+    },
+    {
+      "id": "4a1ca577c476fa3f63b54d7eb58d44f42f8c0b5229f05fafdaa329bece3bc37b",
+      "root_id": "all-files",
+      "action": "maintenance-resolve",
+      "status": "ready",
+      "hard_prerequisites": [
+        "b97cb0b785dcb4f975ebf9444b031980081ecf6471c9cf6e0bed3c0ea3e64384"
+      ],
+      "reasons": []
+    },
+    {
+      "id": "426e5e7b43f361d98b3e87280825839cf88251a97556ddf1061a8de430f51b69",
+      "root_id": "all-files",
+      "action": "runtime-verification",
+      "status": "unknown",
+      "hard_prerequisites": [],
+      "reasons": [
+        "execution_not_established"
+      ]
+    },
+    {
+      "id": "00525fb9abea000914e915f124fb443323ecd90940630fa819b7c13ab6134fa8",
+      "root_id": "native-typescript",
+      "action": "inspect-source",
+      "status": "ready",
+      "hard_prerequisites": [],
+      "reasons": []
+    },
+    {
+      "id": "077f825c22ffb23271e92dd79c81c6205a44291d6da4eba8c11f73f8159fe0e5",
+      "root_id": "native-typescript",
+      "action": "reexport",
+      "status": "ready",
+      "hard_prerequisites": [
+        "00525fb9abea000914e915f124fb443323ecd90940630fa819b7c13ab6134fa8"
+      ],
+      "reasons": []
+    },
+    {
+      "id": "d2d64eaefb530b5df371c24fc717e4fed31b68bafd5f4615bb4e53eeeeb49e13",
+      "root_id": "native-typescript",
+      "action": "establish-baseline",
+      "status": "ready",
+      "hard_prerequisites": [
+        "00525fb9abea000914e915f124fb443323ecd90940630fa819b7c13ab6134fa8"
+      ],
+      "reasons": []
+    },
+    {
+      "id": "b40a7271f5d8e215587ed559d4f060c22e815d8b3fa4073c5f90e5c6aeeaeae7",
+      "root_id": "native-typescript",
+      "action": "maintenance-preview",
+      "status": "ready",
+      "hard_prerequisites": [
+        "d2d64eaefb530b5df371c24fc717e4fed31b68bafd5f4615bb4e53eeeeb49e13"
+      ],
+      "reasons": []
+    },
+    {
+      "id": "2395ed360bbfa9c3b90b7146e8078fc0414cd1005f4d046205b43023acd4f143",
+      "root_id": "native-typescript",
+      "action": "maintenance-refresh",
+      "status": "completed",
+      "hard_prerequisites": [
+        "b40a7271f5d8e215587ed559d4f060c22e815d8b3fa4073c5f90e5c6aeeaeae7"
+      ],
+      "reasons": []
+    },
+    {
+      "id": "58c8424fe7af0cb2f0d81edc5860269938ad48ecb7e23a1f6496460527bd9a8e",
+      "root_id": "native-typescript",
+      "action": "inspect-candidates",
+      "status": "ready",
+      "hard_prerequisites": [
+        "2395ed360bbfa9c3b90b7146e8078fc0414cd1005f4d046205b43023acd4f143"
+      ],
+      "reasons": []
+    },
+    {
+      "id": "475d56ac0138981f9528aa366745384b22e6c8b6f8764c2f2857ce04239b8112",
+      "root_id": "native-typescript",
+      "action": "maintenance-rebind",
+      "status": "ready",
+      "hard_prerequisites": [
+        "58c8424fe7af0cb2f0d81edc5860269938ad48ecb7e23a1f6496460527bd9a8e"
+      ],
+      "reasons": []
+    },
+    {
+      "id": "2bda3d1116f8fc337c192f1279a5b4f43411aa484e341714c8e021e175bc3b10",
+      "root_id": "native-typescript",
+      "action": "maintenance-resolve",
+      "status": "ready",
+      "hard_prerequisites": [
+        "2395ed360bbfa9c3b90b7146e8078fc0414cd1005f4d046205b43023acd4f143"
+      ],
+      "reasons": []
+    },
+    {
+      "id": "480d705b2a4cbf131e7af1c85a92090d2dc8f8f93d1fce611789c6ebf8631f3e",
+      "root_id": "native-typescript",
+      "action": "runtime-verification",
+      "status": "unknown",
+      "hard_prerequisites": [],
+      "reasons": [
+        "execution_not_established"
+      ]
+    }
+  ],
+  "ready_with_unmet_hard_prerequisites": [
+    {
+      "root_id": "all-files",
+      "action": "establish-baseline",
+      "status": "ready",
+      "unmet": [
+        "5a54516ea63fa103f5a833b9d7d60907c75fca3b6cd1d1a6e26e689456fd7809"
+      ]
+    },
+    {
+      "root_id": "all-files",
+      "action": "inspect-candidates",
+      "status": "ready",
+      "unmet": [
+        "b97cb0b785dcb4f975ebf9444b031980081ecf6471c9cf6e0bed3c0ea3e64384"
+      ]
+    },
+    {
+      "root_id": "all-files",
+      "action": "maintenance-rebind",
+      "status": "ready",
+      "unmet": [
+        "a0888e51be871a045757da7615b8b2f0103f79f8406b8b0941a809da65fc6954"
+      ]
+    },
+    {
+      "root_id": "all-files",
+      "action": "maintenance-resolve",
+      "status": "ready",
+      "unmet": [
+        "b97cb0b785dcb4f975ebf9444b031980081ecf6471c9cf6e0bed3c0ea3e64384"
+      ]
+    },
+    {
+      "root_id": "native-typescript",
+      "action": "reexport",
+      "status": "ready",
+      "unmet": [
+        "00525fb9abea000914e915f124fb443323ecd90940630fa819b7c13ab6134fa8"
+      ]
+    },
+    {
+      "root_id": "native-typescript",
+      "action": "establish-baseline",
+      "status": "ready",
+      "unmet": [
+        "00525fb9abea000914e915f124fb443323ecd90940630fa819b7c13ab6134fa8"
+      ]
+    },
+    {
+      "root_id": "native-typescript",
+      "action": "maintenance-preview",
+      "status": "ready",
+      "unmet": [
+        "d2d64eaefb530b5df371c24fc717e4fed31b68bafd5f4615bb4e53eeeeb49e13"
+      ]
+    },
+    {
+      "root_id": "native-typescript",
+      "action": "maintenance-rebind",
+      "status": "ready",
+      "unmet": [
+        "58c8424fe7af0cb2f0d81edc5860269938ad48ecb7e23a1f6496460527bd9a8e"
+      ]
+    }
+  ],
+  "model_unchanged": true,
+  "model_sha256": "bf29162bf66a33f21c20333c45ee354ce9a1e8fb4fb683396fa29eb0b2706c71"
+}

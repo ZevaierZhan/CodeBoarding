@@ -5,9 +5,16 @@ from architecture_model.validation import digest
 
 
 def capture_coverage(model: Model, item: Maintenance, impact_of: Callable[[Model, Model], dict]) -> Maintenance:
-    marked = model.model_copy(deep=True)
-    binding = next(entry for entry in marked.bindings if entry.id == item.binding_id)
-    binding.reason += " [maintenance impact]"
+    binding = next(entry for entry in model.bindings if entry.id == item.binding_id)
+    marked = model.model_copy()
+    marked.bindings = [
+        (
+            entry.model_copy(update={"reason": entry.reason + " [maintenance impact]"})
+            if entry.id == binding.id
+            else entry
+        )
+        for entry in model.bindings
+    ]
     impact = impact_of(model, marked)
     step_ids = [
         step.id

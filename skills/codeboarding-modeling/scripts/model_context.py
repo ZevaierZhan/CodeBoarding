@@ -25,6 +25,8 @@ PATH_OPTIONS = {
     "--tokei",
     "--tools",
     "--source-map",
+    "--plan",
+    "--preview",
 }
 COLLECTIONS = ("facts", "bindings", "components", "relations", "scenarios", "opinions", "verifications", "maintenance")
 
@@ -317,18 +319,87 @@ def main() -> int:
     coverage.add_argument("--search", default="")
     coverage.add_argument("--offset", type=int, default=0)
     coverage.add_argument("--limit", type=int, default=10)
+    plan = commands.add_parser("plan")
+    plan.add_argument("--report", type=Path, required=True)
+    plan.add_argument(
+        "--collection",
+        choices=("items", "roots", "overlaps", "files", "contracts", "observations", "issues", "unattributed_bindings"),
+        default="items",
+    )
+    plan.add_argument("--search", default="")
+    plan.add_argument("--offset", type=int, default=0)
+    plan.add_argument("--limit", type=int, default=10)
+    plan.add_argument("--id", default="")
+    plan.add_argument("--pointer", default="")
+    plan.add_argument("--output", type=Path)
     proxy = commands.add_parser("cli")
     proxy.add_argument("--response", type=Path, required=True)
     proxy.add_argument("arguments", nargs=argparse.REMAINDER)
     args = parser.parse_args()
     try:
-        if args.command == "coverage":
+        if args.command in ("coverage", "plan"):
             if args.offset < 0 or not 1 <= args.limit <= 100:
                 raise ValueError("offset must be nonnegative and limit must be 1..100")
             report = json.loads(args.report.read_text(encoding="utf-8"))
-            if report.get("protocol") != "source-coverage-v1" or report.get("committed") is not False:
-                raise ValueError("Expected a read-only source-coverage-v1 report")
-            result = page({"inventory": report[args.collection]}, "", args.search, args.offset, args.limit)
+            protocol = "source-coverage-v1" if args.command == "coverage" else "cross-root-maintenance-plan-v2"
+            if args.command == "plan" and report.get("protocol") == "cross-root-maintenance-plan-v1":
+                raise ValueError("Legacy plan item states require regeneration; check the old plan, then generate v2")
+            if report.get("protocol") != protocol or report.get("committed") is not False:
+                raise ValueError(f"Expected a read-only {protocol} report")
+            if args.command == "plan" and args.output and not (args.id or args.pointer):
+                raise ValueError("Select a plan ID or pointer before saving query details")
+            if args.command == "plan" and (args.id or args.pointer):
+                selected = report
+                if args.id:
+                    matches = [
+                        item
+                        for item in report[args.collection]
+                        if item.get("id", item.get("source_root_id", item.get("relation_id"))) == args.id
+                    ]
+                    if len(matches) != 1:
+                        raise ValueError("Select exactly one plan item/root/contract ID")
+                    selected = matches[0]
+                result = walk(selected, args.pointer)
+                if args.output:
+                    protected = [args.report, *[Path(path) for path in report["inputs"]["facts"]]]
+                    protected.extend(Path(path) for path in report["inputs"]["previews"])
+                    protected.extend(
+                        Path(report["inputs"][key]) for key in ("source_map", "model_path") if report["inputs"][key]
+                    )
+                    if args.output.resolve() in {path.resolve() for path in protected}:
+                        raise ValueError("Query output must be separate from plan inputs and model")
+                    if any(
+                        args.output.resolve().is_relative_to(Path(path).resolve())
+                        for path in report["validity"]["mapping"].values()
+                    ):
+                        raise ValueError("Save query output outside observed source directories")
+                    write_json(args.output, result)
+                    result = {"output": str(args.output.resolve()), "bytes": args.output.stat().st_size}
+            else:
+                rows = report[args.collection]
+                if args.command == "plan":
+                    rows = [
+                        {
+                            **{
+                                key: item[key]
+                                for key in (
+                                    "id",
+                                    "root_id",
+                                    "source_root_id",
+                                    "relation_id",
+                                    "action",
+                                    "status",
+                                    "code",
+                                    "path",
+                                    "binding_id",
+                                )
+                                if key in item
+                            },
+                            "pointer": f"/{args.collection}/{index}",
+                        }
+                        for index, item in enumerate(rows)
+                    ]
+                result = page({"inventory": rows}, "", args.search, args.offset, args.limit)
         elif args.command == "capture":
             result = capture(args.engine, args.model, args.cache)
         elif args.command == "cli":

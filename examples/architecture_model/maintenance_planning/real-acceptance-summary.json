@@ -1,0 +1,87 @@
+{
+  "private_data_committed": false,
+  "lossy_projection": false,
+  "cases": {
+    "formal": {
+      "revision": 10,
+      "coverage": {
+        "roots": 3,
+        "file_records": 16215,
+        "confirmed_overlaps": 46,
+        "same_version": 46,
+        "different_versions": 0,
+        "unknown_physical_identity": 0,
+        "unattributed_bindings": 0
+      },
+      "plan": {
+        "roots": 3,
+        "file_records": 16215,
+        "confirmed_overlaps": 46,
+        "same_version": 46,
+        "different_versions": 0,
+        "unknown_physical_identity": 0,
+        "unattributed_bindings": 0,
+        "items": 27,
+        "current_pending": 0,
+        "historical_pending": 0,
+        "issues": 0,
+        "blocked_roots": 1
+      },
+      "status": "blocked",
+      "plan_seconds": 51.497,
+      "plan_bytes": 17907630,
+      "stdout_bytes": 651,
+      "current_pending": 0,
+      "historical_pending": 0,
+      "stale_after_other_store_write": "stale",
+      "original_model_and_source_unchanged": true,
+      "protected_source_files": 16169,
+      "operation_topics": 9,
+      "comparison_topics": 7,
+      "history_preserved": true,
+      "verification_preserved": true
+    },
+    "isolated-r38": {
+      "revision": 38,
+      "coverage": {
+        "roots": 3,
+        "file_records": 16215,
+        "confirmed_overlaps": 6,
+        "same_version": 6,
+        "different_versions": 0,
+        "unknown_physical_identity": 0,
+        "unattributed_bindings": 0
+      },
+      "plan": {
+        "roots": 3,
+        "file_records": 16215,
+        "confirmed_overlaps": 6,
+        "same_version": 6,
+        "different_versions": 0,
+        "unknown_physical_identity": 0,
+        "unattributed_bindings": 0,
+        "items": 27,
+        "current_pending": 0,
+        "historical_pending": 20,
+        "issues": 0,
+        "blocked_roots": 1
+      },
+      "status": "blocked",
+      "plan_seconds": 54.201,
+      "plan_bytes": 18432882,
+      "stdout_bytes": 656,
+      "current_pending": 0,
+      "historical_pending": 20,
+      "stale_after_other_store_write": "stale",
+      "original_model_and_source_unchanged": true,
+      "protected_source_files": 16209,
+      "operation_topics": 9,
+      "comparison_topics": 6,
+      "history_preserved": true,
+      "verification_preserved": true,
+      "alternative_mapping_overlaps": 6,
+      "distinct_overlapping_root_mapping_overlaps": 0,
+      "copied_root_has_no_false_physical_overlaps": true
+    }
+  }
+}

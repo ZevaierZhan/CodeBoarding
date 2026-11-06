@@ -1,0 +1,21 @@
+{
+  "independent_agent": true,
+  "inherited_agent_a_history": false,
+  "source": "complete private isolated model",
+  "old_plan_revision": 38,
+  "current_model_revision": 39,
+  "old_plan_status": "stale",
+  "fresh_plan_blocked_roots": 1,
+  "fresh_plan_requires_replan": false,
+  "independent_roots": 3,
+  "current_pending": 0,
+  "historical_pending": 20,
+  "planned_verifications_preserved": 8,
+  "model_and_source_unchanged": true,
+  "source_files_checked": 16209,
+  "visible_query_context_estimate_bytes": 50000,
+  "query_pages": 13,
+  "complete_artifacts_stayed_on_disk": true,
+  "writes_executed": false,
+  "detailed_report_retained_privately": true
+}

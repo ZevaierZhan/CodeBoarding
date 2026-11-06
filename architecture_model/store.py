@@ -47,6 +47,8 @@ def model_diff(before: Model, after: Model) -> dict:
     changes: dict[str, dict] = {}
     affected: set[str] = set()
     for collection in COLLECTIONS:
+        if getattr(before, collection) is getattr(after, collection):
+            continue
         old = {item.id: item.model_dump() for item in getattr(before, collection)}
         new = {item.id: item.model_dump() for item in getattr(after, collection)}
         changed = {

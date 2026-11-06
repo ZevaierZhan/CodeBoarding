@@ -1,0 +1,24 @@
+{
+  "model_revision": 38,
+  "protocol": "cross-root-maintenance-plan-v2",
+  "roots": 3,
+  "items": 30,
+  "states": {
+    "ready": 11,
+    "requires-confirmation": 4,
+    "completed": 1,
+    "waiting": 5,
+    "unknown": 3,
+    "blocked": 6
+  },
+  "eligible_dependency_violations": 0,
+  "current_pending": 0,
+  "historical_pending": 20,
+  "planned_verifications": 8,
+  "source_files_hashed": 16209,
+  "model_and_source_unchanged": true,
+  "model_writes": false,
+  "source_exports": false,
+  "rebind_or_review": false,
+  "runtime_verification": false
+}

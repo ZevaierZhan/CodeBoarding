@@ -1,0 +1,22 @@
+{
+  "independent_agent": true,
+  "inherited_agent_a_history": false,
+  "source": "public synthetic Native TypeScript demo",
+  "result": "pass",
+  "old_plan_status": "stale",
+  "old_plan_reasons": [
+    "engine_digest_changed"
+  ],
+  "recorded_refreshes": 1,
+  "current_pending": 1,
+  "historical_pending": 0,
+  "source_bytes_read": 226,
+  "source_files_read": 4,
+  "visible_context_estimate_bytes": [
+    65000,
+    85000
+  ],
+  "complete_model_or_plan_in_prompt": false,
+  "model_and_source_unchanged": true,
+  "writes_executed": false
+}

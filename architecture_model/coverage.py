@@ -18,6 +18,7 @@ def coverage_report(
     snapshots: list[str],
     targets: list[Facts],
     root_ids: list[str],
+    maintenance_report: dict | None = None,
 ) -> dict:
     catalog = {item.id: item for item in model.facts}
     for target in targets:
@@ -37,7 +38,9 @@ def coverage_report(
             raise ModelError("USAGE_ERROR", "/snapshot", "Select at most one snapshot per root")
         selected[snapshot.source_root_id] = snapshot
     recorded = root_targets(model)
-    maintenance = query(model)
+    maintenance = query(model) if maintenance_report is None else maintenance_report
+    if maintenance["model_id"] != model.id or maintenance["revision"] != model.revision:
+        raise ModelError("REVISION_CONFLICT", "/maintenance", "Coverage requires maintenance from this model revision")
     observations = maintenance["observations"]
     coverage_ids = set(maintenance["current_coverage_ids"])
     pending_ids = set(maintenance["pending_ids"])
