@@ -1,0 +1,254 @@
+{
+  "synthetic": {
+    "environment": {
+      "platform": "Windows-11-10.0.26100-SP0",
+      "python": "3.12.13",
+      "logical_cpus": 12
+    },
+    "model_unchanged": true,
+    "samples": {
+      "generate": [
+        {
+          "seconds": 11.829352300002938,
+          "status": "ready",
+          "summary": {
+            "roots": 3,
+            "file_records": 32100,
+            "confirmed_overlaps": 16000,
+            "same_version": 16000,
+            "different_versions": 0,
+            "unknown_physical_identity": 0,
+            "unattributed_bindings": 0,
+            "items": 30,
+            "current_pending": 0,
+            "historical_pending": 0,
+            "issues": 0,
+            "blocked_roots": 0,
+            "ready_items": 12,
+            "confirmation_items": 3
+          },
+          "requires_replan": false,
+          "stdout_bytes": 644,
+          "plan_bytes": 52856809,
+          "peak_rss_bytes": 224071680,
+          "counters": {},
+          "profile": {},
+          "process_seconds": 12.977850700001
+        }
+      ],
+      "check": [
+        {
+          "seconds": 11.639734299998963,
+          "status": "ready",
+          "summary": {
+            "roots": 3,
+            "file_records": 32100,
+            "confirmed_overlaps": 16000,
+            "same_version": 16000,
+            "different_versions": 0,
+            "unknown_physical_identity": 0,
+            "unattributed_bindings": 0,
+            "items": 30,
+            "current_pending": 0,
+            "historical_pending": 0,
+            "issues": 0,
+            "blocked_roots": 0,
+            "ready_items": 12,
+            "confirmation_items": 3
+          },
+          "requires_replan": false,
+          "stdout_bytes": 836,
+          "plan_bytes": 0,
+          "peak_rss_bytes": 326934528,
+          "counters": {},
+          "profile": {},
+          "process_seconds": 12.757832200004486
+        }
+      ],
+      "same_process_check": [],
+      "profile_generate": [],
+      "profile_check": []
+    },
+    "timing_summary": {
+      "generate": {
+        "median_s": 11.829352300002938,
+        "max_s": 11.829352300002938,
+        "min_s": 11.829352300002938
+      },
+      "check": {
+        "median_s": 11.639734299998963,
+        "max_s": 11.639734299998963,
+        "min_s": 11.639734299998963
+      }
+    },
+    "fixed_input_complete_plan_comparison": "Passed compare_plans.py against unmodified reference after final code review; only engine/derived plan identity differ."
+  },
+  "formal": {
+    "environment": {
+      "platform": "Windows-11-10.0.26100-SP0",
+      "python": "3.12.13",
+      "logical_cpus": 12
+    },
+    "model_unchanged": true,
+    "samples": {
+      "generate": [
+        {
+          "seconds": 26.220574500010116,
+          "status": "blocked",
+          "summary": {
+            "roots": 3,
+            "file_records": 16215,
+            "confirmed_overlaps": 46,
+            "same_version": 46,
+            "different_versions": 0,
+            "unknown_physical_identity": 0,
+            "unattributed_bindings": 0,
+            "items": 30,
+            "current_pending": 0,
+            "historical_pending": 0,
+            "issues": 0,
+            "blocked_roots": 1,
+            "ready_items": 10,
+            "confirmation_items": 3
+          },
+          "requires_replan": false,
+          "stdout_bytes": 647,
+          "plan_bytes": 17944907,
+          "peak_rss_bytes": 173490176,
+          "counters": {},
+          "profile": {},
+          "process_seconds": 27.368260299990652
+        }
+      ],
+      "check": [
+        {
+          "seconds": 21.33161689998815,
+          "status": "blocked",
+          "summary": {
+            "roots": 3,
+            "file_records": 16215,
+            "confirmed_overlaps": 46,
+            "same_version": 46,
+            "different_versions": 0,
+            "unknown_physical_identity": 0,
+            "unattributed_bindings": 0,
+            "items": 30,
+            "current_pending": 0,
+            "historical_pending": 0,
+            "issues": 0,
+            "blocked_roots": 1,
+            "ready_items": 10,
+            "confirmation_items": 3
+          },
+          "requires_replan": false,
+          "stdout_bytes": 975,
+          "plan_bytes": 0,
+          "peak_rss_bytes": 205340672,
+          "counters": {},
+          "profile": {},
+          "process_seconds": 22.531527499988442
+        }
+      ],
+      "same_process_check": [],
+      "profile_generate": [],
+      "profile_check": []
+    },
+    "timing_summary": {
+      "generate": {
+        "median_s": 26.220574500010116,
+        "max_s": 26.220574500010116,
+        "min_s": 26.220574500010116
+      },
+      "check": {
+        "median_s": 21.33161689998815,
+        "max_s": 21.33161689998815,
+        "min_s": 21.33161689998815
+      }
+    },
+    "fixed_input_complete_plan_comparison": "Passed compare_plans.py against unmodified reference after final code review; only engine/derived plan identity differ."
+  },
+  "isolated": {
+    "environment": {
+      "platform": "Windows-11-10.0.26100-SP0",
+      "python": "3.12.13",
+      "logical_cpus": 12
+    },
+    "model_unchanged": true,
+    "samples": {
+      "generate": [
+        {
+          "seconds": 22.06176460001734,
+          "status": "blocked",
+          "summary": {
+            "roots": 3,
+            "file_records": 16215,
+            "confirmed_overlaps": 6,
+            "same_version": 6,
+            "different_versions": 0,
+            "unknown_physical_identity": 0,
+            "unattributed_bindings": 0,
+            "items": 30,
+            "current_pending": 0,
+            "historical_pending": 20,
+            "issues": 0,
+            "blocked_roots": 1,
+            "ready_items": 11,
+            "confirmation_items": 4
+          },
+          "requires_replan": false,
+          "stdout_bytes": 648,
+          "plan_bytes": 18476979,
+          "peak_rss_bytes": 178049024,
+          "counters": {},
+          "profile": {},
+          "process_seconds": 23.258821600000374
+        }
+      ],
+      "check": [
+        {
+          "seconds": 22.227876100019785,
+          "status": "blocked",
+          "summary": {
+            "roots": 3,
+            "file_records": 16215,
+            "confirmed_overlaps": 6,
+            "same_version": 6,
+            "different_versions": 0,
+            "unknown_physical_identity": 0,
+            "unattributed_bindings": 0,
+            "items": 30,
+            "current_pending": 0,
+            "historical_pending": 20,
+            "issues": 0,
+            "blocked_roots": 1,
+            "ready_items": 11,
+            "confirmation_items": 4
+          },
+          "requires_replan": false,
+          "stdout_bytes": 974,
+          "plan_bytes": 0,
+          "peak_rss_bytes": 209649664,
+          "counters": {},
+          "profile": {},
+          "process_seconds": 23.65309000000707
+        }
+      ],
+      "same_process_check": [],
+      "profile_generate": [],
+      "profile_check": []
+    },
+    "timing_summary": {
+      "generate": {
+        "median_s": 22.06176460001734,
+        "max_s": 22.06176460001734,
+        "min_s": 22.06176460001734
+      },
+      "check": {
+        "median_s": 22.227876100019785,
+        "max_s": 22.227876100019785,
+        "min_s": 22.227876100019785
+      }
+    },
+    "fixed_input_complete_plan_comparison": "Passed compare_plans.py against unmodified reference after final code review; only engine/derived plan identity differ."
+  }
+}

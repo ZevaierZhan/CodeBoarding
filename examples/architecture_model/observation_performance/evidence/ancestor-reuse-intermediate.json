@@ -1,0 +1,475 @@
+{
+  "environment": {
+    "platform": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.13",
+    "logical_cpus": 12
+  },
+  "model_unchanged": true,
+  "samples": {
+    "generate": [
+      {
+        "seconds": 35.15950539999176,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 630,
+        "plan_bytes": 52856809,
+        "peak_rss_bytes": 224784384,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 36.954618899995694
+      },
+      {
+        "seconds": 28.37817109999014,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 630,
+        "plan_bytes": 52856809,
+        "peak_rss_bytes": 225693696,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 29.629728100000648
+      },
+      {
+        "seconds": 33.902485600003274,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 630,
+        "plan_bytes": 52856809,
+        "peak_rss_bytes": 224784384,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 35.36712590002571
+      }
+    ],
+    "check": [
+      {
+        "seconds": 30.10779830001411,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 835,
+        "plan_bytes": 0,
+        "peak_rss_bytes": 325160960,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 31.418098800000735
+      },
+      {
+        "seconds": 27.102167000004556,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 835,
+        "plan_bytes": 0,
+        "peak_rss_bytes": 324280320,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 28.34691210000892
+      },
+      {
+        "seconds": 30.650131300004432,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 835,
+        "plan_bytes": 0,
+        "peak_rss_bytes": 324931584,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 32.136607500026
+      }
+    ],
+    "same_process_check": [
+      {
+        "seconds": 29.631643000000622,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 835,
+        "plan_bytes": 0,
+        "peak_rss_bytes": 325455872,
+        "counters": {},
+        "profile": {}
+      },
+      {
+        "seconds": 34.89958170001046,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 835,
+        "plan_bytes": 0,
+        "peak_rss_bytes": 325500928,
+        "counters": {},
+        "profile": {}
+      },
+      {
+        "seconds": 45.47766919998685,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 835,
+        "plan_bytes": 0,
+        "peak_rss_bytes": 325500928,
+        "counters": {},
+        "profile": {}
+      }
+    ],
+    "profile_generate": [
+      {
+        "seconds": 46.170067500002915,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 630,
+        "plan_bytes": 52856809,
+        "peak_rss_bytes": 225751040,
+        "counters": {
+          "stat": 195712,
+          "path_opens": 32090,
+          "binary_opens": 32088,
+          "binary_bytes_read": 33917569,
+          "lstat": 960
+        },
+        "profile": {
+          "benchmark.py:read": {
+            "calls": 64206,
+            "own_s": 0.14938970000000001,
+            "inclusive_s": 15.856840300000002
+          },
+          "maintenance_plan.py:_workspace": {
+            "calls": 2,
+            "own_s": 0.0014791000000000001,
+            "inclusive_s": 18.4943233
+          },
+          "file_inventory.py:file_digest": {
+            "calls": 32088,
+            "own_s": 0.7954013000000001,
+            "inclusive_s": 22.6521122
+          },
+          "maintenance_plan.py:_engine_digest": {
+            "calls": 1,
+            "own_s": 0.00062,
+            "inclusive_s": 0.0700639
+          },
+          "store.py:atomic_write": {
+            "calls": 1,
+            "own_s": 0.0001549,
+            "inclusive_s": 7.9211631
+          },
+          "file_inventory.py:safe_file": {
+            "calls": 960,
+            "own_s": 0.007175000000000001,
+            "inclusive_s": 0.3625049
+          },
+          "coverage.py:coverage_report": {
+            "calls": 1,
+            "own_s": 0.3681104,
+            "inclusive_s": 16.432633300000003
+          },
+          "maintenance.py:query": {
+            "calls": 1,
+            "own_s": 1.62e-05,
+            "inclusive_s": 3.43e-05
+          },
+          "validation.py:validate_model": {
+            "calls": 1,
+            "own_s": 0.005170800000000001,
+            "inclusive_s": 1.0954810000000001
+          },
+          "maintenance_plan.py:generate_plan": {
+            "calls": 1,
+            "own_s": 0.06797020000000001,
+            "inclusive_s": 36.906965500000005
+          },
+          "maintenance_plan.py:_impact": {
+            "calls": 1,
+            "own_s": 7.3e-06,
+            "inclusive_s": 1.43e-05
+          },
+          "store.py:read": {
+            "calls": 1,
+            "own_s": 0.0028425,
+            "inclusive_s": 1.2149258
+          }
+        },
+        "process_seconds": 49.09930450000684
+      }
+    ],
+    "profile_check": [
+      {
+        "seconds": 49.13465689998702,
+        "status": "ready",
+        "summary": {
+          "roots": 3,
+          "file_records": 32100,
+          "confirmed_overlaps": 16000,
+          "same_version": 16000,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 0,
+          "ready_items": 12,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 835,
+        "plan_bytes": 0,
+        "peak_rss_bytes": 325636096,
+        "counters": {
+          "stat": 195705,
+          "path_opens": 32091,
+          "binary_opens": 32088,
+          "binary_bytes_read": 33917569,
+          "lstat": 960
+        },
+        "profile": {
+          "benchmark.py:read": {
+            "calls": 64206,
+            "own_s": 0.18056840000000002,
+            "inclusive_s": 17.4478987
+          },
+          "coverage.py:coverage_report": {
+            "calls": 1,
+            "own_s": 0.554849,
+            "inclusive_s": 21.292873
+          },
+          "file_inventory.py:safe_file": {
+            "calls": 960,
+            "own_s": 0.0112493,
+            "inclusive_s": 0.5432056000000001
+          },
+          "maintenance_plan.py:_workspace": {
+            "calls": 2,
+            "own_s": 0.0015344,
+            "inclusive_s": 20.3238451
+          },
+          "file_inventory.py:file_digest": {
+            "calls": 32088,
+            "own_s": 0.9265920000000001,
+            "inclusive_s": 25.687509900000002
+          },
+          "maintenance_plan.py:check_plan": {
+            "calls": 1,
+            "own_s": 0.0134718,
+            "inclusive_s": 45.9027721
+          },
+          "maintenance_plan.py:_engine_digest": {
+            "calls": 1,
+            "own_s": 0.0013520000000000001,
+            "inclusive_s": 0.1339845
+          },
+          "validation.py:validate_model": {
+            "calls": 1,
+            "own_s": 0.0088568,
+            "inclusive_s": 1.7954290000000002
+          },
+          "maintenance.py:query": {
+            "calls": 1,
+            "own_s": 1.6100000000000002e-05,
+            "inclusive_s": 3.29e-05
+          },
+          "maintenance_plan.py:generate_plan": {
+            "calls": 1,
+            "own_s": 0.11009400000000001,
+            "inclusive_s": 44.425566100000005
+          },
+          "maintenance_plan.py:_impact": {
+            "calls": 1,
+            "own_s": 1.4200000000000001e-05,
+            "inclusive_s": 2.7300000000000003e-05
+          },
+          "store.py:read": {
+            "calls": 1,
+            "own_s": 0.007233900000000001,
+            "inclusive_s": 2.0893965000000003
+          }
+        },
+        "process_seconds": 52.52104270001291
+      }
+    ]
+  },
+  "timing_summary": {
+    "generate": {
+      "median_s": 33.902485600003274,
+      "max_s": 35.15950539999176,
+      "min_s": 28.37817109999014
+    },
+    "check": {
+      "median_s": 30.10779830001411,
+      "max_s": 30.650131300004432,
+      "min_s": 27.102167000004556
+    },
+    "same_process_check": {
+      "median_s": 34.89958170001046,
+      "max_s": 45.47766919998685,
+      "min_s": 29.631643000000622
+    },
+    "profile_generate": {
+      "median_s": 46.170067500002915,
+      "max_s": 46.170067500002915,
+      "min_s": 46.170067500002915
+    },
+    "profile_check": {
+      "median_s": 49.13465689998702,
+      "max_s": 49.13465689998702,
+      "min_s": 49.13465689998702
+    }
+  }
+}

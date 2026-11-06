@@ -102,6 +102,8 @@ rule before omitting the scope map; a matching root or digest alone is insuffici
 For a saved maintenance plan, overlapping roots, or a request to resume source
 maintenance, follow [cross-root continuation](references/maintenance-plan.md)
 before selecting a write. Check plan validity and replan after every committed step.
+For repeated large-plan checks, read that reference's observation-cost section:
+exact hashes are command-scoped, and bounded queries avoid full artifacts in context.
 Use v2 item eligibility: `ready` is a currently allowed read-only action;
 `requires-confirmation` names a decision, and `waiting`/`blocked` cannot execute.
 Validated input `satisfied` is distinct from model-proven `completed`. Regenerate v1 plans.

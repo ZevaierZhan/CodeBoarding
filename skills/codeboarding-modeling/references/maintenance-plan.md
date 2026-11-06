@@ -100,6 +100,31 @@ Rebind only a candidate selected after source inspection, through
 `revised` review through `maintenance-resolve`. An unchanged binding may not need
 rebind; the plan's recommended ordering is distinct from hard prerequisites.
 
+## Observation cost and trust
+
+Plan generation and checking use exact content observation. Every command reads
+the selected manifest's raw bytes and verifies them again at its closing boundary;
+mtime, size and filesystem identity are change hints, not content proof. Shared
+physical files can share a hash within one boundary, while each root retains its
+own snapshot, descriptor and saved hash. Closing scans use a fresh context.
+There is no persistent observation cache or fast advisory CLI mode. A new process
+performs exact verification again. Missing, corrupt or deleted local artifacts
+require regeneration or input repair; they never grant ready status. A future
+metadata-only diagnostic would require exact verification before treating a plan
+as current. Git HEAD alone does not account for dirty or untracked bytes.
+
+Source observation establishes current bytes, not correctness of the architectural
+interpretation. Review current and historical pending independently even when all
+saved files match. When checks report stale or unknown, inspect bounded reasons,
+repair the named inputs, and generate a new plan before resuming.
+
+Keep full model/plan artifacts on disk. Use the plan index and the existing ID,
+root/status search and JSON-pointer queries above to obtain the next maintenance
+item; retain the 4096-character response boundary. The helper parses the complete
+JSON locally, so bounded output does not imply constant memory or partial disk
+reads. Reuse locators across sessions, then recheck; old chat context and cached
+query responses do not establish current prerequisites.
+
 ## Completion and handoff
 
 Check the new plan, root targets, candidate state and current/historical pending

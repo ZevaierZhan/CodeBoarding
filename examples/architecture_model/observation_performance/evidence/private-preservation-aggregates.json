@@ -1,0 +1,53 @@
+{
+  "formal": {
+    "revision": 10,
+    "roots": 3,
+    "source_files": 16169,
+    "source_bytes": 1071041302,
+    "comparison_count": 7,
+    "operation_count": 9,
+    "history_locations": 0,
+    "model_raw_sha256_unchanged": true,
+    "source_tree_raw_sha256_unchanged": true,
+    "protected_interpretation_history_unchanged": true
+  },
+  "isolated": {
+    "revision": 39,
+    "roots": 3,
+    "source_files": 16209,
+    "source_bytes": 1071501239,
+    "comparison_count": 6,
+    "operation_count": 9,
+    "history_locations": 14,
+    "model_raw_sha256_unchanged": true,
+    "source_tree_raw_sha256_unchanged": true,
+    "protected_interpretation_history_unchanged": true
+  },
+  "copy_trial": {
+    "copied_source_files": 16169,
+    "generated_status": "blocked",
+    "before_status": "blocked",
+    "after_status": "stale",
+    "restored_size_and_mtime": true,
+    "summary": {
+      "roots": 3,
+      "file_records": 16215,
+      "confirmed_overlaps": 46,
+      "same_version": 46,
+      "different_versions": 0,
+      "unknown_physical_identity": 0,
+      "unattributed_bindings": 0,
+      "items": 30,
+      "current_pending": 0,
+      "historical_pending": 0,
+      "issues": 0,
+      "blocked_roots": 1,
+      "ready_items": 10,
+      "confirmation_items": 3
+    },
+    "reason_codes": [
+      "file_observations_changed"
+    ],
+    "original_model_unchanged": true
+  }
+}

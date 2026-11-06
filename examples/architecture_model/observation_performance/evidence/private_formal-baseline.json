@@ -1,0 +1,191 @@
+{
+  "environment": {
+    "platform": "Windows-11-10.0.26100-SP0",
+    "python": "3.12.13",
+    "logical_cpus": 12
+  },
+  "model_unchanged": true,
+  "samples": {
+    "generate": [
+      {
+        "seconds": 54.423852100007934,
+        "status": "blocked",
+        "summary": {
+          "roots": 3,
+          "file_records": 16215,
+          "confirmed_overlaps": 46,
+          "same_version": 46,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 1,
+          "ready_items": 10,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 643,
+        "plan_bytes": 17944907,
+        "peak_rss_bytes": 167706624,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 56.990486700000474
+      },
+      {
+        "seconds": 48.25984850001987,
+        "status": "blocked",
+        "summary": {
+          "roots": 3,
+          "file_records": 16215,
+          "confirmed_overlaps": 46,
+          "same_version": 46,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 1,
+          "ready_items": 10,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 643,
+        "plan_bytes": 17944907,
+        "peak_rss_bytes": 169529344,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 49.53375020000385
+      },
+      {
+        "seconds": 47.26944329999969,
+        "status": "blocked",
+        "summary": {
+          "roots": 3,
+          "file_records": 16215,
+          "confirmed_overlaps": 46,
+          "same_version": 46,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 1,
+          "ready_items": 10,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 643,
+        "plan_bytes": 17944907,
+        "peak_rss_bytes": 167170048,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 48.56500299999607
+      }
+    ],
+    "check": [
+      {
+        "seconds": 49.90662819999852,
+        "status": "blocked",
+        "summary": {
+          "roots": 3,
+          "file_records": 16215,
+          "confirmed_overlaps": 46,
+          "same_version": 46,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 1,
+          "ready_items": 10,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 975,
+        "plan_bytes": 0,
+        "peak_rss_bytes": 199434240,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 51.37356419998105
+      },
+      {
+        "seconds": 46.85264209998422,
+        "status": "blocked",
+        "summary": {
+          "roots": 3,
+          "file_records": 16215,
+          "confirmed_overlaps": 46,
+          "same_version": 46,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 1,
+          "ready_items": 10,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 975,
+        "plan_bytes": 0,
+        "peak_rss_bytes": 198631424,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 48.12956829997711
+      },
+      {
+        "seconds": 44.126519100012956,
+        "status": "blocked",
+        "summary": {
+          "roots": 3,
+          "file_records": 16215,
+          "confirmed_overlaps": 46,
+          "same_version": 46,
+          "different_versions": 0,
+          "unknown_physical_identity": 0,
+          "unattributed_bindings": 0,
+          "items": 30,
+          "current_pending": 0,
+          "historical_pending": 0,
+          "issues": 0,
+          "blocked_roots": 1,
+          "ready_items": 10,
+          "confirmation_items": 3
+        },
+        "requires_replan": false,
+        "stdout_bytes": 975,
+        "plan_bytes": 0,
+        "peak_rss_bytes": 197861376,
+        "counters": {},
+        "profile": {},
+        "process_seconds": 45.41844189999392
+      }
+    ],
+    "same_process_check": [],
+    "profile_generate": [],
+    "profile_check": []
+  },
+  "timing_summary": {
+    "generate": {
+      "median_s": 48.25984850001987,
+      "max_s": 54.423852100007934,
+      "min_s": 47.26944329999969
+    },
+    "check": {
+      "median_s": 46.85264209998422,
+      "max_s": 49.90662819999852,
+      "min_s": 44.126519100012956
+    }
+  }
+}

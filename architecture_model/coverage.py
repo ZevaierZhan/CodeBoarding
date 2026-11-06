@@ -5,8 +5,9 @@ from collections import Counter
 from pathlib import Path
 
 from architecture_model.errors import ModelError
-from architecture_model.file_inventory import MAX_FILES, file_digest, safe_file
+from architecture_model.file_inventory import MAX_FILES, file_digest
 from architecture_model.maintenance import extraction_differences, extraction_status, query, root_targets
+from architecture_model.observation import PathObservation
 from architecture_model.schema import Facts, Model
 from architecture_model.validation import validate_facts
 from architecture_model.verification import referenced_bindings
@@ -50,6 +51,7 @@ def coverage_report(
     rows = []
     binding_index: dict[tuple[str, str], list[str]] = {}
     unattributed = []
+    paths = PathObservation()
     for binding in model.bindings:
         basis = catalog.get(binding.snapshot_id)
         if basis is None:
@@ -175,7 +177,7 @@ def coverage_report(
             files.append(record)
             if local is None:
                 continue
-            physical = safe_file(local, path)
+            physical = paths.file(local, path)
             try:
                 info = physical.stat()
             except FileNotFoundError:
@@ -199,6 +201,7 @@ def coverage_report(
                 raise ModelError("SOURCE_CHANGED", "/source-map", "Shared physical file changed during report")
             record["workspace_hash"] = current
             record["workspace_content"] = "same" if saved == current else "different"
+    paths.finish()
     overlaps = []
     affected = set()
     for group in groups.values():

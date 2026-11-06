@@ -6,9 +6,10 @@ from pathlib import Path
 
 from architecture_model.coverage import coverage_report
 from architecture_model.errors import ModelError
-from architecture_model.file_inventory import DEFAULT_EXCLUDES, MAX_ENTRIES, file_digest, safe_file
+from architecture_model.file_inventory import DEFAULT_EXCLUDES, file_digest
 from architecture_model.maintenance import preview, query, root_targets
 from architecture_model.maintenance_plan_states import evaluate_dependencies, root_items
+from architecture_model.observation import ObservationContext
 from architecture_model.schema import Facts, Model
 from architecture_model.store import load_json
 from architecture_model.validation import digest, parse, validate_facts
@@ -56,7 +57,7 @@ def generate_plan(
         catalog[target.id] = target
     if set(mapping) - known_roots or set(roots) - known_roots:
         raise ModelError("USAGE_ERROR", "/root", "Unknown mapping or selected root")
-    workspace, usable, source_issues = _workspace(mapping)
+    workspace, usable, source_issues = _workspace(mapping, {})
     issues = input_issues + source_issues
     maintenance = query(model)
     try:
@@ -292,7 +293,12 @@ def generate_plan(
     for path, hashed in external.items():
         if file_digest(Path(path))[0] != hashed:
             raise ModelError("SOURCE_CHANGED", "/inputs", "Plan input changed during observation")
-    if _workspace(mapping)[0] != workspace:
+    closing_hashes = {
+        os.path.normcase(str(usable[row["source_root_id"]] / row["path"])): row["workspace_hash"]
+        for row in coverage["files"]
+        if "workspace_hash" in row
+    }
+    if _workspace(mapping, closing_hashes)[0] != workspace:
         raise ModelError("SOURCE_CHANGED", "/source-map", "Workspace changed during observation")
     return {"plan_id": digest(body), **body}
 
@@ -473,11 +479,11 @@ def _engine_digest() -> str:
     return digest({path.relative_to(engine).as_posix(): file_digest(path)[0] for path in sorted(files)})
 
 
-def _workspace(mapping: dict[str, Path]) -> tuple[dict, dict[str, Path], list[dict]]:
+def _workspace(mapping: dict[str, Path], expected_hashes: dict[str, str]) -> tuple[dict, dict[str, Path], list[dict]]:
     observations = {}
     usable = {}
     issues = []
-    cached: dict[str, dict] = {}
+    context = ObservationContext(expected_hashes)
     for root, directory in sorted(mapping.items()):
         try:
             if not directory.is_absolute() or not directory.is_dir():
@@ -485,45 +491,13 @@ def _workspace(mapping: dict[str, Path]) -> tuple[dict, dict[str, Path], list[di
                     "MAPPING_UNAVAILABLE", "/source-map", "Mapping must name an existing absolute directory"
                 )
             directory = directory.resolve()
-            key = os.path.normcase(str(directory))
-            if key not in cached:
-                entries: list[tuple] = []
-                pending = [directory]
-                while pending:
-                    parent = pending.pop()
-                    with os.scandir(parent) as children:
-                        for child in children:
-                            if child.name in DEFAULT_EXCLUDES:
-                                continue
-                            if len(entries) >= MAX_ENTRIES:
-                                raise ModelError(
-                                    "INVENTORY_LIMIT", "/source-map", "Workspace observation exceeds entry limit"
-                                )
-                            path = safe_file(directory, Path(child.path).relative_to(directory).as_posix())
-                            info = path.stat()
-                            entries.append(
-                                (
-                                    path.relative_to(directory).as_posix(),
-                                    info.st_dev,
-                                    info.st_ino,
-                                    info.st_size,
-                                    info.st_mtime_ns,
-                                )
-                            )
-                            if path.is_dir():
-                                pending.append(path)
-                info = directory.stat()
-                cached[key] = {
-                    "identity": [info.st_dev, info.st_ino, key],
-                    "entries_digest": digest(sorted(entries)),
-                    "entries": len(entries),
-                }
-            observations[root] = cached[key]
+            observations[root] = context.workspace(directory)
             usable[root] = directory
         except (OSError, ModelError) as error:
             logging.exception("Plan mapping could not be observed for root %s", root)
             observations[root] = {"status": "unavailable", "reason": str(error)}
             issues.append({"code": "mapping_unavailable", "root_id": root, "detail": str(error)})
+    context.finish()
     return observations, usable, issues
 
 

@@ -75,4 +75,6 @@ and 51.5/54.2 seconds generation under this host's concurrent acceptance load.
 Next candidates: narrower source-observation caching, explicit native-tool input
 fingerprints and supported descriptor-to-export recipes. These require separate
 design; runtime permissions validation, global approval enforcement, cross-root
-atomic commits and automatic execution remain outside M6-B. M6-C is not started.
+atomic commits and automatic execution remain outside M6-B. M6-C was not started
+at this checkpoint. The subsequent performance work and acceptance are recorded
+in [M6-C implementation progress](../observation_performance/implementation-progress.md).
