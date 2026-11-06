@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "id": "compat-model",
+  "project": {
+    "id": "project",
+    "name": "Example",
+    "boundary": "Fixture only"
+  },
+  "revision": 2,
+  "facts": [
+    {
+      "schema_version": 1,
+      "id": "c6322df58e5de47880308846690ddbaa295f49bf3d31d27642471d34ec63d699",
+      "project_id": "project",
+      "source": {
+        "digest": "f9147d8bb7005161cc365f2fe2e6e873a9817f27d3bc12a0b6f6d30185b894b1",
+        "git_commit": "",
+        "files": {
+          "app.py": "8c20161420fde8a5d71f98a1fbc379d5917f77c03d943741030daf037417b9b9"
+        },
+        "scope": "unit fixture"
+      },
+      "symbols": {
+        "app.py|app.run": {
+          "path": "app.py",
+          "symbol": "app.run",
+          "kind": "FUNCTION",
+          "content_hash": "8c20161420fde8a5d71f98a1fbc379d5917f77c03d943741030daf037417b9b9",
+          "start": 1,
+          "end": 1
+        }
+      },
+      "file_locations": {},
+      "calls": [],
+      "tools": {
+        "engine": "unit fixture"
+      },
+      "limitations": [
+        "Unit-test snapshot"
+      ]
+    }
+  ],
+  "bindings": [
+    {
+      "id": "binding",
+      "snapshot_id": "c6322df58e5de47880308846690ddbaa295f49bf3d31d27642471d34ec63d699",
+      "source_version": "f9147d8bb7005161cc365f2fe2e6e873a9817f27d3bc12a0b6f6d30185b894b1",
+      "location": {
+        "path": "app.py",
+        "symbol": "app.run",
+        "kind": "FUNCTION",
+        "content_hash": "8c20161420fde8a5d71f98a1fbc379d5917f77c03d943741030daf037417b9b9",
+        "start": 1,
+        "end": 1
+      },
+      "status": "current",
+      "reason": "",
+      "history": []
+    }
+  ],
+  "components": [
+    {
+      "id": "component",
+      "name": "Entry",
+      "responsibility": "Return one",
+      "rationale": "Fixture boundary",
+      "parent_id": "",
+      "binding_ids": [
+        "binding"
+      ],
+      "claim": {
+        "kind": "code_fact",
+        "explanation": "app.run returns 1",
+        "binding_ids": [
+          "binding"
+        ],
+        "assumptions": [],
+        "issues": []
+      }
+    }
+  ],
+  "relations": [],
+  "scenarios": [
+    {
+      "id": "scenario",
+      "name": "Run",
+      "entry_step_id": "step",
+      "steps": [
+        {
+          "id": "step",
+          "component_ids": [
+            "component"
+          ],
+          "binding_ids": [
+            "binding"
+          ],
+          "claim": {
+            "kind": "code_fact",
+            "explanation": "app.run returns 1",
+            "binding_ids": [
+              "binding"
+            ],
+            "assumptions": [],
+            "issues": []
+          },
+          "facet_checks": {
+            "Decision": "The entry returns a constant."
+          }
+        }
+      ],
+      "order": [
+        "step"
+      ],
+      "transitions": [],
+      "claim": {
+        "kind": "code_fact",
+        "explanation": "app.run returns 1",
+        "binding_ids": [
+          "binding"
+        ],
+        "assumptions": [],
+        "issues": []
+      },
+      "analysis_kind": "operation",
+      "facet_order": [
+        "Decision",
+        "Lifetime"
+      ]
+    },
+    {
+      "id": "topic",
+      "name": "Compare mechanisms",
+      "entry_step_id": "topic-item",
+      "steps": [
+        {
+          "id": "topic-item",
+          "component_ids": [
+            "component"
+          ],
+          "binding_ids": [
+            "binding"
+          ],
+          "claim": {
+            "kind": "code_fact",
+            "explanation": "app.run returns 1",
+            "binding_ids": [
+              "binding"
+            ],
+            "assumptions": [],
+            "issues": []
+          },
+          "facet_checks": {
+            "Decision": "The entry returns a constant."
+          }
+        }
+      ],
+      "order": [
+        "topic-item"
+      ],
+      "transitions": [],
+      "claim": {
+        "kind": "code_fact",
+        "explanation": "app.run returns 1",
+        "binding_ids": [
+          "binding"
+        ],
+        "assumptions": [],
+        "issues": []
+      },
+      "analysis_kind": "comparison",
+      "facet_order": [
+        "Decision",
+        "Lifetime"
+      ]
+    }
+  ],
+  "opinions": [],
+  "verifications": [],
+  "revisions": [
+    {
+      "revision": 0,
+      "author": "test",
+      "summary": "Initialize architecture model",
+      "timestamp": "2026-01-01T00:00:00+00:00",
+      "object_ids": [],
+      "scenario_ids": []
+    },
+    {
+      "revision": 1,
+      "author": "test",
+      "summary": "Initial explanation",
+      "timestamp": "2026-01-01T00:00:00+00:00",
+      "object_ids": [
+        "binding",
+        "c6322df58e5de47880308846690ddbaa295f49bf3d31d27642471d34ec63d699",
+        "component",
+        "scenario"
+      ],
+      "scenario_ids": [
+        "scenario"
+      ]
+    },
+    {
+      "revision": 2,
+      "author": "agent",
+      "summary": "Clarify analysis",
+      "timestamp": "2026-01-01T00:00:00+00:00",
+      "object_ids": [
+        "scenario",
+        "topic"
+      ],
+      "scenario_ids": [
+        "scenario",
+        "topic"
+      ]
+    }
+  ],
+  "maintenance": [],
+  "maintenance_target_snapshot_id": ""
+}

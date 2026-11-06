@@ -47,6 +47,11 @@ HTML is a frozen display artifact; changes go through the model CLI.
 
 ## Explain code and reuse objects
 
+Inspect `model schema` and the captured model's `schema_version` before editing.
+For operation/comparison topics or facet questions, read
+[analysis topics](references/analysis-topics.md). An unsupported version, kind or
+field requires a compatible engine; preserve the model and report the error.
+
 Inspect actual entrypoints, callees and data handling within the declared scope.
 Before creating an object, search existing components, relations, bindings and
 scenario steps for the same responsibility/evidence. Reuse their IDs. Preserve

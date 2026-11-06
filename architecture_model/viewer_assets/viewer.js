@@ -109,6 +109,7 @@
     const involved = new Set(scenario?.steps.flatMap(s => s.component_ids) || []);
     const project = id => projection.visibleById.get(id);
     const activeVisible = new Set([...active].map(project));
+    const currentLabel = scenario?.analysis_kind === "comparison" ? "Inspected item" : "Current step";
     const involvedVisible = new Set([...involved].map(project));
     const graph = el("graph");
     const nodes = el("nodes");
@@ -166,7 +167,7 @@
       node.classList.toggle("unrelated", el("focus").checked && !involvedVisible.has(component.id));
       node.append(element("strong", component.name), element("small", component.id));
       if (activeVisible.has(component.id)) {
-        node.append(element("span", active.has(component.id) ? "Current step" : `Current step inside · ${player.current}`, "inside"));
+        node.append(element("span", active.has(component.id) ? currentLabel : `${currentLabel} inside · ${player.current}`, "inside"));
       }
       const hidden = projection.hiddenCounts.get(component.id) || 0;
       if (hidden) node.append(element("small", `${hidden} components inside · expand in structure`));
@@ -181,10 +182,13 @@
     if (!model.relations.length) el("relations").append(element("p", "No component relations modeled. Business transitions remain separate."));
   }
   function renderPlayer() {
-    el("current").textContent = scenario ? `${scenario.name} / ${player.current}` : "No business selected";
+    const comparison = scenario?.analysis_kind === "comparison";
+    el("current").textContent = scenario ? `${comparison ? "Comparison topic" : "Operation"} · ${scenario.name} / ${player.current}` : "No business selected";
     el("choices").replaceChildren();
     const choices = player.choices();
-    el("playback-status").textContent = message || (choices.length === 0
+    el("playback-status").textContent = comparison
+      ? "Independent explanations in display order. Select a topic item to inspect its evidence; playback is disabled."
+      : message || (choices.length === 0
       ? "No outgoing transition saved. Modeled endpoint or unexplained gap; no next step is inferred from display order."
       : choices.length > 1 ? "Choose a saved transition. Conditions have not been evaluated."
       : choices[0].transition.kind === "loop" ? "Loop boundary: paused until explicitly selected. Choose another transition to exit when available." : "Ready to follow the saved transition.");
@@ -192,11 +196,11 @@
       el("choices").append(button(`${transition.kind} → ${transition.target_id} · ${transition.condition}`, () => advance(index)));
     }
     const incoming = scenario?.transitions[player.incoming];
-    el("incoming").textContent = incoming ? `Last traversed: ${incoming.source_id} → ${incoming.target_id} · ${incoming.kind} · ${incoming.condition}` : "No transition traversed in this browsing path.";
+    el("incoming").textContent = comparison ? "No execution order is asserted." : incoming ? `Last traversed: ${incoming.source_id} → ${incoming.target_id} · ${incoming.kind} · ${incoming.condition}` : "No transition traversed in this browsing path.";
     el("back").disabled = player.history.length === 0;
     el("next").disabled = choices.length !== 1;
     el("play").disabled = !scenario || !choices.length;
-    el("reset").disabled = !scenario;
+    el("reset").disabled = !scenario || comparison;
   }
   function renderBindings(container, ids, displayed) {
     container.append(element("h3", "Code evidence"));
@@ -295,6 +299,19 @@
       field(container, "Assumptions", claim.assumptions.length ? claim.assumptions : "None declared");
       field(container, "Issues", claim.issues.length ? claim.issues : "None declared");
     }
+    if (object.steps) {
+      field(container, "Analysis kind", object.analysis_kind || "operation");
+      field(container, "Analysis questions (display order)", object.facet_order || []);
+      container.append(element("p", "Step order organizes reading. Only operation transitions describe a modeled execution path.", "muted"));
+    }
+    const owner = model.scenarios.find(item => item.steps.some(step => step.id === object.id));
+    if (owner?.facet_order?.length) {
+      container.append(element("h3", "Analysis questions"));
+      container.append(element("p", "Authored interpretations supported by this step's claim and code evidence. These entries have no execution status. Executed checks appear separately under Verification.", "muted"));
+      for (const label of owner.facet_order || []) {
+        field(container, label, object.facet_checks?.[label] || "Not examined / unknown");
+      }
+    }
     const ids = new Set([object.id]);
     const bindings = new Set([...(object.binding_ids || []), ...(claim?.binding_ids || [])]);
     if (bindingIds.has(object.id)) bindings.add(object.id);
@@ -321,7 +338,7 @@
   el("identity").textContent = `Model ${model.id} · revision ${model.revision}`;
   el("exported").textContent = `Exported ${documentData.exported_at}`;
   for (const item of model.scenarios) {
-    const option = element("option", item.name); option.value = item.id; el("scenario").append(option);
+    const option = element("option", `${item.analysis_kind === "comparison" ? "Comparison" : "Operation"} · ${item.name}`); option.value = item.id; el("scenario").append(option);
   }
   el("scenario").disabled = !scenario;
   el("inspect-business").disabled = !scenario;

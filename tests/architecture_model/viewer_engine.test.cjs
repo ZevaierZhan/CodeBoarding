@@ -79,6 +79,24 @@ test('direct inspection is explicit and starts a fresh path; empty models are pl
   assert.equal(player.incoming,null);
   const empty=new Player(null);assert.equal(empty.current,'');assert.deepEqual(empty.choices(),[]);
 });
+test('comparison topics never play or project execution edges, even with stale transition input',()=>{
+  const comparison={...scenario,analysis_kind:'comparison',facet_order:['Decision'],
+    steps:scenario.steps.map(step=>({...step,facet_checks:{Decision:'Authored explanation'}}))};
+  const before=JSON.stringify(comparison);
+  const player=new Player(comparison);
+  assert.equal(player.current,'a');
+  assert.deepEqual(player.choices(),[]);
+  assert.equal(player.autoChoice(),null);
+  assert.equal(player.forward(0),false);
+  assert.equal(player.inspectStep('b'),true);
+  assert.equal(player.back(),false);
+  const model={components,relations:[{id:'r',source_id:'leaf',target_id:'shared'}]};
+  assert.deepEqual(projectedEdges(model,comparison,new Set()).map(edge=>edge.kind),['relation']);
+  assert.equal(JSON.stringify(comparison),before);
+  const operation=new Player({...scenario,analysis_kind:'operation'});
+  assert.equal(operation.forward(1),true);
+  assert.equal(operation.back(),true);
+});
 test('shared projection matches ancestor semantics and preserves original edge references for every collapse state',()=>{
   const forest=[...components,{id:'other',parent_id:''},{id:'child',parent_id:'other'}];
   const model={components:forest,relations:[{id:'r',source_id:'leaf',target_id:'child'}]};

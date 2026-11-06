@@ -105,7 +105,7 @@ def inventory(model: dict) -> list[dict]:
     for collection in COLLECTIONS:
         for index, item in enumerate(model[collection]):
             row = {"id": item["id"], "collection": collection, "pointer": f"/{collection}/{index}"}
-            for field in ("name", "parent_id", "source_id", "target_id", "binding_id"):
+            for field in ("name", "parent_id", "source_id", "target_id", "binding_id", "analysis_kind"):
                 if field in item:
                     row[field] = item[field]
             if collection == "bindings":

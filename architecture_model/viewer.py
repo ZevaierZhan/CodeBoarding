@@ -95,6 +95,8 @@ def _snippet(location: Location, source_root: Path | None) -> dict:
         if hashlib.sha256(content).hexdigest() != location.content_hash:
             return {"status": "mismatch", "reason": "Workspace bytes differ from this evidence version; body withheld."}
         lines = [line.decode("utf-8") for line in content.splitlines()]
+        if location.kind == "FILE" and content.endswith((b"\n", b"\r")):
+            lines.append("")
         if location.end > len(lines):
             return {"status": "unavailable", "reason": "Evidence line range exceeds the verified file."}
         return {

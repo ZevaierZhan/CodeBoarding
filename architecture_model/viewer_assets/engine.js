@@ -57,7 +57,7 @@ const ArchitectureView = (() => {
       source: project(r.source_id), target: project(r.target_id),
       relation_id: r.id, component_ids: [r.source_id, r.target_id], kind: "relation"
     }));
-    if (!scenario) return edges;
+    if (!scenario || scenario.analysis_kind === "comparison") return edges;
     const steps = new Map(scenario.steps.map(s => [s.id, s]));
     scenario.transitions.forEach((transition, index) => {
       for (const source of steps.get(transition.source_id).component_ids) {
@@ -81,7 +81,7 @@ const ArchitectureView = (() => {
       this.incoming = null;
     }
     choices() {
-      return this.scenario ? this.scenario.transitions.map((transition, index) => ({transition, index}))
+      return this.scenario && this.scenario.analysis_kind !== "comparison" ? this.scenario.transitions.map((transition, index) => ({transition, index}))
         .filter(choice => choice.transition.source_id === this.current) : [];
     }
     forward(index) {
